@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>me.lj.train</groupId>
+    <artifactId>road-transport-training-backend</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>road-transport-training-backend</name>
+    <description>道路运输企业在线安全培训与学时监管系统后端聚合工程</description>
+
+    <modules>
+        <module>train-dependencies</module>
+        <module>train-common</module>
+        <module>train-api</module>
+        <module>train-gateway</module>
+        <module>train-web-api</module>
+        <module>train-realtime-service</module>
+        <module>train-admin-service</module>
+        <module>train-training-service</module>
+        <module>train-learning-service</module>
+        <module>train-face-adapter</module>
+    </modules>
+</project>

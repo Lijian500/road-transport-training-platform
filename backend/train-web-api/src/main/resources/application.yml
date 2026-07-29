@@ -1,0 +1,42 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  application:
+    name: train-web-api
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  config:
+    import:
+      - optional:nacos:train-common.yml?group=DEFAULT_GROUP
+      - optional:nacos:${spring.application.name}.yml?group=DEFAULT_GROUP
+  cloud:
+    nacos:
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
+      discovery:
+        enabled: ${NACOS_DISCOVERY_ENABLED:false}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+      config:
+        enabled: ${NACOS_CONFIG_ENABLED:false}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+
+dubbo:
+  enabled: ${DUBBO_ENABLED:false}
+  application:
+    name: ${spring.application.name}
+  registry:
+    address: nacos://${NACOS_SERVER_ADDR:127.0.0.1:8848}
+  consumer:
+    check: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

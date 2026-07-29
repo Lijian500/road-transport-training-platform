@@ -1,0 +1,53 @@
+server:
+  port: ${SERVER_PORT:8091}
+
+spring:
+  application:
+    name: train-admin-service
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  config:
+    import:
+      - optional:nacos:train-common.yml?group=DEFAULT_GROUP
+      - optional:nacos:${spring.application.name}.yml?group=DEFAULT_GROUP
+  cloud:
+    nacos:
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
+      discovery:
+        enabled: ${NACOS_DISCOVERY_ENABLED:false}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+      config:
+        enabled: ${NACOS_CONFIG_ENABLED:false}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_ADMIN_DATABASE:road_training_admin}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: ${MYSQL_ADMIN_USER:train_admin}
+    password: ${MYSQL_ADMIN_PASSWORD:}
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+  flyway:
+    enabled: ${FLYWAY_ENABLED:true}
+    locations: classpath:db/migration
+
+dubbo:
+  enabled: ${DUBBO_ENABLED:true}
+  application:
+    name: ${spring.application.name}
+  registry:
+    address: nacos://${NACOS_SERVER_ADDR:127.0.0.1:8848}
+    check: false
+  protocol:
+    name: tri
+    port: ${DUBBO_PORT:20891}
+  scan:
+    base-packages: me.lj.train.admin
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

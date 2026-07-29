@@ -1,0 +1,50 @@
+# 操作系统与编辑器
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Java与Maven
+**/target/
+*.class
+*.log
+.mvn/timing.properties
+
+# Node.js与前端
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+frontend/.vite/
+frontend/.eslintcache
+*.tsbuildinfo
+
+# 环境与密钥
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+
+# 本地数据与上传文件
+deploy/volumes/
+storage/
+uploads/
+temp/
+tmp/
+
+# 测试与工具缓存
+.testcontainers.properties
+.cache/
+playwright-report/
+test-results/
+
+# 本地覆盖配置
+application-local.yml
+application-local.yaml
+bootstrap-local.yml
+bootstrap-local.yaml

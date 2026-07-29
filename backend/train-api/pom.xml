@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>me.lj.train</groupId>
+        <artifactId>train-dependencies</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../train-dependencies/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>train-api</artifactId>
+    <packaging>pom</packaging>
+
+    <name>train-api</name>
+    <description>Dubbo RPC契约模块聚合工程</description>
+
+    <modules>
+        <module>train-admin-api</module>
+        <module>train-training-api</module>
+        <module>train-learning-api</module>
+    </modules>
+</project>
