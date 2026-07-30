@@ -32,6 +32,16 @@ spring:
               uri: ${REALTIME_URI:ws://127.0.0.1:8082}
               predicates:
                 - Path=/ws/**
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+
+app:
+  security:
+    issuer: ${JWT_ISSUER:road-transport-training}
+    public-key-path: ${JWT_PUBLIC_KEY_PATH:}
 
 management:
   endpoints:

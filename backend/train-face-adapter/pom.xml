@@ -13,12 +13,31 @@
 
     <artifactId>train-face-adapter</artifactId>
     <name>train-face-adapter</name>
-    <description>模拟或第三方人脸核验能力的适配接口，初期不独立部署</description>
+    <description>基于OpenCV YuNet和SFace的人脸检测与核验适配库，初期不独立部署</description>
 
     <dependencies>
         <dependency>
             <groupId>me.lj.train</groupId>
             <artifactId>train-common-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openpnp</groupId>
+            <artifactId>opencv</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

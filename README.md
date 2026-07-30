@@ -9,7 +9,7 @@
 
 ## 当前仓库状态与快速开始
 
-当前仓库已经完成阶段一的工程骨架初始化，尚未实现业务代码。已建立后端Maven多模块、Vue 3前端、Docker Compose基础设施、数据库初始化、CI和项目文档目录。
+当前仓库已完成企业、部门、用户、角色、权限和登录的基础闭环。平台超管可创建企业及初始管理员，企业管理员可维护本企业组织、用户和角色；认证采用RSA Access Token、Redis Refresh Token轮换、HttpOnly Cookie和CSRF双提交保护。
 
 环境要求：
 
@@ -25,13 +25,16 @@
 # 1. 准备本地环境变量并替换示例密码
 Copy-Item .env.example .env
 
-# 2. 启动MySQL、Redis、RabbitMQ、Nacos和Nginx
+# 2. 生成本地RSA密钥，并将输出路径写入本机环境变量
+.\scripts\generate-jwt-keys.ps1
+
+# 3. 启动MySQL、Redis、RabbitMQ、Nacos和Nginx
 .\scripts\start-infra.ps1
 
-# 3. 验证后端Maven模块
+# 4. 验证后端Maven模块
 mvn -f backend\pom.xml clean verify
 
-# 4. 安装并启动前端
+# 5. 安装并启动前端
 pnpm --dir frontend install
 pnpm --dir frontend dev
 ```
@@ -39,9 +42,11 @@ pnpm --dir frontend dev
 说明：
 
 - 根目录`.env`不会被Git跟踪；
-- 前端首次安装成功后需要提交生成的`frontend/pnpm-lock.yaml`；
+- 首次启动`train-admin-service`前，需要在进程环境中设置`APP_BOOTSTRAP_ENABLED=true`及唯一平台超管账号、强密码；初始化成功后建议关闭该开关；
+- `JWT_PRIVATE_KEY_PATH`只提供给`train-web-api`，`JWT_PUBLIC_KEY_PATH`同时提供给`train-web-api`和`train-gateway`，不得提交私钥；
+- 服务启动顺序和完整环境变量参见[部署说明](./docs/deployment/README.md)，REST契约参见[API说明](./docs/api/README.md)；
 - 当前Docker Compose不构建Java业务容器，Java应用通过IDE或Maven独立运行；
-- 当前Nginx只提供健康检查、Gateway反向代理和媒体目录占位，前端生产产物将在后续阶段接入；
+- 当前Nginx提供健康检查、Gateway反向代理和媒体目录占位；
 - 本地Nacos采用单机开发配置，不能直接作为生产配置使用。
 
 ## 1. 文档目的
@@ -703,19 +708,18 @@ road-transport-training-platform/
 职责：
 
 - 定义统一的`FaceVerifier`接口；
-- 封装第三方服务或本地模拟实现；
-- 输入登记照片和当前照片；
-- 返回是否通过、相似度、原因和处理耗时；
-- 对业务层隐藏具体厂商SDK。
+- 使用OpenCV YuNet检测人脸数量、位置和置信度；
+- 使用OpenCV SFace比对登记照片和当前照片；
+- 返回是否可比、是否同一人、余弦相似度、原因和处理耗时；
+- 对业务层隐藏OpenCV模型和本地库调用。
 
 论文中应将其描述为“人脸核验服务集成”，不描述为自研人脸识别算法。
 
-第一阶段可以提供可替换的模拟实现：
+当前适配实现使用OpenCV Zoo开源模型，模型权重不直接提交到仓库。运行
+`scripts/download-face-models.ps1`下载并校验YuNet和SFace模型，完整配置、接口及许可说明见
+[`train-face-adapter/README.md`](./backend/train-face-adapter/README.md)。
 
-- 预设测试账号与照片；
-- 返回可控的通过或失败结果；
-- 用于演示抽验流程；
-- 后续再接入合法授权的第三方服务。
+当前能力是1:1人脸比对，不包含活体检测和1:N人员库检索。正式使用前需要基于获得授权的实际场景数据评估检测及相似度阈值。
 
 ### 7.13 模块依赖规则
 
@@ -756,46 +760,49 @@ flowchart LR
 
 ## 8. 后端服务内部目录规范
 
-每个业务服务采用相同的分层方式：
+每个业务服务采用相同的内部结构，不设置`biz`目录：
 
 ```text
-me.lj.train.<domain>/
-├─ Application.java
-├─ config/                 Spring、Dubbo、Redis及MQ配置
-├─ service/                Dubbo服务实现
-├─ biz/                    业务编排和核心规则
-├─ mapper/                 MyBatis-Flex Mapper
-├─ model/
-│  ├─ entity/              数据库实体
-│  ├─ dto/                 服务内部DTO
-│  ├─ command/             写操作命令
-│  └─ query/               查询条件
-├─ mq/
-│  ├─ producer/
-│  ├─ consumer/
-│  └─ event/
-├─ schedule/               补偿和定时任务
-├─ converter/              MapStruct转换器
-├─ constant/
-├─ enums/
-└─ support/                领域内辅助代码
+src/main/
+├─ java/me/lj/train/<domain>/
+│  ├─ Application.java
+│  ├─ config/                 Spring、Dubbo、Redis及MQ配置
+│  ├─ service/                Dubbo服务实现、业务编排和事务边界
+│  ├─ mapper/                 MyBatis-Flex Mapper
+│  ├─ model/
+│  │  ├─ entity/              数据库实体
+│  │  ├─ dto/                 服务内部DTO
+│  │  ├─ command/             写操作命令
+│  │  └─ query/               查询条件
+│  ├─ mq/
+│  │  ├─ producer/
+│  │  ├─ consumer/
+│  │  └─ event/
+│  ├─ schedule/               补偿和定时任务
+│  ├─ converter/              MapStruct转换器
+│  ├─ constant/
+│  ├─ enums/
+│  └─ support/                领域内辅助代码
+└─ resources/
+   └─ mappers/                与Mapper同名的复杂SQL XML
 ```
 
 推荐调用链：
 
 ```text
-Dubbo Service
-    -> Biz
-    -> Mapper
+Dubbo ServiceImpl
+    -> MyBatis-Flex Mapper
     -> MySQL
 ```
 
 约束：
 
-- `service`层只负责接口适配、权限入口和事务边界；
-- `biz`层负责核心业务和状态转换；
-- `mapper`层只负责数据访问；
-- 简单查询可以由Biz直接调用Mapper；
+- 不设置`biz`层或`biz`目录；
+- Dubbo `ServiceImpl`负责接口适配、权限入口、业务编排、状态转换和事务边界；
+- `mapper`层只负责数据访问，Mapper继承MyBatis-Flex `BaseMapper`；
+- 简单单表CRUD和分页使用`BaseMapper + QueryWrapper`；
+- 多表JOIN、聚合和子查询等复杂SQL放在`src/main/resources/mappers/`下与Mapper同名的XML文件中；
+- 默认不引入MyBatis-Flex `IService/ServiceImpl`中间层；
 - 禁止Service调用其他服务的Mapper；
 - 禁止跨服务直接查询其他模块的数据表；
 - 业务状态使用枚举，不使用无含义魔法数字；
@@ -1751,13 +1758,14 @@ Docker Compose启动：
 
 ### 阶段二：登录和管理基础
 
-- 用户、组织、角色和权限表；
-- JWT登录；
-- Gateway鉴权；
-- 管理端布局；
-- 人员、组织和车辆基础页面。
+- 企业、部门、用户、角色和固定权限目录；
+- RSA Access Token、Redis Refresh Token轮换及CSRF保护；
+- Gateway鉴权、登录版本和可信上下文；
+- 管理端权限路由及企业、部门、用户、角色页面；
+- 本阶段不包含车辆和部门级数据范围。
 
-验收标准：用户可以登录，并根据角色进入正确工作台。
+验收标准：超管创建企业及初始管理员，企业管理员强制改密后完成本企业组织、用户
+和角色授权，并阻止跨企业访问及角色提权。
 
 ### 阶段三：课程和培训计划
 

@@ -33,3 +33,45 @@ button,
 input {
   font: inherit;
 }
+
+.page-title {
+  margin-bottom: 24px;
+}
+
+.page-title--actions {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-title h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.page-title p {
+  margin: 0;
+  color: #71809a;
+  line-height: 1.6;
+}
+
+.table-card {
+  overflow: hidden;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #e5eaf2;
+  border-radius: 14px;
+}
+
+.el-select,
+.el-tree-select {
+  min-width: 160px;
+}
+
+@media (width <= 640px) {
+  .page-title--actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

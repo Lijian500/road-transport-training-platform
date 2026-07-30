@@ -1,0 +1,2 @@
+userContextConsumer=me.lj.train.common.dubbo.UserContextConsumerFilter
+userContextProvider=me.lj.train.common.dubbo.UserContextProviderFilter

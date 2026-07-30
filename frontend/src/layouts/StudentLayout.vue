@@ -1,5 +1,17 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { ElMessageBox } from 'element-plus'
+
+import { useAuthStore } from '@/stores/auth'
+
+const router = useRouter()
+const authStore = useAuthStore()
+
+async function logout() {
+  await ElMessageBox.confirm('确定退出当前账号吗？', '退出登录', { type: 'warning' })
+  await authStore.logout()
+  await router.replace('/login')
+}
 </script>
 
 <template>
@@ -11,7 +23,10 @@ import { RouterLink, RouterView } from 'vue-router'
       </div>
       <nav aria-label="学员端导航">
         <RouterLink to="/student">学习首页</RouterLink>
-        <RouterLink to="/admin">管理工作台</RouterLink>
+        <RouterLink v-if="authStore.session?.workspaces.includes('admin')" to="/admin">
+          管理工作台
+        </RouterLink>
+        <button type="button" @click="logout">退出登录</button>
       </nav>
     </header>
     <main class="workspace__content">
@@ -57,6 +72,14 @@ nav {
 nav a {
   padding: 9px 12px;
   border-radius: 8px;
+}
+
+nav button {
+  padding: 9px 12px;
+  color: #5f6c85;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
 }
 
 nav a.router-link-active {

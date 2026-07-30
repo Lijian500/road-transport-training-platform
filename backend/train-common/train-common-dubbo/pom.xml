@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>me.lj.train</groupId>
-            <artifactId>train-common-core</artifactId>
+            <artifactId>train-common-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.dubbo</groupId>

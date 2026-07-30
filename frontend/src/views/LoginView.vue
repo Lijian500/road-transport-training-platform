@@ -1,11 +1,40 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { RouterLink } from 'vue-router'
+import { reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
 
+import { ApiError } from '@/api/http'
+import { useAuthStore } from '@/stores/auth'
+
+const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
+const formRef = ref<FormInstance>()
 const form = reactive({
   username: '',
   password: '',
 })
+const rules: FormRules = {
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+}
+
+async function submit() {
+  if (!(await formRef.value?.validate().catch(() => false))) {
+    return
+  }
+  try {
+    const session = await authStore.login(form)
+    if (session.mustChangePassword) {
+      await router.replace('/change-password')
+      return
+    }
+    const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : undefined
+    await router.replace(redirect || `/${session.defaultWorkspace}`)
+  } catch (error) {
+    ElMessage.error(error instanceof ApiError ? error.message : '登录失败，请稍后重试')
+  }
+}
 </script>
 
 <template>
@@ -19,13 +48,13 @@ const form = reactive({
     <section class="login-card">
       <header>
         <h2>登录系统</h2>
-        <p>当前为项目骨架，认证接口将在业务实施阶段接入。</p>
+        <p>请输入平台分配的账号和密码。</p>
       </header>
-      <el-form :model="form" label-position="top">
-        <el-form-item label="用户名">
-          <el-input v-model="form.username" autocomplete="username" placeholder="请输入用户名" />
+      <el-form ref="formRef" :model="form" :rules="rules" label-position="top" @keyup.enter="submit">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model.trim="form.username" autocomplete="username" placeholder="请输入用户名" />
         </el-form-item>
-        <el-form-item label="密码">
+        <el-form-item label="密码" prop="password">
           <el-input
             v-model="form.password"
             autocomplete="current-password"
@@ -34,13 +63,8 @@ const form = reactive({
             type="password"
           />
         </el-form-item>
-        <el-button disabled type="primary">登录功能待接入</el-button>
+        <el-button :loading="authStore.loading" type="primary" @click="submit">登录</el-button>
       </el-form>
-      <div class="login-card__preview">
-        <span>界面预览</span>
-        <RouterLink to="/admin">管理端</RouterLink>
-        <RouterLink to="/student">学员端</RouterLink>
-      </div>
     </section>
   </main>
 </template>
@@ -82,7 +106,6 @@ const form = reactive({
   padding: 36px;
   color: #172033;
   background: #fff;
-  border: 1px solid rgb(255 255 255 / 65%);
   border-radius: 18px;
   box-shadow: 0 28px 70px rgb(0 0 0 / 24%);
 }
@@ -100,30 +123,10 @@ const form = reactive({
   margin: 0;
   color: #71809a;
   font-size: 14px;
-  line-height: 1.6;
 }
 
 .login-card .el-button {
   width: 100%;
-}
-
-.login-card__preview {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-top: 26px;
-  padding-top: 20px;
-  border-top: 1px solid #edf0f5;
-  font-size: 13px;
-}
-
-.login-card__preview span {
-  margin-right: auto;
-  color: #8591a6;
-}
-
-.login-card__preview a {
-  color: #155eef;
 }
 
 @media (width <= 820px) {

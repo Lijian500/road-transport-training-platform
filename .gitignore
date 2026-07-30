@@ -36,6 +36,7 @@ storage/
 uploads/
 temp/
 tmp/
+backend/train-face-adapter/models/*.onnx
 
 # 测试与工具缓存
 .testcontainers.properties

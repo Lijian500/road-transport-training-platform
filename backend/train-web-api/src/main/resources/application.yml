@@ -27,13 +27,22 @@ spring:
       password: ${REDIS_PASSWORD:}
 
 dubbo:
-  enabled: ${DUBBO_ENABLED:false}
+  enabled: ${DUBBO_ENABLED:true}
   application:
     name: ${spring.application.name}
   registry:
     address: nacos://${NACOS_SERVER_ADDR:127.0.0.1:8848}
   consumer:
     check: false
+
+app:
+  security:
+    issuer: ${JWT_ISSUER:road-transport-training}
+    private-key-path: ${JWT_PRIVATE_KEY_PATH:}
+    public-key-path: ${JWT_PUBLIC_KEY_PATH:}
+    access-token-minutes: ${JWT_ACCESS_TOKEN_MINUTES:30}
+    refresh-token-days: ${JWT_REFRESH_TOKEN_DAYS:7}
+    secure-cookie: ${JWT_SECURE_COOKIE:false}
 
 management:
   endpoints:
