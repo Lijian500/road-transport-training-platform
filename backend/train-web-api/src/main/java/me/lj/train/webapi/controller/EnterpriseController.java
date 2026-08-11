@@ -4,8 +4,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import me.lj.train.api.admin.AdminModels.ChangeStatusCommand;
 import me.lj.train.api.admin.AdminModels.CreateEnterpriseCommand;
+import me.lj.train.api.admin.AdminModels.EnterpriseAdministratorView;
 import me.lj.train.api.admin.AdminModels.EnterpriseQuery;
 import me.lj.train.api.admin.AdminModels.EnterpriseView;
+import me.lj.train.api.admin.AdminModels.ResetEnterpriseAdministratorPasswordCommand;
 import me.lj.train.api.admin.AdminModels.UpdateEnterpriseCommand;
 import me.lj.train.api.admin.EnterpriseService;
 import me.lj.train.common.core.page.PageResult;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 平台企业管理REST接口。
@@ -77,6 +81,23 @@ public class EnterpriseController {
         return Result.ok();
     }
 
+    @GetMapping("/{id}/administrators")
+    @RequirePermission("admin:enterprise:view")
+    public Result<List<EnterpriseAdministratorView>> listAdministrators(@PathVariable Long id) {
+        return Result.ok(RpcResultSupport.unwrap(enterpriseService.listAdministrators(id)));
+    }
+
+    @PutMapping("/{id}/administrators/{userId}/password")
+    @RequirePermission("admin:enterprise:update")
+    public Result<?> resetAdministratorPassword(
+            @PathVariable Long id,
+            @PathVariable Long userId,
+            @Valid @RequestBody ResetPasswordRequest request) {
+        RpcResultSupport.ensureSuccess(enterpriseService.resetAdministratorPassword(
+                new ResetEnterpriseAdministratorPasswordCommand(id, userId, request.getTemporaryPassword())));
+        return Result.ok();
+    }
+
     public record CreateEnterpriseRequest(
             @NotBlank(message = "企业编码不能为空") String code,
             @NotBlank(message = "企业名称不能为空") String name,
@@ -97,5 +118,19 @@ public class EnterpriseController {
     }
 
     public record StatusRequest(@NotBlank(message = "状态不能为空") String status) {
+    }
+
+    public static final class ResetPasswordRequest {
+
+        @NotBlank(message = "临时密码不能为空")
+        private String temporaryPassword;
+
+        public String getTemporaryPassword() {
+            return temporaryPassword;
+        }
+
+        public void setTemporaryPassword(String temporaryPassword) {
+            this.temporaryPassword = temporaryPassword;
+        }
     }
 }

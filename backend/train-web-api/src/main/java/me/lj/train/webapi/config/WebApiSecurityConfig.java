@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -60,10 +62,10 @@ public class WebApiSecurityConfig {
                         .csrfTokenRequestHandler(requestHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
-                .httpBasic(basic -> basic.disable())
-                .formLogin(form -> form.disable())
-                .logout(logout -> logout.disable())
-                .requestCache(cache -> cache.disable())
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
+                .requestCache(RequestCacheConfigurer::disable)
                 .exceptionHandling(exception -> exception.accessDeniedHandler((request, response, denied) -> {
                     response.setStatus(AppErrorCode.CSRF_INVALID.getHttpStatus());
                     response.setCharacterEncoding(StandardCharsets.UTF_8.name());

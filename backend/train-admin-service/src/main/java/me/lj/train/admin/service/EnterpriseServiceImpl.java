@@ -23,8 +23,10 @@ import me.lj.train.admin.support.AdminGuard;
 import me.lj.train.admin.support.AuthorizationCacheService;
 import me.lj.train.api.admin.AdminModels.ChangeStatusCommand;
 import me.lj.train.api.admin.AdminModels.CreateEnterpriseCommand;
+import me.lj.train.api.admin.AdminModels.EnterpriseAdministratorView;
 import me.lj.train.api.admin.AdminModels.EnterpriseQuery;
 import me.lj.train.api.admin.AdminModels.EnterpriseView;
+import me.lj.train.api.admin.AdminModels.ResetEnterpriseAdministratorPasswordCommand;
 import me.lj.train.api.admin.AdminModels.UpdateEnterpriseCommand;
 import me.lj.train.api.admin.EnterpriseService;
 import me.lj.train.common.core.exception.BusinessException;
@@ -222,6 +224,38 @@ public class EnterpriseServiceImpl extends AdminServiceSupport implements Enterp
         });
     }
 
+    @Override
+    public Result<List<EnterpriseAdministratorView>> listAdministrators(Long enterpriseId) {
+        return execute(() -> {
+            AdminGuard.requirePlatformPermission(AdminPermissions.ENTERPRISE_VIEW);
+            OrgEntity enterprise = requireEnterprise(enterpriseId);
+            return userMapper.listEnterpriseAdministrators(enterprise.getId()).stream()
+                    .map(this::toAdministratorView)
+                    .collect(Collectors.toList());
+        });
+    }
+
+    @Override
+    public Result<?> resetAdministratorPassword(ResetEnterpriseAdministratorPasswordCommand command) {
+        return executeVoidTransactional(() -> {
+            LoginUser operator = AdminGuard.requirePlatformPermission(AdminPermissions.ENTERPRISE_UPDATE);
+            OrgEntity enterprise = requireEnterprise(command.getEnterpriseId());
+            UserEntity administrator = requireEnterpriseAdministrator(enterprise.getId(), command.getUserId());
+            if (!PasswordPolicy.isValid(command.getTemporaryPassword())) {
+                throw new BusinessException(AppErrorCode.PASSWORD_POLICY_INVALID);
+            }
+            UpdateWrapper<UserEntity> update = UpdateWrapper.of(UserEntity.class)
+                    .set(USER.PASSWORD_HASH, passwordEncoder.encode(command.getTemporaryPassword()))
+                    .set(USER.MUST_CHANGE_PASSWORD, true)
+                    .set(USER.LOGIN_VERSION, USER.LOGIN_VERSION.add(1))
+                    .set(USER.UPDATED_BY, operator.getUserId());
+            userMapper.updateByCondition(update.toEntity(), USER.ID.eq(administrator.getId()));
+            UserEntity changedAdministrator = userMapper.selectOneById(administrator.getId());
+            cacheService.syncLoginVersion(changedAdministrator);
+            cacheService.invalidateAuthorization(administrator.getId());
+        });
+    }
+
     private RoleEntity createBuiltInRole(
             Long enterpriseId,
             String code,
@@ -271,6 +305,23 @@ public class EnterpriseServiceImpl extends AdminServiceSupport implements Enterp
         return enterprise;
     }
 
+    private UserEntity requireEnterpriseAdministrator(Long enterpriseId, Long userId) {
+        UserEntity administrator = userId == null ? null : userMapper.selectOneById(userId);
+        if (administrator == null) {
+            throw new BusinessException(AppErrorCode.USER_NOT_FOUND);
+        }
+        if (!enterpriseId.equals(administrator.getEnterpriseId())) {
+            throw new BusinessException(AppErrorCode.DATA_SCOPE_VIOLATION);
+        }
+        boolean enterpriseAdministrator = roleMapper.listByUserId(administrator.getId()).stream()
+                .anyMatch(role -> enterpriseId.equals(role.getEnterpriseId())
+                        && AdminConstants.ROLE_ENTERPRISE_ADMIN.equals(role.getRoleCode()));
+        if (!enterpriseAdministrator) {
+            throw new BusinessException(AppErrorCode.FORBIDDEN, "只能重置企业管理员密码");
+        }
+        return administrator;
+    }
+
     private EnterpriseView toView(OrgEntity entity) {
         return new EnterpriseView(
                 entity.getId(),
@@ -280,6 +331,17 @@ public class EnterpriseServiceImpl extends AdminServiceSupport implements Enterp
                 entity.getContactPhone(),
                 entity.getAddress(),
                 entity.getStatus(),
+                entity.getCreatedAt());
+    }
+
+    private EnterpriseAdministratorView toAdministratorView(UserEntity entity) {
+        return new EnterpriseAdministratorView(
+                entity.getId(),
+                entity.getUsername(),
+                entity.getDisplayName(),
+                entity.getPhone(),
+                entity.getStatus(),
+                entity.isMustChangePassword(),
                 entity.getCreatedAt());
     }
 

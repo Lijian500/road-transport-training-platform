@@ -30,7 +30,7 @@
 
 | 资源 | 接口 |
 |---|---|
-| 企业 | `GET/POST /api/admin/enterprises`、`PUT /{id}`、`PATCH /{id}/status` |
+| 企业 | `GET/POST /api/admin/enterprises`、`PUT /{id}`、`PATCH /{id}/status`、`GET /{id}/administrators`、`PUT /{id}/administrators/{userId}/password` |
 | 部门 | `GET /api/admin/orgs/tree`、`POST /api/admin/orgs`、`PUT/DELETE /api/admin/orgs/{id}` |
 | 用户 | `GET/POST /api/admin/users`、`PUT /{id}`、`PATCH /{id}/status`、`PUT /{id}/password`、`PUT /{id}/roles` |
 | 角色 | `GET/POST /api/admin/roles`、`GET /options`、`PUT/DELETE /{id}`、`PATCH /{id}/status`、`PUT /{id}/permissions` |

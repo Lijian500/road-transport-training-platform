@@ -14,4 +14,16 @@
           AND u.status = 'ENABLED'
           AND r.role_code = 'ENTERPRISE_ADMIN'
     </select>
+
+    <select id="listEnterpriseAdministrators"
+            resultType="me.lj.train.admin.model.entity.UserEntity">
+        SELECT DISTINCT u.*
+        FROM sys_user u
+        JOIN sys_user_role ur ON ur.user_id = u.id
+        JOIN sys_role r ON r.id = ur.role_id
+        WHERE u.enterprise_id = #{enterpriseId}
+          AND r.enterprise_id = #{enterpriseId}
+          AND r.role_code = 'ENTERPRISE_ADMIN'
+        ORDER BY u.created_at
+    </select>
 </mapper>

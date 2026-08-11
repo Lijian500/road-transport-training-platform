@@ -25,6 +25,16 @@ export interface EnterprisePayload {
   temporaryPassword: string
 }
 
+export interface EnterpriseAdministrator {
+  id: string
+  username: string
+  displayName: string
+  phone?: string
+  status: Status
+  mustChangePassword: boolean
+  createdAt: string
+}
+
 export interface OrgNode {
   id: string
   parentId: string | null
@@ -102,12 +112,34 @@ export function createEnterprise(data: EnterprisePayload) {
   return http.post<Enterprise>('/admin/enterprises', data)
 }
 
-export function updateEnterprise(id: string, data: Omit<EnterprisePayload, 'code' | 'adminUsername' | 'adminDisplayName' | 'adminPhone' | 'temporaryPassword'>) {
+export function updateEnterprise(
+  id: string,
+  data: Omit<
+    EnterprisePayload,
+    'code' | 'adminUsername' | 'adminDisplayName' | 'adminPhone' | 'temporaryPassword'
+  >,
+) {
   return http.put<Enterprise>(`/admin/enterprises/${id}`, data)
 }
 
 export function changeEnterpriseStatus(id: string, status: Status) {
   return http.patch<void>(`/admin/enterprises/${id}/status`, { status })
+}
+
+/** 查询指定企业的管理员账号。 */
+export function getEnterpriseAdministrators(id: string) {
+  return http.get<EnterpriseAdministrator[]>(`/admin/enterprises/${id}/administrators`)
+}
+
+/** 重置指定企业管理员的临时密码。 */
+export function resetEnterpriseAdministratorPassword(
+  enterpriseId: string,
+  userId: string,
+  temporaryPassword: string,
+) {
+  return http.put<void>(`/admin/enterprises/${enterpriseId}/administrators/${userId}/password`, {
+    temporaryPassword,
+  })
 }
 
 export function getOrgTree() {
@@ -140,10 +172,7 @@ export function createUser(data: UserPayload) {
   return http.post<User>('/admin/users', data)
 }
 
-export function updateUser(
-  id: string,
-  data: Pick<UserPayload, 'displayName' | 'phone' | 'orgId'>,
-) {
+export function updateUser(id: string, data: Pick<UserPayload, 'displayName' | 'phone' | 'orgId'>) {
   return http.put<User>(`/admin/users/${id}`, data)
 }
 

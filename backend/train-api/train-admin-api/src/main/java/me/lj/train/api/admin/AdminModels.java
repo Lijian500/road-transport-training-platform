@@ -78,6 +78,94 @@ public final class AdminModels {
             LocalDateTime createdAt) implements Serializable {
     }
 
+    public static final class EnterpriseAdministratorView implements Serializable {
+
+        private static final long serialVersionUID = 1L;
+
+        private final Long id;
+        private final String username;
+        private final String displayName;
+        private final String phone;
+        private final String status;
+        private final boolean mustChangePassword;
+        private final LocalDateTime createdAt;
+
+        public EnterpriseAdministratorView(
+                Long id,
+                String username,
+                String displayName,
+                String phone,
+                String status,
+                boolean mustChangePassword,
+                LocalDateTime createdAt) {
+            this.id = id;
+            this.username = username;
+            this.displayName = displayName;
+            this.phone = phone;
+            this.status = status;
+            this.mustChangePassword = mustChangePassword;
+            this.createdAt = createdAt;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public boolean isMustChangePassword() {
+            return mustChangePassword;
+        }
+
+        public LocalDateTime getCreatedAt() {
+            return createdAt;
+        }
+    }
+
+    public static final class ResetEnterpriseAdministratorPasswordCommand implements Serializable {
+
+        private static final long serialVersionUID = 1L;
+
+        private final Long enterpriseId;
+        private final Long userId;
+        private final String temporaryPassword;
+
+        public ResetEnterpriseAdministratorPasswordCommand(
+                Long enterpriseId,
+                Long userId,
+                String temporaryPassword) {
+            this.enterpriseId = enterpriseId;
+            this.userId = userId;
+            this.temporaryPassword = temporaryPassword;
+        }
+
+        public Long getEnterpriseId() {
+            return enterpriseId;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public String getTemporaryPassword() {
+            return temporaryPassword;
+        }
+    }
+
     public record ChangeStatusCommand(Long id, String status) implements Serializable {
     }
 

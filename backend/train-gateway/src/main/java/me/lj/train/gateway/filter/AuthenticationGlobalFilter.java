@@ -71,6 +71,7 @@ public class AuthenticationGlobalFilter implements GlobalFilter, Ordered {
         }
         String key = SecurityConstants.REDIS_LOGIN_VERSION_PREFIX + claims.getUserId();
         return redisTemplate.opsForValue().get(key)
+                .defaultIfEmpty("")
                 .flatMap(version -> {
                     if (!String.valueOf(claims.getLoginVersion()).equals(version)) {
                         return writeError(exchange, AppErrorCode.TOKEN_EXPIRED);
@@ -88,8 +89,7 @@ public class AuthenticationGlobalFilter implements GlobalFilter, Ordered {
                                     String.valueOf(claims.getLoginVersion()))
                             .build();
                     return chain.filter(sanitizedExchange.mutate().request(request).build());
-                })
-                .switchIfEmpty(Mono.defer(() -> writeError(exchange, AppErrorCode.TOKEN_EXPIRED)));
+                });
     }
 
     private ServerHttpRequest stripTrustedHeaders(ServerHttpRequest request, String traceId) {
