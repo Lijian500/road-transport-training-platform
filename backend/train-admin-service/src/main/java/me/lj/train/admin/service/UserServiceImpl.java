@@ -122,7 +122,7 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
                 throw new BusinessException(AppErrorCode.PASSWORD_POLICY_INVALID);
             }
             OrgEntity org = requireOrg(command.orgId(), enterpriseId);
-            List<Long> roleIds = normalizeRoleIds(command.roleIds(), enterpriseId);
+            List<Long> roleIds = normalizeRoleIds(command.roleIds(), enterpriseId, true);
 
             UserEntity user = new UserEntity();
             user.setId(IdGenerator.nextId());
@@ -228,7 +228,7 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
             Long enterpriseId = AdminGuard.requireEnterprisePermission(AdminPermissions.USER_ASSIGN_ROLE);
             UserEntity user = requireUser(command.userId(), enterpriseId);
             checkCanManage(user);
-            List<Long> roleIds = normalizeRoleIds(command.roleIds(), enterpriseId);
+            List<Long> roleIds = normalizeRoleIds(command.roleIds(), enterpriseId, false);
             boolean hadAdminRole = hasRole(user.getId(), AdminConstants.ROLE_ENTERPRISE_ADMIN);
             boolean keepsAdminRole = selectRoles(roleIds).stream()
                     .anyMatch(role -> AdminConstants.ROLE_ENTERPRISE_ADMIN.equals(role.getRoleCode()));
@@ -246,18 +246,29 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
         });
     }
 
-    private List<Long> normalizeRoleIds(List<Long> roleIds, Long enterpriseId) {
+    /**
+     * 校验角色归属；新增用户未选角色时仅企业可回退到内置学员角色。
+     */
+    private List<Long> normalizeRoleIds(
+            List<Long> roleIds,
+            Long enterpriseId,
+            boolean requireRoleForCreate) {
         List<Long> normalized = roleIds == null
                 ? new ArrayList<Long>()
                 : roleIds.stream().filter(id -> id != null).distinct().collect(Collectors.toList());
         if (normalized.isEmpty()) {
             RoleEntity studentRole = findRoleByCode(enterpriseId, AdminConstants.ROLE_STUDENT);
-            return studentRole == null
-                    ? Collections.emptyList()
-                    : Collections.singletonList(studentRole.getId());
+            if (studentRole != null) {
+                return Collections.singletonList(studentRole.getId());
+            }
+            if (requireRoleForCreate) {
+                throw new BusinessException(AppErrorCode.PARAM_INVALID, "行管组织新增用户时必须选择角色");
+            }
+            return Collections.emptyList();
         }
         List<RoleEntity> roles = roleMapper.selectListByQuery(QueryWrapper.create()
                 .where(ROLE.ENTERPRISE_ID.eq(enterpriseId))
+                .and(ROLE.DELETED_AT.isNull())
                 .and(ROLE.STATUS.eq(AdminConstants.STATUS_ENABLED))
                 .and(ROLE.ID.in(normalized)));
         if (roles.size() != normalized.size()) {
@@ -300,7 +311,9 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
     }
 
     private OrgEntity requireOrg(Long id, Long enterpriseId) {
-        OrgEntity org = id == null ? null : orgMapper.selectOneById(id);
+        OrgEntity org = id == null ? null : orgMapper.selectOneByQuery(QueryWrapper.create()
+                .where(ORG.ID.eq(id))
+                .and(ORG.DELETED_AT.isNull()));
         if (org == null) {
             throw new BusinessException(AppErrorCode.ORG_NOT_FOUND);
         }
@@ -309,12 +322,13 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
     }
 
     /**
-     * 串行化同一企业的管理员移除操作，避免并发操作绕过最后管理员保护。
+     * 串行化同一根组织的管理员移除操作，避免并发操作绕过最后管理员保护。
      */
     private void lockEnterprise(Long enterpriseId) {
         OrgEntity enterprise = orgMapper.selectOneByQuery(QueryWrapper.create()
                 .where(ORG.ID.eq(enterpriseId))
                 .and(ORG.ORG_TYPE.eq(AdminConstants.ORG_ENTERPRISE))
+                .and(ORG.DELETED_AT.isNull())
                 .forUpdate());
         if (enterprise == null) {
             throw new BusinessException(AppErrorCode.ENTERPRISE_NOT_FOUND);
@@ -328,7 +342,8 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
     private RoleEntity findRoleByCode(Long enterpriseId, String code) {
         return roleMapper.selectOneByQuery(QueryWrapper.create()
                 .where(ROLE.ENTERPRISE_ID.eq(enterpriseId))
-                .and(ROLE.ROLE_CODE.eq(code)));
+                .and(ROLE.ROLE_CODE.eq(code))
+                .and(ROLE.DELETED_AT.isNull()));
     }
 
     private List<RoleEntity> selectRoles(List<Long> roleIds) {
@@ -337,6 +352,7 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
         }
         return roleMapper.selectListByQuery(QueryWrapper.create()
                 .where(ROLE.ID.in(roleIds))
+                .and(ROLE.DELETED_AT.isNull())
                 .orderBy(ROLE.BUILT_IN.desc(), ROLE.ROLE_NAME.asc()));
     }
 
@@ -365,7 +381,9 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
                 .collect(Collectors.toSet());
         Map<Long, OrgEntity> orgMap = orgIds.isEmpty()
                 ? Collections.emptyMap()
-                : orgMapper.selectListByQuery(QueryWrapper.create().where(ORG.ID.in(orgIds)))
+                : orgMapper.selectListByQuery(QueryWrapper.create()
+                                .where(ORG.ID.in(orgIds))
+                                .and(ORG.DELETED_AT.isNull()))
                         .stream()
                         .collect(Collectors.toMap(OrgEntity::getId, org -> org));
 

@@ -5,6 +5,7 @@ import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.update.UpdateWrapper;
 import me.lj.train.admin.model.entity.OrgEntity;
 import me.lj.train.admin.model.entity.OrgUserEntity;
+import me.lj.train.admin.model.entity.PermissionEntity;
 import me.lj.train.admin.model.entity.RoleEntity;
 import me.lj.train.admin.model.entity.RolePermissionEntity;
 import me.lj.train.admin.model.entity.UserEntity;
@@ -26,10 +27,12 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static me.lj.train.admin.model.table.OrgTableDef.ORG;
 import static me.lj.train.admin.model.table.OrgUserTableDef.ORG_USER;
+import static me.lj.train.admin.model.table.PermissionTableDef.PERMISSION;
 import static me.lj.train.admin.model.table.RolePermissionTableDef.ROLE_PERMISSION;
 import static me.lj.train.admin.model.table.UserRoleTableDef.USER_ROLE;
 import static me.lj.train.admin.model.table.UserTableDef.USER;
@@ -81,6 +84,8 @@ class AdminMapperIntegrationTest {
     @Autowired
     private RolePermissionMapper rolePermissionMapper;
     @Autowired
+    private PermissionMapper permissionMapper;
+    @Autowired
     private PlatformTransactionManager transactionManager;
 
     @DynamicPropertySource
@@ -128,6 +133,10 @@ class AdminMapperIntegrationTest {
                 211_000L, enterpriseOne, "ENTERPRISE_ADMIN", "企业一管理员", true);
         RoleEntity customRole = role(
                 211_001L, enterpriseOne, "USER_OPERATOR", "用户操作员", false);
+        RoleEntity deletedRole = role(
+                211_002L, enterpriseOne, "DELETED_ROLE", "已删除角色", false);
+        deletedRole.setDeletedBy(1L);
+        deletedRole.setDeletedAt(LocalDateTime.now());
         RoleEntity enterpriseAdminTwo = role(
                 221_000L, enterpriseTwo, "ENTERPRISE_ADMIN", "企业二管理员", true);
         UserEntity enabledAdminOne = user(212_000L, enterpriseOne, "admin-one", "ENABLED", 1);
@@ -136,16 +145,19 @@ class AdminMapperIntegrationTest {
 
         roleMapper.insertSelective(enterpriseAdminOne);
         roleMapper.insertSelective(customRole);
+        roleMapper.insertSelective(deletedRole);
         roleMapper.insertSelective(enterpriseAdminTwo);
         userMapper.insertSelective(enabledAdminOne);
         userMapper.insertSelective(disabledAdminOne);
         userMapper.insertSelective(enabledAdminTwo);
         insertUserRole(enabledAdminOne.getId(), enterpriseAdminOne.getId(), enterpriseOne);
         insertUserRole(enabledAdminOne.getId(), customRole.getId(), enterpriseOne);
+        insertUserRole(enabledAdminOne.getId(), deletedRole.getId(), enterpriseOne);
         insertUserRole(disabledAdminOne.getId(), enterpriseAdminOne.getId(), enterpriseOne);
         insertUserRole(enabledAdminTwo.getId(), enterpriseAdminTwo.getId(), enterpriseTwo);
         insertRolePermission(enterpriseAdminOne.getId(), 400L);
         insertRolePermission(customRole.getId(), 401L);
+        insertRolePermission(deletedRole.getId(), 402L);
 
         assertThat(roleMapper.listByUserId(enabledAdminOne.getId()))
                 .extracting(RoleEntity::getRoleCode)
@@ -154,8 +166,9 @@ class AdminMapperIntegrationTest {
                 .containsExactly("admin:user:view", "admin:user:create");
         assertThat(roleMapper.listPermissionCodesByRoleId(customRole.getId()))
                 .containsExactly("admin:user:create");
+        assertThat(roleMapper.listPermissionCodesByRoleId(deletedRole.getId())).isEmpty();
         assertThat(roleMapper.listPermissionCodesByRoleIds(
-                List.of(enterpriseAdminOne.getId(), customRole.getId())))
+                List.of(enterpriseAdminOne.getId(), customRole.getId(), deletedRole.getId())))
                 .containsExactlyInAnyOrder("admin:user:view", "admin:user:create");
         assertThat(userMapper.countEnabledEnterpriseAdmins(enterpriseOne)).isEqualTo(1);
         assertThat(userMapper.countEnabledEnterpriseAdmins(enterpriseTwo)).isEqualTo(1);
@@ -218,6 +231,25 @@ class AdminMapperIntegrationTest {
 
         assertThat(updatedRows).isEqualTo(1);
         assertThat(userMapper.selectOneById(user.getId()).getLoginVersion()).isEqualTo(8);
+    }
+
+    @Test
+    void shouldMigrateCompleteCoursePermissionCatalog() {
+        List<PermissionEntity> permissions = permissionMapper.selectListByQuery(QueryWrapper.create()
+                .where(PERMISSION.PERMISSION_CODE.likeRight("admin:course"))
+                .orderBy(PERMISSION.SORT_ORDER.asc()));
+
+        assertThat(permissions)
+                .extracting(PermissionEntity::getPermissionCode)
+                .containsExactly(
+                        "admin:course:view",
+                        "admin:course:create",
+                        "admin:course:update",
+                        "admin:course:status",
+                        "admin:course:delete",
+                        "admin:courseware:manage");
+        assertThat(permissions).allSatisfy(permission ->
+                assertThat(permission.getPermissionScope()).isEqualTo("ENTERPRISE"));
     }
 
     @Test

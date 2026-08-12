@@ -2,8 +2,10 @@ package me.lj.train.admin.model.entity;
 
 import com.mybatisflex.annotation.Table;
 
+import java.time.LocalDateTime;
+
 /**
- * 企业及部门实体。
+ * 根组织及部门实体。
  */
 @Table("train_org")
 public class OrgEntity extends AuditEntity {
@@ -11,6 +13,8 @@ public class OrgEntity extends AuditEntity {
     private Long enterpriseId;
     private Long parentId;
     private String orgType;
+    private String organizationNature;
+    private Long areaId;
     private String orgCode;
     private String orgName;
     private String contactName;
@@ -18,6 +22,8 @@ public class OrgEntity extends AuditEntity {
     private String address;
     private String status;
     private int sortOrder;
+    private Long deletedBy;
+    private LocalDateTime deletedAt;
 
     public Long getEnterpriseId() {
         return enterpriseId;
@@ -41,6 +47,22 @@ public class OrgEntity extends AuditEntity {
 
     public void setOrgType(String orgType) {
         this.orgType = orgType;
+    }
+
+    public String getOrganizationNature() {
+        return organizationNature;
+    }
+
+    public void setOrganizationNature(String organizationNature) {
+        this.organizationNature = organizationNature;
+    }
+
+    public Long getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Long areaId) {
+        this.areaId = areaId;
     }
 
     public String getOrgCode() {
@@ -97,5 +119,21 @@ public class OrgEntity extends AuditEntity {
 
     public void setSortOrder(int sortOrder) {
         this.sortOrder = sortOrder;
+    }
+
+    public Long getDeletedBy() {
+        return deletedBy;
+    }
+
+    public void setDeletedBy(Long deletedBy) {
+        this.deletedBy = deletedBy;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

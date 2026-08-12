@@ -9,7 +9,7 @@ const router = useRouter()
     <section>
       <strong>403</strong>
       <h1>无权访问该页面</h1>
-      <p>当前账号没有所需权限，请联系企业管理员。</p>
+      <p>当前账号没有所需权限，请联系组织管理员。</p>
       <el-button type="primary" @click="router.back()">返回上一页</el-button>
     </section>
   </main>

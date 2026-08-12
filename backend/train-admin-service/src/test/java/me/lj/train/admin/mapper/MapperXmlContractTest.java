@@ -31,6 +31,8 @@ class MapperXmlContractTest {
                 statement(RoleMapper.class, "listPermissionCodesByRoleIds"))).isTrue();
         assertThat(configuration.hasStatement(
                 statement(UserMapper.class, "countEnabledEnterpriseAdmins"))).isTrue();
+        assertThat(configuration.hasStatement(
+                statement(UserMapper.class, "listEnterpriseAdministrators"))).isTrue();
     }
 
     private void parse(Configuration configuration, String resource) throws IOException {

@@ -13,6 +13,7 @@
         WHERE u.enterprise_id = #{enterpriseId}
           AND u.status = 'ENABLED'
           AND r.role_code = 'ENTERPRISE_ADMIN'
+          AND r.deleted_at IS NULL
     </select>
 
     <select id="listEnterpriseAdministrators"
@@ -24,6 +25,7 @@
         WHERE u.enterprise_id = #{enterpriseId}
           AND r.enterprise_id = #{enterpriseId}
           AND r.role_code = 'ENTERPRISE_ADMIN'
+          AND r.deleted_at IS NULL
         ORDER BY u.created_at
     </select>
 </mapper>

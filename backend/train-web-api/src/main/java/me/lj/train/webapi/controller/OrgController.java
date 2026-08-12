@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 企业部门树REST接口。
+ * 根组织部门树REST接口。
  */
 @RestController
 @RequestMapping("/api/admin/orgs")

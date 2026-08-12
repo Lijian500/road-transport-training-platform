@@ -109,7 +109,7 @@ onMounted(load)
     <header class="page-title page-title--actions">
       <div>
         <h1>部门管理</h1>
-        <p>维护当前企业的组织层级，企业根节点不可删除。</p>
+        <p>维护当前组织的部门层级，根组织节点不可删除。</p>
       </div>
       <PermissionButton permission="admin:org:create" type="primary" @click="openCreate()">
         新建部门
@@ -128,17 +128,27 @@ onMounted(load)
           <div class="tree-node">
             <div>
               <strong>{{ data.name }}</strong>
-              <span>{{ data.code }} · {{ data.type === 'ENTERPRISE' ? '企业' : '部门' }}</span>
+              <span>{{ data.code }} · {{ data.type === 'ENTERPRISE' ? '根组织' : '部门' }}</span>
             </div>
             <div class="tree-node__actions">
               <PermissionButton permission="admin:org:create" link @click.stop="openCreate(data)">
                 新增下级
               </PermissionButton>
               <template v-if="data.type === 'DEPARTMENT'">
-                <PermissionButton permission="admin:org:update" link type="primary" @click.stop="openEdit(data)">
+                <PermissionButton
+                  permission="admin:org:update"
+                  link
+                  type="primary"
+                  @click.stop="openEdit(data)"
+                >
                   编辑
                 </PermissionButton>
-                <PermissionButton permission="admin:org:delete" link type="danger" @click.stop="remove(data)">
+                <PermissionButton
+                  permission="admin:org:delete"
+                  link
+                  type="danger"
+                  @click.stop="remove(data)"
+                >
                   删除
                 </PermissionButton>
               </template>

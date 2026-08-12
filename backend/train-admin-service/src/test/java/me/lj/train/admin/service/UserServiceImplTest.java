@@ -13,6 +13,7 @@ import me.lj.train.admin.model.entity.RoleEntity;
 import me.lj.train.admin.model.entity.UserEntity;
 import me.lj.train.admin.support.AuthorizationCacheService;
 import me.lj.train.api.admin.AdminModels.AssignRolesCommand;
+import me.lj.train.api.admin.AdminModels.CreateUserCommand;
 import me.lj.train.common.core.result.AppErrorCode;
 import me.lj.train.common.core.result.Result;
 import me.lj.train.common.security.context.UserContext;
@@ -160,6 +161,27 @@ class UserServiceImplTest {
         verify(userMapper).countEnabledEnterpriseAdmins(20L);
         verify(transactionManager).rollback(transactionStatus);
         verify(userRoleMapper, never()).deleteByQuery(any(QueryWrapper.class));
+    }
+
+    @Test
+    void shouldRequireExplicitRoleWhenOrganizationHasNoStudentRole() {
+        LoginUser operator = UserContext.require();
+        operator.setPermissions(Collections.singletonList(AdminPermissions.USER_CREATE));
+        OrgEntity root = new OrgEntity();
+        root.setId(20L);
+        root.setEnterpriseId(20L);
+        root.setOrgType(AdminConstants.ORG_ENTERPRISE);
+        when(userMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(null);
+        when(orgMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(root);
+        when(roleMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(null);
+
+        Result<?> result = service.create(new CreateUserCommand(
+                "operator", "操作员", null, 20L, "Password1", Collections.emptyList()));
+
+        assertThat(result.isSuccess()).isFalse();
+        assertThat(result.getCode()).isEqualTo(AppErrorCode.PARAM_INVALID.getCode());
+        verify(userMapper, never()).insertSelective(any(UserEntity.class));
+        verify(transactionManager).rollback(transactionStatus);
     }
 
     private UserEntity enabledTargetUser() {

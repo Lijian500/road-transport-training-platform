@@ -2,6 +2,8 @@ package me.lj.train.admin.model.entity;
 
 import com.mybatisflex.annotation.Table;
 
+import java.time.LocalDateTime;
+
 /**
  * 角色实体。
  */
@@ -14,6 +16,8 @@ public class RoleEntity extends AuditEntity {
     private String description;
     private String status;
     private boolean builtIn;
+    private Long deletedBy;
+    private LocalDateTime deletedAt;
 
     public Long getEnterpriseId() {
         return enterpriseId;
@@ -61,5 +65,21 @@ public class RoleEntity extends AuditEntity {
 
     public void setBuiltIn(boolean builtIn) {
         this.builtIn = builtIn;
+    }
+
+    public Long getDeletedBy() {
+        return deletedBy;
+    }
+
+    public void setDeletedBy(Long deletedBy) {
+        this.deletedBy = deletedBy;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

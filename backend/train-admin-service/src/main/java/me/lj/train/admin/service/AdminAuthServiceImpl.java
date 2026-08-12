@@ -161,7 +161,8 @@ public class AdminAuthServiceImpl extends AdminServiceSupport implements AdminAu
 
         RoleEntity role = roleMapper.selectOneByQuery(QueryWrapper.create()
                 .where(ROLE.ENTERPRISE_ID.isNull())
-                .and(ROLE.ROLE_CODE.eq(AdminConstants.ROLE_SUPER_ADMIN)));
+                .and(ROLE.ROLE_CODE.eq(AdminConstants.ROLE_SUPER_ADMIN))
+                .and(ROLE.DELETED_AT.isNull()));
         if (role == null) {
             role = new RoleEntity();
             role.setId(IdGenerator.nextId());
@@ -208,7 +209,8 @@ public class AdminAuthServiceImpl extends AdminServiceSupport implements AdminAu
     private OrgEntity findEnterprise(Long enterpriseId) {
         return enterpriseId == null ? null : orgMapper.selectOneByQuery(QueryWrapper.create()
                 .where(ORG.ID.eq(enterpriseId))
-                .and(ORG.ORG_TYPE.eq(AdminConstants.ORG_ENTERPRISE)));
+                .and(ORG.ORG_TYPE.eq(AdminConstants.ORG_ENTERPRISE))
+                .and(ORG.DELETED_AT.isNull()));
     }
 
     private void checkAvailable(UserEntity user) {

@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 企业用户管理REST接口。
+ * 组织用户管理REST接口。
  */
 @RestController
 @RequestMapping("/api/admin/users")

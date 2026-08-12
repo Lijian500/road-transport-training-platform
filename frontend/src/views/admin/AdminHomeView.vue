@@ -16,15 +16,17 @@ const authStore = useAuthStore()
     <div class="overview-grid">
       <article>
         <span>当前身份</span>
-        <strong>{{ authStore.session?.platformAdmin ? '平台超级管理员' : '企业用户' }}</strong>
+        <strong>{{ authStore.session?.platformAdmin ? '平台超级管理员' : '组织用户' }}</strong>
       </article>
       <article>
-        <span>所属企业</span>
+        <span>所属组织</span>
         <strong>{{ authStore.session?.enterpriseName || '平台管理中心' }}</strong>
       </article>
       <article>
         <span>已授予权限</span>
-        <strong>{{ authStore.permissions.includes('*') ? '全部' : authStore.permissions.length }}</strong>
+        <strong>{{
+          authStore.permissions.includes('*') ? '全部' : authStore.permissions.length
+        }}</strong>
       </article>
     </div>
   </section>

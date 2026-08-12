@@ -20,21 +20,32 @@ public enum AppErrorCode implements ErrorCode {
     PASSWORD_CHANGE_REQUIRED("A0007", "请先修改初始密码", 403),
     CSRF_INVALID("A0008", "请求安全校验失败", 403),
 
-    ENTERPRISE_NOT_FOUND("M1001", "企业不存在", 404),
+    ENTERPRISE_NOT_FOUND("M1001", "组织不存在", 404),
     ORG_NOT_FOUND("M1002", "组织不存在", 404),
     USER_NOT_FOUND("M1003", "用户不存在", 404),
     ROLE_NOT_FOUND("M1004", "角色不存在", 404),
     USERNAME_EXISTS("M1005", "用户名已存在", 409),
-    ENTERPRISE_CODE_EXISTS("M1006", "企业编码已存在", 409),
+    ENTERPRISE_CODE_EXISTS("M1006", "组织编码已存在", 409),
     ROLE_CODE_EXISTS("M1007", "角色编码已存在", 409),
-    DATA_SCOPE_VIOLATION("M1008", "不能访问其他企业的数据", 403),
+    DATA_SCOPE_VIOLATION("M1008", "不能访问其他组织的数据", 403),
     DATA_IN_USE("M1009", "数据正在使用，不能删除", 409),
     BUILTIN_DATA_READONLY("M1010", "内置数据不能修改或删除", 409),
-    LAST_ADMIN_PROTECTED("M1011", "必须至少保留一个启用的企业管理员", 409),
+    LAST_ADMIN_PROTECTED("M1011", "必须至少保留一个启用的组织管理员", 409),
     PASSWORD_INCORRECT("M1012", "原密码不正确", 400),
     PASSWORD_POLICY_INVALID("M1013", "密码需为8至64位，并同时包含字母和数字", 400),
     ORG_NAME_EXISTS("M1014", "同级组织名称已存在", 409),
-    ORG_CODE_EXISTS("M1015", "组织编码已存在", 409);
+    ORG_CODE_EXISTS("M1015", "组织编码已存在", 409),
+
+    COURSE_NOT_FOUND("T1001", "课程不存在", 404),
+    COURSEWARE_NOT_FOUND("T1002", "课件不存在", 404),
+    COURSE_STATE_INVALID("T1003", "当前课程状态不允许该操作", 409),
+    COURSE_ENABLE_INVALID("T1004", "课程不满足启用条件", 409),
+    UPLOAD_DISABLED("T1101", "对象存储未配置，暂不可上传", 503),
+    UPLOAD_SESSION_NOT_FOUND("T1102", "上传会话不存在", 404),
+    UPLOAD_SESSION_INVALID("T1103", "上传会话状态无效或已过期", 409),
+    STORAGE_OPERATION_FAILED("T1104", "对象存储操作失败", 502),
+    STORAGE_OBJECT_INVALID("T1105", "上传文件校验失败", 400),
+    UPLOAD_FILE_INVALID("T1106", "上传文件信息不符合要求", 400);
 
     private final String code;
     private final String message;

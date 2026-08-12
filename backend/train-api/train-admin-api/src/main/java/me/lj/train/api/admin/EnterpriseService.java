@@ -13,7 +13,7 @@ import me.lj.train.common.core.result.Result;
 import java.util.List;
 
 /**
- * 平台企业管理RPC接口。
+ * 平台企业及行管组织管理RPC接口。
  */
 public interface EnterpriseService {
 

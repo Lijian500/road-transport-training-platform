@@ -2,6 +2,7 @@ package me.lj.train.webapi.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import me.lj.train.api.admin.AdminModels.ChangeStatusCommand;
 import me.lj.train.api.admin.AdminModels.CreateEnterpriseCommand;
 import me.lj.train.api.admin.AdminModels.EnterpriseAdministratorView;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 平台企业管理REST接口。
+ * 平台组织管理REST接口，沿用企业资源路径保持兼容。
  */
 @RestController
 @RequestMapping("/api/admin/enterprises")
@@ -43,9 +44,10 @@ public class EnterpriseController {
             @RequestParam(defaultValue = "1") int pageNumber,
             @RequestParam(defaultValue = "10") int pageSize,
             @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) String status) {
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String organizationNature) {
         return Result.ok(RpcResultSupport.unwrap(enterpriseService.page(
-                new EnterpriseQuery(pageNumber, pageSize, keyword, status))));
+                new EnterpriseQuery(pageNumber, pageSize, keyword, status, organizationNature))));
     }
 
     @PostMapping
@@ -54,6 +56,8 @@ public class EnterpriseController {
         CreateEnterpriseCommand command = new CreateEnterpriseCommand(
                 request.code(),
                 request.name(),
+                request.organizationNature(),
+                request.areaId(),
                 request.contactName(),
                 request.contactPhone(),
                 request.address(),
@@ -71,7 +75,8 @@ public class EnterpriseController {
             @Valid @RequestBody UpdateEnterpriseRequest request) {
         return Result.ok(RpcResultSupport.unwrap(enterpriseService.update(
                 new UpdateEnterpriseCommand(
-                        id, request.name(), request.contactName(), request.contactPhone(), request.address()))));
+                        id, request.name(), request.areaId(), request.contactName(),
+                        request.contactPhone(), request.address()))));
     }
 
     @PatchMapping("/{id}/status")
@@ -99,8 +104,10 @@ public class EnterpriseController {
     }
 
     public record CreateEnterpriseRequest(
-            @NotBlank(message = "企业编码不能为空") String code,
-            @NotBlank(message = "企业名称不能为空") String name,
+            @NotBlank(message = "组织编码不能为空") String code,
+            @NotBlank(message = "组织名称不能为空") String name,
+            @NotBlank(message = "组织类型不能为空") String organizationNature,
+            @NotNull(message = "行政区域不能为空") Long areaId,
             String contactName,
             String contactPhone,
             String address,
@@ -111,7 +118,8 @@ public class EnterpriseController {
     }
 
     public record UpdateEnterpriseRequest(
-            @NotBlank(message = "企业名称不能为空") String name,
+            @NotBlank(message = "组织名称不能为空") String name,
+            @NotNull(message = "行政区域不能为空") Long areaId,
             String contactName,
             String contactPhone,
             String address) {

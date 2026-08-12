@@ -14,8 +14,14 @@ const menus = [
   { path: '/admin', label: '工作台首页', permission: 'admin:dashboard:view', audience: 'all' },
   {
     path: '/admin/enterprises',
-    label: '企业管理',
+    label: '组织管理',
     permission: 'admin:enterprise:view',
+    audience: 'platform',
+  },
+  {
+    path: '/admin/addresses',
+    label: '地址管理',
+    permission: 'admin:address:view',
     audience: 'platform',
   },
   { path: '/admin/orgs', label: '部门管理', permission: 'admin:org:view', audience: 'enterprise' },
@@ -23,6 +29,12 @@ const menus = [
     path: '/admin/users',
     label: '用户管理',
     permission: 'admin:user:view',
+    audience: 'enterprise',
+  },
+  {
+    path: '/admin/courses',
+    label: '课程管理',
+    permission: 'admin:course:view',
     audience: 'enterprise',
   },
   {
@@ -54,6 +66,7 @@ const visibleMenus = computed(() =>
   }),
 )
 
+/** 退出当前登录并返回登录页。 */
 async function logout() {
   await ElMessageBox.confirm('确定退出当前账号吗？', '退出登录', { type: 'warning' })
   await authStore.logout()

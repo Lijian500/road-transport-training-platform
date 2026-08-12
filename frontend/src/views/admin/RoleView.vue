@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onMounted, reactive, ref } from 'vue'
-import {
-  ElMessage,
-  ElMessageBox,
-  ElTree,
-  type FormInstance,
-  type FormRules,
-} from 'element-plus'
+import { ElMessage, ElMessageBox, ElTree, type FormInstance, type FormRules } from 'element-plus'
 
 import {
   assignRolePermissions,
@@ -158,6 +152,25 @@ async function savePermissions() {
   }
 }
 
+/** 切换角色列表页码。 */
+function changePage(pageNumber: number) {
+  query.pageNumber = pageNumber
+  void load()
+}
+
+/** 切换角色列表每页数量并返回第一页。 */
+function changePageSize(pageSize: number) {
+  query.pageSize = pageSize
+  query.pageNumber = 1
+  void load()
+}
+
+/** 从第一页查询角色列表。 */
+function search() {
+  query.pageNumber = 1
+  void load()
+}
+
 function showError(error: unknown) {
   ElMessage.error(error instanceof ApiError ? error.message : '操作失败，请稍后重试')
 }
@@ -169,7 +182,7 @@ onMounted(load)
   <section>
     <header class="page-title">
       <h1>角色管理</h1>
-      <p>创建企业自定义角色并分配菜单和操作权限，内置角色不可修改。</p>
+      <p>创建组织自定义角色并分配菜单和操作权限，内置角色不可修改。</p>
     </header>
     <AppTable
       :data="rows"
@@ -177,16 +190,21 @@ onMounted(load)
       :page-number="query.pageNumber"
       :page-size="query.pageSize"
       :total="total"
-      @page-change="query.pageNumber = $event; load()"
-      @size-change="query.pageSize = $event; query.pageNumber = 1; load()"
+      @page-change="changePage"
+      @size-change="changePageSize"
     >
       <template #search>
-        <el-input v-model="query.keyword" clearable placeholder="角色名称/编码" @keyup.enter="load" />
+        <el-input
+          v-model="query.keyword"
+          clearable
+          placeholder="角色名称/编码"
+          @keyup.enter="load"
+        />
         <el-select v-model="query.status" clearable placeholder="全部状态">
           <el-option label="启用" value="ENABLED" />
           <el-option label="禁用" value="DISABLED" />
         </el-select>
-        <el-button type="primary" @click="query.pageNumber = 1; load()">查询</el-button>
+        <el-button type="primary" @click="search">查询</el-button>
       </template>
       <template #actions>
         <PermissionButton permission="admin:role:create" type="primary" @click="openCreate">
@@ -198,7 +216,9 @@ onMounted(load)
       <el-table-column label="说明" min-width="180" prop="description" />
       <el-table-column label="类型" width="90">
         <template #default="{ row }">
-          <el-tag :type="row.builtIn ? 'warning' : ''">{{ row.builtIn ? '内置' : '自定义' }}</el-tag>
+          <el-tag :type="row.builtIn ? 'warning' : ''">{{
+            row.builtIn ? '内置' : '自定义'
+          }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="状态" width="90">
@@ -207,16 +227,30 @@ onMounted(load)
       <el-table-column fixed="right" label="操作" width="260">
         <template #default="{ row }">
           <template v-if="!row.builtIn">
-            <PermissionButton permission="admin:role:update" link type="primary" @click="openEdit(row)">
+            <PermissionButton
+              permission="admin:role:update"
+              link
+              type="primary"
+              @click="openEdit(row)"
+            >
               编辑
             </PermissionButton>
-            <PermissionButton permission="admin:role:assign-permission" link @click="openPermissions(row)">
+            <PermissionButton
+              permission="admin:role:assign-permission"
+              link
+              @click="openPermissions(row)"
+            >
               授权
             </PermissionButton>
             <PermissionButton permission="admin:role:status" link @click="toggleStatus(row)">
               {{ row.status === 'ENABLED' ? '禁用' : '启用' }}
             </PermissionButton>
-            <PermissionButton permission="admin:role:delete" link type="danger" @click="remove(row)">
+            <PermissionButton
+              permission="admin:role:delete"
+              link
+              type="danger"
+              @click="remove(row)"
+            >
               删除
             </PermissionButton>
           </template>
@@ -251,11 +285,7 @@ onMounted(load)
       width="620px"
       @confirm="savePermissions"
     >
-      <el-alert
-        :closable="false"
-        title="仅可授予当前账号自身拥有的企业级权限。"
-        type="info"
-      />
+      <el-alert :closable="false" title="仅可授予当前账号自身拥有的组织级权限。" type="info" />
       <el-tree
         ref="permissionTreeRef"
         :data="permissionTree"
@@ -266,7 +296,9 @@ onMounted(load)
         show-checkbox
       >
         <template #default="{ data }">
-          <span>{{ data.name }} <small>{{ data.code }}</small></span>
+          <span
+            >{{ data.name }} <small>{{ data.code }}</small></span
+          >
         </template>
       </el-tree>
     </AppDialog>

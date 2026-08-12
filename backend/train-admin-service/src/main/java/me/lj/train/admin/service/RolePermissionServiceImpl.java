@@ -34,6 +34,7 @@ import me.lj.train.common.security.model.LoginUser;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -82,6 +83,7 @@ public class RolePermissionServiceImpl extends AdminServiceSupport implements Ro
             String status = trim(query.status());
             QueryWrapper wrapper = QueryWrapper.create()
                     .where(ROLE.ENTERPRISE_ID.eq(enterpriseId))
+                    .and(ROLE.DELETED_AT.isNull())
                     .and(ROLE.ROLE_NAME.like(keyword)
                             .or(ROLE.ROLE_CODE.like(keyword))
                             .when(hasText(keyword)))
@@ -99,6 +101,7 @@ public class RolePermissionServiceImpl extends AdminServiceSupport implements Ro
             Long enterpriseId = AdminGuard.requireEnterprisePermission(AdminPermissions.ROLE_VIEW);
             List<RoleEntity> roles = roleMapper.selectListByQuery(QueryWrapper.create()
                     .where(ROLE.ENTERPRISE_ID.eq(enterpriseId))
+                    .and(ROLE.DELETED_AT.isNull())
                     .and(ROLE.STATUS.eq(AdminConstants.STATUS_ENABLED))
                     .orderBy(ROLE.BUILT_IN.desc(), ROLE.ROLE_NAME.asc()));
             return toViews(roles);
@@ -140,7 +143,8 @@ public class RolePermissionServiceImpl extends AdminServiceSupport implements Ro
                     .set(ROLE.ROLE_NAME, AdminGuard.requireText(command.name(), "角色名称"))
                     .set(ROLE.DESCRIPTION, trim(command.description()))
                     .set(ROLE.UPDATED_BY, UserContext.require().getUserId());
-            roleMapper.updateByCondition(update.toEntity(), ROLE.ID.eq(role.getId()));
+            roleMapper.updateByCondition(
+                    update.toEntity(), ROLE.ID.eq(role.getId()).and(ROLE.DELETED_AT.isNull()));
             cacheService.invalidateUsers(listRoleUserIds(role.getId()));
             RoleEntity changed = roleMapper.selectOneById(role.getId());
             return toView(changed, listPermissionIds(role.getId()));
@@ -157,7 +161,8 @@ public class RolePermissionServiceImpl extends AdminServiceSupport implements Ro
             UpdateWrapper<RoleEntity> update = UpdateWrapper.of(RoleEntity.class)
                     .set(ROLE.STATUS, AdminGuard.normalizeStatus(command.status()))
                     .set(ROLE.UPDATED_BY, UserContext.require().getUserId());
-            roleMapper.updateByCondition(update.toEntity(), ROLE.ID.eq(role.getId()));
+            roleMapper.updateByCondition(
+                    update.toEntity(), ROLE.ID.eq(role.getId()).and(ROLE.DELETED_AT.isNull()));
             cacheService.invalidateUsers(listRoleUserIds(role.getId()));
         });
     }
@@ -173,9 +178,14 @@ public class RolePermissionServiceImpl extends AdminServiceSupport implements Ro
                     QueryWrapper.create().where(USER_ROLE.ROLE_ID.eq(id))) > 0) {
                 throw new BusinessException(AppErrorCode.DATA_IN_USE);
             }
-            rolePermissionMapper.deleteByQuery(
-                    QueryWrapper.create().where(ROLE_PERMISSION.ROLE_ID.eq(id)));
-            roleMapper.deleteById(id);
+            Long operatorId = UserContext.require().getUserId();
+            RoleEntity update = new RoleEntity();
+            update.setStatus(AdminConstants.STATUS_DISABLED);
+            update.setDeletedBy(operatorId);
+            update.setDeletedAt(LocalDateTime.now());
+            update.setUpdatedBy(operatorId);
+            roleMapper.updateByCondition(
+                    update, ROLE.ID.eq(role.getId()).and(ROLE.DELETED_AT.isNull()));
         });
     }
 
@@ -229,6 +239,9 @@ public class RolePermissionServiceImpl extends AdminServiceSupport implements Ro
         });
     }
 
+    /**
+     * 已删除角色仍保留编码，避免新角色复用编码后混淆历史授权记录。
+     */
     private RoleEntity findByCode(Long enterpriseId, String code) {
         return roleMapper.selectOneByQuery(QueryWrapper.create()
                 .where(ROLE.ENTERPRISE_ID.eq(enterpriseId))
@@ -299,7 +312,9 @@ public class RolePermissionServiceImpl extends AdminServiceSupport implements Ro
     }
 
     private RoleEntity requireRole(Long id, Long enterpriseId) {
-        RoleEntity role = id == null ? null : roleMapper.selectOneById(id);
+        RoleEntity role = id == null ? null : roleMapper.selectOneByQuery(QueryWrapper.create()
+                .where(ROLE.ID.eq(id))
+                .and(ROLE.DELETED_AT.isNull()));
         if (role == null) {
             throw new BusinessException(AppErrorCode.ROLE_NOT_FOUND);
         }

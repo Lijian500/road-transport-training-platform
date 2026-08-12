@@ -26,7 +26,7 @@ const adminRoutes: RouteRecordRaw[] = [
         name: 'admin-enterprises',
         component: () => import('@/views/admin/EnterpriseView.vue'),
         meta: {
-          title: '企业管理',
+          title: '组织管理',
           requiresAuth: true,
           workspace: 'admin',
           permission: 'admin:enterprise:view',
@@ -44,6 +44,17 @@ const adminRoutes: RouteRecordRaw[] = [
         },
       },
       {
+        path: 'addresses',
+        name: 'admin-addresses',
+        component: () => import('@/views/admin/AddressView.vue'),
+        meta: {
+          title: '地址管理',
+          requiresAuth: true,
+          workspace: 'admin',
+          permission: 'admin:address:view',
+        },
+      },
+      {
         path: 'users',
         name: 'admin-users',
         component: () => import('@/views/admin/UserView.vue'),
@@ -52,6 +63,28 @@ const adminRoutes: RouteRecordRaw[] = [
           requiresAuth: true,
           workspace: 'admin',
           permission: 'admin:user:view',
+        },
+      },
+      {
+        path: 'courses',
+        name: 'admin-courses',
+        component: () => import('@/views/admin/CourseView.vue'),
+        meta: {
+          title: '课程管理',
+          requiresAuth: true,
+          workspace: 'admin',
+          permission: 'admin:course:view',
+        },
+      },
+      {
+        path: 'courses/:id',
+        name: 'admin-course-detail',
+        component: () => import('@/views/admin/CourseDetailView.vue'),
+        meta: {
+          title: '课程详情',
+          requiresAuth: true,
+          workspace: 'admin',
+          permission: 'admin:course:view',
         },
       },
       {

@@ -9,7 +9,7 @@
 
 ## 当前仓库状态与快速开始
 
-当前仓库已完成企业、部门、用户、角色、权限和登录的基础闭环。平台超管可创建企业及初始管理员，企业管理员可维护本企业组织、用户和角色；认证采用RSA Access Token、Redis Refresh Token轮换、HttpOnly Cookie和CSRF双提交保护。
+当前仓库已完成企业、部门、用户、角色、权限和登录的基础闭环，并完成企业课程、封面及视频课件管理。课程文件由浏览器通过短期预签名地址直传私有阿里云OSS；认证采用RSA Access Token、Redis Refresh Token轮换、HttpOnly Cookie和CSRF双提交保护。
 
 环境要求：
 
@@ -46,7 +46,7 @@ pnpm --dir frontend dev
 - `JWT_PRIVATE_KEY_PATH`只提供给`train-web-api`，`JWT_PUBLIC_KEY_PATH`同时提供给`train-web-api`和`train-gateway`，不得提交私钥；
 - 服务启动顺序和完整环境变量参见[部署说明](./docs/deployment/README.md)，REST契约参见[API说明](./docs/api/README.md)；
 - 当前Docker Compose不构建Java业务容器，Java应用通过IDE或Maven独立运行；
-- 当前Nginx提供健康检查、Gateway反向代理和媒体目录占位；
+- 当前Nginx提供健康检查和Gateway反向代理；课程文件不经过Nginx、Gateway、Dubbo或Java服务；
 - 本地Nacos采用单机开发配置，不能直接作为生产配置使用。
 
 ## 1. 文档目的
@@ -154,7 +154,7 @@ pnpm --dir frontend dev
 ├─ /admin/org                  组织管理
 ├─ /admin/user                 人员管理
 ├─ /admin/vehicle              车辆管理
-├─ /admin/course               课程及课件
+├─ /admin/courses              课程及课件
 ├─ /admin/plan                 培训计划
 ├─ /admin/exam                 题库、试卷及考试
 └─ /admin/statistics           培训统计
@@ -189,7 +189,7 @@ flowchart TB
     end
 
     subgraph ACCESS["统一接入层"]
-        NGINX["Nginx<br/>HTTPS、SPA、视频及静态文件"]
+        NGINX["Nginx<br/>HTTPS、SPA及反向代理"]
         GATEWAY["train-gateway<br/>Spring Cloud Gateway<br/>JWT、路由、限流、跨域、TraceId"]
     end
 
@@ -210,15 +210,15 @@ flowchart TB
         MYSQL["MySQL 8<br/>三个业务逻辑数据库"]
         REDIS["Redis<br/>登录状态、学习状态、幂等、连接映射"]
         MQ["RabbitMQ<br/>抽验、超时、完成事件、实时推送"]
-        FILES["本地文件目录<br/>视频、图片和临时上传文件"]
+        OSS["阿里云私有OSS<br/>课程封面和视频课件"]
     end
 
     WEB -->|"HTTPS /api"| NGINX
     PLAYER -->|"WSS /ws/learning"| NGINX
-    PLAYER -->|"HTTP Range读取视频"| NGINX
+    WEB -->|"预签名PUT及UploadPart"| OSS
+    PLAYER -->|"短期签名GET及Range"| OSS
 
     NGINX --> GATEWAY
-    NGINX --> FILES
 
     GATEWAY -->|"REST"| BFF
     GATEWAY -->|"WebSocket Upgrade"| REALTIME
@@ -234,6 +234,7 @@ flowchart TB
 
     ADMIN --> MYSQL
     TRAINING --> MYSQL
+    TRAINING -->|"预签名、HEAD校验及对象清理"| OSS
     LEARNING --> MYSQL
 
     BFF --> REDIS
@@ -258,6 +259,8 @@ flowchart TB
 | 调用场景 | 通信方式 |
 |---|---|
 | 浏览器请求普通业务接口 | HTTPS REST |
+| 管理端上传封面和视频 | 阿里云OSS预签名PUT/UploadPart |
+| 浏览器预览私有课件 | 阿里云OSS短期签名GET/Range |
 | 浏览器上报实时学习动作 | WSS WebSocket |
 | 网关转发HTTP接口 | HTTP |
 | 网关转发WebSocket握手 | WebSocket Upgrade |
@@ -937,7 +940,9 @@ src/
 - 配置学时允许误差；
 - 启用或禁用课程。
 
-视频文件不经过Dubbo和Gateway传输。论文环境下由Nginx通过HTTP Range提供本地MP4文件，MySQL只保存路径、文件大小、时长、摘要和业务元数据。
+视频文件不经过Dubbo和Gateway传输。管理端使用短期预签名URL将MP4分片直传到私有
+阿里云OSS，管理预览使用短期签名GET地址；MySQL只保存Bucket、ObjectKey、文件大小、
+时长、ETag和业务元数据。AccessKey仅由培训服务进程环境变量持有。
 
 ### 10.4 培训计划
 
@@ -1769,8 +1774,8 @@ Docker Compose启动：
 
 ### 阶段三：课程和培训计划
 
-- 课程和课件；
-- 本地视频文件；
+- 课程、封面和视频课件管理；
+- 私有阿里云OSS预签名单次/分片直传、断点续传和签名预览；
 - 培训计划；
 - 计划学员；
 - 学员任务列表。

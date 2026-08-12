@@ -10,6 +10,7 @@
         FROM sys_role r
         JOIN sys_user_role ur ON ur.role_id = r.id
         WHERE ur.user_id = #{userId}
+          AND r.deleted_at IS NULL
         ORDER BY r.built_in DESC, r.role_name
     </select>
 
@@ -22,6 +23,7 @@
         JOIN sys_user_role ur ON ur.role_id = r.id
         WHERE ur.user_id = #{userId}
           AND r.status = 'ENABLED'
+          AND r.deleted_at IS NULL
         ORDER BY p.sort_order
     </select>
 
@@ -30,7 +32,9 @@
         SELECT p.permission_code
         FROM sys_permission p
         JOIN sys_role_permission rp ON rp.permission_id = p.id
+        JOIN sys_role r ON r.id = rp.role_id
         WHERE rp.role_id = #{roleId}
+          AND r.deleted_at IS NULL
     </select>
 
     <select id="listPermissionCodesByRoleIds"
@@ -38,7 +42,9 @@
         SELECT DISTINCT p.permission_code
         FROM sys_permission p
         JOIN sys_role_permission rp ON rp.permission_id = p.id
-        WHERE rp.role_id IN
+        JOIN sys_role r ON r.id = rp.role_id
+        WHERE r.deleted_at IS NULL
+          AND rp.role_id IN
         <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
             #{roleId}
         </foreach>

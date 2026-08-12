@@ -8,7 +8,7 @@ import me.lj.train.common.core.result.Result;
 import java.util.List;
 
 /**
- * 企业组织树管理RPC接口。
+ * 根组织部门树管理RPC接口。
  */
 public interface OrgService {
 

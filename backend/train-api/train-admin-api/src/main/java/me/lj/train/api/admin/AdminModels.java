@@ -40,7 +40,8 @@ public final class AdminModels {
             int pageNumber,
             int pageSize,
             String keyword,
-            String status) implements Serializable {
+            String status,
+            String organizationNature) implements Serializable {
 
         public PageRequest toPageRequest() {
             return new PageRequest(pageNumber, pageSize);
@@ -50,6 +51,8 @@ public final class AdminModels {
     public record CreateEnterpriseCommand(
             String code,
             String name,
+            String organizationNature,
+            Long areaId,
             String contactName,
             String contactPhone,
             String address,
@@ -62,6 +65,7 @@ public final class AdminModels {
     public record UpdateEnterpriseCommand(
             Long id,
             String name,
+            Long areaId,
             String contactName,
             String contactPhone,
             String address) implements Serializable {
@@ -71,11 +75,25 @@ public final class AdminModels {
             Long id,
             String code,
             String name,
+            String organizationNature,
+            Long areaId,
+            String areaName,
+            List<AddressPathNode> areaPath,
             String contactName,
             String contactPhone,
             String address,
             String status,
             LocalDateTime createdAt) implements Serializable {
+    }
+
+    /**
+     * 组织行政区域路径节点。
+     */
+    public record AddressPathNode(
+            Long id,
+            int level,
+            String areaCode,
+            String name) implements Serializable {
     }
 
     public static final class EnterpriseAdministratorView implements Serializable {

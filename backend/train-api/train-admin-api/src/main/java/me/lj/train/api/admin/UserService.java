@@ -11,7 +11,7 @@ import me.lj.train.common.core.page.PageResult;
 import me.lj.train.common.core.result.Result;
 
 /**
- * 企业用户管理RPC接口。
+ * 组织用户管理RPC接口。
  */
 public interface UserService {
 

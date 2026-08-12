@@ -12,12 +12,12 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<UserEntity> {
 
     /**
-     * 统计企业当前启用的管理员人数。
+     * 统计根组织当前启用的管理员人数。
      */
     int countEnabledEnterpriseAdmins(@Param("enterpriseId") Long enterpriseId);
 
     /**
-     * 查询企业所有管理员账号。
+     * 查询根组织所有管理员账号。
      */
     List<UserEntity> listEnterpriseAdministrators(@Param("enterpriseId") Long enterpriseId);
 }

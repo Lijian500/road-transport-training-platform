@@ -20,6 +20,7 @@ import me.lj.train.common.security.context.UserContext;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,7 +100,7 @@ public class OrgServiceImpl extends AdminServiceSupport implements OrgService {
             Long enterpriseId = AdminGuard.requireEnterprisePermission(AdminPermissions.ORG_UPDATE);
             OrgEntity entity = requireOrg(command.id(), enterpriseId);
             if (!AdminConstants.ORG_DEPARTMENT.equals(entity.getOrgType())) {
-                throw new BusinessException(AppErrorCode.BUILTIN_DATA_READONLY, "企业根节点不能在部门管理中修改");
+                throw new BusinessException(AppErrorCode.BUILTIN_DATA_READONLY, "根组织节点不能在部门管理中修改");
             }
             Long parentId = command.parentId() == null ? enterpriseId : command.parentId();
             OrgEntity parent = requireOrg(parentId, enterpriseId);
@@ -124,7 +125,9 @@ public class OrgServiceImpl extends AdminServiceSupport implements OrgService {
                     .set(ORG.UPDATED_BY, UserContext.require().getUserId());
             orgMapper.updateByCondition(
                     update.toEntity(),
-                    ORG.ID.eq(entity.getId()).and(ORG.ORG_TYPE.eq(AdminConstants.ORG_DEPARTMENT)));
+                    ORG.ID.eq(entity.getId())
+                            .and(ORG.ORG_TYPE.eq(AdminConstants.ORG_DEPARTMENT))
+                            .and(ORG.DELETED_AT.isNull()));
             return toView(orgMapper.selectOneById(entity.getId()), new ArrayList<OrgView>());
         });
     }
@@ -135,21 +138,33 @@ public class OrgServiceImpl extends AdminServiceSupport implements OrgService {
             Long enterpriseId = AdminGuard.requireEnterprisePermission(AdminPermissions.ORG_DELETE);
             OrgEntity entity = requireOrg(id, enterpriseId);
             if (!AdminConstants.ORG_DEPARTMENT.equals(entity.getOrgType())) {
-                throw new BusinessException(AppErrorCode.BUILTIN_DATA_READONLY, "企业根节点不能删除");
+                throw new BusinessException(AppErrorCode.BUILTIN_DATA_READONLY, "根组织节点不能删除");
             }
             if (countChildren(id) > 0 || countUsers(enterpriseId, id) > 0) {
                 throw new BusinessException(AppErrorCode.DATA_IN_USE);
             }
-            orgMapper.deleteById(id);
+            Long operatorId = UserContext.require().getUserId();
+            OrgEntity update = new OrgEntity();
+            update.setStatus(AdminConstants.STATUS_DISABLED);
+            update.setDeletedBy(operatorId);
+            update.setDeletedAt(LocalDateTime.now());
+            update.setUpdatedBy(operatorId);
+            orgMapper.updateByCondition(
+                    update,
+                    ORG.ID.eq(entity.getId()).and(ORG.DELETED_AT.isNull()));
         });
     }
 
     private List<OrgEntity> listByEnterprise(Long enterpriseId) {
         return orgMapper.selectListByQuery(QueryWrapper.create()
                 .where(ORG.ENTERPRISE_ID.eq(enterpriseId))
+                .and(ORG.DELETED_AT.isNull())
                 .orderBy(ORG.SORT_ORDER.asc(), ORG.CREATED_AT.asc()));
     }
 
+    /**
+     * 已删除组织仍保留编码，防止重新创建后产生历史数据歧义。
+     */
     private OrgEntity findByCode(Long enterpriseId, String code) {
         return orgMapper.selectOneByQuery(QueryWrapper.create()
                 .where(ORG.ENTERPRISE_ID.eq(enterpriseId))
@@ -161,11 +176,14 @@ public class OrgServiceImpl extends AdminServiceSupport implements OrgService {
                 .where(ORG.ENTERPRISE_ID.eq(enterpriseId))
                 .and(ORG.PARENT_ID.eq(parentId))
                 .and(ORG.ORG_NAME.eq(name))
+                .and(ORG.DELETED_AT.isNull())
                 .and(ORG.ID.ne(excludeId).when(excludeId != null)));
     }
 
     private long countChildren(Long parentId) {
-        return orgMapper.selectCountByQuery(QueryWrapper.create().where(ORG.PARENT_ID.eq(parentId)));
+        return orgMapper.selectCountByQuery(QueryWrapper.create()
+                .where(ORG.PARENT_ID.eq(parentId))
+                .and(ORG.DELETED_AT.isNull()));
     }
 
     private long countUsers(Long enterpriseId, Long orgId) {
@@ -190,7 +208,9 @@ public class OrgServiceImpl extends AdminServiceSupport implements OrgService {
     }
 
     private OrgEntity requireOrg(Long id, Long enterpriseId) {
-        OrgEntity entity = id == null ? null : orgMapper.selectOneById(id);
+        OrgEntity entity = id == null ? null : orgMapper.selectOneByQuery(QueryWrapper.create()
+                .where(ORG.ID.eq(id))
+                .and(ORG.DELETED_AT.isNull()));
         if (entity == null) {
             throw new BusinessException(AppErrorCode.ORG_NOT_FOUND);
         }

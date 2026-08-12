@@ -22,11 +22,7 @@ import AppDialog from '@/components/AppDialog/AppDialog.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
 import PermissionButton from '@/components/PermissionButton/PermissionButton.vue'
 import StatusTag from '@/components/StatusTag/StatusTag.vue'
-import {
-  isValidPassword,
-  PASSWORD_RULE_MESSAGE,
-  validatePassword,
-} from '@/utils/validation'
+import { isValidPassword, PASSWORD_RULE_MESSAGE, validatePassword } from '@/utils/validation'
 
 const loading = ref(false)
 const saving = ref(false)
@@ -54,11 +50,30 @@ const emptyUser = (): UserPayload => ({
   roleIds: [],
 })
 const form = reactive<UserPayload>(emptyUser())
+/** 校验新增用户必选初始角色，编辑资料时不参与验证。 */
+function validateInitialRoles(_rule: unknown, value: string[], callback: (error?: Error) => void) {
+  if (!editingId.value && !value.length) {
+    callback(new Error('请选择至少一个初始角色'))
+    return
+  }
+  callback()
+}
+
+/** 校验新增用户的临时密码，编辑资料时不参与验证。 */
+function validateCreatePassword(_rule: unknown, value: string, callback: (error?: Error) => void) {
+  if (editingId.value) {
+    callback()
+    return
+  }
+  validatePassword(_rule, value, callback)
+}
+
 const rules: FormRules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   displayName: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
   orgId: [{ required: true, message: '请选择部门', trigger: 'change' }],
-  temporaryPassword: [{ validator: validatePassword, trigger: 'blur' }],
+  roleIds: [{ validator: validateInitialRoles, trigger: 'change' }],
+  temporaryPassword: [{ validator: validateCreatePassword, trigger: 'blur' }],
 }
 
 const resetVisible = ref(false)
@@ -111,6 +126,7 @@ function openEdit(row: User) {
   dialogVisible.value = true
 }
 
+/** 保存新增或编辑的组织用户。 */
 async function save() {
   if (!(await formRef.value?.validate().catch(() => false))) {
     return
@@ -199,6 +215,25 @@ async function saveRoles() {
   }
 }
 
+/** 切换用户列表页码。 */
+function changePage(pageNumber: number) {
+  query.pageNumber = pageNumber
+  void load()
+}
+
+/** 切换用户列表每页数量并返回第一页。 */
+function changePageSize(pageSize: number) {
+  query.pageSize = pageSize
+  query.pageNumber = 1
+  void load()
+}
+
+/** 从第一页查询用户列表。 */
+function search() {
+  query.pageNumber = 1
+  void load()
+}
+
 function resetSearch() {
   Object.assign(query, { keyword: '', orgId: '', status: '', pageNumber: 1 })
   void load()
@@ -222,7 +257,7 @@ onMounted(async () => {
   <section>
     <header class="page-title">
       <h1>用户管理</h1>
-      <p>维护本企业账号、所属部门、状态和角色。</p>
+      <p>维护本组织账号、所属部门、状态和角色。</p>
     </header>
     <AppTable
       :data="rows"
@@ -230,11 +265,16 @@ onMounted(async () => {
       :page-number="query.pageNumber"
       :page-size="query.pageSize"
       :total="total"
-      @page-change="query.pageNumber = $event; load()"
-      @size-change="query.pageSize = $event; query.pageNumber = 1; load()"
+      @page-change="changePage"
+      @size-change="changePageSize"
     >
       <template #search>
-        <el-input v-model="query.keyword" clearable placeholder="用户名/姓名/手机号" @keyup.enter="load" />
+        <el-input
+          v-model="query.keyword"
+          clearable
+          placeholder="用户名/姓名/手机号"
+          @keyup.enter="load"
+        />
         <el-tree-select
           v-model="query.orgId"
           :data="orgTree"
@@ -247,7 +287,7 @@ onMounted(async () => {
           <el-option label="启用" value="ENABLED" />
           <el-option label="禁用" value="DISABLED" />
         </el-select>
-        <el-button type="primary" @click="query.pageNumber = 1; load()">查询</el-button>
+        <el-button type="primary" @click="search">查询</el-button>
         <el-button @click="resetSearch">重置</el-button>
       </template>
       <template #actions>
@@ -266,7 +306,12 @@ onMounted(async () => {
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="300">
         <template #default="{ row }">
-          <PermissionButton permission="admin:user:update" link type="primary" @click="openEdit(row)">
+          <PermissionButton
+            permission="admin:user:update"
+            link
+            type="primary"
+            @click="openEdit(row)"
+          >
             编辑
           </PermissionButton>
           <PermissionButton permission="admin:user:assign-role" link @click="openRoles(row)">
@@ -308,7 +353,7 @@ onMounted(async () => {
           />
         </el-form-item>
         <template v-if="!editingId">
-          <el-form-item label="初始角色">
+          <el-form-item label="初始角色" prop="roleIds">
             <el-select v-model="form.roleIds" multiple>
               <el-option v-for="role in roles" :key="role.id" :label="role.name" :value="role.id" />
             </el-select>
@@ -320,12 +365,7 @@ onMounted(async () => {
       </el-form>
     </AppDialog>
 
-    <AppDialog
-      v-model="resetVisible"
-      :loading="saving"
-      title="重置密码"
-      @confirm="resetPassword"
-    >
+    <AppDialog v-model="resetVisible" :loading="saving" title="重置密码" @confirm="resetPassword">
       <el-alert
         :closable="false"
         :title="`将重置 ${resetUser?.displayName || ''} 的密码，并使其所有旧会话失效。`"
@@ -338,12 +378,7 @@ onMounted(async () => {
       </el-form>
     </AppDialog>
 
-    <AppDialog
-      v-model="roleVisible"
-      :loading="saving"
-      title="分配角色"
-      @confirm="saveRoles"
-    >
+    <AppDialog v-model="roleVisible" :loading="saving" title="分配角色" @confirm="saveRoles">
       <el-checkbox-group v-model="selectedRoleIds" class="role-options">
         <el-checkbox v-for="role in roles" :key="role.id" :label="role.id">
           {{ role.name }}
