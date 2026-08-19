@@ -22,6 +22,10 @@
         </dependency>
         <dependency>
             <groupId>me.lj.train</groupId>
+            <artifactId>train-common-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>me.lj.train</groupId>
             <artifactId>train-admin-api</artifactId>
         </dependency>
         <dependency>
@@ -90,6 +94,19 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.mybatis-flex</groupId>
+                            <artifactId>mybatis-flex-processor</artifactId>
+                            <version>${mybatis-flex.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

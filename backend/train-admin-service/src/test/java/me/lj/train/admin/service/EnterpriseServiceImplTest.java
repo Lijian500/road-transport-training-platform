@@ -252,7 +252,6 @@ class EnterpriseServiceImplTest {
         when(addressMapper.selectOneById(102L)).thenReturn(district);
         when(passwordEncoder.encode("Password1")).thenReturn("encoded-password");
         when(permissionMapper.selectListByQuery(any(QueryWrapper.class))).thenReturn(Collections.emptyList());
-        when(permissionMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(null);
         OrgEntity enterprise = enterprise();
         enterprise.setOrganizationNature(AdminConstants.ORGANIZATION_NATURE_ENTERPRISE);
         enterprise.setAreaId(102L);
@@ -271,7 +270,7 @@ class EnterpriseServiceImplTest {
     }
 
     @Test
-    void shouldGrantNewEnterpriseAdministratorAllAdminPermissionsIncludingCourse() {
+    void shouldGrantNewEnterpriseBuiltInRolesTheirDomainPermissions() {
         when(transactionManager.getTransaction(any(TransactionDefinition.class)))
                 .thenReturn(transactionStatus);
         AddressEntity district = area(102L, 3, "110101000000");
@@ -279,10 +278,13 @@ class EnterpriseServiceImplTest {
         when(passwordEncoder.encode("Password1")).thenReturn("encoded-password");
         PermissionEntity courseView = permission(800L, "admin:course:view");
         PermissionEntity coursewareManage = permission(805L, "admin:courseware:manage");
+        PermissionEntity planView = permission(900L, "admin:plan:view");
         PermissionEntity studentWorkspace = permission(700L, "student:workspace:view");
+        PermissionEntity studentPlanView = permission(701L, "student:plan:view");
+        PermissionEntity studentLearning = permission(702L, "student:learning:study");
         when(permissionMapper.selectListByQuery(any(QueryWrapper.class)))
-                .thenReturn(Arrays.asList(courseView, coursewareManage, studentWorkspace));
-        when(permissionMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(null);
+                .thenReturn(Arrays.asList(courseView, coursewareManage, planView),
+                        Arrays.asList(studentWorkspace, studentPlanView, studentLearning));
         OrgEntity enterprise = enterprise();
         enterprise.setOrganizationNature(AdminConstants.ORGANIZATION_NATURE_ENTERPRISE);
         enterprise.setAreaId(102L);
@@ -298,10 +300,13 @@ class EnterpriseServiceImplTest {
         @SuppressWarnings({"rawtypes", "unchecked"})
         ArgumentCaptor<List<RolePermissionEntity>> captor =
                 ArgumentCaptor.forClass((Class) List.class);
-        verify(rolePermissionMapper).insertBatch(captor.capture());
-        assertThat(captor.getValue())
+        verify(rolePermissionMapper, times(2)).insertBatch(captor.capture());
+        assertThat(captor.getAllValues().get(0))
                 .extracting(RolePermissionEntity::getPermissionId)
-                .containsExactlyInAnyOrder(800L, 805L);
+                .containsExactlyInAnyOrder(800L, 805L, 900L);
+        assertThat(captor.getAllValues().get(1))
+                .extracting(RolePermissionEntity::getPermissionId)
+                .containsExactlyInAnyOrder(700L, 701L, 702L);
         verify(transactionManager).commit(transactionStatus);
     }
 

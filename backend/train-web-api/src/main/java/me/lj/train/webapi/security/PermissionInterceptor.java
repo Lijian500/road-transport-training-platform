@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.util.Arrays;
+
 /**
  * 在BFF层执行接口操作权限校验。
  */
@@ -29,7 +31,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
             return true;
         }
         LoginUser loginUser = UserContext.require();
-        if (!loginUser.hasPermission(permission.value())) {
+        if (Arrays.stream(permission.value()).noneMatch(loginUser::hasPermission)) {
             throw new BusinessException(AppErrorCode.FORBIDDEN);
         }
         return true;

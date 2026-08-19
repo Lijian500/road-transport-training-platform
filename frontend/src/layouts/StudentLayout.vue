@@ -22,7 +22,7 @@ async function logout() {
         <strong>学员学习中心</strong>
       </div>
       <nav aria-label="学员端导航">
-        <RouterLink to="/student">学习首页</RouterLink>
+        <RouterLink to="/student/plans">我的培训任务</RouterLink>
         <RouterLink v-if="authStore.session?.workspaces.includes('admin')" to="/admin">
           管理工作台
         </RouterLink>

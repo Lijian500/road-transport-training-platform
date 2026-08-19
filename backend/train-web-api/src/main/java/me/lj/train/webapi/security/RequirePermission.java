@@ -12,5 +12,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RequirePermission {
 
-    String value();
+    /** 满足其中任意一个权限即可访问。 */
+    String[] value();
 }

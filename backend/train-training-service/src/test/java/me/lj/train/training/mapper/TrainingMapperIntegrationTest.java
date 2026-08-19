@@ -75,7 +75,7 @@ class TrainingMapperIntegrationTest {
     }
 
     @Test
-    void shouldMigrateFourTenantTablesWithIndexesAndNoForeignKeys() {
+    void shouldMigrateCourseAndPlanTenantTablesWithIndexesAndNoForeignKeys() {
         List<String> tables = jdbcTemplate.queryForList(
                 "SELECT table_name FROM information_schema.tables "
                         + "WHERE table_schema = DATABASE() AND table_name LIKE 'train_%' "
@@ -85,16 +85,25 @@ class TrainingMapperIntegrationTest {
                 "SELECT DISTINCT index_name FROM information_schema.statistics "
                         + "WHERE table_schema = DATABASE() AND table_name IN "
                         + "('train_course', 'train_courseware', 'train_storage_object', "
-                        + "'train_upload_session')",
+                        + "'train_upload_session', 'train_plan', 'train_plan_course', "
+                        + "'train_plan_courseware_snapshot', 'train_plan_user')",
                 String.class);
         Integer foreignKeyCount = jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) FROM information_schema.referential_constraints "
                         + "WHERE constraint_schema = DATABASE()",
                 Integer.class);
+        Integer consumeLogCount = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM information_schema.tables "
+                        + "WHERE table_schema = DATABASE() AND table_name = 'mq_consume_log'",
+                Integer.class);
 
         assertThat(tables).containsExactly(
                 "train_course",
                 "train_courseware",
+                "train_plan",
+                "train_plan_course",
+                "train_plan_courseware_snapshot",
+                "train_plan_user",
                 "train_storage_object",
                 "train_upload_session");
         assertThat(indexes).contains(
@@ -102,7 +111,12 @@ class TrainingMapperIntegrationTest {
                 "idx_courseware_course_order",
                 "idx_storage_enterprise_status",
                 "idx_upload_enterprise_course",
-                "idx_upload_expiry");
+                "idx_upload_expiry",
+                "idx_plan_enterprise_status",
+                "idx_plan_course_order",
+                "idx_plan_courseware_order",
+                "idx_plan_user_student");
+        assertThat(consumeLogCount).isEqualTo(1);
         assertThat(foreignKeyCount).isZero();
     }
 

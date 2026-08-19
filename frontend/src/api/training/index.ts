@@ -47,6 +47,120 @@ export interface CoursePayload {
   studyToleranceSeconds: number
 }
 
+export type PlanStatus = 'DRAFT' | 'PUBLISHED' | 'IN_PROGRESS' | 'FINISHED' | 'CANCELLED'
+
+export interface PlanCoursewareSnapshot {
+  id: string
+  sourceCoursewareId: string
+  storageObjectId: string
+  title: string
+  durationSeconds: number
+  sortOrder: number
+}
+
+export interface PlanCourse {
+  id: string
+  courseId: string
+  courseName: string
+  requiredDurationSeconds: number
+  allowSeek: boolean
+  progressReportIntervalSeconds: number
+  studyToleranceSeconds: number
+  sortOrder: number
+  coursewares: PlanCoursewareSnapshot[]
+}
+
+export interface PlanUser {
+  id: string
+  userId: string
+  orgId?: string
+  orgName?: string
+  username: string
+  displayName: string
+  assignmentStatus: string
+  studyStatus: string
+  examStatus: string
+  completionStatus: string
+  completedAt?: string
+}
+
+export interface Plan {
+  id: string
+  name: string
+  description?: string
+  startAt: string
+  endAt: string
+  status: PlanStatus
+  examRequired: boolean
+  examPassScore?: number
+  courses: PlanCourse[]
+  users: PlanUser[]
+  publishedAt?: string
+  cancelledAt?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface PlanCourseOption {
+  courseId: string
+  name: string
+  requiredDurationSeconds: number
+  coursewareCount: number
+  totalVideoDurationSeconds: number
+}
+
+export interface PlanParticipantOption {
+  userId: string
+  orgId?: string
+  orgName?: string
+  username: string
+  displayName: string
+}
+
+export interface PlanPayload {
+  name: string
+  description?: string
+  startAt: string
+  endAt: string
+  examRequired: boolean
+  courseIds?: string[]
+  userIds?: string[]
+}
+
+export interface StudentPlan {
+  taskId: string
+  planId: string
+  name: string
+  description?: string
+  startAt: string
+  endAt: string
+  status: Exclude<PlanStatus, 'DRAFT'>
+  assignmentStatus: string
+  studyStatus: string
+  examStatus: string
+  completionStatus: string
+  courses: StudentPlanCourse[]
+  publishedAt: string
+}
+
+export interface StudentPlanCourseware {
+  id: string
+  title: string
+  durationSeconds: number
+  sortOrder: number
+}
+
+export interface StudentPlanCourse {
+  id: string
+  courseName: string
+  requiredDurationSeconds: number
+  allowSeek: boolean
+  progressReportIntervalSeconds: number
+  studyToleranceSeconds: number
+  sortOrder: number
+  coursewares: StudentPlanCourseware[]
+}
+
 export interface StorageCapability {
   enabled: boolean
   message: string
@@ -176,10 +290,7 @@ export function createCoursewareUploadSession(
   courseId: string,
   data: FileDeclaration & { title: string; durationSeconds: number },
 ) {
-  return http.post<UploadSession>(
-    `/training/courses/${courseId}/coursewares/upload-sessions`,
-    data,
-  )
+  return http.post<UploadSession>(`/training/courses/${courseId}/coursewares/upload-sessions`, data)
 }
 
 /** 批量获取指定分片的短期签名。 */
@@ -214,4 +325,72 @@ export function getCoursewarePreviewUrl(courseId: string, coursewareId: string) 
   return http.get<SignedRequest>(
     `/training/courses/${courseId}/coursewares/${coursewareId}/preview-url`,
   )
+}
+
+/** 分页查询当前组织培训计划。 */
+export function getPlans(params: {
+  pageNumber: number
+  pageSize: number
+  keyword?: string
+  status?: PlanStatus | ''
+}) {
+  return http.get<PageResult<Plan>>('/training/plans', { params })
+}
+
+/** 创建培训计划草稿。 */
+export function createPlan(data: PlanPayload) {
+  return http.post<Plan>('/training/plans', data)
+}
+
+/** 获取培训计划及当前快照详情。 */
+export function getPlan(id: string) {
+  return http.get<Plan>(`/training/plans/${id}`)
+}
+
+/** 编辑草稿计划并重建课程与学员快照。 */
+export function updatePlan(id: string, data: PlanPayload) {
+  return http.put<Plan>(`/training/plans/${id}`, data)
+}
+
+/** 删除培训计划草稿。 */
+export function deletePlan(id: string) {
+  return http.delete<void>(`/training/plans/${id}`)
+}
+
+/** 发布培训计划并冻结最终规则快照。 */
+export function publishPlan(id: string) {
+  return http.post<Plan>(`/training/plans/${id}/publish`)
+}
+
+/** 取消尚未开始的已发布计划。 */
+export function cancelPlan(id: string) {
+  return http.post<Plan>(`/training/plans/${id}/cancel`)
+}
+
+/** 查询培训计划可选择的已启用课程。 */
+export function getPlanCourseCandidates(keyword?: string) {
+  return http.get<PlanCourseOption[]>('/training/plans/course-candidates', {
+    params: { keyword },
+  })
+}
+
+/** 查询当前组织可参训的已启用学员。 */
+export function getPlanParticipantCandidates(keyword?: string, orgId?: string) {
+  return http.get<PlanParticipantOption[]>('/training/plans/participant-candidates', {
+    params: { keyword, orgId },
+  })
+}
+
+/** 分页查询当前登录学员的培训任务。 */
+export function getStudentPlans(params: {
+  pageNumber: number
+  pageSize: number
+  status?: Exclude<PlanStatus, 'DRAFT'> | ''
+}) {
+  return http.get<PageResult<StudentPlan>>('/training/student/plans', { params })
+}
+
+/** 获取当前登录学员被分配的计划详情。 */
+export function getStudentPlan(id: string) {
+  return http.get<StudentPlan>(`/training/student/plans/${id}`)
 }

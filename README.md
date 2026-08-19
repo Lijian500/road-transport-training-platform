@@ -960,6 +960,10 @@ src/
 
 培训计划发布时，需要保存课程学习规则、规定学时、试卷规则和及格分数等快照。计划发布后的基础课程或试卷即使被修改，也不能影响已经开始的培训任务。
 
+当前考试模块尚未实现时，计划可预留考试字段，但只允许`examRequired=false`，避免发布
+无法完成的计划。计划课程同时冻结课件标题、顺序、时长和OSS对象引用，历史任务不读取
+后续被修改的课程清单。
+
 计划状态建议：
 
 ```text
@@ -1283,7 +1287,8 @@ wss://<domain>/ws/learning
 | `train_course` | 课程 |
 | `train_courseware` | 视频课件元数据 |
 | `train_plan` | 培训计划 |
-| `train_plan_course` | 计划课程关系 |
+| `train_plan_course` | 计划课程及学习规则快照 |
+| `train_plan_courseware_snapshot` | 发布时课件清单与OSS对象引用快照 |
 | `train_plan_user` | 计划学员及完成状态 |
 | `exam_question` | 题目 |
 | `exam_paper` | 试卷 |
@@ -1297,11 +1302,12 @@ wss://<domain>/ws/learning
 |---|---|
 | `study_session` | 一次在线学习会话 |
 | `study_progress` | 学员课程累计进度 |
+| `study_courseware_progress` | 学员逐课件确认位置与完成状态 |
 | `study_event_log` | 关键学习事件 |
 | `face_check_task` | 人脸抽验任务 |
 | `face_check_log` | 核验结果 |
 | `mq_outbox` | 可靠消息Outbox |
-| `mq_consume_log` | 重要消费事件幂等记录 |
+| `mq_consume_log` | 培训库中的学习结果消费幂等记录 |
 
 ### 13.5 关键索引
 
@@ -1310,6 +1316,7 @@ wss://<domain>/ws/learning
 - `study_session(user_id, status)`；
 - `study_session(plan_id, course_id, user_id)`；
 - `study_progress(plan_id, course_id, user_id)`唯一索引；
+- `study_courseware_progress(plan_course_id, courseware_snapshot_id, user_id)`唯一索引；
 - `study_event_log(study_session_id, server_time)`；
 - `face_check_task(study_session_id, status, deadline)`；
 - `train_plan_user(plan_id, user_id)`唯一索引；
@@ -1324,10 +1331,12 @@ Flyway脚本由拥有数据的业务服务维护：
 backend/
 ├─ train-admin-service/src/main/resources/db/migration/
 │  ├─ V1__admin_schema.sql
-│  └─ V2__admin_permission.sql
+│  ├─ ...
+│  └─ V8__student_learning_permission.sql
 ├─ train-training-service/src/main/resources/db/migration/
-│  ├─ V1__training_schema.sql
-│  └─ V2__training_snapshot_fields.sql
+│  ├─ V1__training_course_schema.sql
+│  ├─ V2__training_plan_schema.sql
+│  └─ V3__learning_task_projection.sql
 └─ train-learning-service/src/main/resources/db/migration/
    ├─ V1__learning_schema.sql
    └─ V2__learning_outbox.sql
@@ -1428,6 +1437,11 @@ training.learning-completed.queue
 training.exam-completed.queue
 realtime.push.queue
 ```
+
+阶段四已落地的学习结果投影使用Topic Exchange `training.events`、队列
+`training.learning-task-projection.v1`，路由键为`learning.task.study.started.v1`和
+`learning.task.study.completed.v1`。学习服务通过Outbox与Publisher Confirm投递，培训服务
+通过`mq_consume_log`幂等消费并只允许任务状态正向更新。
 
 延迟事件优先使用RabbitMQ TTL与死信交换机组合，不强制安装额外延迟消息插件。
 

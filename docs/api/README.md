@@ -53,6 +53,35 @@ Dubbo或Java服务。签名响应只包含URL、HTTP方法、必须请求头和�
 不进入响应、数据库或日志。视频完成接口具备幂等语义：OSS已合并但数据库事务未提交时，
 客户端可使用同一会话重试完成。OSS未配置时课程CRUD仍可使用，能力接口返回禁用原因。
 
+## 培训计划与学员任务接口
+
+| 资源 | 接口 |
+|---|---|
+| 培训计划 | `GET/POST /api/training/plans`、`GET/PUT/DELETE /api/training/plans/{id}` |
+| 发布与取消 | `POST /api/training/plans/{id}/publish`、`POST /api/training/plans/{id}/cancel` |
+| 计划候选项 | `GET /api/training/plans/course-candidates`、`GET /api/training/plans/participant-candidates` |
+| 学员任务 | `GET /api/training/student/plans`、`GET /api/training/student/plans/{id}` |
+
+计划使用独立的`admin:plan:view/create/update/publish/cancel`权限。课程和学员候选接口
+只要求计划创建或编辑权限，不依赖`admin:course:view`或`admin:user:view`。计划发布会在
+同一培训库事务中重新校验已启用课程、有效学员和起止时间，并冻结课程规则、课件清单
+及学员展示信息；发布后不可编辑。学员任务接口只按当前登录用户和`enterprise_id`查询，
+未分配用户及其他组织用户不可见。考试模块尚未启用时仅接受`examRequired=false`。
+
+## 视频学习与有效学时接口
+
+| 资源 | 接口 |
+|---|---|
+| 学习进度 | `GET /api/learning/plans/{planId}/progress`、`GET /api/learning/plans/{planId}/courses/{planCourseId}` |
+| 学习会话 | `POST /api/learning/sessions`、`GET /api/learning/sessions/active`、`GET /api/learning/sessions/{id}` |
+| 学习事件 | `POST /api/learning/sessions/{id}/events`、`POST /api/learning/sessions/{id}/terminate` |
+| 学员播放签名 | `GET /api/learning/sessions/{id}/coursewares/{snapshotId}/play-url` |
+
+全部接口要求`student:learning:study`，并按当前用户和组织隔离。事件仅接受`SIGN_IN`、
+`PLAY`、`PROGRESS`、`PAUSE`和`SIGN_OUT`；同一请求ID幂等、序号必须严格递增。服务端按
+接收时间与确认位置计算有效学时，课程内课件严格顺序。播放签名先校验活动学习会话，
+再由培训服务校验任务、计划有效期和课件快照，响应不暴露Bucket、ObjectKey或密钥。
+
 组织接口沿用`/enterprises`、`EnterpriseService`和`enterprise_id`等技术标识以保持兼容，
 根组织业务性质由`organizationNature`区分企业和行管。新增组织必须传入`areaId`；企业
 只能选择区县，行管可以选择省、市或区县。列表响应包含`areaPath`用于省市区回显，
@@ -66,8 +95,8 @@ Dubbo或Java服务。签名响应只包含URL、HTTP方法、必须请求头和�
 
 ## Dubbo契约
 
-`train-admin-api`提供认证、根组织、部门、用户和角色权限服务；`train-training-api`
-提供课程及对象存储服务与独立DTO。所有RPC
+`train-admin-api`提供认证、根组织、部门、用户、角色权限和计划学员目录服务；
+`train-training-api`提供课程、对象存储、培训计划及当前学员任务服务与独立DTO。所有RPC
 返回明确泛型的`Result<T>`；无数据响应使用`Result<?>`，数据库实体不跨模块暴露。
 
 接口定义以代码为准。禁止在文档、响应体、日志或前端存储中记录真实令牌、账号

@@ -88,6 +88,28 @@ const adminRoutes: RouteRecordRaw[] = [
         },
       },
       {
+        path: 'plans',
+        name: 'admin-plans',
+        component: () => import('@/views/admin/PlanView.vue'),
+        meta: {
+          title: '培训计划',
+          requiresAuth: true,
+          workspace: 'admin',
+          permission: 'admin:plan:view',
+        },
+      },
+      {
+        path: 'plans/:id',
+        name: 'admin-plan-detail',
+        component: () => import('@/views/admin/PlanDetailView.vue'),
+        meta: {
+          title: '培训计划详情',
+          requiresAuth: true,
+          workspace: 'admin',
+          permission: 'admin:plan:view',
+        },
+      },
+      {
         path: 'roles',
         name: 'admin-roles',
         component: () => import('@/views/admin/RoleView.vue'),

@@ -15,6 +15,7 @@ public class OssStorageProperties {
     private String objectPrefix = "road-training";
     private int uploadUrlTtlSeconds = 900;
     private int previewUrlTtlSeconds = 1800;
+    private int learningUrlTtlSeconds = 900;
     private int uploadSessionHours = 24;
     private long partSizeBytes = 8_388_608L;
     private long maxVideoBytes = 5_368_709_120L;
@@ -34,6 +35,8 @@ public class OssStorageProperties {
     public void setUploadUrlTtlSeconds(int value) { this.uploadUrlTtlSeconds = value; }
     public int getPreviewUrlTtlSeconds() { return previewUrlTtlSeconds; }
     public void setPreviewUrlTtlSeconds(int value) { this.previewUrlTtlSeconds = value; }
+    public int getLearningUrlTtlSeconds() { return learningUrlTtlSeconds; }
+    public void setLearningUrlTtlSeconds(int value) { this.learningUrlTtlSeconds = value; }
     public int getUploadSessionHours() { return uploadSessionHours; }
     public void setUploadSessionHours(int value) { this.uploadSessionHours = value; }
     public long getPartSizeBytes() { return partSizeBytes; }

@@ -29,6 +29,12 @@ public final class AdminPermissions {
     public static final String ROLE_DELETE = "admin:role:delete";
     public static final String ROLE_ASSIGN_PERMISSION = "admin:role:assign-permission";
     public static final String PERMISSION_VIEW = "admin:permission:view";
+    public static final String PLAN_VIEW = "admin:plan:view";
+    public static final String PLAN_CREATE = "admin:plan:create";
+    public static final String PLAN_UPDATE = "admin:plan:update";
+    public static final String PLAN_PUBLISH = "admin:plan:publish";
+    public static final String PLAN_CANCEL = "admin:plan:cancel";
+    public static final String STUDENT_LEARNING_STUDY = "student:learning:study";
 
     private AdminPermissions() {
     }

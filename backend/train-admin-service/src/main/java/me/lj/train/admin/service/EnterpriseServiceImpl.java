@@ -182,11 +182,13 @@ public class EnterpriseServiceImpl extends AdminServiceSupport implements Enterp
                 RoleEntity studentRole = createBuiltInRole(
                         enterpriseId, AdminConstants.ROLE_STUDENT, "学员", "企业内置学员角色",
                         operator.getUserId());
-                PermissionEntity studentPermission = permissionMapper.selectOneByQuery(QueryWrapper.create()
-                        .where(PERMISSION.PERMISSION_CODE.eq("student:workspace:view")));
-                if (studentPermission != null) {
-                    insertRolePermissions(
-                            studentRole.getId(), Collections.singletonList(studentPermission.getId()));
+                List<Long> studentPermissionIds = permissionMapper.selectListByQuery(QueryWrapper.create()
+                                .where(PERMISSION.PERMISSION_CODE.likeRight("student:")))
+                        .stream()
+                        .map(PermissionEntity::getId)
+                        .collect(Collectors.toList());
+                if (!studentPermissionIds.isEmpty()) {
+                    insertRolePermissions(studentRole.getId(), studentPermissionIds);
                 }
             }
 

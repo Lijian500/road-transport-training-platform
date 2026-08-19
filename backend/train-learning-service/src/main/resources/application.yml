@@ -34,9 +34,23 @@ spring:
     port: ${RABBITMQ_PORT:5672}
     username: ${RABBITMQ_USERNAME:train}
     password: ${RABBITMQ_PASSWORD:train}
+    publisher-confirm-type: correlated
   flyway:
     enabled: ${FLYWAY_ENABLED:true}
     locations: classpath:db/migration
+
+mybatis-flex:
+  configuration:
+    map-underscore-to-camel-case: true
+
+learning:
+  session-idle-hours: ${LEARNING_SESSION_IDLE_HOURS:24}
+  timeout-scan-interval-ms: ${LEARNING_TIMEOUT_SCAN_INTERVAL_MS:5000}
+  outbox-poll-interval-ms: ${LEARNING_OUTBOX_POLL_INTERVAL_MS:1000}
+  outbox-batch-size: ${LEARNING_OUTBOX_BATCH_SIZE:100}
+  outbox-max-retries: ${LEARNING_OUTBOX_MAX_RETRIES:10}
+  mq:
+    enabled: ${LEARNING_MQ_ENABLED:true}
 
 dubbo:
   enabled: ${DUBBO_ENABLED:true}

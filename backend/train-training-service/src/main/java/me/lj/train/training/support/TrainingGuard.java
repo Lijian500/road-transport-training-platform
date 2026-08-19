@@ -6,7 +6,7 @@ import me.lj.train.common.security.context.UserContext;
 import me.lj.train.common.security.model.LoginUser;
 
 /**
- * 课程服务权限、租户范围及基础格式校验。
+ * 培训服务权限、租户范围及基础格式校验。
  */
 public final class TrainingGuard {
 
@@ -14,17 +14,24 @@ public final class TrainingGuard {
     }
 
     public static Long requireEnterprisePermission(String permission) {
+        return requireEnterpriseAnyPermission(permission);
+    }
+
+    /** 校验企业账号至少具备一个候选权限。 */
+    public static Long requireEnterpriseAnyPermission(String... permissions) {
         LoginUser loginUser = UserContext.require();
         if (loginUser.isMustChangePassword()) {
             throw new BusinessException(AppErrorCode.PASSWORD_CHANGE_REQUIRED);
         }
         if (loginUser.isPlatformAdmin() || loginUser.getEnterpriseId() == null) {
-            throw new BusinessException(AppErrorCode.DATA_SCOPE_VIOLATION, "平台账号不能操作企业课程");
+            throw new BusinessException(AppErrorCode.DATA_SCOPE_VIOLATION, "平台账号不能操作企业培训数据");
         }
-        if (!loginUser.hasPermission(permission)) {
-            throw new BusinessException(AppErrorCode.FORBIDDEN);
+        for (String permission : permissions) {
+            if (loginUser.hasPermission(permission)) {
+                return loginUser.getEnterpriseId();
+            }
         }
-        return loginUser.getEnterpriseId();
+        throw new BusinessException(AppErrorCode.FORBIDDEN);
     }
 
     public static void checkEnterprise(Long actualEnterpriseId, Long expectedEnterpriseId) {

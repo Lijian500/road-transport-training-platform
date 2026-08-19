@@ -45,7 +45,23 @@ public enum AppErrorCode implements ErrorCode {
     UPLOAD_SESSION_INVALID("T1103", "上传会话状态无效或已过期", 409),
     STORAGE_OPERATION_FAILED("T1104", "对象存储操作失败", 502),
     STORAGE_OBJECT_INVALID("T1105", "上传文件校验失败", 400),
-    UPLOAD_FILE_INVALID("T1106", "上传文件信息不符合要求", 400);
+    UPLOAD_FILE_INVALID("T1106", "上传文件信息不符合要求", 400),
+
+    PLAN_NOT_FOUND("T1201", "培训计划不存在", 404),
+    PLAN_STATE_INVALID("T1202", "当前培训计划状态不允许该操作", 409),
+    PLAN_PUBLISH_INVALID("T1203", "培训计划不满足发布条件", 409),
+    PLAN_PARTICIPANT_INVALID("T1204", "参训学员信息无效", 400),
+    STUDENT_TASK_NOT_FOUND("T1205", "培训任务不存在", 404),
+
+    LEARNING_ACCESS_DENIED("L3001", "当前培训任务不允许学习", 403),
+    LEARNING_SESSION_NOT_FOUND("L3002", "学习会话不存在", 404),
+    LEARNING_SESSION_CONFLICT("L3003", "已有其他活动学习会话", 409),
+    LEARNING_SESSION_STATE_INVALID("L3004", "当前学习状态不允许该操作", 409),
+    LEARNING_EVENT_SEQUENCE_INVALID("L3005", "学习事件序号无效，请同步服务端状态", 409),
+    LEARNING_COURSEWARE_LOCKED("L3006", "请先完成前一个课件", 409),
+    LEARNING_POSITION_INVALID("L3007", "视频进度校验失败", 409),
+    LEARNING_SESSION_STALE("L3008", "学习会话已失效，请重新进入课程", 409),
+    LEARNING_PLAYBACK_UNAVAILABLE("L3009", "视频暂时无法播放", 503);
 
     private final String code;
     private final String message;

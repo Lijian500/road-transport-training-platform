@@ -38,6 +38,12 @@ const menus = [
     audience: 'enterprise',
   },
   {
+    path: '/admin/plans',
+    label: '培训计划',
+    permission: 'admin:plan:view',
+    audience: 'enterprise',
+  },
+  {
     path: '/admin/roles',
     label: '角色管理',
     permission: 'admin:role:view',

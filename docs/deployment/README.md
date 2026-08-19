@@ -24,10 +24,11 @@ Bucket配置要求：
 - 读写权限设为私有；生产环境建议使用仅允许目标Bucket必要对象操作的RAM子账号；
 - CORS来源只填写实际管理端域名，开发环境可另加`http://localhost:5173`；
 - 允许方法为`GET`、`HEAD`、`PUT`，允许请求头按OSS控制台使用`*`或签名实际请求头；
-- 暴露响应头`ETag`，缓存预检响应；禁止把Bucket设为公共读；
+- 暴露响应头`ETag`、`Content-Length`、`Content-Range`和`Accept-Ranges`，缓存预检响应；
+  学员播放需要允许`Range`请求；禁止把Bucket设为公共读；
 - 建议配置未完成分片生命周期规则作为服务端定时清理之外的兜底。
 
-固定默认值为8 MiB分片、上传签名15分钟、预览签名30分钟、会话24小时、视频最大
+固定默认值为8 MiB分片、上传签名15分钟、管理预览30分钟、学员播放15分钟、上传会话24小时、视频最大
 5 GiB、封面最大5 MiB。修改大小或TTL时只调整服务环境变量，前端通过能力接口读取，
 无需另行配置。本期不启用CDN、云点播或转码。
 
@@ -76,15 +77,17 @@ APP_BOOTSTRAP_ADMIN_DISPLAY_NAME=<显示名称>
 
 ## 本地启动顺序
 
-1. 启动MySQL、Redis和Nacos；
+1. 启动MySQL、Redis、RabbitMQ和Nacos；
 2. 启动`train-admin-service`（HTTP 8091、Dubbo 20891），Flyway自动迁移管理库；
 3. 启动`train-training-service`（HTTP 8092、Dubbo 20892），Flyway自动迁移培训库；
-4. 启动`train-web-api`（8081）；
-5. 启动`train-gateway`（8080）；
-6. 在`frontend`执行`pnpm dev`，访问`http://localhost:5173`。
+4. 启动`train-learning-service`（HTTP 8093、Dubbo 20893），Flyway自动迁移学习库；
+5. 启动`train-web-api`（8081）；
+6. 启动`train-gateway`（8080）；
+7. 在`frontend`执行`pnpm dev`，访问`http://localhost:5173`。
 
-三个Java应用必须使用一致的`JWT_ISSUER`和Redis配置。Admin Service与Web API
-通过Nacos中的Dubbo注册发现，默认地址为`127.0.0.1:8848`。
+各Java应用必须使用一致的`JWT_ISSUER`、Redis和RabbitMQ配置。Admin、Training、Learning
+Service与Web API通过Nacos中的Dubbo注册发现，默认地址为`127.0.0.1:8848`。RabbitMQ
+不可用时学习进度仍写入学习库，Outbox保留待投递事件，恢复后继续同步培训任务状态。
 
 ## 验证命令
 

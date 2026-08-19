@@ -53,10 +53,15 @@ training:
       object-prefix: ${OSS_OBJECT_PREFIX:road-training}
       upload-url-ttl-seconds: ${OSS_UPLOAD_URL_TTL_SECONDS:900}
       preview-url-ttl-seconds: ${OSS_PREVIEW_URL_TTL_SECONDS:1800}
+      learning-url-ttl-seconds: ${OSS_LEARNING_URL_TTL_SECONDS:900}
       upload-session-hours: ${OSS_UPLOAD_SESSION_HOURS:24}
       part-size-bytes: ${OSS_PART_SIZE_BYTES:8388608}
       max-video-bytes: ${OSS_MAX_VIDEO_BYTES:5368709120}
       max-cover-bytes: ${OSS_MAX_COVER_BYTES:5242880}
+
+learning:
+  mq:
+    enabled: ${LEARNING_MQ_ENABLED:true}
 
 dubbo:
   enabled: ${DUBBO_ENABLED:true}

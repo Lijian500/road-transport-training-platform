@@ -253,6 +253,33 @@ class AdminMapperIntegrationTest {
     }
 
     @Test
+    void shouldMigratePlanAndStudentTaskPermissionCatalog() {
+        List<PermissionEntity> planPermissions = permissionMapper.selectListByQuery(
+                QueryWrapper.create()
+                        .where(PERMISSION.PERMISSION_CODE.likeRight("admin:plan"))
+                        .orderBy(PERMISSION.SORT_ORDER.asc()));
+        PermissionEntity studentTask = permissionMapper.selectOneByQuery(QueryWrapper.create()
+                .where(PERMISSION.PERMISSION_CODE.eq("student:plan:view")));
+        PermissionEntity studentLearning = permissionMapper.selectOneByQuery(QueryWrapper.create()
+                .where(PERMISSION.PERMISSION_CODE.eq("student:learning:study")));
+
+        assertThat(planPermissions)
+                .extracting(PermissionEntity::getPermissionCode)
+                .containsExactly(
+                        "admin:plan:view",
+                        "admin:plan:create",
+                        "admin:plan:update",
+                        "admin:plan:publish",
+                        "admin:plan:cancel");
+        assertThat(planPermissions).allSatisfy(permission ->
+                assertThat(permission.getPermissionScope()).isEqualTo("ENTERPRISE"));
+        assertThat(studentTask).isNotNull();
+        assertThat(studentTask.getPermissionScope()).isEqualTo("COMMON");
+        assertThat(studentLearning).isNotNull();
+        assertThat(studentLearning.getPermissionScope()).isEqualTo("COMMON");
+    }
+
+    @Test
     void shouldRollbackChangesAcrossMultipleMappers() {
         long enterpriseId = 510_000L;
         long userId = 512_000L;

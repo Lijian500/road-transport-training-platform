@@ -5,6 +5,7 @@ import me.lj.train.common.core.result.AppErrorCode;
 import me.lj.train.common.security.context.UserContext;
 import me.lj.train.common.security.model.LoginUser;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -42,6 +43,23 @@ public final class AdminGuard {
         LoginUser loginUser = requirePermission(permission);
         if (loginUser.getEnterpriseId() == null) {
             throw new BusinessException(AppErrorCode.DATA_SCOPE_VIOLATION);
+        }
+        return loginUser.getEnterpriseId();
+    }
+
+    /**
+     * 要求当前企业账号至少拥有一项指定权限。
+     */
+    public static Long requireEnterpriseAnyPermission(String... permissions) {
+        LoginUser loginUser = UserContext.require();
+        if (loginUser.isMustChangePassword()) {
+            throw new BusinessException(AppErrorCode.PASSWORD_CHANGE_REQUIRED);
+        }
+        if (loginUser.getEnterpriseId() == null) {
+            throw new BusinessException(AppErrorCode.DATA_SCOPE_VIOLATION);
+        }
+        if (permissions == null || Arrays.stream(permissions).noneMatch(loginUser::hasPermission)) {
+            throw new BusinessException(AppErrorCode.FORBIDDEN);
         }
         return loginUser.getEnterpriseId();
     }
