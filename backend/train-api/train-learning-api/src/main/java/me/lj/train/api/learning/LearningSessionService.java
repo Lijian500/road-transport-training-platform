@@ -1,5 +1,6 @@
 package me.lj.train.api.learning;
 
+import me.lj.train.api.learning.LearningModels.BindSessionCommand;
 import me.lj.train.api.learning.LearningModels.CourseProgressView;
 import me.lj.train.api.learning.LearningModels.LearningEventResultView;
 import me.lj.train.api.learning.LearningModels.LearningSessionView;
@@ -21,6 +22,8 @@ public interface LearningSessionService {
     Result<CourseProgressView> getCourse(Long planId, Long planCourseId);
 
     Result<LearningSessionView> openSession(OpenSessionCommand command);
+
+    Result<LearningSessionView> bindSession(BindSessionCommand command);
 
     Result<LearningSessionView> getActiveSession();
 

@@ -3,6 +3,7 @@ package me.lj.train.learning.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mybatisflex.core.query.QueryWrapper;
+import me.lj.train.api.learning.LearningModels.BindSessionCommand;
 import me.lj.train.api.learning.LearningModels.CourseProgressView;
 import me.lj.train.api.learning.LearningModels.LearningEventResultView;
 import me.lj.train.api.learning.LearningModels.LearningSessionView;
@@ -71,6 +72,8 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
 
     private static final Set<String> ACTIVE_STATUSES = Set.of(
             CREATED, SIGNED_IN, STUDYING, PAUSED);
+    private static final Set<String> BINDABLE_STATUSES = Set.of(
+            CREATED, SIGNED_IN, STUDYING, PAUSED, SESSION_COMPLETED);
     private static final Set<String> EVENT_TYPES = Set.of(
             "SIGN_IN", "PLAY", "PROGRESS", "PAUSE", "SIGN_OUT");
 
@@ -193,6 +196,27 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
             StudySessionEntity session = activeSession(
                     user.getEnterpriseId(), user.getUserId(), false);
             return session == null ? null : toSessionView(session);
+        });
+    }
+
+    @Override
+    public Result<LearningSessionView> bindSession(BindSessionCommand command) {
+        return execute(() -> {
+            LoginUser user = LearningGuard.requireStudent();
+            if (command == null) {
+                throw new BusinessException(AppErrorCode.PARAM_INVALID);
+            }
+            String clientInstanceId = requireIdentifier(
+                    command.clientInstanceId(), "客户端实例ID");
+            StudySessionEntity session = requireOwnedSession(
+                    command.sessionId(), user.getEnterpriseId(), user.getUserId(), false);
+            if (!session.getClientInstanceId().equals(clientInstanceId)) {
+                throw new BusinessException(AppErrorCode.LEARNING_SESSION_STALE);
+            }
+            if (!BINDABLE_STATUSES.contains(session.getStatus())) {
+                throw new BusinessException(AppErrorCode.LEARNING_SESSION_STALE);
+            }
+            return toSessionView(session);
         });
     }
 

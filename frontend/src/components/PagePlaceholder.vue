@@ -18,15 +18,15 @@ defineProps<{
 .placeholder {
   max-width: 760px;
   padding: 40px;
-  background: #fff;
-  border: 1px solid #e5eaf2;
-  border-radius: 16px;
-  box-shadow: 0 14px 40px rgb(23 32 51 / 7%);
+  background: linear-gradient(145deg, #fff, #f8faff);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-md);
 }
 
 .placeholder__eyebrow {
   margin: 0 0 10px;
-  color: #155eef;
+  color: var(--app-primary);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -38,7 +38,7 @@ h2 {
 }
 
 p {
-  color: #5f6c85;
+  color: var(--app-text-secondary);
   line-height: 1.75;
 }
 </style>

@@ -35,5 +35,6 @@ class JwtTokenServiceTest {
         assertThat(claims.getEnterpriseId()).isEqualTo(2001L);
         assertThat(claims.getSessionId()).isEqualTo("session-1");
         assertThat(claims.getLoginVersion()).isEqualTo(3L);
+        assertThat(claims.getExpiresAt()).isAfter(java.time.Instant.now());
     }
 }

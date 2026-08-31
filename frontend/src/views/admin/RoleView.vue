@@ -16,6 +16,7 @@ import {
 } from '@/api/admin'
 import { ApiError } from '@/api/http'
 import AppDialog from '@/components/AppDialog/AppDialog.vue'
+import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
 import PermissionButton from '@/components/PermissionButton/PermissionButton.vue'
 import StatusTag from '@/components/StatusTag/StatusTag.vue'
@@ -194,17 +195,23 @@ onMounted(load)
       @size-change="changePageSize"
     >
       <template #search>
-        <el-input
-          v-model="query.keyword"
-          clearable
-          placeholder="角色名称/编码"
-          @keyup.enter="load"
-        />
-        <el-select v-model="query.status" clearable placeholder="全部状态">
-          <el-option label="启用" value="ENABLED" />
-          <el-option label="禁用" value="DISABLED" />
-        </el-select>
-        <el-button type="primary" @click="search">查询</el-button>
+        <AppFilterField label="角色关键词">
+          <el-input
+            v-model="query.keyword"
+            clearable
+            placeholder="名称 / 编码"
+            @keyup.enter="load"
+          />
+        </AppFilterField>
+        <AppFilterField label="角色状态">
+          <el-select v-model="query.status" clearable placeholder="全部">
+            <el-option label="启用" value="ENABLED" />
+            <el-option label="禁用" value="DISABLED" />
+          </el-select>
+        </AppFilterField>
+        <div class="app-filter-actions">
+          <el-button type="primary" @click="search">查询</el-button>
+        </div>
       </template>
       <template #actions>
         <PermissionButton permission="admin:role:create" type="primary" @click="openCreate">

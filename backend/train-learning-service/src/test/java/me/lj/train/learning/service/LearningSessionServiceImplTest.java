@@ -2,6 +2,7 @@ package me.lj.train.learning.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mybatisflex.core.query.QueryWrapper;
+import me.lj.train.api.learning.LearningModels.BindSessionCommand;
 import me.lj.train.api.learning.LearningModels.LearningEventResultView;
 import me.lj.train.api.learning.LearningModels.OpenSessionCommand;
 import me.lj.train.api.learning.LearningModels.SubmitEventCommand;
@@ -125,6 +126,49 @@ class LearningSessionServiceImplTest {
         assertThat(captor.getValue().getSortOrder()).isEqualTo(1);
         assertThat(captor.getValue().getCreatedAt())
                 .isEqualTo(LocalDateTime.of(2026, 8, 19, 16, 0));
+    }
+
+    @Test
+    void shouldBindCompletedSessionForFinalSignOut() {
+        StudySessionEntity completed = session(101L, "browser-one", "COMPLETED");
+        when(sessionMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(completed);
+        when(progressManager.requireProgress(20L, 10L, 100L, 101L)).thenReturn(progress());
+
+        Result<?> result = service.bindSession(new BindSessionCommand(900L, "browser-one"));
+
+        assertThat(result.isSuccess()).isTrue();
+    }
+
+    @Test
+    void shouldRejectBindingAnotherBrowserInstance() {
+        when(sessionMapper.selectOneByQuery(any(QueryWrapper.class)))
+                .thenReturn(session(101L, "browser-one", "PAUSED"));
+
+        Result<?> result = service.bindSession(new BindSessionCommand(900L, "browser-two"));
+
+        assertThat(result.getCode()).isEqualTo(AppErrorCode.LEARNING_SESSION_STALE.getCode());
+        verifyNoInteractions(progressManager);
+    }
+
+    @Test
+    void shouldRejectBindingFinalSession() {
+        when(sessionMapper.selectOneByQuery(any(QueryWrapper.class)))
+                .thenReturn(session(101L, "browser-one", "SIGNED_OUT"));
+
+        Result<?> result = service.bindSession(new BindSessionCommand(900L, "browser-one"));
+
+        assertThat(result.getCode()).isEqualTo(AppErrorCode.LEARNING_SESSION_STALE.getCode());
+        verifyNoInteractions(progressManager);
+    }
+
+    @Test
+    void shouldRejectBindingSessionOwnedByAnotherUser() {
+        when(sessionMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(null);
+
+        Result<?> result = service.bindSession(new BindSessionCommand(900L, "browser-one"));
+
+        assertThat(result.getCode()).isEqualTo(AppErrorCode.LEARNING_SESSION_NOT_FOUND.getCode());
+        verifyNoInteractions(progressManager);
     }
 
     @Test

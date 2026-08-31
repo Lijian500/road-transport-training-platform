@@ -30,15 +30,29 @@ spring:
     port: ${RABBITMQ_PORT:5672}
     username: ${RABBITMQ_USERNAME:train}
     password: ${RABBITMQ_PASSWORD:train}
+  codec:
+    max-in-memory-size: ${REALTIME_MAX_MESSAGE_BYTES:16384}
 
 dubbo:
-  enabled: ${DUBBO_ENABLED:false}
+  enabled: ${DUBBO_ENABLED:true}
   application:
     name: ${spring.application.name}
   registry:
     address: nacos://${NACOS_SERVER_ADDR:127.0.0.1:8848}
   consumer:
     check: false
+
+app:
+  security:
+    issuer: ${JWT_ISSUER:road-transport-training}
+    public-key-path: ${JWT_PUBLIC_KEY_PATH:}
+  realtime:
+    allowed-origins: ${REALTIME_ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173}
+    heartbeat-interval-seconds: ${REALTIME_HEARTBEAT_INTERVAL_SECONDS:20}
+    connection-timeout-seconds: ${REALTIME_CONNECTION_TIMEOUT_SECONDS:60}
+    auth-recheck-seconds: ${REALTIME_AUTH_RECHECK_SECONDS:60}
+    max-message-bytes: ${REALTIME_MAX_MESSAGE_BYTES:16384}
+    ack-timeout-seconds: ${REALTIME_ACK_TIMEOUT_SECONDS:10}
 
 management:
   endpoints:

@@ -14,6 +14,7 @@ import {
 } from '@/api/training'
 import { ApiError } from '@/api/http'
 import AppDialog from '@/components/AppDialog/AppDialog.vue'
+import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
 import PermissionButton from '@/components/PermissionButton/PermissionButton.vue'
 
@@ -212,15 +213,21 @@ onMounted(load)
       @size-change="changePageSize"
     >
       <template #search>
-        <el-input v-model="query.keyword" clearable placeholder="计划名称" @keyup.enter="search" />
-        <el-select v-model="query.status" clearable placeholder="全部状态">
-          <el-option label="草稿" value="DRAFT" />
-          <el-option label="待开始" value="PUBLISHED" />
-          <el-option label="进行中" value="IN_PROGRESS" />
-          <el-option label="已结束" value="FINISHED" />
-          <el-option label="已取消" value="CANCELLED" />
-        </el-select>
-        <el-button type="primary" @click="search">查询</el-button>
+        <AppFilterField label="计划名称">
+          <el-input v-model="query.keyword" clearable placeholder="请输入" @keyup.enter="search" />
+        </AppFilterField>
+        <AppFilterField label="计划状态">
+          <el-select v-model="query.status" clearable placeholder="全部">
+            <el-option label="草稿" value="DRAFT" />
+            <el-option label="待开始" value="PUBLISHED" />
+            <el-option label="进行中" value="IN_PROGRESS" />
+            <el-option label="已结束" value="FINISHED" />
+            <el-option label="已取消" value="CANCELLED" />
+          </el-select>
+        </AppFilterField>
+        <div class="app-filter-actions">
+          <el-button type="primary" @click="search">查询</el-button>
+        </div>
       </template>
       <template #actions>
         <PermissionButton permission="admin:plan:create" type="primary" @click="openCreate">

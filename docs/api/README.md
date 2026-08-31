@@ -82,6 +82,25 @@ Dubbo或Java服务。签名响应只包含URL、HTTP方法、必须请求头和�
 接收时间与确认位置计算有效学时，课程内课件严格顺序。播放签名先校验活动学习会话，
 再由培训服务校验任务、计划有效期和课件快照，响应不暴露Bucket、ObjectKey或密钥。
 
+## WebSocket实时学习协议
+
+同源端点为`/ws/learning`。Gateway完成Cookie JWT和Redis登录版本检查后，实时服务会再次
+精确校验`Origin`、Access Token签名、登录版本、企业归属、`student:learning:study`
+权限及强制改密状态。连接建立后必须依次发送`BIND_SESSION`和`SYNC_STATE`。
+
+统一信封字段为`type`、`requestId`、`studySessionId`、`seq`、`sentAt`和`payload`；业务ID
+使用字符串，`sentAt`使用ISO时间且不参与有效学时计算。客户端消息为
+`BIND_SESSION`、`HEARTBEAT`、`SYNC_STATE`、`SIGN_IN`、`PLAY`、`PROGRESS`、`PAUSE`和
+`SIGN_OUT`；服务端消息为`ACK`、`STATE_SYNC`、`PROGRESS_CONFIRMED`、`PONG`、`ERROR`
+和`SESSION_REPLACED`。
+
+`ERROR.payload`固定包含`code`、`message`、`retryable`和`resyncRequired`。学习RPC成功后
+先返回`ACK`，再以`PROGRESS_CONFIRMED`返回最终状态与有效学时。断线重发必须复用原
+`requestId`和`seq`；`L3005`要求先同步状态，过期进度及签到/播放不自动重放。实时通道
+不可用时播放器暂停并重连，不自动改走REST学习事件接口。单条消息上限16KB，心跳20秒、
+连接超时60秒；`4401`表示刷新HTTP会话后重连，`4403`表示登录版本或学习权限已失效，
+`4409`表示连接已被其他页面接管。
+
 组织接口沿用`/enterprises`、`EnterpriseService`和`enterprise_id`等技术标识以保持兼容，
 根组织业务性质由`organizationNature`区分企业和行管。新增组织必须传入`areaId`；企业
 只能选择区县，行管可以选择省、市或区县。列表响应包含`areaPath`用于省市区回显，
@@ -96,7 +115,8 @@ Dubbo或Java服务。签名响应只包含URL、HTTP方法、必须请求头和�
 ## Dubbo契约
 
 `train-admin-api`提供认证、根组织、部门、用户、角色权限和计划学员目录服务；
-`train-training-api`提供课程、对象存储、培训计划及当前学员任务服务与独立DTO。所有RPC
+`train-training-api`提供课程、对象存储、培训计划及当前学员任务服务与独立DTO；
+`train-learning-api`提供会话查询、`bindSession`、学习事件和播放授权。所有RPC
 返回明确泛型的`Result<T>`；无数据响应使用`Result<?>`，数据库实体不跨模块暴露。
 
 接口定义以代码为准。禁止在文档、响应体、日志或前端存储中记录真实令牌、账号

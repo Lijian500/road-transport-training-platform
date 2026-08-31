@@ -44,7 +44,7 @@ Bucket配置要求：
 覆盖。将绝对路径分别写入：
 
 - `JWT_PRIVATE_KEY_PATH`：仅`train-web-api`；
-- `JWT_PUBLIC_KEY_PATH`：`train-web-api`和`train-gateway`。
+- `JWT_PUBLIC_KEY_PATH`：`train-web-api`、`train-gateway`和`train-realtime-service`。
 
 生产环境必须由密钥管理系统挂载独立密钥，并设置`JWT_SECURE_COOKIE=true`。
 
@@ -82,12 +82,19 @@ APP_BOOTSTRAP_ADMIN_DISPLAY_NAME=<显示名称>
 3. 启动`train-training-service`（HTTP 8092、Dubbo 20892），Flyway自动迁移培训库；
 4. 启动`train-learning-service`（HTTP 8093、Dubbo 20893），Flyway自动迁移学习库；
 5. 启动`train-web-api`（8081）；
-6. 启动`train-gateway`（8080）；
-7. 在`frontend`执行`pnpm dev`，访问`http://localhost:5173`。
+6. 启动`train-realtime-service`（8082）；
+7. 启动`train-gateway`（8080）；
+8. 在`frontend`执行`pnpm dev`，访问`http://localhost:5173`。
 
 各Java应用必须使用一致的`JWT_ISSUER`、Redis和RabbitMQ配置。Admin、Training、Learning
 Service与Web API通过Nacos中的Dubbo注册发现，默认地址为`127.0.0.1:8848`。RabbitMQ
 不可用时学习进度仍写入学习库，Outbox保留待投递事件，恢复后继续同步培训任务状态。
+
+实时服务默认仅允许`http://localhost:5173`和`http://127.0.0.1:5173`握手。部署到其他
+域名时使用`REALTIME_ALLOWED_ORIGINS`配置精确来源列表，并按需设置
+`REALTIME_HEARTBEAT_INTERVAL_SECONDS`、`REALTIME_CONNECTION_TIMEOUT_SECONDS`、
+`REALTIME_AUTH_RECHECK_SECONDS`、`REALTIME_MAX_MESSAGE_BYTES`和
+`REALTIME_ACK_TIMEOUT_SECONDS`。阶段五按单实例运行，暂不支持跨节点连接替换。
 
 ## 验证命令
 

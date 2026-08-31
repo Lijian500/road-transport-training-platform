@@ -18,6 +18,12 @@ public final class LearningModels {
             String clientInstanceId) implements Serializable {
     }
 
+    /** WebSocket连接绑定已有学习会话的命令。 */
+    public record BindSessionCommand(
+            Long sessionId,
+            String clientInstanceId) implements Serializable {
+    }
+
     public record SubmitEventCommand(
             Long sessionId,
             String clientInstanceId,

@@ -29,6 +29,10 @@
             <artifactId>train-learning-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>me.lj.train</groupId>
+            <artifactId>train-admin-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>

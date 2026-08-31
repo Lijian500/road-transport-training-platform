@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 
 import { getStudentPlans, type PlanStatus, type StudentPlan } from '@/api/training'
 import { ApiError } from '@/api/http'
+import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
 
 const router = useRouter()
@@ -120,13 +121,17 @@ onMounted(load)
       @size-change="changePageSize"
     >
       <template #search>
-        <el-select v-model="query.status" clearable placeholder="全部状态">
-          <el-option label="待开始" value="PUBLISHED" />
-          <el-option label="进行中" value="IN_PROGRESS" />
-          <el-option label="已结束" value="FINISHED" />
-          <el-option label="已取消" value="CANCELLED" />
-        </el-select>
-        <el-button type="primary" @click="search">查询</el-button>
+        <AppFilterField label="计划状态">
+          <el-select v-model="query.status" clearable placeholder="全部">
+            <el-option label="待开始" value="PUBLISHED" />
+            <el-option label="进行中" value="IN_PROGRESS" />
+            <el-option label="已结束" value="FINISHED" />
+            <el-option label="已取消" value="CANCELLED" />
+          </el-select>
+        </AppFilterField>
+        <div class="app-filter-actions">
+          <el-button type="primary" @click="search">查询</el-button>
+        </div>
       </template>
       <el-table-column label="计划名称" min-width="200" prop="name" />
       <el-table-column label="培训周期" min-width="285">

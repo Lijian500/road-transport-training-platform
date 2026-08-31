@@ -13,6 +13,7 @@ import {
 } from '@/api/training'
 import { ApiError } from '@/api/http'
 import AppDialog from '@/components/AppDialog/AppDialog.vue'
+import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
 import PermissionButton from '@/components/PermissionButton/PermissionButton.vue'
 
@@ -187,18 +188,19 @@ onMounted(load)
       @size-change="changePageSize"
     >
       <template #search>
-        <el-input
-          v-model="query.keyword"
-          clearable
-          placeholder="课程名称"
-          @keyup.enter="search"
-        />
-        <el-select v-model="query.status" clearable placeholder="全部状态">
-          <el-option label="草稿" value="DRAFT" />
-          <el-option label="启用" value="ENABLED" />
-          <el-option label="已禁用" value="DISABLED" />
-        </el-select>
-        <el-button type="primary" @click="search">查询</el-button>
+        <AppFilterField label="课程名称">
+          <el-input v-model="query.keyword" clearable placeholder="请输入" @keyup.enter="search" />
+        </AppFilterField>
+        <AppFilterField label="课程状态">
+          <el-select v-model="query.status" clearable placeholder="全部">
+            <el-option label="草稿" value="DRAFT" />
+            <el-option label="启用" value="ENABLED" />
+            <el-option label="已禁用" value="DISABLED" />
+          </el-select>
+        </AppFilterField>
+        <div class="app-filter-actions">
+          <el-button type="primary" @click="search">查询</el-button>
+        </div>
       </template>
       <template #actions>
         <PermissionButton permission="admin:course:create" type="primary" @click="openCreate">
@@ -259,11 +261,7 @@ onMounted(load)
           <el-switch v-model="form.allowSeek" />
         </el-form-item>
         <el-form-item label="进度上报">
-          <el-input-number
-            v-model="form.progressReportIntervalSeconds"
-            :min="10"
-            :max="30"
-          />
+          <el-input-number v-model="form.progressReportIntervalSeconds" :min="10" :max="30" />
           <span class="form-unit">秒</span>
         </el-form-item>
         <el-form-item label="学时误差">

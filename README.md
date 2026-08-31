@@ -862,15 +862,14 @@ src/
 │  ├─ useAuth.ts
 │  ├─ usePermission.ts
 │  ├─ useStudySession.ts
-│  └─ useWebSocket.ts
+│  └─ useLearningRealtime.ts
 ├─ layouts/
 │  ├─ AdminLayout.vue
 │  └─ StudentLayout.vue
 ├─ realtime/
 │  ├─ client.ts
 │  ├─ protocol.ts
-│  ├─ reconnect.ts
-│  └─ handlers.ts
+│  └─ reconnect.ts
 ├─ router/
 │  ├─ index.ts
 │  ├─ admin.ts
@@ -1126,8 +1125,7 @@ stateDiagram-v2
     STUDYING --> DISCONNECTED: WebSocket断开
     PAUSED --> DISCONNECTED: WebSocket断开
     FACE_PENDING --> DISCONNECTED: WebSocket断开
-    DISCONNECTED --> PAUSED: 宽限期内重连并同步
-    DISCONNECTED --> TERMINATED: 超过断线宽限期
+    DISCONNECTED --> PAUSED: 重连同步或学习超时任务暂停
 
     STUDYING --> COMPLETED: 视频和规定学时均完成
     PAUSED --> SIGNED_OUT: 正常签退
@@ -1176,9 +1174,8 @@ wss://<domain>/ws/learning
   "seq": 12,
   "sentAt": "2026-07-29T10:30:00.123+08:00",
   "payload": {
-    "coursewareId": 1001,
-    "videoPositionSeconds": 320,
-    "playing": true
+    "coursewareSnapshotId": "1001",
+    "videoPositionMillis": 320000
   }
 }
 ```
@@ -1201,16 +1198,12 @@ wss://<domain>/ws/learning
 | 消息 | 用途 |
 |---|---|
 | `BIND_SESSION` | 把连接绑定到学习会话 |
+| `HEARTBEAT` | 保持连接，不写业务库、不累计学时 |
+| `SYNC_STATE` | 绑定或重连后请求当前状态 |
 | `SIGN_IN` | 学习签到 |
-| `START` | 开始播放 |
+| `PLAY` | 开始或手动恢复播放 |
 | `PROGRESS` | 上报播放位置 |
 | `PAUSE` | 主动暂停 |
-| `RESUME` | 恢复学习 |
-| `SEEK` | 视频位置发生跳转 |
-| `PAGE_HIDDEN` | 页面进入后台 |
-| `PAGE_VISIBLE` | 页面恢复可见 |
-| `HEARTBEAT` | 保持连接并报告基本状态 |
-| `SYNC_STATE` | 重连后请求当前状态 |
 | `SIGN_OUT` | 正常签退 |
 
 ### 12.4 服务端消息
@@ -1220,10 +1213,6 @@ wss://<domain>/ws/learning
 | `ACK` | 确认客户端事件 |
 | `STATE_SYNC` | 返回服务端当前状态 |
 | `PROGRESS_CONFIRMED` | 返回已确认进度和有效学时 |
-| `FACE_CHECK_REQUIRED` | 发起人脸抽验 |
-| `FACE_CHECK_RESULT` | 返回抽验结果 |
-| `FORCE_PAUSE` | 服务端强制暂停 |
-| `FORCE_SIGN_OUT` | 服务端强制签退 |
 | `SESSION_REPLACED` | 账号在其他连接开始学习 |
 | `ERROR` | 协议或业务错误 |
 | `PONG` | 应用层心跳响应 |
@@ -1236,10 +1225,18 @@ wss://<domain>/ws/learning
 |---|---:|---|
 | 心跳间隔 | 20秒 | 可通过Nacos调整 |
 | 连接超时 | 60秒 | 超过后视为断开 |
+| 授权复查 | 60秒 | 复查登录版本、权限和强制改密状态 |
+| ACK超时 | 10秒 | 超时重连后原请求ID和序号重发 |
 | 进度上报间隔 | 10至30秒 | 按课程配置 |
-| 断线宽限期 | 60至120秒 | 宽限期内允许恢复 |
 | 单条消息大小 | 不超过16KB | 禁止通过WebSocket传大文件 |
 | 重连退避 | 1、2、5、10秒 | 达到上限后维持10秒 |
+
+学习事件必须在`BIND_SESSION -> SYNC_STATE`完成后发送。同一时刻只保留一个待确认
+学习事件；断线重发复用原`requestId`和`seq`。连接中断时前端立即暂停播放器且不回退
+REST事件接口；同步到`STUDYING`时先提交一次`PAUSE`，由用户手动恢复。当前连接注册表
+按单实例实现，同一用户、学习会话和浏览器实例的新连接以`4409`替换旧连接；跨节点
+连接替换留待后续扩展。Access Token到期使用`4401`关闭并由前端刷新HTTP会话后重连；
+登录版本、学习权限或强制改密状态失效使用`4403`关闭。
 
 ## 13. 数据库设计
 
@@ -1807,6 +1804,8 @@ Docker Compose启动：
 验收标准：不依赖WebSocket也能通过接口测试完整学习状态转换。
 
 ### 阶段五：WebSocket实时学习
+
+当前实现状态：代码与自动化验证已完成，Redis、Nacos、Dubbo和真实浏览器断网联调待执行。
 
 - 实时服务；
 - Gateway WebSocket路由；

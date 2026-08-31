@@ -7,6 +7,7 @@ import { useAuthStore } from '@/stores/auth'
 const router = useRouter()
 const authStore = useAuthStore()
 
+/** 退出当前登录并返回登录页。 */
 async function logout() {
   await ElMessageBox.confirm('确定退出当前账号吗？', '退出登录', { type: 'warning' })
   await authStore.logout()
@@ -17,9 +18,12 @@ async function logout() {
 <template>
   <div class="workspace">
     <header class="workspace__header">
-      <div>
-        <span>道路运输在线培训</span>
-        <strong>学员学习中心</strong>
+      <div class="workspace__brand">
+        <span class="workspace__brand-mark">学</span>
+        <span class="workspace__brand-copy">
+          <small>道路运输在线培训</small>
+          <strong>学员学习中心</strong>
+        </span>
       </div>
       <nav aria-label="学员端导航">
         <RouterLink to="/student/plans">我的培训任务</RouterLink>
@@ -38,30 +42,58 @@ async function logout() {
 <style scoped>
 .workspace {
   min-height: 100vh;
-  background: linear-gradient(180deg, #edf4ff 0, #f7f9fc 320px);
+  background:
+    radial-gradient(circle at 8% 0, rgb(70 107 224 / 12%), transparent 26rem),
+    linear-gradient(180deg, #f0f4ff 0, var(--app-bg) 360px);
 }
 
 .workspace__header {
   display: flex;
+  position: sticky;
+  z-index: 20;
+  top: 0;
   align-items: center;
   justify-content: space-between;
-  padding: 22px clamp(24px, 6vw, 80px);
-  background: rgb(255 255 255 / 88%);
-  border-bottom: 1px solid #dfe7f3;
+  min-height: 76px;
+  padding: 14px clamp(24px, 6vw, 80px);
+  background: rgb(255 255 255 / 86%);
+  border-bottom: 1px solid rgb(227 231 240 / 90%);
+  box-shadow: 0 8px 28px rgb(29 44 83 / 4%);
+  backdrop-filter: blur(18px);
 }
 
-.workspace__header div {
+.workspace__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.workspace__brand-mark {
   display: grid;
-  gap: 4px;
+  width: 42px;
+  height: 42px;
+  color: #fff;
+  background: linear-gradient(145deg, #5475eb, var(--app-primary));
+  border-radius: 13px;
+  box-shadow: 0 8px 20px rgb(49 86 217 / 22%);
+  font-size: 18px;
+  font-weight: 800;
+  place-items: center;
 }
 
-.workspace__header span {
-  color: #6a7891;
+.workspace__brand-copy {
+  display: grid;
+  gap: 3px;
+}
+
+.workspace__brand-copy small {
+  color: var(--app-text-muted);
   font-size: 12px;
 }
 
-.workspace__header strong {
-  font-size: 20px;
+.workspace__brand-copy strong {
+  color: var(--app-text);
+  font-size: 18px;
 }
 
 nav {
@@ -69,26 +101,39 @@ nav {
   gap: 8px;
 }
 
-nav a {
+nav a,
+nav button {
   padding: 9px 12px;
-  border-radius: 8px;
+  border-radius: 9px;
+  font-weight: 600;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
 }
 
 nav button {
-  padding: 9px 12px;
-  color: #5f6c85;
+  color: var(--app-text-secondary);
   background: transparent;
   border: 0;
   cursor: pointer;
 }
 
+nav a:hover,
+nav button:hover {
+  color: var(--app-primary);
+  background: var(--app-primary-soft);
+}
+
 nav a.router-link-active {
-  color: #155eef;
-  background: #eaf1ff;
+  color: var(--app-primary);
+  background: var(--app-primary-soft);
 }
 
 .workspace__content {
-  padding: clamp(32px, 6vw, 80px);
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: clamp(32px, 5vw, 64px) clamp(20px, 6vw, 80px);
 }
 
 @media (width <= 640px) {
@@ -96,6 +141,16 @@ nav a.router-link-active {
     align-items: flex-start;
     flex-direction: column;
     gap: 16px;
+  }
+
+  nav {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  nav a,
+  nav button {
+    flex: 0 0 auto;
   }
 }
 </style>

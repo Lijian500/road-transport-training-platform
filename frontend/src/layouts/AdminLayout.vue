@@ -84,12 +84,16 @@ async function logout() {
   <div class="workspace">
     <aside class="workspace__sidebar">
       <div class="workspace__brand">
-        <span>道路运输在线培训</span>
-        <strong>管理工作台</strong>
+        <span class="workspace__brand-mark">路</span>
+        <span class="workspace__brand-copy">
+          <small>道路运输在线培训</small>
+          <strong>管理工作台</strong>
+        </span>
       </div>
       <nav aria-label="管理端导航">
         <RouterLink v-for="menu in visibleMenus" :key="menu.path" :to="menu.path">
-          {{ menu.label }}
+          <span class="workspace__nav-dot" />
+          <span>{{ menu.label }}</span>
         </RouterLink>
       </nav>
       <RouterLink
@@ -97,16 +101,26 @@ async function logout() {
         class="workspace__switch"
         to="/student"
       >
-        切换到学员端
+        <span>切换到学员端</span>
+        <strong>→</strong>
       </RouterLink>
     </aside>
     <section class="workspace__main">
       <header class="workspace__header">
-        <div>
+        <div class="workspace__context">
+          <small>当前工作空间</small>
           <strong>{{ authStore.session?.enterpriseName || '平台管理中心' }}</strong>
-          <span>{{ authStore.session?.displayName }}（{{ authStore.session?.username }}）</span>
         </div>
-        <el-button text @click="logout">退出登录</el-button>
+        <div class="workspace__account">
+          <span class="workspace__avatar">
+            {{ authStore.session?.displayName?.slice(0, 1) || '管' }}
+          </span>
+          <span class="workspace__account-copy">
+            <strong>{{ authStore.session?.displayName }}</strong>
+            <small>{{ authStore.session?.username }}</small>
+          </span>
+          <el-button plain @click="logout">退出登录</el-button>
+        </div>
       </header>
       <main class="workspace__content">
         <RouterView />
@@ -119,7 +133,8 @@ async function logout() {
 .workspace {
   display: grid;
   min-height: 100vh;
-  grid-template-columns: 240px minmax(0, 1fr);
+  background: transparent;
+  grid-template-columns: 256px minmax(0, 1fr);
 }
 
 .workspace__sidebar {
@@ -127,47 +142,116 @@ async function logout() {
   position: sticky;
   top: 0;
   flex-direction: column;
-  gap: 28px;
+  gap: 26px;
   height: 100vh;
-  padding: 28px 22px;
+  padding: 24px 18px;
   color: #fff;
-  background: #142a4c;
+  background:
+    radial-gradient(circle at 15% 4%, rgb(116 142 237 / 26%), transparent 16rem),
+    linear-gradient(180deg, #182449 0%, #101a38 100%);
+  box-shadow: 12px 0 35px rgb(20 30 63 / 10%);
 }
 
 .workspace__brand {
+  display: flex;
+  align-items: center;
+  padding: 2px 8px 18px;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+  gap: 12px;
+}
+
+.workspace__brand-mark {
   display: grid;
-  gap: 6px;
+  flex: 0 0 42px;
+  height: 42px;
+  color: #fff;
+  background: linear-gradient(145deg, #6885f2, #365bd9);
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 13px;
+  box-shadow: 0 10px 22px rgb(13 27 79 / 35%);
+  font-size: 19px;
+  font-weight: 800;
+  place-items: center;
 }
 
-.workspace__brand span {
-  color: #a9b9d3;
+.workspace__brand-copy {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.workspace__brand-copy small {
+  overflow: hidden;
+  color: #aebbe1;
   font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.workspace__brand strong {
-  font-size: 22px;
+.workspace__brand-copy strong {
+  font-size: 18px;
+  letter-spacing: 0.02em;
 }
 
 nav {
   display: grid;
-  gap: 6px;
+  gap: 5px;
 }
 
 nav a,
 .workspace__switch {
-  display: block;
-  padding: 11px 12px;
-  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 11px 13px;
+  border-radius: 10px;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+nav a {
+  color: #c5cee8;
+  gap: 11px;
+}
+
+nav a:hover {
+  color: #fff;
+  background: rgb(255 255 255 / 7%);
+  transform: translateX(2px);
 }
 
 nav a.router-link-exact-active {
-  background: rgb(255 255 255 / 12%);
+  color: #fff;
+  background: linear-gradient(90deg, rgb(92 122 234 / 44%), rgb(92 122 234 / 18%));
+  box-shadow: inset 3px 0 #8ca3ff;
+}
+
+.workspace__nav-dot {
+  width: 7px;
+  height: 7px;
+  background: currentColor;
+  border-radius: 50%;
+  opacity: 0.55;
+}
+
+nav a.router-link-exact-active .workspace__nav-dot {
+  box-shadow: 0 0 0 4px rgb(140 163 255 / 16%);
+  opacity: 1;
 }
 
 .workspace__switch {
   margin-top: auto;
-  color: #a9b9d3;
+  justify-content: space-between;
+  color: #bdc8e7;
+  background: rgb(255 255 255 / 6%);
+  border: 1px solid rgb(255 255 255 / 8%);
   font-size: 13px;
+}
+
+.workspace__switch:hover {
+  color: #fff;
+  background: rgb(255 255 255 / 10%);
 }
 
 .workspace__main {
@@ -176,26 +260,66 @@ nav a.router-link-exact-active {
 
 .workspace__header {
   display: flex;
+  position: sticky;
+  z-index: 20;
+  top: 0;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
-  padding: 0 clamp(24px, 4vw, 48px);
-  background: #fff;
-  border-bottom: 1px solid #e5eaf2;
+  height: 74px;
+  padding: 0 clamp(24px, 3.5vw, 48px);
+  background: rgb(255 255 255 / 88%);
+  border-bottom: 1px solid rgb(227 231 240 / 88%);
+  backdrop-filter: blur(18px);
 }
 
-.workspace__header div {
+.workspace__context,
+.workspace__account-copy {
   display: grid;
   gap: 3px;
 }
 
-.workspace__header span {
-  color: #7b879b;
+.workspace__context small,
+.workspace__account-copy small {
+  color: var(--app-text-muted);
   font-size: 12px;
 }
 
+.workspace__context strong {
+  font-size: 16px;
+}
+
+.workspace__account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.workspace__avatar {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  color: #fff;
+  background: linear-gradient(145deg, #5475eb, var(--app-primary));
+  border-radius: 11px;
+  box-shadow: 0 7px 16px rgb(49 86 217 / 20%);
+  font-size: 14px;
+  font-weight: 700;
+  place-items: center;
+}
+
+.workspace__account-copy {
+  min-width: 96px;
+}
+
+.workspace__account-copy strong {
+  font-size: 13px;
+}
+
 .workspace__content {
-  padding: clamp(24px, 4vw, 48px);
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: clamp(24px, 3.5vw, 48px);
 }
 
 @media (width <= 760px) {
@@ -205,12 +329,38 @@ nav a.router-link-exact-active {
 
   .workspace__sidebar {
     position: static;
+    gap: 16px;
     height: auto;
+    padding-bottom: 16px;
   }
 
   nav {
     display: flex;
     overflow-x: auto;
+  }
+
+  nav a {
+    flex: 0 0 auto;
+  }
+
+  .workspace__switch {
+    margin-top: 0;
+  }
+}
+
+@media (width <= 560px) {
+  .workspace__header {
+    height: 66px;
+    padding-inline: 18px;
+  }
+
+  .workspace__context small,
+  .workspace__account-copy {
+    display: none;
+  }
+
+  .workspace__content {
+    padding: 22px 16px 32px;
   }
 }
 </style>

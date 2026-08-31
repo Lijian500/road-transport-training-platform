@@ -7,9 +7,7 @@ import {
   getActiveLearningSession,
   getLearningCourse,
   getLearningPlaybackUrl,
-  getLearningSession,
   openLearningSession,
-  submitLearningEvent,
   terminateLearningSession,
   type CourseProgress,
   type CoursewareProgress,
@@ -18,12 +16,11 @@ import {
   type LearningSession,
 } from '@/api/learning'
 import { ApiError } from '@/api/http'
+import { LearningRealtimeError, useLearningRealtime } from '@/composables/useLearningRealtime'
 import {
-  createRequestId,
   getOrCreateClientInstanceId,
   isCoursewareUnlocked,
   resolveCoursewareStatusAfterEvent,
-  shouldRetryLearningEvent,
 } from '@/learning/session'
 
 const route = useRoute()
@@ -49,6 +46,16 @@ let approvedPlay = false
 let handlingEnd = false
 let restoringPosition = false
 let playbackRetries = 0
+
+const learningRealtime = useLearningRealtime({
+  clientInstanceId,
+  onStateSync: applySessionState,
+  onProgressConfirmed: applyEventResult,
+  onDisconnected: handleRealtimeDisconnected,
+  onReplaced: handleRealtimeReplaced,
+})
+const realtimeReady = learningRealtime.ready
+const realtimeState = learningRealtime.connectionState
 
 const selectedCourseware = computed(() =>
   course.value?.coursewares.find(
@@ -81,17 +88,11 @@ async function initialize() {
   }
 }
 
-/** 创建会话，并在页面刷新命中学习中状态时立即安全暂停。 */
+/** 创建REST会话，再由实时通道完成绑定、同步及必要的安全暂停。 */
 async function openCurrentSession() {
   session.value = await openLearningSession({ planId, planCourseId, clientInstanceId })
   selectInitialCourseware()
-  if (session.value.status === 'STUDYING' && session.value.currentCoursewareSnapshotId) {
-    await enqueueEvent(
-      'PAUSE',
-      session.value.currentCoursewareSnapshotId,
-      session.value.confirmedPositionMillis,
-    )
-  }
+  session.value = await learningRealtime.bind(session.value.id)
   if (['SIGNED_IN', 'PAUSED'].includes(session.value.status)) {
     await loadPlaybackUrl()
   }
@@ -115,6 +116,7 @@ function selectInitialCourseware() {
 
 /** 完成学习签到并加载首个已解锁视频。 */
 async function signIn() {
+  if (!realtimeReady.value) return
   try {
     await enqueueEvent('SIGN_IN')
     await loadPlaybackUrl()
@@ -184,9 +186,14 @@ function pausePlayerSilently() {
 
 /** 在浏览器真正播放前先获得服务端PLAY状态确认。 */
 async function onVideoPlay() {
-  startProgressTimer()
+  if (!realtimeReady.value) {
+    pausePlayerSilently()
+    ElMessage.warning('实时学习连接尚未恢复，请稍后手动继续播放')
+    return
+  }
   if (approvedPlay) {
     approvedPlay = false
+    startProgressTimer()
     return
   }
   if (!session.value || session.value.status === 'STUDYING' || !selectedCourseware.value) return
@@ -279,6 +286,9 @@ function onSeeking() {
 async function pauseCurrentVideo() {
   if (!session.value || !selectedCourseware.value) return
   pausePlayerSilently()
+  if (!realtimeReady.value) {
+    throw new LearningRealtimeError('实时学习连接已断开', 'REALTIME_DISCONNECTED', true)
+  }
   await enqueueEvent(
     'PAUSE',
     selectedCourseware.value.coursewareSnapshotId,
@@ -288,6 +298,7 @@ async function pauseCurrentVideo() {
 
 /** 正常签退当前会话并返回培训任务详情。 */
 async function signOut() {
+  if (!realtimeReady.value) return
   try {
     if (session.value?.status === 'STUDYING') await pauseCurrentVideo()
     await enqueueEvent(
@@ -336,7 +347,7 @@ function enqueueEvent(
   return action
 }
 
-/** 使用固定请求ID和序号发送事件，网络或5xx最多重试两次。 */
+/** 将下一严格序号事件交给实时组合函数确认和断线恢复。 */
 async function sendEventNow(
   eventType: LearningEventType,
   coursewareSnapshotId?: string,
@@ -344,32 +355,32 @@ async function sendEventNow(
 ) {
   if (!session.value) throw new ApiError('学习会话尚未创建')
   eventBusy.value = true
-  const payload = {
-    clientInstanceId,
-    requestId: createRequestId(),
-    sequence: session.value.lastSequence + 1,
-    eventType,
-    coursewareSnapshotId,
-    videoPositionMillis: Math.max(0, Math.floor(videoPositionMillis)),
-  }
   try {
-    let lastError: unknown
-    for (let attempt = 0; attempt < 3; attempt += 1) {
-      try {
-        const result = await submitLearningEvent(session.value.id, payload)
-        applyEventResult(result)
-        return result
-      } catch (error) {
-        lastError = error
-        if (error instanceof ApiError && error.code === 'L3005') {
-          session.value = await getLearningSession(session.value.id)
-        }
-        if (!shouldRetryLearningEvent(error) || attempt === 2) throw error
-      }
-    }
-    throw lastError
+    return await learningRealtime.sendEvent(
+      eventType,
+      session.value.lastSequence + 1,
+      coursewareSnapshotId,
+      videoPositionMillis,
+    )
   } finally {
     eventBusy.value = false
+  }
+}
+
+/** 将服务端STATE_SYNC快照合并到学习页。 */
+function applySessionState(state: LearningSession) {
+  session.value = state
+  if (!course.value) return
+  course.value.effectiveDurationMillis = state.effectiveDurationMillis
+  const current = course.value.coursewares.find(
+    (value) => value.coursewareSnapshotId === state.currentCoursewareSnapshotId,
+  )
+  if (current) {
+    current.confirmedPositionMillis = state.confirmedPositionMillis
+    current.maxConfirmedPositionMillis = Math.max(
+      current.maxConfirmedPositionMillis,
+      state.confirmedPositionMillis,
+    )
   }
 }
 
@@ -418,7 +429,12 @@ function startProgressTimer() {
   stopProgressTimer()
   if (!course.value) return
   progressTimer = window.setInterval(async () => {
-    if (session.value?.status !== 'STUDYING' || !selectedCourseware.value || eventBusy.value) {
+    if (
+      !realtimeReady.value ||
+      session.value?.status !== 'STUDYING' ||
+      !selectedCourseware.value ||
+      eventBusy.value
+    ) {
       return
     }
     try {
@@ -447,9 +463,26 @@ function stopProgressTimer() {
 function onVisibilityChange() {
   if (!document.hidden || session.value?.status !== 'STUDYING') return
   stopProgressTimer()
+  if (!realtimeReady.value) {
+    pausePlayerSilently()
+    return
+  }
   void pauseCurrentVideo().catch((error) => {
     showError(error, '页面失焦暂停同步失败')
   })
+}
+
+/** 连接中断后立即停止计时和播放，等待同步完成后手动恢复。 */
+function handleRealtimeDisconnected() {
+  stopProgressTimer()
+  pausePlayerSilently()
+}
+
+/** 连接被同浏览器其他页面接管后停止本页学习。 */
+function handleRealtimeReplaced() {
+  stopProgressTimer()
+  pausePlayerSilently()
+  ElMessage.warning('学习连接已被其他页面接管，本页面已停止计时')
 }
 
 /** 格式化毫秒学时。 */
@@ -482,7 +515,9 @@ function coursewareStatusLabel(status: CoursewareProgress['status']) {
 
 /** 统一展示学习页错误。 */
 function showError(error: unknown, fallback: string) {
-  ElMessage.error(error instanceof ApiError ? error.message : fallback)
+  ElMessage.error(
+    error instanceof ApiError || error instanceof LearningRealtimeError ? error.message : fallback,
+  )
 }
 
 onMounted(() => {
@@ -493,7 +528,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   stopProgressTimer()
   document.removeEventListener('visibilitychange', onVisibilityChange)
-  if (session.value?.status === 'STUDYING') void pauseCurrentVideo()
 })
 </script>
 
@@ -525,6 +559,20 @@ onBeforeUnmount(() => {
     </el-alert>
 
     <template v-else-if="course && session">
+      <el-alert
+        v-if="realtimeState === 'replaced'"
+        type="warning"
+        :closable="false"
+        title="学习连接已被其他页面接管，本页面不会继续累计学时。"
+        class="realtime-alert"
+      />
+      <el-alert
+        v-else-if="!realtimeReady"
+        type="info"
+        :closable="false"
+        title="实时学习连接正在恢复，播放器已暂停；同步完成后请手动继续。"
+        class="realtime-alert"
+      />
       <el-card shadow="never" class="progress-card">
         <div class="progress-summary">
           <div>
@@ -551,7 +599,10 @@ onBeforeUnmount(() => {
             :key="item.coursewareSnapshotId"
             class="courseware-item"
             :class="{ active: selectedCoursewareId === item.coursewareSnapshotId }"
-            :disabled="!isCoursewareUnlocked(course.coursewares, item)"
+            :disabled="
+              !isCoursewareUnlocked(course.coursewares, item) ||
+              (session.status === 'STUDYING' && !realtimeReady)
+            "
             type="button"
             @click="selectCourseware(item)"
           >
@@ -579,7 +630,13 @@ onBeforeUnmount(() => {
 
           <div v-if="session.status === 'CREATED'" class="sign-in-panel">
             <p>开始播放前请先完成本次学习签到。</p>
-            <el-button type="primary" size="large" :loading="eventBusy" @click="signIn">
+            <el-button
+              type="primary"
+              size="large"
+              :loading="eventBusy"
+              :disabled="!realtimeReady"
+              @click="signIn"
+            >
               学习签到
             </el-button>
           </div>
@@ -588,6 +645,7 @@ onBeforeUnmount(() => {
             <video
               ref="video"
               :src="videoUrl"
+              :class="{ 'connection-disabled': !realtimeReady }"
               controls
               controlslist="nodownload"
               preload="metadata"
@@ -617,6 +675,7 @@ onBeforeUnmount(() => {
             <el-button
               v-if="!['CREATED', 'SIGNED_OUT', 'TERMINATED'].includes(session.status)"
               :loading="eventBusy"
+              :disabled="!realtimeReady"
               @click="signOut"
             >
               正常签退
@@ -659,6 +718,7 @@ onBeforeUnmount(() => {
 }
 
 .conflict-alert,
+.realtime-alert,
 .progress-card {
   margin-bottom: 20px;
 }
@@ -720,6 +780,11 @@ video {
   max-height: 65vh;
   background: #101828;
   border-radius: 8px;
+}
+
+video.connection-disabled {
+  opacity: 0.65;
+  pointer-events: none;
 }
 
 .sign-in-panel {

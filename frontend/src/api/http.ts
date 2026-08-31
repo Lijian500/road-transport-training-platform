@@ -49,7 +49,8 @@ export const client: AxiosInstance = axios.create({
 
 let refreshPromise: Promise<void> | null = null
 
-function refreshSession() {
+/** 使用HttpOnly Refresh Token刷新当前Access Token。 */
+export function refreshAccessSession() {
   if (!refreshPromise) {
     refreshPromise = client
       .post<ApiResult<unknown>>('/auth/refresh', undefined, {
@@ -78,7 +79,7 @@ client.interceptors.response.use(
     ) {
       config._retried = true
       try {
-        await refreshSession()
+        await refreshAccessSession()
         return client.request(config)
       } catch {
         window.dispatchEvent(new CustomEvent('auth:expired'))

@@ -19,6 +19,7 @@ import {
 } from '@/api/admin'
 import { ApiError } from '@/api/http'
 import AppDialog from '@/components/AppDialog/AppDialog.vue'
+import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
 import PermissionButton from '@/components/PermissionButton/PermissionButton.vue'
 import StatusTag from '@/components/StatusTag/StatusTag.vue'
@@ -269,26 +270,34 @@ onMounted(async () => {
       @size-change="changePageSize"
     >
       <template #search>
-        <el-input
-          v-model="query.keyword"
-          clearable
-          placeholder="用户名/姓名/手机号"
-          @keyup.enter="load"
-        />
-        <el-tree-select
-          v-model="query.orgId"
-          :data="orgTree"
-          :props="{ label: 'name', value: 'id', children: 'children' }"
-          check-strictly
-          clearable
-          placeholder="全部部门"
-        />
-        <el-select v-model="query.status" clearable placeholder="全部状态">
-          <el-option label="启用" value="ENABLED" />
-          <el-option label="禁用" value="DISABLED" />
-        </el-select>
-        <el-button type="primary" @click="search">查询</el-button>
-        <el-button @click="resetSearch">重置</el-button>
+        <AppFilterField label="用户关键词">
+          <el-input
+            v-model="query.keyword"
+            clearable
+            placeholder="用户名 / 姓名 / 手机号"
+            @keyup.enter="load"
+          />
+        </AppFilterField>
+        <AppFilterField label="所属部门">
+          <el-tree-select
+            v-model="query.orgId"
+            :data="orgTree"
+            :props="{ label: 'name', value: 'id', children: 'children' }"
+            check-strictly
+            clearable
+            placeholder="全部"
+          />
+        </AppFilterField>
+        <AppFilterField label="用户状态">
+          <el-select v-model="query.status" clearable placeholder="全部">
+            <el-option label="启用" value="ENABLED" />
+            <el-option label="禁用" value="DISABLED" />
+          </el-select>
+        </AppFilterField>
+        <div class="app-filter-actions">
+          <el-button type="primary" @click="search">查询</el-button>
+          <el-button @click="resetSearch">重置</el-button>
+        </div>
       </template>
       <template #actions>
         <PermissionButton permission="admin:user:create" type="primary" @click="openCreate">

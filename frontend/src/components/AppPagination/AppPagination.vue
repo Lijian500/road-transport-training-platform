@@ -30,7 +30,9 @@ const emit = defineEmits<{
 .app-pagination {
   display: flex;
   justify-content: flex-end;
-  margin-top: 18px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--app-border);
 }
 
 @media (width <= 720px) {

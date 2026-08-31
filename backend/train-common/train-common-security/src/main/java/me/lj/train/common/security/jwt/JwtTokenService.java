@@ -75,6 +75,7 @@ public class JwtTokenService {
                 enterpriseId == null || enterpriseId.isEmpty() ? null : Long.valueOf(enterpriseId),
                 jwt.getClaimAsString(SecurityConstants.CLAIM_USERNAME),
                 jwt.getClaimAsString(SecurityConstants.CLAIM_SESSION_ID),
-                loginVersion == null ? 0L : loginVersion.longValue());
+                loginVersion == null ? 0L : loginVersion.longValue(),
+                jwt.getExpiresAt());
     }
 }
