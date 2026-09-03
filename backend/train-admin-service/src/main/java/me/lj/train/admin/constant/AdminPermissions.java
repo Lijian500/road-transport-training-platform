@@ -22,6 +22,8 @@ public final class AdminPermissions {
     public static final String USER_STATUS = "admin:user:status";
     public static final String USER_RESET_PASSWORD = "admin:user:reset-password";
     public static final String USER_ASSIGN_ROLE = "admin:user:assign-role";
+    public static final String FACE_CHECK_VIEW = "admin:face-check:view";
+    public static final String FACE_CHECK_MANAGE = "admin:face-check:manage";
     public static final String ROLE_VIEW = "admin:role:view";
     public static final String ROLE_CREATE = "admin:role:create";
     public static final String ROLE_UPDATE = "admin:role:update";
@@ -34,6 +36,7 @@ public final class AdminPermissions {
     public static final String PLAN_UPDATE = "admin:plan:update";
     public static final String PLAN_PUBLISH = "admin:plan:publish";
     public static final String PLAN_CANCEL = "admin:plan:cancel";
+    public static final String STATISTICS_VIEW = "admin:statistics:view";
     public static final String STUDENT_LEARNING_STUDY = "student:learning:study";
 
     private AdminPermissions() {

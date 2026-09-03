@@ -5,7 +5,11 @@ import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'elem
 import {
   assignUserRoles,
   changeUserStatus,
+  completeFaceReferenceUploadSession,
+  createFaceReferenceUploadSession,
   createUser,
+  deleteFaceReference,
+  getFaceReferencePreviewUrl,
   getOrgTree,
   getRoleOptions,
   getUsers,
@@ -23,9 +27,12 @@ import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
 import PermissionButton from '@/components/PermissionButton/PermissionButton.vue'
 import StatusTag from '@/components/StatusTag/StatusTag.vue'
+import { usePermissionStore } from '@/stores/permission'
+import { uploadSignedBlob } from '@/utils/ossUpload'
 import { isValidPassword, PASSWORD_RULE_MESSAGE, validatePassword } from '@/utils/validation'
 
 const loading = ref(false)
+const permissionStore = usePermissionStore()
 const saving = ref(false)
 const rows = ref<User[]>([])
 const total = ref(0)
@@ -83,6 +90,106 @@ const temporaryPassword = ref('')
 const roleVisible = ref(false)
 const roleUser = ref<User>()
 const selectedRoleIds = ref<string[]>([])
+const faceVisible = ref(false)
+const faceUser = ref<User>()
+const faceFile = ref<File>()
+const facePreviewUrl = ref('')
+const facePreviewLoading = ref(false)
+
+/** 判断当前账号是否可维护登记照。 */
+function canManageFaceReference() {
+  return permissionStore.has('admin:face-check:manage')
+}
+
+/** 打开登记照弹窗，并清理上一次选择和短期预览。 */
+function openFaceReference(row: User) {
+  faceUser.value = row
+  faceFile.value = undefined
+  facePreviewUrl.value = ''
+  faceVisible.value = true
+}
+
+/** 选择并校验用于登记的人脸图片。 */
+function selectFaceFile(event: Event) {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  input.value = ''
+  if (!file) return
+  if (!['image/jpeg', 'image/png'].includes(file.type)) {
+    ElMessage.warning('登记照仅支持 JPG 或 PNG 格式')
+    return
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    ElMessage.warning('登记照不能超过 5MB')
+    return
+  }
+  faceFile.value = file
+}
+
+/** 通过短期签名直传登记照并完成用户绑定。 */
+async function saveFaceReference() {
+  const user = faceUser.value
+  const file = faceFile.value
+  if (!user || !file || !canManageFaceReference()) {
+    ElMessage.warning(file ? '当前账号无登记照维护权限' : '请先选择登记照')
+    return
+  }
+  saving.value = true
+  try {
+    const uploadSession = await createFaceReferenceUploadSession(user.id, {
+      originalFilename: file.name,
+      contentType: file.type,
+      fileSizeBytes: file.size,
+      clientLastModified: file.lastModified,
+    })
+    await uploadSignedBlob(uploadSession.uploadRequest, file)
+    const reference = await completeFaceReferenceUploadSession(user.id, uploadSession.id)
+    user.faceReferenceEnrolled = reference.enrolled
+    user.faceReferenceUpdatedAt = reference.updatedAt
+    faceFile.value = undefined
+    facePreviewUrl.value = ''
+    ElMessage.success('登记照已更新')
+  } catch (error) {
+    showError(error)
+  } finally {
+    saving.value = false
+  }
+}
+
+/** 获取并展示一次性短期登记照预览地址。 */
+async function previewFaceReference() {
+  if (!faceUser.value?.faceReferenceEnrolled) return
+  facePreviewLoading.value = true
+  try {
+    facePreviewUrl.value = (await getFaceReferencePreviewUrl(faceUser.value.id)).url
+  } catch (error) {
+    showError(error)
+  } finally {
+    facePreviewLoading.value = false
+  }
+}
+
+/** 经确认后删除用户当前登记照。 */
+async function removeFaceReference() {
+  const user = faceUser.value
+  if (!user || !canManageFaceReference()) return
+  await ElMessageBox.confirm(`确定删除“${user.displayName}”的登记照吗？`, '删除确认', {
+    type: 'warning',
+  })
+  saving.value = true
+  try {
+    await deleteFaceReference(user.id)
+    user.faceReferenceEnrolled = false
+    user.faceReferenceUpdatedAt = undefined
+    facePreviewUrl.value = ''
+    faceFile.value = undefined
+    ElMessage.success('登记照已删除')
+  } catch (error) {
+    showError(error)
+  } finally {
+    saving.value = false
+  }
+}
 
 async function loadBaseData() {
   const [orgResult, roleResult] = await Promise.all([getOrgTree(), getRoleOptions()])
@@ -313,7 +420,17 @@ onMounted(async () => {
       <el-table-column label="状态" width="90">
         <template #default="{ row }"><StatusTag :status="row.status" /></template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="300">
+      <el-table-column label="人脸登记" min-width="150">
+        <template #default="{ row }">
+          <el-tag :type="row.faceReferenceEnrolled ? 'success' : 'info'">
+            {{ row.faceReferenceEnrolled ? '已登记' : '未登记' }}
+          </el-tag>
+          <small v-if="row.faceReferenceUpdatedAt" class="face-updated-at">
+            {{ new Date(row.faceReferenceUpdatedAt).toLocaleString('zh-CN', { hour12: false }) }}
+          </small>
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" label="操作" width="360">
         <template #default="{ row }">
           <PermissionButton
             permission="admin:user:update"
@@ -332,6 +449,17 @@ onMounted(async () => {
           <PermissionButton permission="admin:user:status" link @click="toggleStatus(row)">
             {{ row.status === 'ENABLED' ? '禁用' : '启用' }}
           </PermissionButton>
+          <el-button
+            v-if="
+              permissionStore.has('admin:face-check:view') ||
+              permissionStore.has('admin:face-check:manage')
+            "
+            link
+            type="primary"
+            @click="openFaceReference(row)"
+          >
+            登记照
+          </el-button>
         </template>
       </el-table-column>
     </AppTable>
@@ -394,6 +522,65 @@ onMounted(async () => {
         </el-checkbox>
       </el-checkbox-group>
     </AppDialog>
+
+    <el-dialog
+      v-model="faceVisible"
+      :close-on-click-modal="!saving"
+      :title="`${faceUser?.displayName || ''} · 人脸登记照`"
+      destroy-on-close
+      width="560px"
+    >
+      <el-alert
+        :closable="false"
+        :title="
+          faceUser?.faceReferenceEnrolled
+            ? `已登记${faceUser.faceReferenceUpdatedAt ? `，更新时间：${new Date(faceUser.faceReferenceUpdatedAt).toLocaleString('zh-CN', { hour12: false })}` : ''}`
+            : '当前用户尚未登记人脸照片'
+        "
+        :type="faceUser?.faceReferenceEnrolled ? 'success' : 'warning'"
+      />
+      <div v-loading="facePreviewLoading" class="face-preview">
+        <img v-if="facePreviewUrl" :src="facePreviewUrl" alt="用户登记照预览" />
+        <el-empty v-else description="登记照默认不加载，请按需获取短期预览" :image-size="80" />
+      </div>
+      <div class="face-actions">
+        <el-button
+          v-if="faceUser?.faceReferenceEnrolled"
+          :loading="facePreviewLoading"
+          @click="previewFaceReference"
+        >
+          获取预览
+        </el-button>
+        <label v-if="canManageFaceReference()" class="face-file-button">
+          <input accept="image/jpeg,image/png" type="file" @change="selectFaceFile" />
+          <span>{{
+            faceFile ? '重新选择' : faceUser?.faceReferenceEnrolled ? '选择替换照片' : '选择照片'
+          }}</span>
+        </label>
+        <el-button
+          v-if="canManageFaceReference() && faceUser?.faceReferenceEnrolled"
+          type="danger"
+          plain
+          :disabled="saving"
+          @click="removeFaceReference"
+        >
+          删除登记照
+        </el-button>
+      </div>
+      <p v-if="faceFile" class="face-file-name">待上传：{{ faceFile.name }}</p>
+      <template #footer>
+        <el-button :disabled="saving" @click="faceVisible = false">关闭</el-button>
+        <el-button
+          v-if="canManageFaceReference()"
+          type="primary"
+          :loading="saving"
+          :disabled="!faceFile"
+          @click="saveFaceReference"
+        >
+          {{ faceUser?.faceReferenceEnrolled ? '上传并替换' : '上传并登记' }}
+        </el-button>
+      </template>
+    </el-dialog>
   </section>
 </template>
 
@@ -406,5 +593,49 @@ onMounted(async () => {
 
 .el-alert {
   margin-bottom: 20px;
+}
+
+.face-updated-at {
+  display: block;
+  margin-top: 5px;
+  color: #8792a6;
+}
+
+.face-preview {
+  display: grid;
+  min-height: 260px;
+  margin: 16px 0;
+  overflow: hidden;
+  background: #f6f8fb;
+  border-radius: 8px;
+  place-items: center;
+}
+
+.face-preview img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+}
+
+.face-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.face-file-button {
+  padding: 8px 15px;
+  color: #155eef;
+  border: 1px solid #b7cffb;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.face-file-button input {
+  display: none;
+}
+
+.face-file-name {
+  color: #6f7c93;
 }
 </style>

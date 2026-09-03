@@ -259,6 +259,8 @@ public final class AdminModels {
             boolean mustChangePassword,
             List<Long> roleIds,
             List<String> roleNames,
+            boolean faceReferenceEnrolled,
+            LocalDateTime faceReferenceUpdatedAt,
             LocalDateTime createdAt) implements Serializable {
     }
 

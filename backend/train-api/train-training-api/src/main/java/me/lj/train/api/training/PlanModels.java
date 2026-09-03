@@ -40,7 +40,14 @@ public final class PlanModels {
             String description,
             LocalDateTime startAt,
             LocalDateTime endAt,
-            boolean examRequired) implements Serializable {
+            boolean examRequired,
+            Long examPaperId,
+            Integer examPassScore,
+            boolean faceCheckEnabled,
+            int faceCheckMinIntervalSeconds,
+            int faceCheckMaxIntervalSeconds,
+            int faceCheckTimeoutSeconds,
+            int faceCheckMaxAttempts) implements Serializable {
     }
 
     public record UpdatePlanCommand(
@@ -50,6 +57,13 @@ public final class PlanModels {
             LocalDateTime startAt,
             LocalDateTime endAt,
             boolean examRequired,
+            Long examPaperId,
+            Integer examPassScore,
+            boolean faceCheckEnabled,
+            int faceCheckMinIntervalSeconds,
+            int faceCheckMaxIntervalSeconds,
+            int faceCheckTimeoutSeconds,
+            int faceCheckMaxAttempts,
             List<Long> courseIds,
             List<Long> userIds) implements Serializable {
     }
@@ -67,7 +81,8 @@ public final class PlanModels {
             Long orgId,
             String orgName,
             String username,
-            String displayName) implements Serializable {
+            String displayName,
+            boolean faceReferenceEnrolled) implements Serializable {
     }
 
     public record PlanCoursewareSnapshotView(
@@ -131,7 +146,14 @@ public final class PlanModels {
             LocalDateTime endAt,
             String status,
             boolean examRequired,
+            Long examPaperId,
             Integer examPassScore,
+            Integer examDurationMinutes,
+            boolean faceCheckEnabled,
+            int faceCheckMinIntervalSeconds,
+            int faceCheckMaxIntervalSeconds,
+            int faceCheckTimeoutSeconds,
+            int faceCheckMaxAttempts,
             List<PlanCourseView> courses,
             List<PlanUserView> users,
             LocalDateTime publishedAt,
@@ -152,6 +174,12 @@ public final class PlanModels {
             String studyStatus,
             String examStatus,
             String completionStatus,
+            boolean examRequired,
+            Integer examPassScore,
+            Integer examDurationMinutes,
+            boolean faceCheckEnabled,
+            int faceCheckTimeoutSeconds,
+            int faceCheckMaxAttempts,
             List<StudentPlanCourseView> courses,
             LocalDateTime publishedAt) implements Serializable {
     }

@@ -9,6 +9,7 @@ import com.mybatisflex.annotation.Table;
 public class StorageObjectEntity extends TrainingAuditEntity {
 
     private Long enterpriseId;
+    private Long ownerUserId;
     private String provider;
     private String bucketName;
     private String objectKey;
@@ -21,6 +22,8 @@ public class StorageObjectEntity extends TrainingAuditEntity {
 
     public Long getEnterpriseId() { return enterpriseId; }
     public void setEnterpriseId(Long enterpriseId) { this.enterpriseId = enterpriseId; }
+    public Long getOwnerUserId() { return ownerUserId; }
+    public void setOwnerUserId(Long ownerUserId) { this.ownerUserId = ownerUserId; }
     public String getProvider() { return provider; }
     public void setProvider(String provider) { this.provider = provider; }
     public String getBucketName() { return bucketName; }

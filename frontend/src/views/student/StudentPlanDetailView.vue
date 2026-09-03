@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { ElMessage } from 'element-plus'
+import { computed, onMounted, ref } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 
 import { getStudentPlan, type StudentPlan } from '@/api/training'
@@ -14,6 +14,11 @@ const loading = ref(false)
 const plan = ref<StudentPlan>()
 const learningProgress = ref<PlanLearningProgress>()
 const permissionStore = usePermissionStore()
+
+const canEnterExam = computed(() => {
+  if (!plan.value?.examRequired || !permissionStore.has('student:exam:take')) return false
+  return plan.value.status === 'IN_PROGRESS' || plan.value.examStatus !== 'NOT_STARTED'
+})
 
 /** 加载当前登录学员被分配的计划及冻结课程规则。 */
 async function load() {
@@ -39,6 +44,27 @@ function courseProgress(planCourseId: string) {
 /** 进入当前计划课程的视频学习页面。 */
 function startStudy(planCourseId: string) {
   return router.push(`/student/plans/${plan.value?.planId}/courses/${planCourseId}/study`)
+}
+
+/** 确认首次考试会开始计时，并进入考试或查看已有结果。 */
+async function enterExam() {
+  if (!plan.value || !canEnterExam.value) return
+  if (plan.value.examStatus === 'NOT_STARTED') {
+    try {
+      await ElMessageBox.confirm(
+        `考试限时 ${plan.value.examDurationMinutes ?? '-'} 分钟，进入后立即开始计时，确定开始吗？`,
+        '开始考试',
+        {
+          type: 'warning',
+          confirmButtonText: '开始考试',
+          cancelButtonText: '暂不开始',
+        },
+      )
+    } catch {
+      return
+    }
+  }
+  await router.push(`/student/plans/${plan.value.planId}/exam`)
 }
 
 /** 将毫秒有效学时格式化为易读文本。 */
@@ -94,6 +120,36 @@ function completionStatusLabel(status: string) {
   )
 }
 
+/** 返回考试状态中文文案。 */
+function examStatusLabel(status: string) {
+  return (
+    (
+      {
+        NOT_REQUIRED: '无需考试',
+        NOT_STARTED: '未开始',
+        IN_PROGRESS: '考试中',
+        PASSED: '已通过',
+        FAILED: '未通过',
+      } as Record<string, string>
+    )[status] || status
+  )
+}
+
+/** 返回考试状态标签颜色。 */
+function examStatusType(status: string) {
+  if (status === 'PASSED') return 'success'
+  if (status === 'FAILED') return 'danger'
+  if (status === 'IN_PROGRESS') return 'warning'
+  return 'info'
+}
+
+/** 返回当前考试入口按钮文案。 */
+function examActionLabel(status: string) {
+  if (status === 'IN_PROGRESS') return '继续考试'
+  if (status === 'PASSED' || status === 'FAILED') return '查看考试结果'
+  return '开始考试'
+}
+
 /** 统一展示任务详情错误。 */
 function showError(error: unknown) {
   ElMessage.error(error instanceof ApiError ? error.message : '培训任务加载失败，请稍后重试')
@@ -132,6 +188,39 @@ onMounted(load)
           {{ completionStatusLabel(plan.completionStatus) }}
         </el-descriptions-item>
       </el-descriptions>
+
+      <el-card v-if="plan.examRequired" class="course-card exam-card" shadow="never">
+        <template #header>
+          <div class="exam-card-header">
+            <strong>计划考试</strong>
+            <el-tag :type="examStatusType(plan.examStatus)">
+              {{ examStatusLabel(plan.examStatus) }}
+            </el-tag>
+          </div>
+        </template>
+        <el-descriptions :column="2" border size="small">
+          <el-descriptions-item label="考试时长">
+            {{ plan.examDurationMinutes ?? '-' }}分钟
+          </el-descriptions-item>
+          <el-descriptions-item label="及格分数">
+            {{ plan.examPassScore ?? '-' }}分
+          </el-descriptions-item>
+        </el-descriptions>
+        <div class="exam-actions">
+          <span v-if="!canEnterExam && plan.status !== 'IN_PROGRESS'">
+            {{ plan.status === 'PUBLISHED' ? '计划开始后可参加考试' : '当前计划不可新开考试' }}
+          </span>
+          <span v-else>同一培训计划只有一次考试记录，系统会自动保存答题进度。</span>
+          <el-button
+            v-if="permissionStore.has('student:exam:take')"
+            type="primary"
+            :disabled="!canEnterExam"
+            @click="enterExam"
+          >
+            {{ examActionLabel(plan.examStatus) }}
+          </el-button>
+        </div>
+      </el-card>
 
       <el-card class="course-card" shadow="never">
         <template #header><strong>计划课程与结业规则</strong></template>
@@ -228,7 +317,9 @@ onMounted(load)
 }
 
 .course-actions,
-.course-progress {
+.course-progress,
+.exam-card-header,
+.exam-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -241,5 +332,17 @@ onMounted(load)
 
 .course-progress {
   color: #5f6c85;
+}
+
+.exam-actions {
+  margin-top: 16px;
+  color: #6f7c93;
+}
+
+@media (max-width: 640px) {
+  .exam-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
 }
 </style>

@@ -55,7 +55,11 @@ public class PlanViewAssembler {
         return new PlanView(
                 plan.getId(), plan.getPlanName(), plan.getDescription(),
                 plan.getStartAt(), plan.getEndAt(), plan.getStatus(),
-                plan.isExamRequired(), plan.getExamPassScore(), courses, users,
+                plan.isExamRequired(), plan.getExamPaperId(), plan.getExamPassScore(),
+                plan.getExamDurationMinutes(),
+                plan.isFaceCheckEnabled(), plan.getFaceCheckMinIntervalSeconds(),
+                plan.getFaceCheckMaxIntervalSeconds(), plan.getFaceCheckTimeoutSeconds(),
+                plan.getFaceCheckMaxAttempts(), courses, users,
                 plan.getPublishedAt(), plan.getCancelledAt(),
                 plan.getCreatedAt(), plan.getUpdatedAt());
     }
@@ -66,7 +70,9 @@ public class PlanViewAssembler {
                 task.getId(), plan.getId(), plan.getPlanName(), plan.getDescription(),
                 plan.getStartAt(), plan.getEndAt(), plan.getStatus(),
                 task.getAssignmentStatus(), task.getStudyStatus(), task.getExamStatus(),
-                task.getCompletionStatus(), includeCourses
+                task.getCompletionStatus(), plan.isExamRequired(), plan.getExamPassScore(),
+                plan.getExamDurationMinutes(), plan.isFaceCheckEnabled(),
+                plan.getFaceCheckTimeoutSeconds(), plan.getFaceCheckMaxAttempts(), includeCourses
                         ? listStudentCourseViews(plan.getId(), plan.getEnterpriseId())
                         : Collections.emptyList(),
                 plan.getPublishedAt());

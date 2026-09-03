@@ -5,6 +5,8 @@ import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.update.UpdateWrapper;
 import me.lj.train.api.training.LearningTaskEvents;
 import me.lj.train.api.training.LearningTaskEvents.LearningTaskEvent;
+import me.lj.train.api.learning.FaceCheckEvents;
+import me.lj.train.api.learning.FaceCheckModels.FaceCheckRealtimeEvent;
 import me.lj.train.learning.config.LearningProperties;
 import me.lj.train.learning.mapper.MqOutboxMapper;
 import me.lj.train.learning.model.entity.MqOutboxEntity;
@@ -70,8 +72,9 @@ public class LearningOutboxPublisher {
 
     private void publishOne(MqOutboxEntity outbox) {
         try {
-            LearningTaskEvent event = objectMapper.readValue(
-                    outbox.getPayload(), LearningTaskEvent.class);
+            Object event = faceCheckEvent(outbox)
+                    ? objectMapper.readValue(outbox.getPayload(), FaceCheckRealtimeEvent.class)
+                    : objectMapper.readValue(outbox.getPayload(), LearningTaskEvent.class);
             CorrelationData correlationData = new CorrelationData(outbox.getEventId());
             rabbitTemplate.convertAndSend(
                     LearningTaskEvents.EXCHANGE, outbox.getRoutingKey(), event, correlationData);
@@ -91,6 +94,11 @@ public class LearningOutboxPublisher {
             LOGGER.warn("学习任务事件发送失败，eventId={}", outbox.getEventId(), exception);
             recordFailure(outbox, exception);
         }
+    }
+
+    private boolean faceCheckEvent(MqOutboxEntity outbox) {
+        return FaceCheckEvents.REQUIRED_ROUTING_KEY.equals(outbox.getRoutingKey())
+                || FaceCheckEvents.RESULT_ROUTING_KEY.equals(outbox.getRoutingKey());
     }
 
     private void recordFailure(MqOutboxEntity outbox, Exception exception) {

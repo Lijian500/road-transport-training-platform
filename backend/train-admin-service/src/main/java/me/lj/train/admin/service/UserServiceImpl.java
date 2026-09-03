@@ -426,6 +426,8 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
                 user.isMustChangePassword(),
                 roles.stream().map(RoleEntity::getId).collect(Collectors.toList()),
                 roles.stream().map(RoleEntity::getRoleName).collect(Collectors.toList()),
+                user.getFaceReferenceObjectId() != null,
+                user.getFaceReferenceUpdatedAt(),
                 user.getCreatedAt());
     }
 

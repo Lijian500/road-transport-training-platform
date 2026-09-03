@@ -66,7 +66,33 @@ Dubbo或Java服务。签名响应只包含URL、HTTP方法、必须请求头和�
 只要求计划创建或编辑权限，不依赖`admin:course:view`或`admin:user:view`。计划发布会在
 同一培训库事务中重新校验已启用课程、有效学员和起止时间，并冻结课程规则、课件清单
 及学员展示信息；发布后不可编辑。学员任务接口只按当前登录用户和`enterprise_id`查询，
-未分配用户及其他组织用户不可见。考试模块尚未启用时仅接受`examRequired=false`。
+未分配用户及其他组织用户不可见。要求考试的计划还会冻结已启用试卷、考试时长和及格分；
+学习完成且考试及格后，任务才进入培训完成状态。
+
+## 人脸登记与学习抽验接口
+
+| 资源 | 接口 |
+|---|---|
+| 人脸登记照 | `GET/DELETE /api/admin/users/{userId}/face-reference`、`POST /upload-sessions`、`POST /upload-sessions/{sessionId}/complete`、`GET /preview-url` |
+| 学习抽验 | `GET /api/learning/sessions/{sessionId}/face-check`、`POST /api/learning/face-checks/{taskId}/submissions` |
+
+登记照和抽验照片均为私有图片。登记照采用短期预签名地址直传，抽验照片采用受限
+`multipart/form-data`提交；照片Base64和原图内容不进入WebSocket、业务响应或日志。
+抽验任务按计划规则在有效学习过程中触发，待处理时暂停有效学时，支持失败重试和超时终态。
+
+## 考试、判分与培训统计接口
+
+| 资源 | 接口 |
+|---|---|
+| 题库 | `GET/POST /api/training/exam/questions`、`GET/PUT/DELETE /api/training/exam/questions/{id}`、`PATCH /{id}/status` |
+| 试卷 | `GET/POST /api/training/exam/papers`、`GET/PUT/DELETE /api/training/exam/papers/{id}`、`POST /{id}/enable`、`GET /options` |
+| 学员考试 | `POST /api/exams/plans/{planId}/records`、`GET /api/exams/records/{recordId}`、`PUT /answers`、`POST /submit` |
+| 培训统计 | `GET /api/training/statistics/overview`、`GET /plans`、`GET /participants` |
+
+题库支持单选题和判断题；试卷支持手工选题与随机补齐，并在启用时固化题目快照。
+每名学员在一个培训任务下只有一条考试记录，答案可增量保存，截止时自动交卷，提交后
+自动判分且禁止重复提交。统计接口按当前企业汇总计划、参训、学习、考试、完成率和
+服务端确认的有效学时，并提供计划及学员分页明细。
 
 ## 视频学习与有效学时接口
 
@@ -92,7 +118,7 @@ Dubbo或Java服务。签名响应只包含URL、HTTP方法、必须请求头和�
 使用字符串，`sentAt`使用ISO时间且不参与有效学时计算。客户端消息为
 `BIND_SESSION`、`HEARTBEAT`、`SYNC_STATE`、`SIGN_IN`、`PLAY`、`PROGRESS`、`PAUSE`和
 `SIGN_OUT`；服务端消息为`ACK`、`STATE_SYNC`、`PROGRESS_CONFIRMED`、`PONG`、`ERROR`
-和`SESSION_REPLACED`。
+、`SESSION_REPLACED`、`FACE_CHECK_REQUIRED`和`FACE_CHECK_RESULT`。
 
 `ERROR.payload`固定包含`code`、`message`、`retryable`和`resyncRequired`。学习RPC成功后
 先返回`ACK`，再以`PROGRESS_CONFIRMED`返回最终状态与有效学时。断线重发必须复用原
@@ -115,8 +141,9 @@ Dubbo或Java服务。签名响应只包含URL、HTTP方法、必须请求头和�
 ## Dubbo契约
 
 `train-admin-api`提供认证、根组织、部门、用户、角色权限和计划学员目录服务；
-`train-training-api`提供课程、对象存储、培训计划及当前学员任务服务与独立DTO；
-`train-learning-api`提供会话查询、`bindSession`、学习事件和播放授权。所有RPC
+`train-training-api`提供课程、对象存储、培训计划、考试、统计及当前学员任务服务与独立DTO；
+`train-learning-api`提供会话查询、`bindSession`、学习事件、抽验、播放授权和有效学时统计。
+所有RPC
 返回明确泛型的`Result<T>`；无数据响应使用`Result<?>`，数据库实体不跨模块暴露。
 
 接口定义以代码为准。禁止在文档、响应体、日志或前端存储中记录真实令牌、账号

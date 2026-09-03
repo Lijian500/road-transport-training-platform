@@ -2,7 +2,14 @@ import { http } from '@/api/http'
 import type { SignedRequest } from '@/api/training'
 
 export type LearningSessionStatus =
-  'CREATED' | 'SIGNED_IN' | 'STUDYING' | 'PAUSED' | 'COMPLETED' | 'SIGNED_OUT' | 'TERMINATED'
+  | 'CREATED'
+  | 'SIGNED_IN'
+  | 'STUDYING'
+  | 'PAUSED'
+  | 'FACE_PENDING'
+  | 'COMPLETED'
+  | 'SIGNED_OUT'
+  | 'TERMINATED'
 
 export type LearningEventType = 'SIGN_IN' | 'PLAY' | 'PROGRESS' | 'PAUSE' | 'SIGN_OUT'
 
@@ -52,8 +59,26 @@ export interface LearningSession {
   confirmedPositionMillis: number
   effectiveDurationMillis: number
   requiredDurationMillis: number
+  currentFaceCheck?: FaceCheckTask | null
   lastEventAt?: string
   createdAt: string
+}
+
+export type FaceCheckStatus = 'PENDING' | 'PASSED' | 'FAILED' | 'TIMED_OUT'
+
+export interface FaceCheckTask {
+  taskId: string
+  sessionId: string
+  status: FaceCheckStatus
+  triggeredAt: string
+  deadlineAt: string
+  attemptCount: number
+  maxAttempts: number
+  remainingAttempts: number
+  result?: string | null
+  failureReason?: string | null
+  similarity?: number | null
+  completedAt?: string | null
 }
 
 export interface LearningEventResult {
@@ -107,6 +132,21 @@ export function getActiveLearningSession() {
 /** 查询指定学习会话的服务端确认状态。 */
 export function getLearningSession(id: string) {
   return http.get<LearningSession>(`/learning/sessions/${id}`)
+}
+
+/** 查询学习会话当前待处理的人脸抽验任务。 */
+export function getCurrentFaceCheck(sessionId: string) {
+  return http.get<FaceCheckTask | null>(`/learning/sessions/${sessionId}/face-check`)
+}
+
+/** 以multipart提交一次抽验照片，请求ID用于服务端幂等。 */
+export function submitFaceCheck(taskId: string, photo: Blob, requestId: string) {
+  const data = new FormData()
+  data.append('requestId', requestId)
+  data.append('photo', photo, 'face-check.jpg')
+  return http.post<FaceCheckTask>(`/learning/face-checks/${taskId}/submissions`, data, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
 }
 
 /** 按严格序号向服务端提交一个学习状态事件。 */

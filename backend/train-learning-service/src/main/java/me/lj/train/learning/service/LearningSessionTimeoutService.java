@@ -35,7 +35,8 @@ public class LearningSessionTimeoutService {
             LearningSessionServiceImpl.CREATED,
             LearningSessionServiceImpl.SIGNED_IN,
             LearningSessionServiceImpl.STUDYING,
-            LearningSessionServiceImpl.PAUSED);
+            LearningSessionServiceImpl.PAUSED,
+            LearningSessionServiceImpl.FACE_PENDING);
 
     private final StudySessionMapper sessionMapper;
     private final StudyProgressMapper progressMapper;

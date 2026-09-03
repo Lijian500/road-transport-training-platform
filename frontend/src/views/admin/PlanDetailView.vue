@@ -16,6 +16,7 @@ import {
   type PlanStatus,
 } from '@/api/training'
 import { ApiError } from '@/api/http'
+import { getEnabledExamPaperOptions, type PaperOption } from '@/api/exam'
 import PermissionButton from '@/components/PermissionButton/PermissionButton.vue'
 import { usePermissionStore } from '@/stores/permission'
 
@@ -28,6 +29,7 @@ const saving = ref(false)
 const plan = ref<Plan>()
 const courseOptions = ref<PlanCourseOption[]>([])
 const participantOptions = ref<PlanParticipantOption[]>([])
+const paperOptions = ref<PaperOption[]>([])
 const formRef = ref<FormInstance>()
 const form = reactive({
   name: '',
@@ -35,6 +37,13 @@ const form = reactive({
   startAt: '',
   endAt: '',
   examRequired: false,
+  examPaperId: '',
+  examPassScore: 60,
+  faceCheckEnabled: false,
+  faceCheckMinIntervalSeconds: 300,
+  faceCheckMaxIntervalSeconds: 600,
+  faceCheckTimeoutSeconds: 60,
+  faceCheckMaxAttempts: 3,
   courseIds: [] as string[],
   userIds: [] as string[],
 })
@@ -49,6 +58,9 @@ const editable = computed(
 const cancellable = computed(
   () => plan.value?.status === 'PUBLISHED' && new Date(plan.value.startAt).getTime() > Date.now(),
 )
+const selectedPaper = computed(() =>
+  paperOptions.value.find((item) => item.id === form.examPaperId),
+)
 
 /** 加载计划详情，并为草稿准备独立的课程和学员候选项。 */
 async function load() {
@@ -58,12 +70,14 @@ async function load() {
     plan.value = result
     syncForm(result)
     if (result.status === 'DRAFT' && permissionStore.has('admin:plan:update')) {
-      const [courses, participants] = await Promise.all([
+      const [courses, participants, papers] = await Promise.all([
         getPlanCourseCandidates(),
         getPlanParticipantCandidates(),
+        getEnabledExamPaperOptions(),
       ])
       courseOptions.value = mergeCourseOptions(courses, result)
       participantOptions.value = mergeParticipantOptions(participants, result)
+      paperOptions.value = papers
     }
   } catch (error) {
     showError(error)
@@ -80,9 +94,22 @@ function syncForm(value: Plan) {
     startAt: value.startAt,
     endAt: value.endAt,
     examRequired: value.examRequired,
+    examPaperId: value.examPaperId || '',
+    examPassScore: value.examPassScore || 60,
+    faceCheckEnabled: value.faceCheckEnabled,
+    faceCheckMinIntervalSeconds: value.faceCheckMinIntervalSeconds,
+    faceCheckMaxIntervalSeconds: value.faceCheckMaxIntervalSeconds,
+    faceCheckTimeoutSeconds: value.faceCheckTimeoutSeconds,
+    faceCheckMaxAttempts: value.faceCheckMaxAttempts,
     courseIds: value.courses.map((item) => item.courseId),
     userIds: value.users.map((item) => item.userId),
   })
+}
+
+/** 选择试卷后使用试卷默认及格分。 */
+function selectPaper(id: string) {
+  const paper = paperOptions.value.find((item) => item.id === id)
+  if (paper) form.examPassScore = paper.passScore
 }
 
 /** 合并已失效但仍在草稿中的课程快照，确保页面能显示原选择。 */
@@ -116,6 +143,7 @@ function mergeParticipantOptions(candidates: PlanParticipantOption[], value: Pla
         orgName: user.orgName,
         username: user.username,
         displayName: `${user.displayName}（当前不可选）`,
+        faceReferenceEnrolled: user.faceReferenceEnrolled,
       })
     }
   })
@@ -131,9 +159,31 @@ async function saveDraft(showSuccess = true) {
     ElMessage.warning('开始时间必须早于结束时间')
     return false
   }
+  if (
+    form.faceCheckEnabled &&
+    form.faceCheckMinIntervalSeconds > form.faceCheckMaxIntervalSeconds
+  ) {
+    ElMessage.warning('抽验最小间隔不能大于最大间隔')
+    return false
+  }
+  if (form.examRequired && !selectedPaper.value) {
+    ElMessage.warning('请选择已启用的考试试卷')
+    return false
+  }
+  if (
+    selectedPaper.value &&
+    (form.examPassScore < 1 || form.examPassScore > selectedPaper.value.totalScore)
+  ) {
+    ElMessage.warning(`计划及格分须在1至${selectedPaper.value.totalScore}分之间`)
+    return false
+  }
   saving.value = true
   try {
-    const result = await updatePlan(planId, { ...form })
+    const result = await updatePlan(planId, {
+      ...form,
+      examPaperId: form.examRequired ? form.examPaperId : undefined,
+      examPassScore: form.examRequired ? form.examPassScore : undefined,
+    })
     plan.value = result
     syncForm(result)
     if (showSuccess) ElMessage.success('计划草稿已保存')
@@ -148,6 +198,11 @@ async function saveDraft(showSuccess = true) {
 
 /** 有编辑权限时先保存当前配置，否则直接发布已保存的草稿。 */
 async function publishConfiguredPlan() {
+  const unenrolledUsers = selectedUnenrolledUsers()
+  if (form.faceCheckEnabled && unenrolledUsers.length) {
+    ElMessage.warning(`以下学员尚未登记人脸：${unenrolledUsers.join('、')}`)
+    return
+  }
   if (editable.value && !(await saveDraft(false))) {
     return
   }
@@ -164,6 +219,18 @@ async function publishConfiguredPlan() {
   } finally {
     saving.value = false
   }
+}
+
+/** 返回当前计划已选择但尚未登记人脸的学员姓名。 */
+function selectedUnenrolledUsers() {
+  if (participantOptions.value.length) {
+    return participantOptions.value
+      .filter((option) => form.userIds.includes(option.userId) && !option.faceReferenceEnrolled)
+      .map((option) => option.displayName)
+  }
+  return (plan.value?.users || [])
+    .filter((user) => !user.faceReferenceEnrolled)
+    .map((user) => user.displayName)
 }
 
 /** 取消尚未开始的已发布计划。 */
@@ -190,7 +257,7 @@ function courseOptionLabel(option: PlanCourseOption) {
 
 /** 返回学员候选项的展示文案。 */
 function participantOptionLabel(option: PlanParticipantOption) {
-  return `${option.displayName}（${option.username}）${option.orgName ? ` · ${option.orgName}` : ''}`
+  return `${option.displayName}（${option.username}）${option.orgName ? ` · ${option.orgName}` : ''}${option.faceReferenceEnrolled ? '' : ' · 未登记人脸'}`
 }
 
 /** 将秒数格式化为易读时长。 */
@@ -322,9 +389,86 @@ onMounted(load)
           </el-form-item>
         </div>
         <el-form-item label="需要考试">
-          <el-switch v-model="form.examRequired" disabled />
-          <span class="form-tip">考试模块尚未启用，本期固定为否</span>
+          <el-switch v-model="form.examRequired" :disabled="!editable" />
+          <span class="form-tip">学习完成且考试及格后确认结业</span>
         </el-form-item>
+        <template v-if="form.examRequired">
+          <el-form-item label="考试试卷">
+            <el-select
+              v-if="editable"
+              v-model="form.examPaperId"
+              filterable
+              placeholder="请选择已启用试卷"
+              @change="selectPaper"
+            >
+              <el-option
+                v-for="paperOption in paperOptions"
+                :key="paperOption.id"
+                :label="`${paperOption.name}（${paperOption.totalScore}分 / ${paperOption.durationMinutes}分钟）`"
+                :value="paperOption.id"
+              />
+            </el-select>
+            <span v-else>
+              试卷 {{ plan.examPaperId }}，限时 {{ plan.examDurationMinutes }} 分钟
+            </span>
+          </el-form-item>
+          <el-form-item label="计划及格分">
+            <el-input-number
+              v-model="form.examPassScore"
+              :disabled="!editable"
+              :min="1"
+              :max="selectedPaper?.totalScore || 10000"
+            />
+          </el-form-item>
+        </template>
+        <el-form-item label="人脸抽验">
+          <el-switch v-model="form.faceCheckEnabled" :disabled="!editable" />
+          <span class="form-tip">
+            {{ form.faceCheckEnabled ? '按累计有效学时随机触发' : '未启用' }}
+          </span>
+        </el-form-item>
+        <div v-if="form.faceCheckEnabled" class="form-grid face-rule-grid">
+          <el-form-item label="随机间隔">
+            <div class="interval-inputs">
+              <el-input-number
+                v-model="form.faceCheckMinIntervalSeconds"
+                :disabled="!editable"
+                :min="60"
+                :max="86400"
+                controls-position="right"
+              />
+              <span>至</span>
+              <el-input-number
+                v-model="form.faceCheckMaxIntervalSeconds"
+                :disabled="!editable"
+                :min="60"
+                :max="86400"
+                controls-position="right"
+              />
+              <span>秒</span>
+            </div>
+          </el-form-item>
+          <el-form-item label="响应时限">
+            <el-input-number
+              v-model="form.faceCheckTimeoutSeconds"
+              :disabled="!editable"
+              :min="10"
+              :max="300"
+              controls-position="right"
+            />
+            <span class="form-tip">秒</span>
+          </el-form-item>
+          <el-form-item label="最多提交">
+            <el-input-number
+              v-model="form.faceCheckMaxAttempts"
+              :disabled="!editable"
+              :min="1"
+              :max="10"
+              controls-position="right"
+            />
+            <span class="form-tip">次</span>
+          </el-form-item>
+        </div>
         <el-form-item label="选择课程">
           <el-select
             v-model="form.courseIds"
@@ -414,6 +558,11 @@ onMounted(load)
         <el-table-column label="姓名" min-width="120" prop="displayName" />
         <el-table-column label="用户名" min-width="130" prop="username" />
         <el-table-column label="部门" min-width="140" prop="orgName" />
+        <el-table-column label="人脸登记" min-width="100">
+          <template #default="{ row }">{{
+            row.faceReferenceEnrolled ? '已登记' : '未登记'
+          }}</template>
+        </el-table-column>
         <el-table-column label="分配状态" min-width="100">
           <template #default="{ row }">{{ assignmentStatusLabel(row.assignmentStatus) }}</template>
         </el-table-column>
@@ -457,6 +606,16 @@ onMounted(load)
 .detail-header p,
 .form-tip {
   color: #7b879b;
+}
+
+.face-rule-grid {
+  align-items: flex-start;
+}
+
+.interval-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .header-actions {

@@ -19,6 +19,12 @@ public class PlanEntity extends TrainingAuditEntity {
     private boolean examRequired;
     private Long examPaperId;
     private Integer examPassScore;
+    private Integer examDurationMinutes;
+    private boolean faceCheckEnabled;
+    private int faceCheckMinIntervalSeconds;
+    private int faceCheckMaxIntervalSeconds;
+    private int faceCheckTimeoutSeconds;
+    private int faceCheckMaxAttempts;
     private Long publishedBy;
     private LocalDateTime publishedAt;
     private Long cancelledBy;
@@ -44,6 +50,18 @@ public class PlanEntity extends TrainingAuditEntity {
     public void setExamPaperId(Long value) { this.examPaperId = value; }
     public Integer getExamPassScore() { return examPassScore; }
     public void setExamPassScore(Integer value) { this.examPassScore = value; }
+    public Integer getExamDurationMinutes() { return examDurationMinutes; }
+    public void setExamDurationMinutes(Integer value) { this.examDurationMinutes = value; }
+    public boolean isFaceCheckEnabled() { return faceCheckEnabled; }
+    public void setFaceCheckEnabled(boolean value) { this.faceCheckEnabled = value; }
+    public int getFaceCheckMinIntervalSeconds() { return faceCheckMinIntervalSeconds; }
+    public void setFaceCheckMinIntervalSeconds(int value) { this.faceCheckMinIntervalSeconds = value; }
+    public int getFaceCheckMaxIntervalSeconds() { return faceCheckMaxIntervalSeconds; }
+    public void setFaceCheckMaxIntervalSeconds(int value) { this.faceCheckMaxIntervalSeconds = value; }
+    public int getFaceCheckTimeoutSeconds() { return faceCheckTimeoutSeconds; }
+    public void setFaceCheckTimeoutSeconds(int value) { this.faceCheckTimeoutSeconds = value; }
+    public int getFaceCheckMaxAttempts() { return faceCheckMaxAttempts; }
+    public void setFaceCheckMaxAttempts(int value) { this.faceCheckMaxAttempts = value; }
     public Long getPublishedBy() { return publishedBy; }
     public void setPublishedBy(Long value) { this.publishedBy = value; }
     public LocalDateTime getPublishedAt() { return publishedAt; }

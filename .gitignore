@@ -32,7 +32,7 @@ frontend/.eslintcache
 
 # 本地数据与上传文件
 deploy/volumes/
-storage/
+/storage/
 uploads/
 temp/
 tmp/

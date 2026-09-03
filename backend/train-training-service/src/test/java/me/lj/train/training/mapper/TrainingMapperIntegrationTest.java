@@ -85,7 +85,8 @@ class TrainingMapperIntegrationTest {
                 "SELECT DISTINCT index_name FROM information_schema.statistics "
                         + "WHERE table_schema = DATABASE() AND table_name IN "
                         + "('train_course', 'train_courseware', 'train_storage_object', "
-                        + "'train_upload_session', 'train_plan', 'train_plan_course', "
+                        + "'train_upload_session', 'train_private_image_upload_session', "
+                        + "'train_plan', 'train_plan_course', "
                         + "'train_plan_courseware_snapshot', 'train_plan_user')",
                 String.class);
         Integer foreignKeyCount = jdbcTemplate.queryForObject(
@@ -96,6 +97,17 @@ class TrainingMapperIntegrationTest {
                 "SELECT COUNT(*) FROM information_schema.tables "
                         + "WHERE table_schema = DATABASE() AND table_name = 'mq_consume_log'",
                 Integer.class);
+        Integer examTableCount = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM information_schema.tables "
+                        + "WHERE table_schema = DATABASE() AND table_name IN "
+                        + "('exam_question', 'exam_paper', 'exam_paper_question', "
+                        + "'exam_record', 'exam_answer')",
+                Integer.class);
+        Integer examDurationColumnCount = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM information_schema.columns "
+                        + "WHERE table_schema = DATABASE() AND table_name = 'train_plan' "
+                        + "AND column_name = 'exam_duration_minutes'",
+                Integer.class);
 
         assertThat(tables).containsExactly(
                 "train_course",
@@ -104,6 +116,7 @@ class TrainingMapperIntegrationTest {
                 "train_plan_course",
                 "train_plan_courseware_snapshot",
                 "train_plan_user",
+                "train_private_image_upload_session",
                 "train_storage_object",
                 "train_upload_session");
         assertThat(indexes).contains(
@@ -112,11 +125,16 @@ class TrainingMapperIntegrationTest {
                 "idx_storage_enterprise_status",
                 "idx_upload_enterprise_course",
                 "idx_upload_expiry",
+                "idx_private_upload_owner",
+                "idx_storage_owner_type",
                 "idx_plan_enterprise_status",
                 "idx_plan_course_order",
                 "idx_plan_courseware_order",
-                "idx_plan_user_student");
+                "idx_plan_user_student",
+                "idx_plan_exam_paper");
         assertThat(consumeLogCount).isEqualTo(1);
+        assertThat(examTableCount).isEqualTo(5);
+        assertThat(examDurationColumnCount).isEqualTo(1);
         assertThat(foreignKeyCount).isZero();
     }
 

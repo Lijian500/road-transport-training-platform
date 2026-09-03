@@ -26,6 +26,8 @@ class LearningConnectionRegistryTest {
         assertThat(first.replacement().block()).isTrue();
         registry.remove(first);
         assertThat(registry.size()).isEqualTo(1);
+        assertThat(registry.find(20L, 10L, 900L)).containsExactly(second);
+        assertThat(registry.find(21L, 10L, 900L)).isEmpty();
     }
 
     private LearningConnection connection(String id) {

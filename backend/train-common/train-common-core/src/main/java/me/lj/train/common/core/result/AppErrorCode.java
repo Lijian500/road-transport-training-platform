@@ -53,6 +53,15 @@ public enum AppErrorCode implements ErrorCode {
     PLAN_PARTICIPANT_INVALID("T1204", "参训学员信息无效", 400),
     STUDENT_TASK_NOT_FOUND("T1205", "培训任务不存在", 404),
 
+    EXAM_QUESTION_NOT_FOUND("T1301", "考试题目不存在", 404),
+    EXAM_QUESTION_STATE_INVALID("T1302", "当前题目状态不允许该操作", 409),
+    EXAM_PAPER_NOT_FOUND("T1311", "试卷不存在", 404),
+    EXAM_PAPER_STATE_INVALID("T1312", "当前试卷状态不允许该操作", 409),
+    EXAM_PAPER_ENABLE_INVALID("T1313", "试卷不满足启用条件", 409),
+    EXAM_ACCESS_DENIED("T1321", "当前培训任务不允许考试", 403),
+    EXAM_RECORD_NOT_FOUND("T1322", "考试记录不存在", 404),
+    EXAM_RECORD_STATE_INVALID("T1323", "当前考试状态不允许该操作", 409),
+
     LEARNING_ACCESS_DENIED("L3001", "当前培训任务不允许学习", 403),
     LEARNING_SESSION_NOT_FOUND("L3002", "学习会话不存在", 404),
     LEARNING_SESSION_CONFLICT("L3003", "已有其他活动学习会话", 409),
@@ -61,7 +70,12 @@ public enum AppErrorCode implements ErrorCode {
     LEARNING_COURSEWARE_LOCKED("L3006", "请先完成前一个课件", 409),
     LEARNING_POSITION_INVALID("L3007", "视频进度校验失败", 409),
     LEARNING_SESSION_STALE("L3008", "学习会话已失效，请重新进入课程", 409),
-    LEARNING_PLAYBACK_UNAVAILABLE("L3009", "视频暂时无法播放", 503);
+    LEARNING_PLAYBACK_UNAVAILABLE("L3009", "视频暂时无法播放", 503),
+    FACE_CHECK_NOT_FOUND("L3101", "人脸抽验任务不存在", 404),
+    FACE_CHECK_STATE_INVALID("L3102", "当前人脸抽验状态不允许该操作", 409),
+    FACE_CHECK_EXPIRED("L3103", "人脸抽验已超时", 409),
+    FACE_CHECK_UNAVAILABLE("L3104", "人脸核验服务暂时不可用", 503),
+    FACE_REFERENCE_REQUIRED("L3105", "尚未登记人脸照片", 409);
 
     private final String code;
     private final String message;

@@ -46,6 +46,17 @@ const studentRoutes: RouteRecordRaw[] = [
           permission: 'student:learning:study',
         },
       },
+      {
+        path: 'plans/:planId/exam',
+        name: 'student-exam',
+        component: () => import('@/views/student/StudentExamView.vue'),
+        meta: {
+          title: '在线考试',
+          requiresAuth: true,
+          workspace: 'student',
+          permission: 'student:exam:take',
+        },
+      },
     ],
   },
 ]

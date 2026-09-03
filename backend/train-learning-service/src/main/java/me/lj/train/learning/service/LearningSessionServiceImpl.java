@@ -66,14 +66,15 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
     static final String SIGNED_IN = "SIGNED_IN";
     static final String STUDYING = "STUDYING";
     static final String PAUSED = "PAUSED";
+    static final String FACE_PENDING = "FACE_PENDING";
     static final String SESSION_COMPLETED = "COMPLETED";
     static final String SIGNED_OUT = "SIGNED_OUT";
     static final String TERMINATED = "TERMINATED";
 
     private static final Set<String> ACTIVE_STATUSES = Set.of(
-            CREATED, SIGNED_IN, STUDYING, PAUSED);
+            CREATED, SIGNED_IN, STUDYING, PAUSED, FACE_PENDING);
     private static final Set<String> BINDABLE_STATUSES = Set.of(
-            CREATED, SIGNED_IN, STUDYING, PAUSED, SESSION_COMPLETED);
+            CREATED, SIGNED_IN, STUDYING, PAUSED, FACE_PENDING, SESSION_COMPLETED);
     private static final Set<String> EVENT_TYPES = Set.of(
             "SIGN_IN", "PLAY", "PROGRESS", "PAUSE", "SIGN_OUT");
 
@@ -87,6 +88,7 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
     private final ObjectMapper objectMapper;
     private final Clock clock;
     private final LearningTimeCalculator timeCalculator;
+    private final FaceCheckServiceImpl faceCheckService;
 
     public LearningSessionServiceImpl(
             PlatformTransactionManager transactionManager,
@@ -99,7 +101,8 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
             TrainingAccessClient trainingAccessClient,
             ObjectMapper objectMapper,
             Clock clock,
-            LearningTimeCalculator timeCalculator) {
+            LearningTimeCalculator timeCalculator,
+            FaceCheckServiceImpl faceCheckService) {
         super(transactionManager);
         this.sessionMapper = sessionMapper;
         this.progressMapper = progressMapper;
@@ -111,6 +114,7 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
         this.objectMapper = objectMapper;
         this.clock = clock;
         this.timeCalculator = timeCalculator;
+        this.faceCheckService = faceCheckService;
     }
 
     @Override
@@ -172,6 +176,11 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
             session.setPlanEndAt(context.endAt());
             session.setStatus(CREATED);
             session.setCreatedAt(now());
+            StudyProgressEntity progress = progressManager.requireProgress(
+                    user.getEnterpriseId(), user.getUserId(), context.planId(), rule.id());
+            faceCheckService.configureSession(
+                    session, context, progress.getEffectiveDurationMs(),
+                    progress.getRequiredDurationMs());
             try {
                 sessionMapper.insertSelective(session);
             } catch (DuplicateKeyException exception) {
@@ -253,6 +262,7 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
             session.setLastSequence(session.getLastSequence() + 1L);
             session.setVersion(session.getVersion() + 1);
             sessionMapper.updateByCondition(session, STUDY_SESSION.ID.eq(session.getId()));
+            faceCheckService.cancelPending(session, now);
             appendSystemEvent(session, fromStatus, "USER_TERMINATE", now);
         });
     }
@@ -469,6 +479,9 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
         coursewareProgressMapper.updateByCondition(
                 courseware, STUDY_COURSEWARE_PROGRESS.ID.eq(courseware.getId()));
         progressMapper.updateByCondition(progress, STUDY_PROGRESS.ID.eq(progress.getId()));
+        if (!finalEvent) {
+            faceCheckService.triggerIfDue(session, progress, serverTime);
+        }
         if (courseCompleted && progressManager.allTaskCoursesCompleted(
                 session.getEnterpriseId(), session.getUserId(), session.getTaskId())) {
             outboxService.appendTaskEvent(
@@ -616,7 +629,8 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
                 session.getPlanCourseId(), session.getCourseName(), session.getStatus(),
                 session.getCurrentCoursewareSnapshotId(), session.getLastSequence(),
                 session.getLastConfirmedPositionMs(), progress.getEffectiveDurationMs(),
-                progress.getRequiredDurationMs(), session.getLastEventAt(), session.getCreatedAt());
+                progress.getRequiredDurationMs(), session.getLastEventAt(), session.getCreatedAt(),
+                faceCheckService.currentPending(session.getId()));
     }
 
     private void validateEvent(SubmitEventCommand command) {

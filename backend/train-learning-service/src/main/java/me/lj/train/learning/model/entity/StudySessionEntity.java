@@ -33,6 +33,12 @@ public class StudySessionEntity {
     private LocalDateTime signedOutAt;
     private LocalDateTime terminatedAt;
     private String terminationReason;
+    private boolean faceCheckEnabled;
+    private int faceCheckMinIntervalSeconds;
+    private int faceCheckMaxIntervalSeconds;
+    private int faceCheckTimeoutSeconds;
+    private int faceCheckMaxAttempts;
+    private Long nextFaceCheckEffectiveDurationMs;
     private int version;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -81,6 +87,18 @@ public class StudySessionEntity {
     public void setTerminatedAt(LocalDateTime value) { this.terminatedAt = value; }
     public String getTerminationReason() { return terminationReason; }
     public void setTerminationReason(String value) { this.terminationReason = value; }
+    public boolean isFaceCheckEnabled() { return faceCheckEnabled; }
+    public void setFaceCheckEnabled(boolean value) { this.faceCheckEnabled = value; }
+    public int getFaceCheckMinIntervalSeconds() { return faceCheckMinIntervalSeconds; }
+    public void setFaceCheckMinIntervalSeconds(int value) { this.faceCheckMinIntervalSeconds = value; }
+    public int getFaceCheckMaxIntervalSeconds() { return faceCheckMaxIntervalSeconds; }
+    public void setFaceCheckMaxIntervalSeconds(int value) { this.faceCheckMaxIntervalSeconds = value; }
+    public int getFaceCheckTimeoutSeconds() { return faceCheckTimeoutSeconds; }
+    public void setFaceCheckTimeoutSeconds(int value) { this.faceCheckTimeoutSeconds = value; }
+    public int getFaceCheckMaxAttempts() { return faceCheckMaxAttempts; }
+    public void setFaceCheckMaxAttempts(int value) { this.faceCheckMaxAttempts = value; }
+    public Long getNextFaceCheckEffectiveDurationMs() { return nextFaceCheckEffectiveDurationMs; }
+    public void setNextFaceCheckEffectiveDurationMs(Long value) { this.nextFaceCheckEffectiveDurationMs = value; }
     public int getVersion() { return version; }
     public void setVersion(int value) { this.version = value; }
     public LocalDateTime getCreatedAt() { return createdAt; }

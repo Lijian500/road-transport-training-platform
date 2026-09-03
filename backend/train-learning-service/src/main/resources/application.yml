@@ -46,6 +46,7 @@ mybatis-flex:
 learning:
   session-idle-hours: ${LEARNING_SESSION_IDLE_HOURS:24}
   timeout-scan-interval-ms: ${LEARNING_TIMEOUT_SCAN_INTERVAL_MS:5000}
+  face-check-timeout-scan-interval-ms: ${FACE_CHECK_TIMEOUT_SCAN_INTERVAL_MS:1000}
   outbox-poll-interval-ms: ${LEARNING_OUTBOX_POLL_INTERVAL_MS:1000}
   outbox-batch-size: ${LEARNING_OUTBOX_BATCH_SIZE:100}
   outbox-max-retries: ${LEARNING_OUTBOX_MAX_RETRIES:10}

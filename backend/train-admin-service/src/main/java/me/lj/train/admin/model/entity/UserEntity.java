@@ -2,6 +2,8 @@ package me.lj.train.admin.model.entity;
 
 import com.mybatisflex.annotation.Table;
 
+import java.time.LocalDateTime;
+
 /**
  * 用户账号实体。
  */
@@ -18,6 +20,8 @@ public class UserEntity extends AuditEntity {
     private long loginVersion;
     private boolean mustChangePassword;
     private boolean platformAdmin;
+    private Long faceReferenceObjectId;
+    private LocalDateTime faceReferenceUpdatedAt;
 
     public Long getEnterpriseId() {
         return enterpriseId;
@@ -97,5 +101,21 @@ public class UserEntity extends AuditEntity {
 
     public void setPlatformAdmin(boolean platformAdmin) {
         this.platformAdmin = platformAdmin;
+    }
+
+    public Long getFaceReferenceObjectId() {
+        return faceReferenceObjectId;
+    }
+
+    public void setFaceReferenceObjectId(Long faceReferenceObjectId) {
+        this.faceReferenceObjectId = faceReferenceObjectId;
+    }
+
+    public LocalDateTime getFaceReferenceUpdatedAt() {
+        return faceReferenceUpdatedAt;
+    }
+
+    public void setFaceReferenceUpdatedAt(LocalDateTime faceReferenceUpdatedAt) {
+        this.faceReferenceUpdatedAt = faceReferenceUpdatedAt;
     }
 }

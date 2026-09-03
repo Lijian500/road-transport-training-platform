@@ -174,7 +174,8 @@ public class TrainingParticipantServiceImpl extends AdminServiceSupport
             OrgEntity org = orgMap.get(user.getOrgId());
             return new ParticipantView(
                     user.getId(), user.getEnterpriseId(), user.getOrgId(),
-                    org == null ? null : org.getOrgName(), user.getUsername(), user.getDisplayName());
+                    org == null ? null : org.getOrgName(), user.getUsername(), user.getDisplayName(),
+                    user.getFaceReferenceObjectId() != null);
         }).collect(Collectors.toList());
     }
 

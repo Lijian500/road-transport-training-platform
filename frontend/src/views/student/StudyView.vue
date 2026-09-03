@@ -7,15 +7,18 @@ import {
   getActiveLearningSession,
   getLearningCourse,
   getLearningPlaybackUrl,
+  getLearningSession,
   openLearningSession,
   terminateLearningSession,
   type CourseProgress,
   type CoursewareProgress,
+  type FaceCheckTask,
   type LearningEventResult,
   type LearningEventType,
   type LearningSession,
 } from '@/api/learning'
 import { ApiError } from '@/api/http'
+import FaceCheckDialog from '@/components/FaceCheckDialog/FaceCheckDialog.vue'
 import { LearningRealtimeError, useLearningRealtime } from '@/composables/useLearningRealtime'
 import {
   getOrCreateClientInstanceId,
@@ -38,6 +41,7 @@ const conflictSession = ref<LearningSession | null>(null)
 const selectedCoursewareId = ref<string>()
 const videoUrl = ref('')
 const video = ref<HTMLVideoElement>()
+const currentFaceCheck = ref<FaceCheckTask | null>(null)
 
 let progressTimer: number | undefined
 let eventChain: Promise<unknown> = Promise.resolve()
@@ -51,6 +55,8 @@ const learningRealtime = useLearningRealtime({
   clientInstanceId,
   onStateSync: applySessionState,
   onProgressConfirmed: applyEventResult,
+  onFaceCheckRequired: handleFaceCheckRequired,
+  onFaceCheckResult: handleFaceCheckResult,
   onDisconnected: handleRealtimeDisconnected,
   onReplaced: handleRealtimeReplaced,
 })
@@ -93,6 +99,7 @@ async function openCurrentSession() {
   session.value = await openLearningSession({ planId, planCourseId, clientInstanceId })
   selectInitialCourseware()
   session.value = await learningRealtime.bind(session.value.id)
+  restoreFaceCheck(session.value)
   if (['SIGNED_IN', 'PAUSED'].includes(session.value.status)) {
     await loadPlaybackUrl()
   }
@@ -186,6 +193,11 @@ function pausePlayerSilently() {
 
 /** 在浏览器真正播放前先获得服务端PLAY状态确认。 */
 async function onVideoPlay() {
+  if (session.value?.status === 'FACE_PENDING') {
+    pausePlayerSilently()
+    ElMessage.warning('请先完成人脸抽验，再手动继续播放')
+    return
+  }
   if (!realtimeReady.value) {
     pausePlayerSilently()
     ElMessage.warning('实时学习连接尚未恢复，请稍后手动继续播放')
@@ -370,6 +382,7 @@ async function sendEventNow(
 /** 将服务端STATE_SYNC快照合并到学习页。 */
 function applySessionState(state: LearningSession) {
   session.value = state
+  restoreFaceCheck(state)
   if (!course.value) return
   course.value.effectiveDurationMillis = state.effectiveDurationMillis
   const current = course.value.coursewares.find(
@@ -382,6 +395,74 @@ function applySessionState(state: LearningSession) {
       state.confirmedPositionMillis,
     )
   }
+}
+
+/** 从STATE_SYNC恢复待处理抽验，或清理已由服务端结束的过期弹窗。 */
+function restoreFaceCheck(state: LearningSession) {
+  if (state.currentFaceCheck) {
+    currentFaceCheck.value = state.currentFaceCheck
+    if (state.status === 'FACE_PENDING') freezeForFaceCheck()
+    return
+  }
+  if (state.status !== 'FACE_PENDING' && currentFaceCheck.value?.status === 'PENDING') {
+    currentFaceCheck.value = null
+  }
+}
+
+/** 处理实时抽验触发，立即冻结播放器和进度上报。 */
+function handleFaceCheckRequired(faceCheck: FaceCheckTask) {
+  if (faceCheck.sessionId !== session.value?.id) return
+  currentFaceCheck.value = faceCheck
+  if (session.value) {
+    session.value = { ...session.value, status: 'FACE_PENDING', currentFaceCheck: faceCheck }
+  }
+  freezeForFaceCheck()
+}
+
+/** 合并HTTP或实时抽验结果，并获取最终会话状态。 */
+function handleFaceCheckResult(faceCheck: FaceCheckTask) {
+  if (faceCheck.sessionId !== session.value?.id) return
+  currentFaceCheck.value = faceCheck
+  freezeForFaceCheck()
+  if (faceCheck.status !== 'PENDING') void refreshSessionAfterFaceCheck()
+}
+
+/** 停止所有学习计时入口并静默暂停播放器。 */
+function freezeForFaceCheck() {
+  stopProgressTimer()
+  approvedPlay = false
+  pausePlayerSilently()
+}
+
+/** 查询抽验后的服务端会话，确保通过后只恢复为手动播放的暂停态。 */
+async function refreshSessionAfterFaceCheck() {
+  if (!session.value) return
+  try {
+    applySessionState(await getLearningSession(session.value.id))
+  } catch (error) {
+    showError(error, '抽验后的学习状态同步失败')
+  }
+}
+
+/** 倒计时结束后刷新服务端终态，不在浏览器本地擅自判定。 */
+async function handleFaceCheckExpired() {
+  freezeForFaceCheck()
+  await refreshSessionAfterFaceCheck()
+  if (session.value?.status === 'TERMINATED' && currentFaceCheck.value?.status === 'PENDING') {
+    currentFaceCheck.value = {
+      ...currentFaceCheck.value,
+      status: 'TIMED_OUT',
+      result: 'TIMEOUT',
+      failureReason: '未在规定时间内完成人脸抽验',
+    }
+  }
+}
+
+/** 关闭抽验终态提示；通过后保持PAUSED并等待学员手动继续。 */
+function acknowledgeFaceCheck() {
+  const passed = currentFaceCheck.value?.status === 'PASSED'
+  currentFaceCheck.value = null
+  if (passed) ElMessage.success('人脸抽验已通过，请手动继续播放')
 }
 
 /** 将服务端确认结果同步到会话、课程和当前课件视图。 */
@@ -501,6 +582,7 @@ function sessionStatusLabel(status?: LearningSession['status']) {
     SIGNED_IN: '已签到',
     STUDYING: '学习中',
     PAUSED: '已暂停',
+    FACE_PENDING: '等待人脸抽验',
     COMPLETED: '课程已完成',
     SIGNED_OUT: '已签退',
     TERMINATED: '已终止',
@@ -601,6 +683,7 @@ onBeforeUnmount(() => {
             :class="{ active: selectedCoursewareId === item.coursewareSnapshotId }"
             :disabled="
               !isCoursewareUnlocked(course.coursewares, item) ||
+              session.status === 'FACE_PENDING' ||
               (session.status === 'STUDYING' && !realtimeReady)
             "
             type="button"
@@ -657,6 +740,12 @@ onBeforeUnmount(() => {
               @seeking="onSeeking"
             />
             <el-alert
+              v-if="session.status === 'FACE_PENDING'"
+              title="人脸抽验处理中，播放器与有效学时累计已暂停。"
+              type="warning"
+              :closable="false"
+            />
+            <el-alert
               v-if="session.status === 'PAUSED'"
               title="学习已暂停，请点击播放器继续；页面返回时不会自动恢复计时。"
               type="info"
@@ -684,6 +773,12 @@ onBeforeUnmount(() => {
         </el-card>
       </div>
     </template>
+    <FaceCheckDialog
+      :face-check="currentFaceCheck"
+      @result="handleFaceCheckResult"
+      @expired="handleFaceCheckExpired"
+      @acknowledged="acknowledgeFaceCheck"
+    />
   </section>
 </template>
 

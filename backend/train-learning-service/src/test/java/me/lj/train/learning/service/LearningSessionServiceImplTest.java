@@ -59,6 +59,7 @@ class LearningSessionServiceImplTest {
     @Mock private LearningProgressManager progressManager;
     @Mock private LearningOutboxService outboxService;
     @Mock private TrainingAccessClient trainingAccessClient;
+    @Mock private FaceCheckServiceImpl faceCheckService;
 
     private ObjectMapper objectMapper;
     private LearningSessionServiceImpl service;
@@ -70,7 +71,7 @@ class LearningSessionServiceImplTest {
                 transactionManager, sessionMapper, progressMapper, coursewareProgressMapper,
                 eventLogMapper, progressManager, outboxService, trainingAccessClient,
                 objectMapper, Clock.fixed(Instant.parse("2026-08-19T08:00:00Z"),
-                ZoneId.of("Asia/Shanghai")), new LearningTimeCalculator());
+                ZoneId.of("Asia/Shanghai")), new LearningTimeCalculator(), faceCheckService);
         UserContext.set(student());
     }
 
@@ -270,6 +271,7 @@ class LearningSessionServiceImplTest {
                 LocalDateTime.of(2026, 8, 19, 0, 0),
                 LocalDateTime.of(2026, 8, 20, 0, 0),
                 "IN_PROGRESS", "ASSIGNED", "NOT_STARTED", "NOT_COMPLETED",
+                false, 300, 600, 60, 3,
                 Arrays.asList(
                         new LearningCourseRuleView(
                                 101L, 201L, "安全驾驶", 60, false, 20, 5, 1,

@@ -13,6 +13,7 @@ import {
   type PlanStatus,
 } from '@/api/training'
 import { ApiError } from '@/api/http'
+import { getEnabledExamPaperOptions, type PaperOption } from '@/api/exam'
 import AppDialog from '@/components/AppDialog/AppDialog.vue'
 import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
@@ -30,6 +31,7 @@ const query = reactive({
   status: '' as PlanStatus | '',
 })
 const dialogVisible = ref(false)
+const paperOptions = ref<PaperOption[]>([])
 const formRef = ref<FormInstance>()
 const form = reactive({
   name: '',
@@ -37,6 +39,13 @@ const form = reactive({
   startAt: '',
   endAt: '',
   examRequired: false,
+  examPaperId: '',
+  examPassScore: 60,
+  faceCheckEnabled: false,
+  faceCheckMinIntervalSeconds: 300,
+  faceCheckMaxIntervalSeconds: 600,
+  faceCheckTimeoutSeconds: 60,
+  faceCheckMaxAttempts: 3,
 })
 const rules: FormRules = {
   name: [{ required: true, message: '请输入计划名称', trigger: 'blur' }],
@@ -68,8 +77,31 @@ function openCreate() {
     startAt: toLocalDateTime(start),
     endAt: toLocalDateTime(end),
     examRequired: false,
+    examPaperId: '',
+    examPassScore: 60,
+    faceCheckEnabled: false,
+    faceCheckMinIntervalSeconds: 300,
+    faceCheckMaxIntervalSeconds: 600,
+    faceCheckTimeoutSeconds: 60,
+    faceCheckMaxAttempts: 3,
   })
   dialogVisible.value = true
+  void loadPaperOptions()
+}
+
+/** 加载培训计划可关联的已启用试卷。 */
+async function loadPaperOptions() {
+  try {
+    paperOptions.value = await getEnabledExamPaperOptions()
+  } catch (error) {
+    showError(error)
+  }
+}
+
+/** 选择试卷后使用其默认及格分作为计划初值。 */
+function selectPaper(id: string) {
+  const paper = paperOptions.value.find((item) => item.id === id)
+  if (paper) form.examPassScore = paper.passScore
 }
 
 /** 创建草稿并进入详情页选择课程和学员。 */
@@ -81,9 +113,29 @@ async function save() {
     ElMessage.warning('开始时间必须早于结束时间')
     return
   }
+  if (
+    form.faceCheckEnabled &&
+    form.faceCheckMinIntervalSeconds > form.faceCheckMaxIntervalSeconds
+  ) {
+    ElMessage.warning('抽验最小间隔不能大于最大间隔')
+    return
+  }
+  const paper = paperOptions.value.find((item) => item.id === form.examPaperId)
+  if (form.examRequired && !paper) {
+    ElMessage.warning('请选择已启用的考试试卷')
+    return
+  }
+  if (paper && (form.examPassScore < 1 || form.examPassScore > paper.totalScore)) {
+    ElMessage.warning(`计划及格分须在1至${paper.totalScore}分之间`)
+    return
+  }
   saving.value = true
   try {
-    const plan = await createPlan({ ...form })
+    const plan = await createPlan({
+      ...form,
+      examPaperId: form.examRequired ? form.examPaperId : undefined,
+      examPassScore: form.examRequired ? form.examPassScore : undefined,
+    })
     dialogVisible.value = false
     ElMessage.success('计划草稿已创建，请继续选择课程和学员')
     await router.push(`/admin/plans/${plan.id}`)
@@ -250,6 +302,12 @@ onMounted(load)
           <el-tag :type="statusType(row.status)">{{ statusLabel(row.status) }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column label="人脸抽验" width="100">
+        <template #default="{ row }">{{ row.faceCheckEnabled ? '已启用' : '未启用' }}</template>
+      </el-table-column>
+      <el-table-column label="考试" width="100">
+        <template #default="{ row }">{{ row.examRequired ? '需要' : '无需' }}</template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width="260">
         <template #default="{ row }">
           <el-button link type="primary" @click="router.push(`/admin/plans/${row.id}`)">
@@ -304,9 +362,71 @@ onMounted(load)
           <el-date-picker v-model="form.endAt" type="datetime" value-format="YYYY-MM-DDTHH:mm:ss" />
         </el-form-item>
         <el-form-item label="需要考试">
-          <el-switch v-model="form.examRequired" disabled />
-          <span class="form-tip">考试模块尚未启用，本期固定为否</span>
+          <el-switch v-model="form.examRequired" />
+          <span class="form-tip">启用后，学习完成且考试及格才确认结业</span>
         </el-form-item>
+        <template v-if="form.examRequired">
+          <el-form-item label="考试试卷">
+            <el-select
+              v-model="form.examPaperId"
+              filterable
+              placeholder="请选择已启用试卷"
+              @change="selectPaper"
+            >
+              <el-option
+                v-for="paper in paperOptions"
+                :key="paper.id"
+                :label="`${paper.name}（${paper.totalScore}分 / ${paper.durationMinutes}分钟）`"
+                :value="paper.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="计划及格分">
+            <el-input-number v-model="form.examPassScore" :min="1" :max="10000" />
+          </el-form-item>
+        </template>
+        <el-form-item label="人脸抽验">
+          <el-switch v-model="form.faceCheckEnabled" />
+          <span class="form-tip">启用后，发布前所有学员都必须已登记人脸</span>
+        </el-form-item>
+        <div v-if="form.faceCheckEnabled" class="face-rule-grid">
+          <el-form-item label="随机间隔">
+            <div class="interval-inputs">
+              <el-input-number
+                v-model="form.faceCheckMinIntervalSeconds"
+                :min="60"
+                :max="86400"
+                controls-position="right"
+              />
+              <span>至</span>
+              <el-input-number
+                v-model="form.faceCheckMaxIntervalSeconds"
+                :min="60"
+                :max="86400"
+                controls-position="right"
+              />
+              <span>秒</span>
+            </div>
+          </el-form-item>
+          <el-form-item label="响应时限">
+            <el-input-number
+              v-model="form.faceCheckTimeoutSeconds"
+              :min="10"
+              :max="300"
+              controls-position="right"
+            />
+            <span class="form-tip">秒</span>
+          </el-form-item>
+          <el-form-item label="最多提交">
+            <el-input-number
+              v-model="form.faceCheckMaxAttempts"
+              :min="1"
+              :max="10"
+              controls-position="right"
+            />
+            <span class="form-tip">次</span>
+          </el-form-item>
+        </div>
       </el-form>
     </AppDialog>
   </section>
@@ -317,5 +437,19 @@ onMounted(load)
   margin-left: 10px;
   color: #8792a6;
   font-size: 12px;
+}
+
+.face-rule-grid,
+.interval-inputs {
+  display: flex;
+  gap: 12px;
+}
+
+.face-rule-grid {
+  flex-wrap: wrap;
+}
+
+.interval-inputs {
+  align-items: center;
 }
 </style>

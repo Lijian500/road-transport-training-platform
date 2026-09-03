@@ -1,4 +1,5 @@
 import http, { type PageResult } from '@/api/http'
+import type { SignedRequest } from '@/api/training'
 
 export type Status = 'ENABLED' | 'DISABLED'
 export type OrganizationNature = 'ENTERPRISE' | 'REGULATOR'
@@ -108,7 +109,33 @@ export interface User {
   mustChangePassword: boolean
   roleIds: string[]
   roleNames: string[]
+  faceReferenceEnrolled: boolean
+  faceReferenceUpdatedAt?: string
   createdAt: string
+}
+
+export interface FaceReference {
+  userId: string
+  enrolled: boolean
+  updatedAt?: string
+}
+
+export interface FaceReferenceUploadSession {
+  id: string
+  userId: string
+  storageObjectId: string
+  originalFilename: string
+  fileSizeBytes: number
+  status: string
+  expiresAt: string
+  uploadRequest: SignedRequest
+}
+
+export interface FaceReferenceFileDeclaration {
+  originalFilename: string
+  contentType: string
+  fileSizeBytes: number
+  clientLastModified: number
 }
 
 export interface UserPayload {
@@ -254,6 +281,36 @@ export function resetUserPassword(id: string, temporaryPassword: string) {
 
 export function assignUserRoles(id: string, roleIds: string[]) {
   return http.put<void>(`/admin/users/${id}/roles`, { roleIds })
+}
+
+/** 查询指定用户的人脸登记状态。 */
+export function getFaceReference(id: string) {
+  return http.get<FaceReference>(`/admin/users/${id}/face-reference`)
+}
+
+/** 创建登记照的短期OSS直传会话。 */
+export function createFaceReferenceUploadSession(id: string, data: FaceReferenceFileDeclaration) {
+  return http.post<FaceReferenceUploadSession>(
+    `/admin/users/${id}/face-reference/upload-sessions`,
+    data,
+  )
+}
+
+/** 完成登记照上传并替换用户当前登记照。 */
+export function completeFaceReferenceUploadSession(id: string, sessionId: string) {
+  return http.post<FaceReference>(
+    `/admin/users/${id}/face-reference/upload-sessions/${sessionId}/complete`,
+  )
+}
+
+/** 获取登记照的短期受控预览地址。 */
+export function getFaceReferencePreviewUrl(id: string) {
+  return http.get<SignedRequest>(`/admin/users/${id}/face-reference/preview-url`)
+}
+
+/** 删除指定用户当前登记照。 */
+export function deleteFaceReference(id: string) {
+  return http.delete<void>(`/admin/users/${id}/face-reference`)
 }
 
 export function getRoles(params: {

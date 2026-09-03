@@ -16,8 +16,14 @@ public final class TrainingPermissions {
     public static final String PLAN_UPDATE = "admin:plan:update";
     public static final String PLAN_PUBLISH = "admin:plan:publish";
     public static final String PLAN_CANCEL = "admin:plan:cancel";
+    public static final String FACE_CHECK_VIEW = "admin:face-check:view";
+    public static final String FACE_CHECK_MANAGE = "admin:face-check:manage";
+    public static final String EXAM_VIEW = "admin:exam:view";
+    public static final String EXAM_MANAGE = "admin:exam:manage";
+    public static final String STATISTICS_VIEW = "admin:statistics:view";
     public static final String STUDENT_PLAN_VIEW = "student:plan:view";
     public static final String STUDENT_LEARNING_STUDY = "student:learning:study";
+    public static final String STUDENT_EXAM_TAKE = "student:exam:take";
 
     private TrainingPermissions() {
     }

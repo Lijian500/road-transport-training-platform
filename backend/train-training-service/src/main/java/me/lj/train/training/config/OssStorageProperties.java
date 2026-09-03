@@ -20,6 +20,7 @@ public class OssStorageProperties {
     private long partSizeBytes = 8_388_608L;
     private long maxVideoBytes = 5_368_709_120L;
     private long maxCoverBytes = 5_242_880L;
+    private long maxFaceReferenceBytes = 5_242_880L;
 
     public boolean isEnabled() { return enabled; }
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
@@ -45,4 +46,6 @@ public class OssStorageProperties {
     public void setMaxVideoBytes(long value) { this.maxVideoBytes = value; }
     public long getMaxCoverBytes() { return maxCoverBytes; }
     public void setMaxCoverBytes(long value) { this.maxCoverBytes = value; }
+    public long getMaxFaceReferenceBytes() { return maxFaceReferenceBytes; }
+    public void setMaxFaceReferenceBytes(long value) { this.maxFaceReferenceBytes = value; }
 }

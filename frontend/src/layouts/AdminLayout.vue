@@ -44,6 +44,18 @@ const menus = [
     audience: 'enterprise',
   },
   {
+    path: '/admin/exam',
+    label: '考试管理',
+    permission: 'admin:exam:view',
+    audience: 'enterprise',
+  },
+  {
+    path: '/admin/statistics',
+    label: '培训统计',
+    permission: 'admin:statistics:view',
+    audience: 'enterprise',
+  },
+  {
     path: '/admin/roles',
     label: '角色管理',
     permission: 'admin:role:view',

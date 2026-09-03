@@ -23,6 +23,7 @@ public final class TrainingParticipantModels {
             Long orgId,
             String orgName,
             String username,
-            String displayName) implements Serializable {
+            String displayName,
+            boolean faceReferenceEnrolled) implements Serializable {
     }
 }

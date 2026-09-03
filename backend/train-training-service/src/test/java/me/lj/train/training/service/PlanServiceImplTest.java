@@ -11,6 +11,7 @@ import me.lj.train.common.security.context.UserContext;
 import me.lj.train.common.security.model.LoginUser;
 import me.lj.train.training.mapper.CourseMapper;
 import me.lj.train.training.mapper.CoursewareMapper;
+import me.lj.train.training.mapper.ExamPaperMapper;
 import me.lj.train.training.mapper.PlanCourseMapper;
 import me.lj.train.training.mapper.PlanCoursewareSnapshotMapper;
 import me.lj.train.training.mapper.PlanMapper;
@@ -59,6 +60,7 @@ class PlanServiceImplTest {
     @Mock private PlanUserMapper planUserMapper;
     @Mock private CourseMapper courseMapper;
     @Mock private CoursewareMapper coursewareMapper;
+    @Mock private ExamPaperMapper examPaperMapper;
     @Mock private ParticipantDirectoryClient participantClient;
     @Mock private PlanLifecycleService lifecycleService;
     @Mock private PlanViewAssembler viewAssembler;
@@ -69,7 +71,8 @@ class PlanServiceImplTest {
     void setUp() {
         service = new PlanServiceImpl(
                 transactionManager, planMapper, planCourseMapper, snapshotMapper, planUserMapper,
-                courseMapper, coursewareMapper, participantClient, lifecycleService, viewAssembler);
+                courseMapper, coursewareMapper, examPaperMapper, participantClient,
+                lifecycleService, viewAssembler);
         UserContext.set(operator(20L, PLAN_VIEW, PLAN_UPDATE, PLAN_PUBLISH));
     }
 
@@ -98,7 +101,8 @@ class PlanServiceImplTest {
 
         Result<?> result = service.update(new UpdatePlanCommand(
                 100L, "更新计划", null, LocalDateTime.now().plusDays(1),
-                LocalDateTime.now().plusDays(2), false,
+                LocalDateTime.now().plusDays(2), false, null, null,
+                false, 300, 600, 60, 3,
                 Collections.singletonList(300L), Collections.singletonList(400L)));
 
         assertThat(result.getCode()).isEqualTo(AppErrorCode.PLAN_STATE_INVALID.getCode());
@@ -134,7 +138,7 @@ class PlanServiceImplTest {
         CourseEntity course = enabledCourse();
         CoursewareEntity courseware = courseware();
         ParticipantView participant = new ParticipantView(
-                400L, 20L, 21L, "安全部", "student", "张三");
+                400L, 20L, 21L, "安全部", "student", "张三", true);
         PlanView expected = planView(PLAN_PUBLISHED);
         when(planMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(draft, published);
         when(planCourseMapper.selectListByQuery(any(QueryWrapper.class)))
@@ -172,6 +176,37 @@ class PlanServiceImplTest {
                 .containsEntry("status", PLAN_PUBLISHED)
                 .containsKey("published_at");
         verify(transactionManager).commit(transactionStatus);
+    }
+
+    @Test
+    void shouldRejectFaceCheckPlanWhenParticipantHasNoReference() {
+        prepareTransaction();
+        PlanEntity draft = plan(PLAN_DRAFT);
+        draft.setFaceCheckEnabled(true);
+        draft.setFaceCheckMinIntervalSeconds(300);
+        draft.setFaceCheckMaxIntervalSeconds(600);
+        draft.setFaceCheckTimeoutSeconds(60);
+        draft.setFaceCheckMaxAttempts(3);
+        PlanCourseEntity selectedCourse = new PlanCourseEntity();
+        selectedCourse.setCourseId(300L);
+        PlanUserEntity selectedUser = new PlanUserEntity();
+        selectedUser.setUserId(400L);
+        when(planMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(draft);
+        when(planCourseMapper.selectListByQuery(any(QueryWrapper.class)))
+                .thenReturn(Collections.singletonList(selectedCourse));
+        when(planUserMapper.selectListByQuery(any(QueryWrapper.class)))
+                .thenReturn(Collections.singletonList(selectedUser));
+        when(courseMapper.selectListByQuery(any(QueryWrapper.class)))
+                .thenReturn(Collections.singletonList(enabledCourse()));
+        when(participantClient.validate(Collections.singletonList(400L)))
+                .thenReturn(Collections.singletonList(new ParticipantView(
+                        400L, 20L, 21L, "安全部", "student", "张三", false)));
+
+        Result<PlanView> result = service.publish(100L);
+
+        assertThat(result.getCode()).isEqualTo(AppErrorCode.PLAN_PUBLISH_INVALID.getCode());
+        verify(planMapper, never()).updateByCondition(any(PlanEntity.class), any());
+        verify(transactionManager).rollback(transactionStatus);
     }
 
     /** 准备需要本地事务的测试场景。 */
@@ -229,7 +264,8 @@ class PlanServiceImplTest {
         return new PlanView(
                 100L, "八月安全培训", null,
                 LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(10), status,
-                false, null, Collections.emptyList(), Collections.emptyList(),
+                false, null, null, null, false, 300, 600, 60, 3,
+                Collections.emptyList(), Collections.emptyList(),
                 LocalDateTime.now(), null, LocalDateTime.now(), LocalDateTime.now());
     }
 }

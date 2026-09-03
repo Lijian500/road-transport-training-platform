@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import me.lj.train.api.learning.FaceCheckModels.FaceCheckView;
+
 /**
  * 学习会话、课程进度及有效学时RPC模型。
  */
@@ -90,7 +92,8 @@ public final class LearningModels {
             long effectiveDurationMillis,
             long requiredDurationMillis,
             LocalDateTime lastEventAt,
-            LocalDateTime createdAt) implements Serializable {
+            LocalDateTime createdAt,
+            FaceCheckView currentFaceCheck) implements Serializable {
     }
 
     public record LearningEventResultView(

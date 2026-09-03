@@ -58,6 +58,7 @@ training:
       part-size-bytes: ${OSS_PART_SIZE_BYTES:8388608}
       max-video-bytes: ${OSS_MAX_VIDEO_BYTES:5368709120}
       max-cover-bytes: ${OSS_MAX_COVER_BYTES:5242880}
+      max-face-reference-bytes: ${OSS_MAX_FACE_REFERENCE_BYTES:5242880}
 
 learning:
   mq:

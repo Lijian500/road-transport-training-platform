@@ -19,6 +19,7 @@ import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -87,6 +88,8 @@ class AdminMapperIntegrationTest {
     private PermissionMapper permissionMapper;
     @Autowired
     private PlatformTransactionManager transactionManager;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @DynamicPropertySource
     static void configureDataSource(DynamicPropertyRegistry registry) {
@@ -277,6 +280,33 @@ class AdminMapperIntegrationTest {
         assertThat(studentTask.getPermissionScope()).isEqualTo("COMMON");
         assertThat(studentLearning).isNotNull();
         assertThat(studentLearning.getPermissionScope()).isEqualTo("COMMON");
+    }
+
+    @Test
+    void shouldMigrateFaceExamAndStatisticsPermissions() {
+        List<String> columns = jdbcTemplate.queryForList(
+                "SELECT column_name FROM information_schema.columns "
+                        + "WHERE table_schema = DATABASE() AND table_name = 'sys_user' "
+                        + "AND column_name LIKE 'face_reference%' ORDER BY ordinal_position",
+                String.class);
+        List<PermissionEntity> permissions = permissionMapper.selectListByQuery(
+                QueryWrapper.create()
+                        .where(PERMISSION.PERMISSION_CODE.likeRight("admin:face-check"))
+                        .orderBy(PERMISSION.SORT_ORDER.asc()));
+        List<String> stagePermissions = jdbcTemplate.queryForList(
+                "SELECT permission_code FROM sys_permission WHERE permission_code IN "
+                        + "('admin:exam:view', 'admin:exam:manage', 'student:exam:take', "
+                        + "'admin:statistics:view')",
+                String.class);
+
+        assertThat(columns).containsExactly(
+                "face_reference_object_id", "face_reference_updated_at");
+        assertThat(permissions)
+                .extracting(PermissionEntity::getPermissionCode)
+                .containsExactly("admin:face-check:view", "admin:face-check:manage");
+        assertThat(stagePermissions).containsExactlyInAnyOrder(
+                "admin:exam:view", "admin:exam:manage", "student:exam:take",
+                "admin:statistics:view");
     }
 
     @Test

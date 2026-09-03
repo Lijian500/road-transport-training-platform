@@ -124,6 +124,37 @@ describe('useLearningRealtime', () => {
     expect(onProgress).toHaveBeenCalledOnce()
   })
 
+  it('抽验触发和结果只分发给当前绑定会话', async () => {
+    const onRequired = vi.fn()
+    const onResult = vi.fn()
+    const { realtime } = mountComposable({
+      onFaceCheckRequired: onRequired,
+      onFaceCheckResult: onResult,
+    })
+    const binding = realtime.bind('900')
+    const socket = FakeWebSocket.instances[0]!
+    socket.open()
+    await respondToStateRequest(socket, 'BIND_SESSION', session('PAUSED', 2))
+    await respondToStateRequest(socket, 'SYNC_STATE', session('PAUSED', 2))
+    await binding
+
+    socket.receive(faceCheckMessage('FACE_CHECK_REQUIRED', 'PENDING'))
+    socket.receive(faceCheckMessage('FACE_CHECK_RESULT', 'PASSED'))
+    socket.receive({
+      ...faceCheckMessage('FACE_CHECK_REQUIRED', 'PENDING'),
+      requestId: 'other-session-event',
+      payload: { ...faceCheck('PENDING'), sessionId: '901' },
+    })
+
+    expect(onRequired).toHaveBeenCalledOnce()
+    expect(onRequired).toHaveBeenCalledWith(expect.objectContaining({ taskId: '700' }))
+    expect(onResult).toHaveBeenCalledOnce()
+    expect(realtime.latestSession.value).toMatchObject({
+      status: 'FACE_PENDING',
+      currentFaceCheck: { status: 'PASSED' },
+    })
+  })
+
   it('待确认PAUSE在重连后复用原requestId和seq', async () => {
     const onDisconnected = vi.fn()
     const { realtime } = mountComposable({ onDisconnected })
@@ -479,5 +510,37 @@ function progressConfirmed(
     seq: acceptedSequence,
     sentAt: new Date().toISOString(),
     payload,
+  }
+}
+
+/** 构造指定状态的抽验任务载荷。 */
+function faceCheck(status: 'PENDING' | 'PASSED') {
+  return {
+    taskId: '700',
+    sessionId: '900',
+    status,
+    triggeredAt: '2026-08-30T08:00:00.000Z',
+    deadlineAt: '2026-08-30T08:01:00.000Z',
+    attemptCount: status === 'PENDING' ? 0 : 1,
+    maxAttempts: 3,
+    remainingAttempts: status === 'PENDING' ? 3 : 2,
+    result: status === 'PASSED' ? 'MATCHED' : null,
+    failureReason: null,
+    similarity: status === 'PASSED' ? 0.91 : null,
+    completedAt: status === 'PASSED' ? '2026-08-30T08:00:10.000Z' : null,
+  }
+}
+
+/** 构造服务端抽验实时消息。 */
+function faceCheckMessage(
+  type: 'FACE_CHECK_REQUIRED' | 'FACE_CHECK_RESULT',
+  status: 'PENDING' | 'PASSED',
+) {
+  return {
+    type,
+    requestId: `face-${type}`,
+    studySessionId: '900',
+    sentAt: '2026-08-30T08:00:00.000Z',
+    payload: faceCheck(status),
   }
 }

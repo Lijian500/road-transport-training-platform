@@ -2,7 +2,12 @@ import { nextTick } from 'vue'
 import { flushPromises, mount, type VueWrapper } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import type { CourseProgress, LearningEventResult, LearningSession } from '@/api/learning'
+import type {
+  CourseProgress,
+  FaceCheckTask,
+  LearningEventResult,
+  LearningSession,
+} from '@/api/learning'
 
 import StudyView from './StudyView.vue'
 
@@ -11,6 +16,8 @@ const realtimeMock = vi.hoisted(() => ({
     | {
         onStateSync?: (session: LearningSession) => void
         onProgressConfirmed?: (result: LearningEventResult) => void
+        onFaceCheckRequired?: (faceCheck: FaceCheckTask) => void
+        onFaceCheckResult?: (faceCheck: FaceCheckTask) => void
         onDisconnected?: () => void
         onReplaced?: () => void
       }
@@ -26,6 +33,7 @@ const apiMock = vi.hoisted(() => ({
   getActiveLearningSession: vi.fn(),
   getLearningCourse: vi.fn(),
   getLearningPlaybackUrl: vi.fn(),
+  getLearningSession: vi.fn(),
   openLearningSession: vi.fn(),
   terminateLearningSession: vi.fn(),
 }))
@@ -109,6 +117,19 @@ describe('StudyView实时连接保护', () => {
 
     expect(HTMLMediaElement.prototype.play).not.toHaveBeenCalled()
   })
+
+  it('抽验触发后立即暂停播放器并展示可恢复任务', async () => {
+    wrapper = mountStudyView()
+    await flushPromises()
+    await nextTick()
+
+    realtimeMock.options?.onFaceCheckRequired?.(faceCheck())
+    await nextTick()
+
+    expect(HTMLMediaElement.prototype.pause).toHaveBeenCalled()
+    expect(wrapper.find('.face-check-dialog').text()).toContain('PENDING')
+    expect(wrapper.text()).toContain('等待人脸抽验')
+  })
 })
 
 /** 使用必要的Element Plus桩挂载学习页。 */
@@ -120,11 +141,33 @@ function mountStudyView() {
         ElAlert: { template: '<div><slot /></div>' },
         ElButton: { template: '<button><slot /></button>' },
         ElCard: { template: '<div><slot name="header" /><slot /></div>' },
+        FaceCheckDialog: {
+          props: ['faceCheck'],
+          template: '<div class="face-check-dialog">{{ faceCheck?.status }}</div>',
+        },
         ElProgress: true,
         ElTag: { template: '<span><slot /></span>' },
       },
     },
   })
+}
+
+/** 创建学习页使用的待处理抽验任务。 */
+function faceCheck(): FaceCheckTask {
+  return {
+    taskId: '700',
+    sessionId: '900',
+    status: 'PENDING',
+    triggeredAt: '2026-08-30T08:00:00.000Z',
+    deadlineAt: '2099-08-30T08:01:00.000Z',
+    attemptCount: 0,
+    maxAttempts: 3,
+    remainingAttempts: 3,
+    result: null,
+    failureReason: null,
+    similarity: null,
+    completedAt: null,
+  }
 }
 
 /** 创建学习页课程数据。 */

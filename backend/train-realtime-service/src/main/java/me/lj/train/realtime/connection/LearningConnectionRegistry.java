@@ -2,6 +2,7 @@ package me.lj.train.realtime.connection;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -38,6 +39,20 @@ public class LearningConnectionRegistry {
 
     public int size() {
         return connections.size();
+    }
+
+    /** 查询指定企业、学员和学习会话的全部浏览器连接。 */
+    public List<LearningConnection> find(
+            Long enterpriseId,
+            Long userId,
+            Long sessionId) {
+        return connections.values().stream()
+                .filter(connection -> enterpriseId.equals(
+                        connection.getLoginUser().getEnterpriseId()))
+                .filter(connection -> userId.equals(
+                        connection.getLoginUser().getUserId()))
+                .filter(connection -> sessionId.equals(connection.getStudySessionId()))
+                .toList();
     }
 
     private ConnectionKey keyOf(LearningConnection connection) {

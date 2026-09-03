@@ -2,6 +2,7 @@ import { computed, onBeforeUnmount, shallowRef } from 'vue'
 
 import {
   getLearningSession,
+  type FaceCheckTask,
   type LearningEventResult,
   type LearningEventType,
   type LearningSession,
@@ -24,6 +25,8 @@ interface LearningRealtimeOptions {
   clientInstanceId: string
   onStateSync?: (session: LearningSession) => void
   onProgressConfirmed?: (result: LearningEventResult) => void
+  onFaceCheckRequired?: (faceCheck: FaceCheckTask) => void
+  onFaceCheckResult?: (faceCheck: FaceCheckTask) => void
   onDisconnected?: () => void
   onReplaced?: () => void
 }
@@ -234,6 +237,14 @@ export function useLearningRealtime(options: LearningRealtimeOptions) {
       confirmPendingEvent(message.requestId, message.payload)
       return
     }
+    if (message.type === 'FACE_CHECK_REQUIRED') {
+      applyFaceCheckRequired(message.payload)
+      return
+    }
+    if (message.type === 'FACE_CHECK_RESULT') {
+      applyFaceCheckResult(message.payload)
+      return
+    }
     if (message.type === 'ACK') {
       acknowledgePendingEvent(message.requestId, message.payload.acceptedSequence)
       return
@@ -243,6 +254,28 @@ export function useLearningRealtime(options: LearningRealtimeOptions) {
       return
     }
     if (message.type === 'SESSION_REPLACED') handleReplacementMessage()
+  }
+
+  /** 收到抽验触发后立即冻结本地会话并通知学习页展示拍照入口。 */
+  function applyFaceCheckRequired(faceCheck: FaceCheckTask) {
+    if (faceCheck.sessionId !== studySessionId) return
+    if (latestSession.value) {
+      latestSession.value = {
+        ...latestSession.value,
+        status: 'FACE_PENDING',
+        currentFaceCheck: faceCheck,
+      }
+    }
+    options.onFaceCheckRequired?.(faceCheck)
+  }
+
+  /** 收到抽验结果后更新任务快照，最终会话状态由随后同步或REST查询确认。 */
+  function applyFaceCheckResult(faceCheck: FaceCheckTask) {
+    if (faceCheck.sessionId !== studySessionId) return
+    if (latestSession.value) {
+      latestSession.value = { ...latestSession.value, currentFaceCheck: faceCheck }
+    }
+    options.onFaceCheckResult?.(faceCheck)
   }
 
   /** 收到ACK后重新启动最终确认超时，避免旧ACK计时器误触发。 */

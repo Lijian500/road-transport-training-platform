@@ -302,7 +302,7 @@ class LearningWebSocketHandlerTest {
     private LearningSessionView sessionView(String status, long sequence) {
         return new LearningSessionView(
                 900L, 500L, 100L, 101L, "安全驾驶", status,
-                null, sequence, 0L, 0L, 60_000L, null, LocalDateTime.now());
+                null, sequence, 0L, 0L, 60_000L, null, LocalDateTime.now(), null);
     }
 
     private LearningEventResultView eventResult() {

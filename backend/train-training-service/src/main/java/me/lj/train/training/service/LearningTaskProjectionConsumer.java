@@ -6,10 +6,8 @@ import me.lj.train.api.training.LearningTaskEvents;
 import me.lj.train.api.training.LearningTaskEvents.LearningTaskEvent;
 import me.lj.train.common.core.util.IdGenerator;
 import me.lj.train.training.mapper.MqConsumeLogMapper;
-import me.lj.train.training.mapper.PlanMapper;
 import me.lj.train.training.mapper.PlanUserMapper;
 import me.lj.train.training.model.entity.MqConsumeLogEntity;
-import me.lj.train.training.model.entity.PlanEntity;
 import me.lj.train.training.model.entity.PlanUserEntity;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,12 +18,10 @@ import org.springframework.transaction.support.TransactionTemplate;
 import java.time.LocalDateTime;
 
 import static me.lj.train.training.constant.TrainingConstants.ASSIGNMENT_ASSIGNED;
-import static me.lj.train.training.constant.TrainingConstants.COMPLETION_COMPLETED;
 import static me.lj.train.training.constant.TrainingConstants.STUDY_COMPLETED;
 import static me.lj.train.training.constant.TrainingConstants.STUDY_IN_PROGRESS;
 import static me.lj.train.training.constant.TrainingConstants.STUDY_NOT_STARTED;
 import static me.lj.train.training.model.table.MqConsumeLogTableDef.MQ_CONSUME_LOG;
-import static me.lj.train.training.model.table.PlanTableDef.PLAN;
 import static me.lj.train.training.model.table.PlanUserTableDef.PLAN_USER;
 
 /**
@@ -40,17 +36,17 @@ public class LearningTaskProjectionConsumer {
 
     private final MqConsumeLogMapper consumeLogMapper;
     private final PlanUserMapper planUserMapper;
-    private final PlanMapper planMapper;
+    private final TrainingCompletionService completionService;
     private final TransactionTemplate transactionTemplate;
 
     public LearningTaskProjectionConsumer(
             MqConsumeLogMapper consumeLogMapper,
             PlanUserMapper planUserMapper,
-            PlanMapper planMapper,
+            TrainingCompletionService completionService,
             PlatformTransactionManager transactionManager) {
         this.consumeLogMapper = consumeLogMapper;
         this.planUserMapper = planUserMapper;
-        this.planMapper = planMapper;
+        this.completionService = completionService;
         this.transactionTemplate = new TransactionTemplate(transactionManager);
     }
 
@@ -88,22 +84,14 @@ public class LearningTaskProjectionConsumer {
         }
         if (LearningTaskEvents.COMPLETED_ROUTING_KEY.equals(event.eventType())
                 && !STUDY_COMPLETED.equals(task.getStudyStatus())) {
-            PlanEntity plan = planMapper.selectOneByQuery(QueryWrapper.create()
-                    .where(PLAN.ID.eq(event.planId()))
-                    .and(PLAN.ENTERPRISE_ID.eq(event.enterpriseId()))
-                    .and(PLAN.DELETED_AT.isNull()));
-            if (plan == null || plan.isExamRequired()) {
-                throw new IllegalStateException("当前计划不能直接完成培训任务");
-            }
             LocalDateTime completedAt = event.occurredAt() == null
                     ? LocalDateTime.now() : event.occurredAt();
             PlanUserEntity update = UpdateWrapper.of(PlanUserEntity.class)
                     .set(PLAN_USER.STUDY_STATUS, STUDY_COMPLETED)
-                    .set(PLAN_USER.COMPLETION_STATUS, COMPLETION_COMPLETED)
-                    .set(PLAN_USER.COMPLETED_AT, completedAt)
                     .set(PLAN_USER.UPDATED_BY, 0L).toEntity();
             planUserMapper.updateByCondition(update, PLAN_USER.ID.eq(task.getId())
                     .and(PLAN_USER.STUDY_STATUS.ne(STUDY_COMPLETED)));
+            completionService.recalculate(task.getId(), event.enterpriseId(), completedAt);
         }
         MqConsumeLogEntity log = new MqConsumeLogEntity();
         log.setId(IdGenerator.nextId());

@@ -20,12 +20,14 @@ import me.lj.train.common.core.util.IdGenerator;
 import me.lj.train.common.security.context.UserContext;
 import me.lj.train.training.mapper.CourseMapper;
 import me.lj.train.training.mapper.CoursewareMapper;
+import me.lj.train.training.mapper.ExamPaperMapper;
 import me.lj.train.training.mapper.PlanCourseMapper;
 import me.lj.train.training.mapper.PlanCoursewareSnapshotMapper;
 import me.lj.train.training.mapper.PlanMapper;
 import me.lj.train.training.mapper.PlanUserMapper;
 import me.lj.train.training.model.entity.CourseEntity;
 import me.lj.train.training.model.entity.CoursewareEntity;
+import me.lj.train.training.model.entity.ExamPaperEntity;
 import me.lj.train.training.model.entity.PlanCourseEntity;
 import me.lj.train.training.model.entity.PlanCoursewareSnapshotEntity;
 import me.lj.train.training.model.entity.PlanEntity;
@@ -48,6 +50,8 @@ import static me.lj.train.training.constant.TrainingConstants.ASSIGNMENT_CANCELL
 import static me.lj.train.training.constant.TrainingConstants.COMPLETION_NOT_COMPLETED;
 import static me.lj.train.training.constant.TrainingConstants.COURSE_ENABLED;
 import static me.lj.train.training.constant.TrainingConstants.EXAM_NOT_REQUIRED;
+import static me.lj.train.training.constant.TrainingConstants.EXAM_NOT_STARTED;
+import static me.lj.train.training.constant.TrainingConstants.PAPER_ENABLED;
 import static me.lj.train.training.constant.TrainingConstants.PLAN_CANCELLED;
 import static me.lj.train.training.constant.TrainingConstants.PLAN_DRAFT;
 import static me.lj.train.training.constant.TrainingConstants.PLAN_FINISHED;
@@ -61,6 +65,7 @@ import static me.lj.train.training.constant.TrainingPermissions.PLAN_UPDATE;
 import static me.lj.train.training.constant.TrainingPermissions.PLAN_VIEW;
 import static me.lj.train.training.model.table.CourseTableDef.COURSE;
 import static me.lj.train.training.model.table.CoursewareTableDef.COURSEWARE;
+import static me.lj.train.training.model.table.ExamPaperTableDef.EXAM_PAPER;
 import static me.lj.train.training.model.table.PlanCourseTableDef.PLAN_COURSE;
 import static me.lj.train.training.model.table.PlanCoursewareSnapshotTableDef.PLAN_COURSEWARE_SNAPSHOT;
 import static me.lj.train.training.model.table.PlanTableDef.PLAN;
@@ -74,6 +79,10 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
 
     private static final int MAX_COURSES = 100;
     private static final int MAX_PARTICIPANTS = 500;
+    private static final int DEFAULT_FACE_CHECK_MIN_INTERVAL_SECONDS = 300;
+    private static final int DEFAULT_FACE_CHECK_MAX_INTERVAL_SECONDS = 600;
+    private static final int DEFAULT_FACE_CHECK_TIMEOUT_SECONDS = 60;
+    private static final int DEFAULT_FACE_CHECK_MAX_ATTEMPTS = 3;
 
     private final PlanMapper planMapper;
     private final PlanCourseMapper planCourseMapper;
@@ -81,6 +90,7 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
     private final PlanUserMapper planUserMapper;
     private final CourseMapper courseMapper;
     private final CoursewareMapper coursewareMapper;
+    private final ExamPaperMapper examPaperMapper;
     private final ParticipantDirectoryClient participantClient;
     private final PlanLifecycleService lifecycleService;
     private final PlanViewAssembler viewAssembler;
@@ -93,6 +103,7 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
             PlanUserMapper planUserMapper,
             CourseMapper courseMapper,
             CoursewareMapper coursewareMapper,
+            ExamPaperMapper examPaperMapper,
             ParticipantDirectoryClient participantClient,
             PlanLifecycleService lifecycleService,
             PlanViewAssembler viewAssembler) {
@@ -103,6 +114,7 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
         this.planUserMapper = planUserMapper;
         this.courseMapper = courseMapper;
         this.coursewareMapper = coursewareMapper;
+        this.examPaperMapper = examPaperMapper;
         this.participantClient = participantClient;
         this.lifecycleService = lifecycleService;
         this.viewAssembler = viewAssembler;
@@ -135,14 +147,22 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
     public Result<PlanView> create(CreatePlanCommand command) {
         return executeTransactional(() -> {
             Long enterpriseId = TrainingGuard.requireEnterprisePermission(PLAN_CREATE);
+            ExamRule examRule = resolveExamRule(command.examRequired(),
+                    command.examPaperId(), command.examPassScore(), enterpriseId);
             validatePlanValues(command.name(), command.description(), command.startAt(),
-                    command.endAt(), command.examRequired());
+                    command.endAt(), command.examRequired(), command.faceCheckEnabled(),
+                    command.faceCheckMinIntervalSeconds(), command.faceCheckMaxIntervalSeconds(),
+                    command.faceCheckTimeoutSeconds(), command.faceCheckMaxAttempts());
             Long operatorId = UserContext.require().getUserId();
             PlanEntity plan = new PlanEntity();
             plan.setId(IdGenerator.nextId());
             plan.setEnterpriseId(enterpriseId);
             applyPlanValues(plan, command.name(), command.description(),
-                    command.startAt(), command.endAt(), command.examRequired());
+                    command.startAt(), command.endAt(), command.examRequired(),
+                    examRule,
+                    command.faceCheckEnabled(), command.faceCheckMinIntervalSeconds(),
+                    command.faceCheckMaxIntervalSeconds(), command.faceCheckTimeoutSeconds(),
+                    command.faceCheckMaxAttempts());
             plan.setStatus(PLAN_DRAFT);
             plan.setCreatedBy(operatorId);
             plan.setUpdatedBy(operatorId);
@@ -166,8 +186,12 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
             Long enterpriseId = TrainingGuard.requireEnterprisePermission(PLAN_UPDATE);
             PlanEntity plan = requirePlan(command.id(), enterpriseId, true);
             requireDraft(plan);
+            ExamRule examRule = resolveExamRule(command.examRequired(),
+                    command.examPaperId(), command.examPassScore(), enterpriseId);
             validatePlanValues(command.name(), command.description(), command.startAt(),
-                    command.endAt(), command.examRequired());
+                    command.endAt(), command.examRequired(), command.faceCheckEnabled(),
+                    command.faceCheckMinIntervalSeconds(), command.faceCheckMaxIntervalSeconds(),
+                    command.faceCheckTimeoutSeconds(), command.faceCheckMaxAttempts());
             List<Long> courseIds = normalizeIds(command.courseIds(), MAX_COURSES, "课程");
             List<Long> userIds = normalizeIds(command.userIds(), MAX_PARTICIPANTS, "学员");
             List<CourseEntity> courses = loadEnabledCourses(courseIds, enterpriseId);
@@ -179,11 +203,32 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
                             TrainingGuard.optionalText(command.description(), "计划说明", 1000))
                     .set(PLAN.START_AT, command.startAt())
                     .set(PLAN.END_AT, command.endAt())
-                    .set(PLAN.EXAM_REQUIRED, false)
+                    .set(PLAN.EXAM_REQUIRED, command.examRequired())
+                    .set(PLAN.EXAM_PAPER_ID, examRule.paperId())
+                    .set(PLAN.EXAM_PASS_SCORE, examRule.passScore())
+                    .set(PLAN.EXAM_DURATION_MINUTES, examRule.durationMinutes())
+                    .set(PLAN.FACE_CHECK_ENABLED, command.faceCheckEnabled())
+                    .set(PLAN.FACE_CHECK_MIN_INTERVAL_SECONDS,
+                            faceRuleValue(command.faceCheckEnabled(),
+                                    command.faceCheckMinIntervalSeconds(),
+                                    DEFAULT_FACE_CHECK_MIN_INTERVAL_SECONDS))
+                    .set(PLAN.FACE_CHECK_MAX_INTERVAL_SECONDS,
+                            faceRuleValue(command.faceCheckEnabled(),
+                                    command.faceCheckMaxIntervalSeconds(),
+                                    DEFAULT_FACE_CHECK_MAX_INTERVAL_SECONDS))
+                    .set(PLAN.FACE_CHECK_TIMEOUT_SECONDS,
+                            faceRuleValue(command.faceCheckEnabled(),
+                                    command.faceCheckTimeoutSeconds(),
+                                    DEFAULT_FACE_CHECK_TIMEOUT_SECONDS))
+                    .set(PLAN.FACE_CHECK_MAX_ATTEMPTS,
+                            faceRuleValue(command.faceCheckEnabled(),
+                                    command.faceCheckMaxAttempts(),
+                                    DEFAULT_FACE_CHECK_MAX_ATTEMPTS))
                     .set(PLAN.UPDATED_BY, operatorId);
             planMapper.updateByCondition(update.toEntity(), activePlanCondition(plan.getId(), enterpriseId)
                     .and(PLAN.STATUS.eq(PLAN_DRAFT)));
-            replaceSnapshotsAndTasks(plan.getId(), enterpriseId, courses, participants, operatorId);
+            replaceSnapshotsAndTasks(plan.getId(), enterpriseId, courses, participants,
+                    command.examRequired(), operatorId);
             return viewAssembler.toPlanView(requirePlan(plan.getId(), enterpriseId, false), true);
         });
     }
@@ -213,7 +258,11 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
             PlanEntity plan = requirePlan(id, enterpriseId, true);
             requireDraft(plan);
             validatePlanValues(plan.getPlanName(), plan.getDescription(), plan.getStartAt(),
-                    plan.getEndAt(), plan.isExamRequired());
+                    plan.getEndAt(), plan.isExamRequired(), plan.isFaceCheckEnabled(),
+                    plan.getFaceCheckMinIntervalSeconds(), plan.getFaceCheckMaxIntervalSeconds(),
+                    plan.getFaceCheckTimeoutSeconds(), plan.getFaceCheckMaxAttempts());
+            resolveExamRule(plan.isExamRequired(), plan.getExamPaperId(),
+                    plan.getExamPassScore(), enterpriseId);
             LocalDateTime now = LocalDateTime.now();
             if (!plan.getEndAt().isAfter(now)) {
                 throw new BusinessException(AppErrorCode.PLAN_PUBLISH_INVALID,
@@ -231,8 +280,14 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
             }
             List<CourseEntity> courses = loadEnabledCourses(courseIds, enterpriseId);
             List<ParticipantView> participants = validateParticipants(userIds, enterpriseId);
+            if (plan.isFaceCheckEnabled()
+                    && participants.stream().anyMatch(item -> !item.faceReferenceEnrolled())) {
+                throw new BusinessException(AppErrorCode.PLAN_PUBLISH_INVALID,
+                        "启用人脸抽验前，全部参训学员必须完成人脸登记");
+            }
             Long operatorId = UserContext.require().getUserId();
-            replaceSnapshotsAndTasks(plan.getId(), enterpriseId, courses, participants, operatorId);
+            replaceSnapshotsAndTasks(plan.getId(), enterpriseId, courses, participants,
+                    plan.isExamRequired(), operatorId);
             String status = plan.getStartAt().isAfter(now) ? PLAN_PUBLISHED : PLAN_IN_PROGRESS;
             UpdateWrapper<PlanEntity> publish = UpdateWrapper.of(PlanEntity.class)
                     .set(PLAN.STATUS, status)
@@ -303,7 +358,8 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
             return participantClient.listCandidates(keyword, orgId).stream()
                     .map(participant -> new PlanParticipantOptionView(
                             participant.userId(), participant.orgId(), participant.orgName(),
-                            participant.username(), participant.displayName()))
+                            participant.username(), participant.displayName(),
+                            participant.faceReferenceEnrolled()))
                     .collect(Collectors.toList());
         });
     }
@@ -313,6 +369,7 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
             Long enterpriseId,
             List<CourseEntity> courses,
             List<ParticipantView> participants,
+            boolean examRequired,
             Long operatorId) {
         deleteRelations(planId, enterpriseId);
         for (int index = 0; index < courses.size(); index++) {
@@ -365,7 +422,7 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
             task.setDisplayName(participant.displayName());
             task.setAssignmentStatus(ASSIGNMENT_ASSIGNED);
             task.setStudyStatus(STUDY_NOT_STARTED);
-            task.setExamStatus(EXAM_NOT_REQUIRED);
+            task.setExamStatus(examRequired ? EXAM_NOT_STARTED : EXAM_NOT_REQUIRED);
             task.setCompletionStatus(COMPLETION_NOT_COMPLETED);
             task.setCreatedBy(operatorId);
             task.setUpdatedBy(operatorId);
@@ -467,14 +524,33 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
             String description,
             LocalDateTime startAt,
             LocalDateTime endAt,
-            boolean examRequired) {
+            boolean examRequired,
+            boolean faceCheckEnabled,
+            int faceCheckMinIntervalSeconds,
+            int faceCheckMaxIntervalSeconds,
+            int faceCheckTimeoutSeconds,
+            int faceCheckMaxAttempts) {
         TrainingGuard.requireText(name, "计划名称", 128);
         TrainingGuard.optionalText(description, "计划说明", 1000);
         if (startAt == null || endAt == null || !startAt.isBefore(endAt)) {
             throw new BusinessException(AppErrorCode.PARAM_INVALID, "计划开始时间必须早于结束时间");
         }
-        if (examRequired) {
-            throw new BusinessException(AppErrorCode.PARAM_INVALID, "考试模块尚未启用，本期计划不能要求考试");
+        if (!faceCheckEnabled) {
+            return;
+        }
+        if (faceCheckMinIntervalSeconds < 60
+                || faceCheckMaxIntervalSeconds < faceCheckMinIntervalSeconds
+                || faceCheckMaxIntervalSeconds > 86_400) {
+            throw new BusinessException(AppErrorCode.PARAM_INVALID,
+                    "人脸抽验间隔须为60至86400秒，且最大间隔不能小于最小间隔");
+        }
+        if (faceCheckTimeoutSeconds < 10 || faceCheckTimeoutSeconds > 300) {
+            throw new BusinessException(AppErrorCode.PARAM_INVALID,
+                    "人脸抽验响应时限须为10至300秒");
+        }
+        if (faceCheckMaxAttempts < 1 || faceCheckMaxAttempts > 10) {
+            throw new BusinessException(AppErrorCode.PARAM_INVALID,
+                    "人脸抽验最多提交次数须为1至10次");
         }
     }
 
@@ -484,12 +560,61 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
             String description,
             LocalDateTime startAt,
             LocalDateTime endAt,
-            boolean examRequired) {
+            boolean examRequired,
+            ExamRule examRule,
+            boolean faceCheckEnabled,
+            int faceCheckMinIntervalSeconds,
+            int faceCheckMaxIntervalSeconds,
+            int faceCheckTimeoutSeconds,
+            int faceCheckMaxAttempts) {
         plan.setPlanName(TrainingGuard.requireText(name, "计划名称", 128));
         plan.setDescription(TrainingGuard.optionalText(description, "计划说明", 1000));
         plan.setStartAt(startAt);
         plan.setEndAt(endAt);
         plan.setExamRequired(examRequired);
+        plan.setExamPaperId(examRule.paperId());
+        plan.setExamPassScore(examRule.passScore());
+        plan.setExamDurationMinutes(examRule.durationMinutes());
+        plan.setFaceCheckEnabled(faceCheckEnabled);
+        plan.setFaceCheckMinIntervalSeconds(faceRuleValue(
+                faceCheckEnabled, faceCheckMinIntervalSeconds,
+                DEFAULT_FACE_CHECK_MIN_INTERVAL_SECONDS));
+        plan.setFaceCheckMaxIntervalSeconds(faceRuleValue(
+                faceCheckEnabled, faceCheckMaxIntervalSeconds,
+                DEFAULT_FACE_CHECK_MAX_INTERVAL_SECONDS));
+        plan.setFaceCheckTimeoutSeconds(faceRuleValue(
+                faceCheckEnabled, faceCheckTimeoutSeconds, DEFAULT_FACE_CHECK_TIMEOUT_SECONDS));
+        plan.setFaceCheckMaxAttempts(faceRuleValue(
+                faceCheckEnabled, faceCheckMaxAttempts, DEFAULT_FACE_CHECK_MAX_ATTEMPTS));
+    }
+
+    private int faceRuleValue(boolean enabled, int value, int defaultValue) {
+        return !enabled && value <= 0 ? defaultValue : value;
+    }
+
+    /** 校验已启用试卷，并生成计划内不可变的考试规则快照。 */
+    private ExamRule resolveExamRule(
+            boolean examRequired,
+            Long paperId,
+            Integer passScore,
+            Long enterpriseId) {
+        if (!examRequired) {
+            return new ExamRule(null, null, null);
+        }
+        ExamPaperEntity paper = paperId == null ? null : examPaperMapper.selectOneByQuery(
+                QueryWrapper.create().where(EXAM_PAPER.ID.eq(paperId))
+                        .and(EXAM_PAPER.ENTERPRISE_ID.eq(enterpriseId))
+                        .and(EXAM_PAPER.STATUS.eq(PAPER_ENABLED))
+                        .and(EXAM_PAPER.DELETED_AT.isNull()));
+        if (paper == null) {
+            throw new BusinessException(AppErrorCode.PARAM_INVALID, "请选择已启用的考试试卷");
+        }
+        int resolvedPassScore = passScore == null ? paper.getPassScore() : passScore;
+        if (resolvedPassScore < 1 || resolvedPassScore > paper.getTotalScore()) {
+            throw new BusinessException(AppErrorCode.PARAM_INVALID,
+                    "计划及格分须在1至试卷总分之间");
+        }
+        return new ExamRule(paper.getId(), resolvedPassScore, paper.getDurationMinutes());
     }
 
     private List<Long> normalizeIds(List<Long> values, int maxSize, String fieldName) {
@@ -531,5 +656,8 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
 
     private String trim(String value) {
         return value == null ? null : value.trim();
+    }
+
+    private record ExamRule(Long paperId, Integer passScore, Integer durationMinutes) {
     }
 }

@@ -77,6 +77,7 @@ export interface PlanUser {
   orgName?: string
   username: string
   displayName: string
+  faceReferenceEnrolled: boolean
   assignmentStatus: string
   studyStatus: string
   examStatus: string
@@ -92,7 +93,14 @@ export interface Plan {
   endAt: string
   status: PlanStatus
   examRequired: boolean
+  examPaperId?: string
   examPassScore?: number
+  examDurationMinutes?: number
+  faceCheckEnabled: boolean
+  faceCheckMinIntervalSeconds: number
+  faceCheckMaxIntervalSeconds: number
+  faceCheckTimeoutSeconds: number
+  faceCheckMaxAttempts: number
   courses: PlanCourse[]
   users: PlanUser[]
   publishedAt?: string
@@ -115,6 +123,7 @@ export interface PlanParticipantOption {
   orgName?: string
   username: string
   displayName: string
+  faceReferenceEnrolled: boolean
 }
 
 export interface PlanPayload {
@@ -123,6 +132,13 @@ export interface PlanPayload {
   startAt: string
   endAt: string
   examRequired: boolean
+  examPaperId?: string
+  examPassScore?: number
+  faceCheckEnabled: boolean
+  faceCheckMinIntervalSeconds: number
+  faceCheckMaxIntervalSeconds: number
+  faceCheckTimeoutSeconds: number
+  faceCheckMaxAttempts: number
   courseIds?: string[]
   userIds?: string[]
 }
@@ -139,6 +155,10 @@ export interface StudentPlan {
   studyStatus: string
   examStatus: string
   completionStatus: string
+  examRequired: boolean
+  examPassScore?: number
+  examDurationMinutes?: number
+  faceCheckEnabled: boolean
   courses: StudentPlanCourse[]
   publishedAt: string
 }

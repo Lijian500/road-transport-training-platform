@@ -51,6 +51,11 @@ public final class LearningAccessModels {
             String assignmentStatus,
             String taskStudyStatus,
             String taskCompletionStatus,
+            boolean faceCheckEnabled,
+            int faceCheckMinIntervalSeconds,
+            int faceCheckMaxIntervalSeconds,
+            int faceCheckTimeoutSeconds,
+            int faceCheckMaxAttempts,
             List<LearningCourseRuleView> courses) implements Serializable {
     }
 }

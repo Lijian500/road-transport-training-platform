@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import me.lj.train.api.training.LearningTaskEvents.LearningTaskEvent;
+import me.lj.train.api.learning.FaceCheckModels.FaceCheckRealtimeEvent;
 import me.lj.train.common.core.util.IdGenerator;
 import me.lj.train.learning.mapper.MqOutboxMapper;
 import me.lj.train.learning.model.entity.MqOutboxEntity;
@@ -63,11 +64,48 @@ public class LearningOutboxService {
         }
     }
 
+    /** 在抽验事务内幂等写入实时通知Outbox。 */
+    public void appendFaceCheckEvent(
+            Long faceCheckTaskId,
+            String businessStage,
+            String routingKey,
+            FaceCheckRealtimeEvent event,
+            LocalDateTime occurredAt) {
+        String businessKey = "FACE_CHECK:" + faceCheckTaskId + ":" + businessStage;
+        if (outboxMapper.selectCountByQuery(QueryWrapper.create()
+                .where(MQ_OUTBOX.BUSINESS_KEY.eq(businessKey))) > 0) {
+            return;
+        }
+        MqOutboxEntity outbox = new MqOutboxEntity();
+        outbox.setId(IdGenerator.nextId());
+        outbox.setEventId(event.eventId());
+        outbox.setBusinessKey(businessKey);
+        outbox.setAggregateType("FACE_CHECK");
+        outbox.setAggregateId(faceCheckTaskId);
+        outbox.setRoutingKey(routingKey);
+        outbox.setPayload(toJson(event));
+        outbox.setStatus("PENDING");
+        outbox.setNextRetryAt(occurredAt);
+        try {
+            outboxMapper.insertSelective(outbox);
+        } catch (DuplicateKeyException ignored) {
+            // 同一抽验阶段只发送一次实时消息。
+        }
+    }
+
     private String toJson(LearningTaskEvent event) {
         try {
             return objectMapper.writeValueAsString(event);
         } catch (JsonProcessingException exception) {
             throw new IllegalStateException("学习任务事件序列化失败", exception);
+        }
+    }
+
+    private String toJson(FaceCheckRealtimeEvent event) {
+        try {
+            return objectMapper.writeValueAsString(event);
+        } catch (JsonProcessingException exception) {
+            throw new IllegalStateException("人脸抽验事件序列化失败", exception);
         }
     }
 }

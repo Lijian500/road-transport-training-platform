@@ -54,7 +54,10 @@ public class PlanController {
     public Result<PlanView> create(@Valid @RequestBody CreatePlanRequest request) {
         return Result.ok(RpcResultSupport.unwrap(planService.create(new CreatePlanCommand(
                 request.name(), request.description(), request.startAt(), request.endAt(),
-                request.examRequired()))));
+                request.examRequired(), request.examPaperId(), request.examPassScore(),
+                request.faceCheckEnabled(),
+                request.faceCheckMinIntervalSeconds(), request.faceCheckMaxIntervalSeconds(),
+                request.faceCheckTimeoutSeconds(), request.faceCheckMaxAttempts()))));
     }
 
     @GetMapping("/course-candidates")
@@ -86,7 +89,11 @@ public class PlanController {
             @Valid @RequestBody UpdatePlanRequest request) {
         return Result.ok(RpcResultSupport.unwrap(planService.update(new UpdatePlanCommand(
                 id, request.name(), request.description(), request.startAt(), request.endAt(),
-                request.examRequired(), request.courseIds(), request.userIds()))));
+                request.examRequired(), request.examPaperId(), request.examPassScore(),
+                request.faceCheckEnabled(),
+                request.faceCheckMinIntervalSeconds(), request.faceCheckMaxIntervalSeconds(),
+                request.faceCheckTimeoutSeconds(), request.faceCheckMaxAttempts(),
+                request.courseIds(), request.userIds()))));
     }
 
     @DeleteMapping("/{id}")
@@ -113,7 +120,14 @@ public class PlanController {
             String description,
             @NotNull(message = "开始时间不能为空") LocalDateTime startAt,
             @NotNull(message = "结束时间不能为空") LocalDateTime endAt,
-            boolean examRequired) {
+            boolean examRequired,
+            Long examPaperId,
+            Integer examPassScore,
+            boolean faceCheckEnabled,
+            int faceCheckMinIntervalSeconds,
+            int faceCheckMaxIntervalSeconds,
+            int faceCheckTimeoutSeconds,
+            int faceCheckMaxAttempts) {
     }
 
     public record UpdatePlanRequest(
@@ -122,6 +136,13 @@ public class PlanController {
             @NotNull(message = "开始时间不能为空") LocalDateTime startAt,
             @NotNull(message = "结束时间不能为空") LocalDateTime endAt,
             boolean examRequired,
+            Long examPaperId,
+            Integer examPassScore,
+            boolean faceCheckEnabled,
+            int faceCheckMinIntervalSeconds,
+            int faceCheckMaxIntervalSeconds,
+            int faceCheckTimeoutSeconds,
+            int faceCheckMaxAttempts,
             List<Long> courseIds,
             List<Long> userIds) {
     }

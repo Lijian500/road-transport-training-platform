@@ -111,7 +111,11 @@ public class LearningAccessServiceImpl extends TrainingServiceSupport implements
                     context.task.getId(), context.plan.getId(), context.plan.getPlanName(),
                     context.plan.getStartAt(), context.plan.getEndAt(), context.plan.getStatus(),
                     context.task.getAssignmentStatus(), context.task.getStudyStatus(),
-                    context.task.getCompletionStatus(), ruleViews);
+                    context.task.getCompletionStatus(), context.plan.isFaceCheckEnabled(),
+                    context.plan.getFaceCheckMinIntervalSeconds(),
+                    context.plan.getFaceCheckMaxIntervalSeconds(),
+                    context.plan.getFaceCheckTimeoutSeconds(),
+                    context.plan.getFaceCheckMaxAttempts(), ruleViews);
         });
     }
 

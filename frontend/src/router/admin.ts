@@ -110,6 +110,28 @@ const adminRoutes: RouteRecordRaw[] = [
         },
       },
       {
+        path: 'exam',
+        name: 'admin-exam',
+        component: () => import('@/views/admin/ExamView.vue'),
+        meta: {
+          title: '考试管理',
+          requiresAuth: true,
+          workspace: 'admin',
+          permission: 'admin:exam:view',
+        },
+      },
+      {
+        path: 'statistics',
+        name: 'admin-statistics',
+        component: () => import('@/views/admin/StatisticsView.vue'),
+        meta: {
+          title: '培训统计',
+          requiresAuth: true,
+          workspace: 'admin',
+          permission: 'admin:statistics:view',
+        },
+      },
+      {
         path: 'roles',
         name: 'admin-roles',
         component: () => import('@/views/admin/RoleView.vue'),

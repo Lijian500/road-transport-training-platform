@@ -1,4 +1,9 @@
-import type { LearningEventResult, LearningEventType, LearningSession } from '@/api/learning'
+import type {
+  FaceCheckTask,
+  LearningEventResult,
+  LearningEventType,
+  LearningSession,
+} from '@/api/learning'
 
 interface ClientEnvelopeBase<TType extends string, TPayload> {
   type: TType
@@ -36,6 +41,8 @@ export type RealtimeServerMessage =
   | ServerEnvelopeBase<'ACK', { acceptedSequence: number; status: LearningSession['status'] }>
   | ServerEnvelopeBase<'STATE_SYNC', LearningSession>
   | ServerEnvelopeBase<'PROGRESS_CONFIRMED', LearningEventResult>
+  | ServerEnvelopeBase<'FACE_CHECK_REQUIRED', FaceCheckTask>
+  | ServerEnvelopeBase<'FACE_CHECK_RESULT', FaceCheckTask>
   | ServerEnvelopeBase<'PONG', { serverTime: string }>
   | ServerEnvelopeBase<
       'ERROR',
@@ -47,6 +54,8 @@ const SERVER_MESSAGE_TYPES = new Set([
   'ACK',
   'STATE_SYNC',
   'PROGRESS_CONFIRMED',
+  'FACE_CHECK_REQUIRED',
+  'FACE_CHECK_RESULT',
   'PONG',
   'ERROR',
   'SESSION_REPLACED',
@@ -56,6 +65,7 @@ const LEARNING_SESSION_STATUSES = new Set([
   'SIGNED_IN',
   'STUDYING',
   'PAUSED',
+  'FACE_PENDING',
   'COMPLETED',
   'SIGNED_OUT',
   'TERMINATED',
@@ -116,6 +126,7 @@ function hasValidServerPayload(type: string, payload: Record<string, unknown>) {
       isNonNegativeNumber(payload.confirmedPositionMillis) &&
       isNonNegativeNumber(payload.effectiveDurationMillis) &&
       isNonNegativeNumber(payload.requiredDurationMillis) &&
+      isOptionalFaceCheck(payload.currentFaceCheck) &&
       isOptionalString(payload.currentCoursewareSnapshotId) &&
       isOptionalIsoTime(payload.lastEventAt) &&
       isIsoTime(payload.createdAt)
@@ -137,6 +148,8 @@ function hasValidServerPayload(type: string, payload: Record<string, unknown>) {
       isIsoTime(payload.serverTime)
     )
   }
+  if (type === 'FACE_CHECK_REQUIRED') return isFaceCheckTask(payload)
+  if (type === 'FACE_CHECK_RESULT') return isFaceCheckTask(payload)
   if (type === 'ERROR') {
     return (
       isNonEmptyString(payload.code) &&
@@ -147,6 +160,48 @@ function hasValidServerPayload(type: string, payload: Record<string, unknown>) {
   }
   if (type === 'PONG') return isIsoTime(payload.serverTime)
   return type === 'SESSION_REPLACED' && typeof payload.message === 'string'
+}
+
+/** 校验抽验任务载荷的必需字段和次数边界。 */
+function isFaceCheckTask(value: Record<string, unknown>) {
+  return (
+    isNonEmptyString(value.taskId) &&
+    isNonEmptyString(value.sessionId) &&
+    isFaceCheckStatus(value.status) &&
+    isIsoTime(value.triggeredAt) &&
+    isIsoTime(value.deadlineAt) &&
+    isNonNegativeInteger(value.attemptCount) &&
+    isPositiveInteger(value.maxAttempts) &&
+    isNonNegativeInteger(value.remainingAttempts) &&
+    isNullableString(value.result) &&
+    isNullableString(value.failureReason) &&
+    isOptionalSimilarity(value.similarity) &&
+    (value.completedAt === undefined || value.completedAt === null || isIsoTime(value.completedAt))
+  )
+}
+
+/** 校验SFace余弦相似度原始值允许处于负一到一之间。 */
+function isOptionalSimilarity(value: unknown) {
+  return (
+    value === undefined ||
+    value === null ||
+    (typeof value === 'number' && Number.isFinite(value) && value >= -1 && value <= 1)
+  )
+}
+
+/** 判断值是否为缺省、空值或字符串。 */
+function isNullableString(value: unknown) {
+  return value === undefined || value === null || typeof value === 'string'
+}
+
+/** 校验STATE_SYNC中可空的当前抽验任务。 */
+function isOptionalFaceCheck(value: unknown) {
+  return value === undefined || value === null || (isRecord(value) && isFaceCheckTask(value))
+}
+
+/** 判断值是否为抽验任务状态。 */
+function isFaceCheckStatus(value: unknown) {
+  return typeof value === 'string' && ['PENDING', 'PASSED', 'FAILED', 'TIMED_OUT'].includes(value)
 }
 
 /** 判断值是否为非空字符串。 */
