@@ -45,4 +45,16 @@ class LearningTimeCalculatorTest {
         assertThat(calculator.completionPosition(60_000L, 5_000L)).isEqualTo(55_000L);
         assertThat(calculator.completionPosition(3_000L, 5_000L)).isZero();
     }
+
+    /** 交替抖动会产生保守差额，容差不能被用于赠送丢失学时。 */
+    @Test
+    void shouldCreditNinetyFiveSecondsForHundredSecondsWithJitter() {
+        long credited = 0L;
+        for (int index = 0; index < 10; index++) {
+            credited += calculator.calculate(index % 2 == 0 ? 9_000L : 11_000L,
+                    index * 10_000L, (index + 1) * 10_000L,
+                    30_000L, 100_000L - credited, 2_000L, false).creditedDurationMillis();
+        }
+        assertThat(credited).isEqualTo(95_000L);
+    }
 }

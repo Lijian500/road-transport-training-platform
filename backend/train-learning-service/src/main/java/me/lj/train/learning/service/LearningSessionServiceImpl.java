@@ -363,6 +363,13 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
                 requireState(session, SIGNED_IN, PAUSED);
                 StudyCoursewareProgressEntity target = requireEventCourseware(command, coursewares);
                 ensureUnlocked(coursewares, target);
+                // 已完成课件可从头补学，保留累计学时和最高确认位置；PLAY本身不计时。
+                if (COMPLETED.equals(target.getStatus()) && command.videoPositionMillis() == 0L
+                        && target.getConfirmedPositionMs() > 0L) {
+                    target.setConfirmedPositionMs(0L);
+                    coursewareProgressMapper.updateByCondition(
+                            target, STUDY_COURSEWARE_PROGRESS.ID.eq(target.getId()));
+                }
                 session.setCurrentCoursewareSnapshotId(target.getCoursewareSnapshotId());
                 session.setLastConfirmedPositionMs(target.getConfirmedPositionMs());
                 session.setStatus(STUDYING);

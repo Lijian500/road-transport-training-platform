@@ -16,6 +16,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -74,6 +77,33 @@ class LearningOutboxPublisherTest {
         assertThat(QueryWrapper.create().where(conditionCaptor.getValue()).toSQL())
                 .contains("'PENDING'")
                 .contains("'FAILED'");
+    }
+
+    /** 路由失败即使收到ACK也不能标为SENT，应保留自动补偿。 */
+    @Test
+    void shouldRetryReturnedMessageEvenWhenBrokerAcknowledgesIt() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
+        MqOutboxEntity outbox = failedOutbox(objectMapper);
+        when(outboxMapper.selectListByQuery(any(QueryWrapper.class)))
+                .thenReturn(Collections.singletonList(outbox));
+        when(transactionManager.getTransaction(any(TransactionDefinition.class)))
+                .thenReturn(transactionStatus);
+        doAnswer(invocation -> {
+            CorrelationData correlation = invocation.getArgument(3);
+            correlation.setReturned(new ReturnedMessage(new Message(new byte[0], new MessageProperties()),
+                    312, "NO_ROUTE", LearningTaskEvents.EXCHANGE, outbox.getRoutingKey()));
+            correlation.getFuture().complete(new CorrelationData.Confirm(true, null));
+            return null;
+        }).when(rabbitTemplate).convertAndSend(eq(LearningTaskEvents.EXCHANGE),
+                eq(outbox.getRoutingKey()), any(LearningTaskEvent.class), any(CorrelationData.class));
+
+        new LearningOutboxPublisher(outboxMapper, rabbitTemplate, objectMapper,
+                new LearningProperties(), transactionManager).publishPending();
+
+        ArgumentCaptor<MqOutboxEntity> update = ArgumentCaptor.forClass(MqOutboxEntity.class);
+        verify(outboxMapper).updateByCondition(update.capture(), any(QueryCondition.class));
+        assertThat(((UpdateWrapper<?>) update.getValue()).getUpdates().values())
+                .contains("FAILED", 11).doesNotContain("SENT");
     }
 
     private MqOutboxEntity failedOutbox(ObjectMapper objectMapper) throws Exception {

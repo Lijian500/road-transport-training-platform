@@ -82,6 +82,11 @@ public class LearningOutboxPublisher {
             if (!confirm.isAck()) {
                 throw new IllegalStateException(confirm.getReason());
             }
+            // Broker确认接收不代表已路由到队列，退回消息必须保留重试。
+            if (correlationData.getReturned() != null) {
+                throw new IllegalStateException("消息未路由到队列："
+                        + correlationData.getReturned().getReplyText());
+            }
             transactionTemplate.executeWithoutResult(status -> {
                 MqOutboxEntity update = UpdateWrapper.of(MqOutboxEntity.class)
                         .set(MQ_OUTBOX.STATUS, "SENT")

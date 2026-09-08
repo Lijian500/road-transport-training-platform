@@ -239,9 +239,32 @@ async function onVideoPause() {
   }
 }
 
+/** 请求服务端从头播放已完成课件，补足有效学时而不清空历史进度。 */
+async function supplementLearning() {
+  if (!selectedCourseware.value || !video.value || !realtimeReady.value) return
+  try {
+    if (session.value?.status === 'STUDYING') await pauseCurrentVideo()
+    const result = await enqueueEvent('PLAY', selectedCourseware.value.coursewareSnapshotId, 0)
+    restoringPosition = true
+    video.value.currentTime = result.confirmedPositionMillis / 1000
+    window.setTimeout(() => {
+      restoringPosition = false
+    })
+    approvedPlay = true
+    await video.value.play()
+  } catch (error) {
+    stopProgressTimer()
+    showError(error, '补学启动失败')
+  }
+}
+
 /** 视频播放结束时使用PAUSE事件结算最后一段并解锁下一课件。 */
 async function onVideoEnded() {
   if (!selectedCourseware.value) return
+  if (session.value?.status === 'COMPLETED') {
+    stopProgressTimer()
+    return
+  }
   handlingEnd = true
   stopProgressTimer()
   try {
@@ -672,6 +695,26 @@ onBeforeUnmount(() => {
           </div>
         </div>
       </el-card>
+
+      <el-alert
+        v-if="
+          course.coursewares.every((item) => item.status === 'COMPLETED') &&
+          course.effectiveDurationMillis < course.requiredDurationMillis
+        "
+        title="课件已播放完成，有效学时仍不足，请从头补学。"
+        type="warning"
+        :closable="false"
+        class="realtime-alert"
+      >
+        <el-button
+          :disabled="
+            !realtimeReady || !['SIGNED_IN', 'PAUSED', 'STUDYING'].includes(session.status)
+          "
+          :loading="eventBusy"
+          @click="supplementLearning"
+          >从头补学当前课件</el-button
+        >
+      </el-alert>
 
       <div class="study-grid">
         <el-card shadow="never" class="courseware-panel">

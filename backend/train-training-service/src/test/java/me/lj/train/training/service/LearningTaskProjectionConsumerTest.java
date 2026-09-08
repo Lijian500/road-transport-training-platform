@@ -69,6 +69,20 @@ class LearningTaskProjectionConsumerTest {
         verify(consumeLogMapper).insertSelective(any(MqConsumeLogEntity.class));
     }
 
+    /** 完成事件先到、开始事件迟到时，不得将完成状态退回学习中。 */
+    @Test
+    void shouldNotRegressCompletedTaskWhenStartedEventArrivesLate() {
+        when(consumeLogMapper.selectCountByQuery(any(QueryWrapper.class))).thenReturn(0L);
+        PlanUserEntity task = new PlanUserEntity();
+        task.setId(500L);
+        task.setStudyStatus("COMPLETED");
+        when(planUserMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(task);
+        consumer.consume(event("late-start", LearningTaskEvents.STARTED_ROUTING_KEY));
+        verify(planUserMapper, never()).updateByCondition(any(PlanUserEntity.class), any());
+        verifyNoInteractions(completionService);
+        verify(consumeLogMapper).insertSelective(any(MqConsumeLogEntity.class));
+    }
+
     private LearningTaskEvent event(String eventId, String type) {
         return new LearningTaskEvent(
                 eventId, type, LocalDateTime.of(2026, 8, 19, 16, 0),

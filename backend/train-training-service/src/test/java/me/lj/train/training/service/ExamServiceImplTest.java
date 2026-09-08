@@ -2,6 +2,7 @@ package me.lj.train.training.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mybatisflex.core.query.QueryWrapper;
+import com.mybatisflex.core.update.UpdateWrapper;
 import me.lj.train.api.training.ExamModels.ExamRecordView;
 import me.lj.train.common.core.result.Result;
 import me.lj.train.common.security.context.UserContext;
@@ -34,12 +35,14 @@ import java.util.Collections;
 
 import static me.lj.train.training.constant.TrainingConstants.EXAM_RECORD_IN_PROGRESS;
 import static me.lj.train.training.constant.TrainingConstants.EXAM_RECORD_SUBMITTED;
+import static me.lj.train.training.constant.TrainingConstants.EXAM_RECORD_TIMEOUT;
 import static me.lj.train.training.constant.TrainingConstants.PAPER_ENABLED;
 import static me.lj.train.training.constant.TrainingPermissions.STUDENT_EXAM_TAKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.never;
 
 /** 学员考试唯一记录和自动判分核心测试。 */
 @ExtendWith(MockitoExtension.class)
@@ -119,6 +122,46 @@ class ExamServiceImplTest {
         verify(recordMapper).updateByCondition(any(ExamRecordEntity.class), any());
         verify(planUserMapper).updateByCondition(any(PlanUserEntity.class), any());
         verify(completionService).recalculate(any(), any(), any());
+    }
+
+    /** 重复交卷只返回既有成绩，不再判分或重算完成时间。 */
+    @Test
+    void shouldReturnSubmittedResultWithoutGradingAgain() {
+        when(recordMapper.selectOneByQuery(any(QueryWrapper.class)))
+                .thenReturn(record(EXAM_RECORD_SUBMITTED, 10, true));
+        when(paperQuestionMapper.selectListByQuery(any(QueryWrapper.class)))
+                .thenReturn(Collections.singletonList(question()));
+        when(answerMapper.selectListByQuery(any(QueryWrapper.class)))
+                .thenReturn(Collections.emptyList());
+
+        Result<ExamRecordView> result = service.submit(700L);
+
+        assertThat(result.isSuccess()).isTrue();
+        assertThat(result.getData().score()).isEqualTo(10);
+        verify(recordMapper, never()).updateByCondition(any(ExamRecordEntity.class), any());
+        verify(completionService, never()).recalculate(any(), any(), any());
+    }
+
+    /** 截止后交卷走超时结算，未答题不能获得及格成绩。 */
+    @Test
+    void shouldSettleExpiredSubmissionAsTimeout() {
+        ExamRecordEntity expired = record(EXAM_RECORD_IN_PROGRESS, null, null);
+        expired.setDeadlineAt(LocalDateTime.now().minusSeconds(1));
+        when(recordMapper.selectOneByQuery(any(QueryWrapper.class)))
+                .thenReturn(expired, record(EXAM_RECORD_TIMEOUT, 0, false));
+        when(paperQuestionMapper.selectListByQuery(any(QueryWrapper.class)))
+                .thenReturn(Collections.singletonList(question()));
+        when(answerMapper.selectListByQuery(any(QueryWrapper.class)))
+                .thenReturn(Collections.emptyList());
+
+        Result<ExamRecordView> result = service.submit(700L);
+
+        assertThat(result.isSuccess()).isTrue();
+        ArgumentCaptor<ExamRecordEntity> update = ArgumentCaptor.forClass(ExamRecordEntity.class);
+        verify(recordMapper).updateByCondition(update.capture(), any());
+        assertThat(((UpdateWrapper<?>) update.getValue()).getUpdates())
+                .containsEntry("status", EXAM_RECORD_TIMEOUT).containsEntry("score", 0);
+        assertThat(result.getData().passed()).isFalse();
     }
 
     private LoginUser student() {

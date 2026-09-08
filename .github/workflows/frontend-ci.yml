@@ -4,10 +4,14 @@ on:
   push:
     paths:
       - "frontend/**"
+      - "scripts/lib/media-config.*"
+      - "scripts/run-media-acceptance.mjs"
       - ".github/workflows/frontend-ci.yml"
   pull_request:
     paths:
       - "frontend/**"
+      - "scripts/lib/media-config.*"
+      - "scripts/run-media-acceptance.mjs"
       - ".github/workflows/frontend-ci.yml"
 
 permissions:
@@ -46,6 +50,13 @@ jobs:
       - name: Unit tests
         working-directory: frontend
         run: pnpm test
+
+      - name: Browser test type check
+        working-directory: frontend
+        run: pnpm typecheck:e2e
+
+      - name: Media configuration guard tests
+        run: node --test scripts/lib/media-config.test.mjs
 
       - name: Build
         working-directory: frontend

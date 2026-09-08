@@ -7,11 +7,13 @@
 
 > 当前实施进度请查看：[IMPLEMENTATION_STATUS.md](./IMPLEMENTATION_STATUS.md)
 
+> 本机论文演示交付新增真实媒体验收入口、独立场景数据和补学恢复。执行步骤见[媒体验收手册](docs/test/media-acceptance.md)，本轮实际结果及阻塞项见[2026-09-08报告](docs/test/media-acceptance-2026-09-08.md)。
+
 ## 当前仓库状态与快速开始
 
 当前仓库已完成企业、部门、用户、角色、权限和登录的基础闭环，并完成企业课程、封面及视频课件管理。课程文件由浏览器通过短期预签名地址直传私有阿里云OSS；认证采用RSA Access Token、Redis Refresh Token轮换、HttpOnly Cookie和CSRF双提交保护。
 
-本次补齐了本企业车辆管理、学员学习档案、管理学时监管及两个工作台首页。只支持“仅学习”和“学习+考试”两种培训模式，均需课程与参训人员。最新功能、真实联调范围及未完成的云媒体验收见[验收报告](docs/test/acceptance-2026-09-07.md)；运行方式见[部署手册](docs/deployment/local-demo.md)，论文配套材料见[设计与答辩材料](docs/thesis/design-and-defense.md)。
+此前已补齐本企业车辆管理、学员学习档案、管理学时监管及两个工作台首页。只支持“仅学习”和“学习+考试”两种培训模式，均需课程与参训人员。最新功能、真实联调范围及未完成的云媒体验收见[本轮报告](docs/test/media-acceptance-2026-09-08.md)；运行方式见[部署手册](docs/deployment/local-demo.md)，论文配套材料见[设计与答辩材料](docs/thesis/design-and-defense.md)。
 
 环境要求：
 

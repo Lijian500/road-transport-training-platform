@@ -2,9 +2,10 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { randomBytes } from 'node:crypto'
 import { dirname, resolve } from 'node:path'
 import { ApiClient, readEnvironment } from './lib/api-client.mjs'
+import { mediaStudentKeys, repositoryRoot } from './lib/media-config.mjs'
 
-const env = readEnvironment(process.env.TRAIN_ENV_FILE || '.env.local')
-const statePath = resolve(process.env.TRAIN_DEMO_STATE || 'tmp/demo/state.json')
+const env = readEnvironment(resolve(repositoryRoot, process.env.TRAIN_ENV_FILE || '.env.local'))
+const statePath = resolve(repositoryRoot, env.TRAIN_DEMO_STATE || 'tmp/demo/state.json')
 const state = existsSync(statePath) ? JSON.parse(readFileSync(statePath, 'utf8')) : {
   prefix: `demo_${Date.now()}`,
   password: `Demo!${randomBytes(12).toString('hex')}`,
@@ -96,6 +97,23 @@ async function main() {
     }
   }
   const admin = await loginDemo(`${state.prefix}_a`)
+  if (process.argv.includes('--media')) {
+    state.media ||= { students: {}, plans: {} }
+    const roles = await admin.call('/admin/roles/options')
+    const role = roles.find((item) => item.code === 'STUDENT')
+    if (!role) throw new Error('新企业未初始化学员角色。')
+    for (const key of mediaStudentKeys()) {
+      const username = `${state.prefix}_${key}`
+      if (!state.media.students[key]) {
+        state.media.students[key] = await admin.call('/admin/users', 'POST', {
+          username, displayName: `验收学员 ${key}`, orgId: state.org_a.id,
+          temporaryPassword: state.temporaryPassword, roleIds: [role.id],
+        })
+        save()
+      }
+      await loginDemo(username)
+    }
+  }
   if (!state.course) {
     state.course = await admin.call('/training/courses', 'POST', {
       name: `${state.prefix} 安全培训演示课`, description: '虚构课程，用于流程演示与验收',
@@ -127,6 +145,7 @@ async function main() {
   save()
   console.log(`演示数据已准备：${statePath}（包含随机演示密码，请勿提交或公开）`)
   console.log(`企业2个、学员2个、车辆2辆、课程草稿1个、已启用试卷1份。OSS能力：${state.storage.enabled ? '可用' : '未配置'}`)
+  if (process.argv.includes('--media')) console.log(`另已准备${Object.keys(state.media.students).length}个独立媒体验收学员，计划需通过publish-demo.mjs --media发布。`)
 }
 
 main().catch((error) => { console.error(error.message); process.exitCode = 1 })

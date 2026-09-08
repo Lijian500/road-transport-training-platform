@@ -1,14 +1,17 @@
 name: Backend CI
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - "backend/**"
       - ".github/workflows/backend-ci.yml"
+      - "scripts/check-database-tests.py"
   pull_request:
     paths:
       - "backend/**"
       - ".github/workflows/backend-ci.yml"
+      - "scripts/check-database-tests.py"
 
 permissions:
   contents: read
@@ -17,6 +20,23 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    services:
+      rabbitmq:
+        image: rabbitmq:4-alpine
+        env:
+          RABBITMQ_DEFAULT_USER: train_test
+          RABBITMQ_DEFAULT_PASS: train_test_only
+        ports:
+          - 5672:5672
+        options: >-
+          --health-cmd "rabbitmq-diagnostics -q ping"
+          --health-interval 10s --health-timeout 5s --health-retries 12
+    env:
+      RABBITMQ_INTEGRATION_ENABLED: 'true'
+      RABBITMQ_HOST: 127.0.0.1
+      RABBITMQ_PORT: '5672'
+      RABBITMQ_USERNAME: train_test
+      RABBITMQ_PASSWORD: train_test_only
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,3 +50,6 @@ jobs:
 
       - name: Verify backend
         run: mvn --batch-mode --no-transfer-progress -f backend/pom.xml clean verify
+
+      - name: Require database integration tests to execute
+        run: python3 scripts/check-database-tests.py

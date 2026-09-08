@@ -5,7 +5,9 @@
 [CmdletBinding()]
 param(
     [string]$EnvironmentFile = '.env.local',
-    [string]$JavaHome = $env:JAVA_HOME
+    [string]$JavaHome = $env:JAVA_HOME,
+    [ValidateSet('train-admin-service', 'train-training-service', 'train-learning-service', 'train-web-api', 'train-realtime-service', 'train-gateway')]
+    [string[]]$Service
 )
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
@@ -32,10 +34,12 @@ $services = [ordered]@{
     'train-gateway' = 8080
 }
 foreach ($entry in $services.GetEnumerator()) {
+    if ($Service -and $entry.Key -notin $Service) { continue }
     $jarPath = Join-Path $projectRoot "backend/$($entry.Key)/target/$($entry.Key)-0.1.0-SNAPSHOT.jar"
     if (-not (Test-Path -LiteralPath $jarPath)) { throw "缺少构建产物：$($entry.Key)，请先执行 scripts/build.ps1。" }
 }
 foreach ($entry in $services.GetEnumerator()) {
+    if ($Service -and $entry.Key -notin $Service) { continue }
     $statePath = Join-Path $runDirectory "$($entry.Key).json"
     if (Test-Path -LiteralPath $statePath) {
         $previousState = Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json

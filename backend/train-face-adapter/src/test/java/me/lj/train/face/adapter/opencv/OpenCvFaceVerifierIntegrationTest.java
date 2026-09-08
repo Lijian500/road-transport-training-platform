@@ -31,12 +31,15 @@ class OpenCvFaceVerifierIntegrationTest {
                 ).build()
         );
         byte[] reference = Files.readAllBytes(Path.of(requiredProperty("face.reference.image")));
+        byte[] samePerson = Files.readAllBytes(Path.of(requiredProperty("face.same.image")));
+        assertThat(samePerson).as("同人场景必须使用另一张授权照片").isNotEqualTo(reference);
         byte[] differentPerson = Files.readAllBytes(Path.of(requiredProperty("face.different.image")));
         byte[] multipleFaces = Files.readAllBytes(Path.of(requiredProperty("face.multiple.image")));
 
         Result<FaceDetectionResult> singleDetection = verifier.detect(reference);
         Result<FaceDetectionResult> multipleDetection = verifier.detect(multipleFaces);
         Result<FaceComparisonResult> sameComparison = verifier.compare(reference, reference);
+        Result<FaceComparisonResult> samePersonComparison = verifier.compare(reference, samePerson);
         Result<FaceComparisonResult> differentComparison = verifier.compare(reference, differentPerson);
         Result<FaceComparisonResult> multipleComparison = verifier.compare(reference, multipleFaces);
         byte[] blankImage = blankImage();
@@ -57,6 +60,9 @@ class OpenCvFaceVerifierIntegrationTest {
         assertThat(sameComparison.isSuccess()).isTrue();
         assertThat(sameComparison.getData().samePerson()).isTrue();
         assertThat(sameComparison.getData().similarity()).isGreaterThan(0.99D);
+        assertThat(samePersonComparison.isSuccess()).isTrue();
+        assertThat(samePersonComparison.getData().comparable()).isTrue();
+        assertThat(samePersonComparison.getData().samePerson()).isTrue();
 
         assertThat(differentComparison.isSuccess()).isTrue();
         assertThat(differentComparison.getData().comparable()).isTrue();

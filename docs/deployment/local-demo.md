@@ -41,7 +41,9 @@ pnpm --dir frontend test:e2e --project=live --project=load
 
 load项目执行1、10、50并发连接的已认证心跳实验，结果写入tmp/experiments/heartbeat.json；不绑定学习会话，不计入培训学时。结果与未验收范围见[验收报告](../test/acceptance-2026-09-07.md)。
 
-云媒体步骤见 `node scripts/publish-demo.mjs`：需先设置TRAIN_DEMO_VIDEO为自制MP4绝对路径、TRAIN_DEMO_VIDEO_SECONDS为真实视频时长，至少60秒，并配置私有OSS。缺少配置时脚本明确失败，不伪造上传和发布成功。两份计划分别为仅学习与学习+考试，发布后规则冻结。
+新增真实媒体验收入口、25个独立学员和1/5/10学员真实播放实验见[媒体验收手册](../test/media-acceptance.md)。执行`seed-demo.mjs --media`和`publish-demo.mjs --media`保留基础演示并追加独立场景。启停脚本现支持`-Service train-learning-service`等服务名，便于定向更新和恢复实验。
+
+云媒体步骤见 `node scripts/publish-demo.mjs`：需先设置TRAIN_DEMO_VIDEO为自制MP4路径（相对仓库根目录或绝对路径）、TRAIN_DEMO_VIDEO_SECONDS为真实视频时长，至少60秒，并配置私有OSS。本机已生成并配置100秒tmp/media/training-demo.mp4，文件制作及检查步骤见媒体验收手册。缺少配置时脚本明确失败，不伪造上传和发布成功。两份基础计划分别为仅学习与学习+考试，发布后规则冻结。
 
 ## HTTPS/WSS
 

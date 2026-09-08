@@ -37,5 +37,11 @@ export default defineConfig({
           { name: 'load', testMatch: '**/*.load.spec.ts' },
         ]
       : []),
+    ...(process.env.TRAIN_MEDIA_LIVE === 'true'
+      ? [
+          { name: 'media', testMatch: '**/*.media.spec.ts', timeout: 900000 },
+          { name: 'study-load', testMatch: '**/*.study-load.spec.ts', timeout: 300000 },
+        ]
+      : []),
   ],
 })

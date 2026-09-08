@@ -20,6 +20,7 @@ import me.lj.train.learning.mapper.StudySessionMapper;
 import me.lj.train.learning.model.entity.StudyEventLogEntity;
 import me.lj.train.learning.model.entity.StudyProgressEntity;
 import me.lj.train.learning.model.entity.StudySessionEntity;
+import me.lj.train.learning.model.entity.StudyCoursewareProgressEntity;
 import me.lj.train.learning.support.TrainingAccessClient;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,6 +42,7 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -258,6 +260,76 @@ class LearningSessionServiceImplTest {
         assertThat(result.getData().status()).isEqualTo("SIGNED_OUT");
         assertThat(result.getData().creditedDurationMillis()).isZero();
         verifyNoInteractions(progressMapper, coursewareProgressMapper, outboxService);
+    }
+
+    /** 复现播完仍缺5秒时的补学：重置位置不赠送学时，随后按实际经过时间补足。 */
+    @Test
+    void shouldSupplementCompletedCoursewareWithoutLosingHistoryOrCreditingPlay() {
+        StudySessionEntity active = prepareReplay("COMPLETED");
+        StudyProgressEntity progress = progressManager.requireProgress(20L, 10L, 100L, 101L);
+        StudyCoursewareProgressEntity target = progressManager.coursewares(20L, 10L, 101L).get(0);
+
+        Result<LearningEventResultView> play = service.submitEvent(new SubmitEventCommand(
+                900L, "browser-one", "replay", 1L, "PLAY", 301L, 0L));
+
+        assertThat(play.isSuccess()).isTrue();
+        assertThat(play.getData().confirmedPositionMillis()).isZero();
+        assertThat(play.getData().creditedDurationMillis()).isZero();
+        assertThat(progress.getEffectiveDurationMs()).isEqualTo(55_000L);
+        assertThat(target.getStatus()).isEqualTo("COMPLETED");
+        assertThat(target.getMaxConfirmedPositionMs()).isEqualTo(60_000L);
+
+        active.setLastEventAt(LocalDateTime.of(2026, 8, 19, 15, 59, 55));
+        when(progressManager.allTaskCoursesCompleted(20L, 10L, 500L)).thenReturn(true);
+        Result<LearningEventResultView> pause = service.submitEvent(new SubmitEventCommand(
+                900L, "browser-one", "replay-pause", 2L, "PAUSE", 301L, 5_000L));
+
+        assertThat(pause.isSuccess()).isTrue();
+        assertThat(pause.getData().creditedDurationMillis()).isEqualTo(5_000L);
+        assertThat(pause.getData().courseCompleted()).isTrue();
+        assertThat(progress.getEffectiveDurationMs()).isEqualTo(60_000L);
+        assertThat(target.getMaxConfirmedPositionMs()).isEqualTo(60_000L);
+    }
+
+    /** 未完成课件不能借补学命令重置已确认位置，仍需按原位置续学。 */
+    @Test
+    void shouldKeepUnfinishedCoursewarePositionWhenPlayReportsZero() {
+        prepareReplay("IN_PROGRESS");
+        Result<LearningEventResultView> play = service.submitEvent(new SubmitEventCommand(
+                900L, "browser-one", "resume-zero", 1L, "PLAY", 301L, 0L));
+        assertThat(play.isSuccess()).isTrue();
+        assertThat(play.getData().confirmedPositionMillis()).isEqualTo(60_000L);
+        verifyNoInteractions(coursewareProgressMapper);
+    }
+
+    /** 构建可继续学习的真实领域对象，仅替换持久化和跨服务边界。 */
+    private StudySessionEntity prepareReplay(String coursewareStatus) {
+        prepareTransaction();
+        StudySessionEntity active = session(101L, "browser-one", "PAUSED");
+        active.setLastSequence(0L);
+        active.setVersion(0);
+        StudyProgressEntity progress = progress();
+        progress.setId(200L);
+        progress.setStatus("IN_PROGRESS");
+        progress.setEffectiveDurationMs(55_000L);
+        progress.setStudyToleranceSeconds(2);
+        progress.setProgressReportIntervalSeconds(10);
+        progress.setVersion(0);
+        StudyCoursewareProgressEntity target = new StudyCoursewareProgressEntity();
+        target.setId(300L);
+        target.setCoursewareSnapshotId(301L);
+        target.setStatus(coursewareStatus);
+        target.setSortOrder(1);
+        target.setDurationMs(60_000L);
+        target.setConfirmedPositionMs(60_000L);
+        target.setMaxConfirmedPositionMs(60_000L);
+        target.setVersion(0);
+        when(sessionMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(active);
+        when(trainingAccessClient.taskContext(100L)).thenReturn(context());
+        when(progressManager.requireProgress(20L, 10L, 100L, 101L)).thenReturn(progress);
+        when(progressManager.coursewares(20L, 10L, 101L)).thenReturn(Collections.singletonList(target));
+        when(progressManager.requireCourseware(any(), eq(301L))).thenReturn(target);
+        return active;
     }
 
     private void prepareTransaction() {
