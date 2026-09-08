@@ -31,7 +31,10 @@ import static org.assertj.core.api.Assertions.assertThat;
                 "spring.application.name=learning-mapper-integration-test",
                 "spring.flyway.enabled=true",
                 "spring.flyway.locations=classpath:db/migration",
-                "mybatis-flex.configuration.map-underscore-to-camel-case=true"
+                "mybatis-flex.configuration.map-underscore-to-camel-case=true",
+                "spring.cloud.nacos.config.enabled=false",
+                "spring.cloud.nacos.discovery.enabled=false",
+                "dubbo.enabled=false"
         })
 class LearningMapperIntegrationTest {
 
