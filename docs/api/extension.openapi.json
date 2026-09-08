@@ -1,0 +1,1672 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "培训档案、监管与车辆扩展API",
+    "version": "0.1.0",
+    "description": "本文件仅覆盖本次新增接口。登录、学习、考试等既有接口见同目录说明。写操作须在Cookie认证基础上携带X-XSRF-TOKEN。"
+  },
+  "servers": [
+    {
+      "url": "/api"
+    }
+  ],
+  "paths": {
+    "/training/student/overview": {
+      "get": {
+        "summary": "学员首页只读概览",
+        "description": "需要权限：student:plan:view。租户和本人范围从登录上下文取得。",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Overview"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/training/student/records": {
+      "get": {
+        "summary": "本人历史档案分页",
+        "description": "需要权限：student:plan:view。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "completionStatus",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "COMPLETED",
+                "NOT_COMPLETED"
+              ]
+            }
+          },
+          {
+            "name": "activity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "TO_STUDY",
+                "TO_EXAM",
+                "COMPLETED"
+              ]
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/RecordItemPage"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/training/student/records/{taskId}": {
+      "get": {
+        "summary": "本人档案详情",
+        "description": "需要权限：student:plan:view。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/RecordDetail"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/training/statistics/participants/{taskId}/record": {
+      "get": {
+        "summary": "本企业参训任务档案",
+        "description": "需要权限：admin:statistics:view。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/RecordDetail"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/learning/records/student/sessions": {
+      "get": {
+        "summary": "学习会话分页",
+        "description": "需要权限：student:plan:view。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          },
+          {
+            "name": "taskId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromTime",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "服务端本地ISO日期时间",
+              "example": "2026-09-07T10:00:00"
+            }
+          },
+          {
+            "name": "toTime",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "服务端本地ISO日期时间",
+              "example": "2026-09-07T10:00:00"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/SessionPage"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/learning/records/student/sessions/{id}/events": {
+      "get": {
+        "summary": "已受理事件分页",
+        "description": "需要权限：student:plan:view。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/EventPage"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/learning/records/student/sessions/{id}/face-checks": {
+      "get": {
+        "summary": "抽验任务及提交分页，包含零提交超时",
+        "description": "需要权限：student:plan:view。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/FaceTaskPage"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/learning/records/admin/sessions": {
+      "get": {
+        "summary": "学习会话分页",
+        "description": "需要权限：admin:statistics:view。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          },
+          {
+            "name": "taskId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromTime",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "服务端本地ISO日期时间",
+              "example": "2026-09-07T10:00:00"
+            }
+          },
+          {
+            "name": "toTime",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "服务端本地ISO日期时间",
+              "example": "2026-09-07T10:00:00"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/SessionPage"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/learning/records/admin/sessions/{id}/events": {
+      "get": {
+        "summary": "已受理事件分页",
+        "description": "需要权限：admin:statistics:view。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/EventPage"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/learning/records/admin/sessions/{id}/face-checks": {
+      "get": {
+        "summary": "抽验任务及提交分页，包含零提交超时",
+        "description": "需要权限：admin:statistics:view。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/FaceTaskPage"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/admin/vehicles": {
+      "get": {
+        "summary": "企业车辆分页",
+        "description": "需要权限：admin:vehicle:view。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/VehiclePage"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      },
+      "post": {
+        "summary": "新增企业车辆",
+        "description": "需要权限：admin:vehicle:create。租户和本人范围从登录上下文取得。",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Vehicle"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/admin/vehicles/departments": {
+      "get": {
+        "summary": "车辆可选部门",
+        "description": "需要权限：admin:vehicle:view 或 admin:vehicle:create 或 admin:vehicle:update。租户和本人范围从登录上下文取得。",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Department"
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/admin/vehicles/{id}": {
+      "put": {
+        "summary": "编辑企业车辆",
+        "description": "需要权限：admin:vehicle:update。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Vehicle"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    },
+    "/admin/vehicles/{id}/status": {
+      "put": {
+        "summary": "启停企业车辆",
+        "description": "需要权限：admin:vehicle:status。租户和本人范围从登录上下文取得。",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatusInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "统一Result业务响应；调用方必须检查code是否为SUCCESS。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "尚未登录或会话失效"
+          },
+          "403": {
+            "description": "权限或归属校验未通过"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "nullable": true
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ]
+      },
+      "Vehicle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "plateNumber": {
+            "type": "string"
+          },
+          "vehicleType": {
+            "type": "string"
+          },
+          "orgId": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$",
+            "nullable": true
+          },
+          "orgName": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ENABLED",
+              "DISABLED"
+            ]
+          },
+          "remark": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00"
+          }
+        }
+      },
+      "VehicleInput": {
+        "type": "object",
+        "properties": {
+          "plateNumber": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 16
+          },
+          "vehicleType": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "orgId": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$",
+            "nullable": true
+          },
+          "remark": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true
+          }
+        },
+        "required": [
+          "plateNumber",
+          "vehicleType"
+        ]
+      },
+      "Department": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "StatusInput": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ENABLED",
+              "DISABLED"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "TrainingRecord": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "planId": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "userId": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "planName": {
+            "type": "string"
+          },
+          "planStatus": {
+            "type": "string"
+          },
+          "startAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00"
+          },
+          "endAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00"
+          },
+          "studyStatus": {
+            "type": "string"
+          },
+          "examStatus": {
+            "type": "string"
+          },
+          "completionStatus": {
+            "type": "string"
+          },
+          "examScore": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "examPassed": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "completedAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00",
+            "nullable": true
+          },
+          "requiredDurationMillis": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "courses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SnapshotCourse"
+            }
+          }
+        }
+      },
+      "SnapshotCourse": {
+        "type": "object",
+        "properties": {
+          "planCourseId": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "courseName": {
+            "type": "string"
+          },
+          "requiredDurationMillis": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "RecordItem": {
+        "type": "object",
+        "properties": {
+          "training": {
+            "$ref": "#/components/schemas/TrainingRecord"
+          },
+          "effectiveDurationMillis": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "CourseRecord": {
+        "type": "object",
+        "properties": {
+          "planCourseId": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "courseName": {
+            "type": "string"
+          },
+          "requiredDurationMillis": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "effectiveDurationMillis": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "string"
+          },
+          "completedAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00",
+            "nullable": true
+          }
+        }
+      },
+      "RecordDetail": {
+        "type": "object",
+        "properties": {
+          "training": {
+            "$ref": "#/components/schemas/TrainingRecord"
+          },
+          "courses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CourseRecord"
+            }
+          }
+        }
+      },
+      "Overview": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "toStudyCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "toExamCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "completedCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "recentTasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TrainingRecord"
+            }
+          }
+        }
+      },
+      "Session": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "taskId": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "planId": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "planCourseId": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "courseName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00"
+          },
+          "signedInAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00",
+            "nullable": true
+          },
+          "startedAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00",
+            "nullable": true
+          },
+          "signedOutAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00",
+            "nullable": true
+          },
+          "terminatedAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00",
+            "nullable": true
+          },
+          "terminationReason": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "sequence": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "eventType": {
+            "type": "string"
+          },
+          "fromStatus": {
+            "type": "string"
+          },
+          "toStatus": {
+            "type": "string"
+          },
+          "reportedPositionMillis": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "confirmedPositionMillis": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "creditedDurationMillis": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "resultCode": {
+            "type": "string"
+          },
+          "serverTime": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00"
+          }
+        }
+      },
+      "FaceAttempt": {
+        "type": "object",
+        "properties": {
+          "attemptNo": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "result": {
+            "type": "string"
+          },
+          "failureReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "similarity": {
+            "type": "number",
+            "nullable": true
+          },
+          "elapsedMillis": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00"
+          }
+        }
+      },
+      "FaceTask": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "status": {
+            "type": "string"
+          },
+          "triggeredAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00"
+          },
+          "deadlineAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00"
+          },
+          "completedAt": {
+            "type": "string",
+            "description": "服务端本地ISO日期时间",
+            "example": "2026-09-07T10:00:00",
+            "nullable": true
+          },
+          "failureReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "attemptCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "attempts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FaceAttempt"
+            }
+          }
+        }
+      },
+      "VehiclePage": {
+        "type": "object",
+        "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Vehicle"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "records",
+          "total",
+          "pageNumber",
+          "pageSize"
+        ]
+      },
+      "RecordItemPage": {
+        "type": "object",
+        "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecordItem"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "records",
+          "total",
+          "pageNumber",
+          "pageSize"
+        ]
+      },
+      "SessionPage": {
+        "type": "object",
+        "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Session"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "records",
+          "total",
+          "pageNumber",
+          "pageSize"
+        ]
+      },
+      "EventPage": {
+        "type": "object",
+        "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "records",
+          "total",
+          "pageNumber",
+          "pageSize"
+        ]
+      },
+      "FaceTaskPage": {
+        "type": "object",
+        "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FaceTask"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "records",
+          "total",
+          "pageNumber",
+          "pageSize"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "sessionCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "TRAIN_ACCESS_TOKEN",
+        "description": "实际Cookie名称由应用JWT配置决定；不要在文档内持久化令牌。"
+      }
+    }
+  },
+  "security": [
+    {
+      "sessionCookie": []
+    }
+  ]
+}

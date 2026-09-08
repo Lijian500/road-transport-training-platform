@@ -182,8 +182,9 @@ public class EnterpriseServiceImpl extends AdminServiceSupport implements Enterp
                 RoleEntity studentRole = createBuiltInRole(
                         enterpriseId, AdminConstants.ROLE_STUDENT, "学员", "企业内置学员角色",
                         operator.getUserId());
+                // 显式使用前缀匹配，避免likeRight按后缀匹配导致新学员角色没有权限。
                 List<Long> studentPermissionIds = permissionMapper.selectListByQuery(QueryWrapper.create()
-                                .where(PERMISSION.PERMISSION_CODE.likeRight("student:")))
+                                .where(PERMISSION.PERMISSION_CODE.likeRaw("student:%")))
                         .stream()
                         .map(PermissionEntity::getId)
                         .collect(Collectors.toList());

@@ -307,6 +307,9 @@ class EnterpriseServiceImplTest {
         assertThat(captor.getAllValues().get(1))
                 .extracting(RolePermissionEntity::getPermissionId)
                 .containsExactlyInAnyOrder(700L, 701L, 702L);
+        ArgumentCaptor<QueryWrapper> queries = ArgumentCaptor.forClass(QueryWrapper.class);
+        verify(permissionMapper, times(2)).selectListByQuery(queries.capture());
+        assertThat(queries.getAllValues().get(1).toSQL()).contains("'student:%'");
         verify(transactionManager).commit(transactionStatus);
     }
 

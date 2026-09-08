@@ -31,6 +31,7 @@ const menus = [
     permission: 'admin:user:view',
     audience: 'enterprise',
   },
+  { path: '/admin/vehicles', label: '车辆管理', permission: 'admin:vehicle:view', audience: 'enterprise' },
   {
     path: '/admin/courses',
     label: '课程管理',

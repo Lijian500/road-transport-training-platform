@@ -23,6 +23,7 @@ if (-not $SkipBackend) {
             else {
                 mvn clean verify
             }
+            if ($LASTEXITCODE -ne 0) { throw "后端构建失败，退出码：$LASTEXITCODE" }
         }
         finally {
             Pop-Location
@@ -46,7 +47,9 @@ if (-not $SkipFrontend) {
                 Write-Warning "尚无pnpm-lock.yaml，本次执行普通安装；依赖安装成功后应提交生成的锁文件。"
                 pnpm install --no-frozen-lockfile
             }
+            if ($LASTEXITCODE -ne 0) { throw "前端依赖安装失败，退出码：$LASTEXITCODE" }
             pnpm build
+            if ($LASTEXITCODE -ne 0) { throw "前端构建失败，退出码：$LASTEXITCODE" }
         }
         finally {
             Pop-Location

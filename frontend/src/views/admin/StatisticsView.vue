@@ -17,6 +17,7 @@ import {
 } from '@/api/statistics'
 import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
+import LearningRecordDetail from '@/components/LearningRecordDetail/LearningRecordDetail.vue'
 
 type TagType = 'primary' | 'success' | 'warning' | 'info' | 'danger'
 
@@ -29,6 +30,7 @@ const planRows = ref<PlanStatistics[]>([])
 const planTotal = ref(0)
 const participantRows = ref<ParticipantStatistics[]>([])
 const participantTotal = ref(0)
+const recordTaskId = ref('')
 const scopePlanId = ref('')
 const activeTab = ref('plans')
 const planOptions = ref<PlanStatistics[]>([])
@@ -450,6 +452,11 @@ onMounted(() => {
             <template #default="{ row }">{{ row.orgName || '-' }}</template>
           </el-table-column>
           <el-table-column label="培训计划" min-width="180" prop="planName" />
+          <el-table-column label="学习档案" width="110" fixed="right">
+            <template #default="{ row }">
+              <el-button link type="primary" @click="recordTaskId = row.taskId">查看学习过程</el-button>
+            </template>
+          </el-table-column>
           <el-table-column label="学习状态" width="100">
             <template #default="{ row }">
               <el-tag :type="studyStatusType(row.studyStatus)">
@@ -488,6 +495,15 @@ onMounted(() => {
         </AppTable>
       </el-tab-pane>
     </el-tabs>
+    <el-drawer
+      :model-value="Boolean(recordTaskId)"
+      title="学时监管与抽验记录"
+      size="90%"
+      destroy-on-close
+      @update:model-value="(value: boolean) => { if (!value) recordTaskId = '' }"
+    >
+      <LearningRecordDetail v-if="recordTaskId" :task-id="recordTaskId" audience="admin" />
+    </el-drawer>
   </section>
 </template>
 

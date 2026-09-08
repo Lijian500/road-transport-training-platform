@@ -1,0 +1,36 @@
+{
+  "measuredAt": "2026-09-07T17:06:15.236Z",
+  "scope": "authenticated heartbeat only; no learning binding or database credit",
+  "reports": [
+    {
+      "concurrency": 1,
+      "responses": 20,
+      "errors": 0,
+      "elapsedMillis": 724.1000000238419,
+      "responsesPerSecond": 27.620494405940445,
+      "p50Millis": 12,
+      "p95Millis": 60,
+      "maxMillis": 249.0999999642372
+    },
+    {
+      "concurrency": 10,
+      "responses": 200,
+      "errors": 0,
+      "elapsedMillis": 1560.5,
+      "responsesPerSecond": 128.16404998397948,
+      "p50Millis": 9,
+      "p95Millis": 52.5,
+      "maxMillis": 296.5
+    },
+    {
+      "concurrency": 50,
+      "responses": 1000,
+      "errors": 0,
+      "elapsedMillis": 5544.199999988079,
+      "responsesPerSecond": 180.3686735691624,
+      "p50Millis": 4.200000047683716,
+      "p95Millis": 46,
+      "maxMillis": 235.5
+    }
+  ]
+}

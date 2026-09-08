@@ -13,14 +13,18 @@ describe('培训计划路由', () => {
     expect(detail?.meta?.permission).toBe('admin:plan:view')
   })
 
-  it('学员工作台默认进入仅属于当前学员的任务路由', () => {
+  it('学员工作台和档案入口使用本人任务查看权限', () => {
     const routes = studentRoutes[0]?.children ?? []
     const index = routes.find((route) => route.path === '')
     const list = routes.find((route) => route.name === 'student-plans')
     const detail = routes.find((route) => route.name === 'student-plan-detail')
     const study = routes.find((route) => route.name === 'student-study')
 
-    expect(index?.redirect).toBe('/student/plans')
+    expect(index?.name).toBe('student-home')
+    expect(index?.meta?.permission).toBe('student:plan:view')
+    expect(routes.find((route) => route.name === 'student-records')?.meta?.permission).toBe(
+      'student:plan:view',
+    )
     expect(list?.meta?.permission).toBe('student:plan:view')
     expect(detail?.meta?.permission).toBe('student:plan:view')
     expect(study?.path).toBe('plans/:planId/courses/:planCourseId/study')
@@ -28,9 +32,7 @@ describe('培训计划路由', () => {
   })
 
   it('考试管理与学员考试路由使用各自权限', () => {
-    const adminExam = (adminRoutes[0]?.children ?? []).find(
-      (route) => route.name === 'admin-exam',
-    )
+    const adminExam = (adminRoutes[0]?.children ?? []).find((route) => route.name === 'admin-exam')
     const studentExam = (studentRoutes[0]?.children ?? []).find(
       (route) => route.name === 'student-exam',
     )

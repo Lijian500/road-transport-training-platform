@@ -6,6 +6,7 @@ import me.lj.train.admin.constant.AdminConstants;
 import me.lj.train.admin.constant.AdminPermissions;
 import me.lj.train.admin.mapper.OrgMapper;
 import me.lj.train.admin.mapper.UserMapper;
+import me.lj.train.admin.mapper.VehicleMapper;
 import me.lj.train.admin.model.entity.OrgEntity;
 import me.lj.train.admin.support.AdminGuard;
 import me.lj.train.api.admin.AdminModels.CreateOrgCommand;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 
 import static me.lj.train.admin.model.table.OrgTableDef.ORG;
 import static me.lj.train.admin.model.table.UserTableDef.USER;
+import static me.lj.train.admin.model.table.VehicleTableDef.VEHICLE;
 
 /**
  * 组织树RPC实现，直接编排MyBatis-Flex Mapper。
@@ -38,14 +40,17 @@ public class OrgServiceImpl extends AdminServiceSupport implements OrgService {
 
     private final OrgMapper orgMapper;
     private final UserMapper userMapper;
+    private final VehicleMapper vehicleMapper;
 
     public OrgServiceImpl(
             PlatformTransactionManager transactionManager,
             OrgMapper orgMapper,
-            UserMapper userMapper) {
+            UserMapper userMapper,
+            VehicleMapper vehicleMapper) {
         super(transactionManager);
         this.orgMapper = orgMapper;
         this.userMapper = userMapper;
+        this.vehicleMapper = vehicleMapper;
     }
 
     @Override
@@ -140,7 +145,9 @@ public class OrgServiceImpl extends AdminServiceSupport implements OrgService {
             if (!AdminConstants.ORG_DEPARTMENT.equals(entity.getOrgType())) {
                 throw new BusinessException(AppErrorCode.BUILTIN_DATA_READONLY, "根组织节点不能删除");
             }
-            if (countChildren(id) > 0 || countUsers(enterpriseId, id) > 0) {
+            if (countChildren(id) > 0 || countUsers(enterpriseId, id) > 0
+                    || vehicleMapper.selectCountByQuery(QueryWrapper.create()
+                            .where(VEHICLE.ENTERPRISE_ID.eq(enterpriseId)).and(VEHICLE.ORG_ID.eq(id))) > 0) {
                 throw new BusinessException(AppErrorCode.DATA_IN_USE);
             }
             Long operatorId = UserContext.require().getUserId();

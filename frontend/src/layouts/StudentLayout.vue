@@ -26,7 +26,11 @@ async function logout() {
         </span>
       </div>
       <nav aria-label="学员端导航">
+        <RouterLink to="/student" active-class="" exact-active-class="router-link-active"
+          >学习首页</RouterLink
+        >
         <RouterLink to="/student/plans">我的培训任务</RouterLink>
+        <RouterLink to="/student/records">我的学习档案</RouterLink>
         <RouterLink v-if="authStore.session?.workspaces.includes('admin')" to="/admin">
           管理工作台
         </RouterLink>

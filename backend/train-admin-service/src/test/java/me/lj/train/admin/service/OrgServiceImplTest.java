@@ -5,6 +5,7 @@ import me.lj.train.admin.constant.AdminConstants;
 import me.lj.train.admin.constant.AdminPermissions;
 import me.lj.train.admin.mapper.OrgMapper;
 import me.lj.train.admin.mapper.UserMapper;
+import me.lj.train.admin.mapper.VehicleMapper;
 import me.lj.train.admin.model.entity.OrgEntity;
 import me.lj.train.common.core.result.Result;
 import me.lj.train.common.security.context.UserContext;
@@ -40,11 +41,13 @@ class OrgServiceImplTest {
     @Mock
     private UserMapper userMapper;
 
+    @Mock
+    private VehicleMapper vehicleMapper;
     private OrgServiceImpl service;
 
     @BeforeEach
     void setUp() {
-        service = new OrgServiceImpl(transactionManager, orgMapper, userMapper);
+        service = new OrgServiceImpl(transactionManager, orgMapper, userMapper, vehicleMapper);
         LoginUser operator = new LoginUser();
         operator.setUserId(1L);
         operator.setEnterpriseId(20L);
@@ -75,6 +78,16 @@ class OrgServiceImplTest {
         assertThat(update.getUpdatedBy()).isEqualTo(1L);
         verify(orgMapper, never()).deleteById(30L);
         verify(transactionManager).commit(transactionStatus);
+    }
+
+    @Test
+    void shouldKeepDepartmentReferencedByVehicle() {
+        when(transactionManager.getTransaction(any(TransactionDefinition.class))).thenReturn(transactionStatus);
+        when(orgMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(department());
+        when(vehicleMapper.selectCountByQuery(any(QueryWrapper.class))).thenReturn(1L);
+        Result<?> result = service.delete(30L);
+        assertThat(result.isSuccess()).isFalse();
+        verify(orgMapper, never()).updateByCondition(any(OrgEntity.class), any());
     }
 
     private OrgEntity department() {

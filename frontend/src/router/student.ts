@@ -11,7 +11,25 @@ const studentRoutes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        redirect: '/student/plans',
+        name: 'student-home',
+        component: () => import('@/views/student/StudentHomeView.vue'),
+        meta: {
+          title: '学习中心',
+          requiresAuth: true,
+          workspace: 'student',
+          permission: 'student:plan:view',
+        },
+      },
+      {
+        path: 'records',
+        name: 'student-records',
+        component: () => import('@/views/student/StudentRecordsView.vue'),
+        meta: {
+          title: '我的学习档案',
+          requiresAuth: true,
+          workspace: 'student',
+          permission: 'student:plan:view',
+        },
       },
       {
         path: 'plans',

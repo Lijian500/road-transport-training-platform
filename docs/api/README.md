@@ -1,5 +1,7 @@
 # API与协议
 
+新增学习档案、学时监管、首页与车辆接口见[接口说明](records-and-vehicles.md)及[OpenAPI 3.0文档](extension.openapi.json)。
+
 ## 通用约定
 
 - HTTP前缀为`/api`，所有响应使用`Result<T>`；

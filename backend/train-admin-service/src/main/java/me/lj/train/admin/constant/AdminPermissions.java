@@ -37,6 +37,10 @@ public final class AdminPermissions {
     public static final String PLAN_PUBLISH = "admin:plan:publish";
     public static final String PLAN_CANCEL = "admin:plan:cancel";
     public static final String STATISTICS_VIEW = "admin:statistics:view";
+    public static final String VEHICLE_VIEW = "admin:vehicle:view";
+    public static final String VEHICLE_CREATE = "admin:vehicle:create";
+    public static final String VEHICLE_UPDATE = "admin:vehicle:update";
+    public static final String VEHICLE_STATUS = "admin:vehicle:status";
     public static final String STUDENT_LEARNING_STUDY = "student:learning:study";
 
     private AdminPermissions() {

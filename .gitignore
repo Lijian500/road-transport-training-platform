@@ -43,6 +43,7 @@ backend/train-face-adapter/models/*.onnx
 .cache/
 playwright-report/
 test-results/
+output/playwright/
 
 # 本地覆盖配置
 application-local.yml

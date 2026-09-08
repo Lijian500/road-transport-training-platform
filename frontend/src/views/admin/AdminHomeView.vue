@@ -1,11 +1,60 @@
 <script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { usePermissionStore } from '@/stores/permission'
+import { getStatisticsOverview, type StatisticsOverview } from '@/api/statistics'
+import { recordDuration } from '@/utils/recordDisplay'
 
 const authStore = useAuthStore()
+const permission = usePermissionStore()
+const router = useRouter()
+const overview = ref<StatisticsOverview>()
+const loading = ref(false)
+const error = ref('')
+const entries = computed(() =>
+  (authStore.session?.platformAdmin
+    ? [
+        { path: '/admin/enterprises', label: '组织管理', permission: 'admin:enterprise:view' },
+        { path: '/admin/addresses', label: '行政区域', permission: 'admin:address:view' },
+      ]
+    : [
+        { path: '/admin/users', label: '人员管理', permission: 'admin:user:view' },
+        { path: '/admin/vehicles', label: '车辆管理', permission: 'admin:vehicle:view' },
+        { path: '/admin/courses', label: '课程管理', permission: 'admin:course:view' },
+        { path: '/admin/plans', label: '培训计划', permission: 'admin:plan:view' },
+        { path: '/admin/exam', label: '考试管理', permission: 'admin:exam:view' },
+        {
+          path: '/admin/statistics',
+          label: '培训统计与学时监管',
+          permission: 'admin:statistics:view',
+        },
+      ]
+  ).filter((entry) => permission.has(entry.permission)),
+)
+
+/** 企业统计只向具有统计权限的企业账号加载。 */
+async function loadOverview() {
+  if (authStore.session?.platformAdmin || !permission.has('admin:statistics:view')) return
+  loading.value = true
+  error.value = ''
+  try {
+    overview.value = await getStatisticsOverview()
+  } catch (reason) {
+    error.value = reason instanceof Error ? reason.message : '培训概览加载失败'
+  } finally {
+    loading.value = false
+  }
+}
+/** 打开已授权的业务入口。 */
+function openEntry(path: string) {
+  void router.push(path)
+}
+onMounted(loadOverview)
 </script>
 
 <template>
-  <section>
+  <section v-loading="loading">
     <header class="page-header">
       <div>
         <p>OVERVIEW</p>
@@ -29,10 +78,58 @@ const authStore = useAuthStore()
         }}</strong>
       </article>
     </div>
+    <el-alert v-if="error" :title="error" type="error" show-icon :closable="false" />
+    <div v-if="overview" class="overview-grid">
+      <article>
+        <span>培训计划</span><strong>{{ overview.planCount }}</strong>
+      </article>
+      <article>
+        <span>参训人次 / 已完成人次</span
+        ><strong>{{ overview.participantCount }} / {{ overview.completedCount }}</strong>
+      </article>
+      <article>
+        <span>有效学时</span
+        ><strong class="duration">{{ recordDuration(overview.effectiveDurationMillis) }}</strong>
+      </article>
+      <article class="completion">
+        <span>培训完成率</span
+        ><el-progress :percentage="overview.completionRate" :stroke-width="12" />
+      </article>
+    </div>
+    <section class="entry-panel">
+      <h2>业务入口</h2>
+      <div class="entries">
+        <el-button v-for="entry in entries" :key="entry.path" @click="openEntry(entry.path)">{{
+          entry.label
+        }}</el-button>
+        <el-empty v-if="!entries.length" description="当前账号暂无其他管理权限" :image-size="55" />
+      </div>
+    </section>
   </section>
 </template>
 
 <style scoped>
+.entry-panel {
+  margin-top: 28px;
+  padding: 24px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 14px;
+}
+.entries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.entries .el-button {
+  margin: 0;
+}
+.completion {
+  grid-column: 1 / -1;
+}
+article strong.duration {
+  font-size: 18px;
+}
 .page-header p {
   margin: 0 0 8px;
   color: #155eef;

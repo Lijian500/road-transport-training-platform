@@ -28,7 +28,8 @@ import java.util.stream.Collectors;
 
 /** WebSocket握手的同源、Token、登录版本和学习权限校验。 */
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
+// 在Spring Security包装exchange之后设置握手身份，避免主体被空安全上下文覆盖。
+@Order(Ordered.LOWEST_PRECEDENCE)
 public class RealtimeAuthenticationWebFilter implements WebFilter {
 
     private static final String LEARNING_PATH = "/ws/learning";

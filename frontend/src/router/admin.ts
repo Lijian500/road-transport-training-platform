@@ -66,6 +66,17 @@ const adminRoutes: RouteRecordRaw[] = [
         },
       },
       {
+        path: 'vehicles',
+        name: 'admin-vehicles',
+        component: () => import('@/views/admin/VehicleView.vue'),
+        meta: {
+          title: '车辆管理',
+          requiresAuth: true,
+          workspace: 'admin',
+          permission: 'admin:vehicle:view',
+        },
+      },
+      {
         path: 'courses',
         name: 'admin-courses',
         component: () => import('@/views/admin/CourseView.vue'),
