@@ -1,0 +1,437 @@
+{
+  "recordedDate": "2026-09-09",
+  "timezone": "Asia/Shanghai",
+  "repository": "https://github.com/Lijian500/road-transport-training-platform",
+  "branch": "codex/local-demo-media-acceptance",
+  "backend": {
+    "commit": "fcbb50688adcf1ee1130e6c27af977f69f645d1f",
+    "runUrl": "https://github.com/Lijian500/road-transport-training-platform/actions/runs/34250552187",
+    "jobId": 102143589406,
+    "conclusion": "success",
+    "tests": 210,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2,
+    "passed": 208,
+    "suites": [
+      {
+        "name": "me.lj.train.common.security.jwt.JwtTokenServiceTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.common.security.support.PasswordPolicyTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.common.security.support.PermissionMatcherTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.gateway.filter.AuthenticationGlobalFilterTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.webapi.security.TrustedUserContextFilterTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.realtime.connection.LearningConnectionRegistryTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.realtime.config.RealtimeConfigurationTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.realtime.rpc.LearningRpcClientTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.realtime.security.RealtimeAuthorizationServiceTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.realtime.security.RealtimeSecurityChainTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.realtime.security.RealtimeAuthenticationWebFilterTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.realtime.service.FaceCheckRealtimeConsumerTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.mapper.AdminMapperIntegrationTest",
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.mapper.MapperXmlContractTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.support.AuthorizationCacheServiceTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.config.CoursePermissionCacheInitializerTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.config.BootstrapInitializerTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.config.PlanPermissionCacheInitializerTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.service.AdminServiceSupportTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.service.RolePermissionServiceImplTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.service.UserServiceImplTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.service.TrainingParticipantServiceImplTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.service.VehicleServiceImplTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.service.FaceReferenceServiceImplTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.service.AdminAuthServiceImplTest",
+        "tests": 7,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.service.OrgServiceImplTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.storage.StorageCleanupSchedulerTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.storage.AliyunOssIntegrationTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1
+      },
+      {
+        "name": "me.lj.train.training.storage.UploadFileValidatorTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.mapper.TrainingMapperIntegrationTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.PrivateImageStorageServiceImplTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.CourseServiceImplTest",
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.CourseStorageServiceImplTest",
+        "tests": 11,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.LearningTaskProjectionConsumerTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.ExamQuestionServiceImplTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.TrainingCompletionServiceTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.ExamServiceImplTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.ExamPaperServiceImplTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.TrainingStatisticsServiceImplTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.TrainingRecordServiceImplTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.PlanServiceImplTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.LearningAccessServiceImplTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.training.service.StudentPlanServiceImplTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.face.adapter.opencv.OpenCvFaceVerifierConfigTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.face.adapter.opencv.OpenCvFaceVerifierIntegrationTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1
+      },
+      {
+        "name": "me.lj.train.face.adapter.config.FaceAdapterAutoConfigurationTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.face.adapter.model.FaceResultTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.learning.mapper.LearningMapperIntegrationTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.learning.service.FaceCheckServiceImplTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.learning.service.LearningOutboxRabbitIntegrationTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.learning.service.LearningOutboxPublisherTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.learning.service.LearningSessionTimeoutServiceTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.learning.service.LearningTimeCalculatorTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.learning.service.LearningStatisticsServiceImplTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "me.lj.train.learning.service.LearningRecordServiceImplTest",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  "frontend": {
+    "commit": "7ca2f9413edda1f6c7159c6f7492d1d152a8eba9",
+    "runUrl": "https://github.com/Lijian500/road-transport-training-platform/actions/runs/34249525727",
+    "jobId": 102140076629,
+    "conclusion": "success",
+    "unitTestsPassed": 55,
+    "unitFilesPassed": 14,
+    "configurationTestsPassed": 4,
+    "uiTestsPassed": 5,
+    "dependencySourceVerification": "385 entries passed; versions and integrity unchanged"
+  },
+  "scope": "按上述GitHub Actions作业日志逐测试类提取；前后端提交不同，后续提交只修改数据库测试，前端源码与工作流未改变。无真实OSS、照片或摄像头验收结果。"
+}

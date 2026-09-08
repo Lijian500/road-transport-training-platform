@@ -1,6 +1,6 @@
 # 论文与演示证据索引
 
-本表记录证据来自哪里及能支持什么结论。最新状态以[阶段报告](../test/media-acceptance-2026-09-08.md)为准；操作见[本机启动](../deployment/local-demo.md)和[真实媒体验收](../test/media-acceptance.md)。路径相对仓库根目录，tmp和output为本机忽略目录。
+本表记录证据来自哪里及能支持什么结论。最新状态以[阶段报告](../test/acceptance-2026-09-09.md)为准；操作见[本机启动](../deployment/local-demo.md)和[真实媒体验收](../test/media-acceptance.md)。路径相对仓库根目录，tmp和output为本机忽略目录。
 
 | 论文论点或演示内容 | 证据入口 | 当前边界 |
 | --- | --- | --- |
@@ -16,7 +16,7 @@
 | 断网、多标签、乱序和跨企业记录访问 | media恢复测试结果 | 测试入口已实现，未执行 |
 | 1/5/10学员学习60秒 | tmp/experiments/study-人数-时间戳.json | 尚无数值；记录学时差额、解码帧数、P50/P95及状态可见时间 |
 | MySQL持久化与服务重启 | 手册消息恢复步骤、事件ID关联的Outbox与消费日志 | 未执行；只读采集，不直接改完成状态 |
-| 11项数据库条件测试 | GitHub Actions后端日志及Surefire报告 | CI门禁已增加，当前未执行 |
+| 11项数据库条件测试 | [Backend CI](https://github.com/Lijian500/road-transport-training-platform/actions/runs/34250552187)、docs/test/ci-2026-09-09.json | 管理8、培训2、学习1项全部通过，门禁确认0跳过 |
 | 自然到期计划历史档案 | 学员与管理档案截图、结束时间及任务ID | 待真实完成及自然到期，禁止改库制造历史成绩 |
 
 ## 每次实验的记录字段
