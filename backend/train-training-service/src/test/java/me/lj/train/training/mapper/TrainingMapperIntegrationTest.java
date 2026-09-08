@@ -242,13 +242,14 @@ class TrainingMapperIntegrationTest {
         return session;
     }
 
-    /** 仅装配Flyway、数据源及MyBatis-Flex。 */
+    /** 装配Flyway、数据源、MyBatis-Flex及其事务桥接，与业务服务保持一致。 */
     @SpringBootConfiguration(proxyBeanMethods = false)
     @ImportAutoConfiguration({
             DataSourceAutoConfiguration.class,
             DataSourceTransactionManagerAutoConfiguration.class,
             JdbcTemplateAutoConfiguration.class,
             FlywayAutoConfiguration.class,
+            com.mybatisflex.spring.boot.FlexTransactionAutoConfiguration.class,
             com.mybatisflex.spring.boot.MybatisFlexAutoConfiguration.class
     })
     @MapperScan("me.lj.train.training.mapper")

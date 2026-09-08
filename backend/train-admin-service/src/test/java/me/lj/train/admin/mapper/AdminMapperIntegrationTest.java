@@ -240,7 +240,7 @@ class AdminMapperIntegrationTest {
     @Test
     void shouldMigrateCompleteCoursePermissionCatalog() {
         List<PermissionEntity> permissions = permissionMapper.selectListByQuery(QueryWrapper.create()
-                .where(PERMISSION.PERMISSION_CODE.likeRight("admin:course"))
+                .where(PERMISSION.PERMISSION_CODE.likeRaw("admin:course%"))
                 .orderBy(PERMISSION.SORT_ORDER.asc()));
 
         assertThat(permissions)
@@ -260,7 +260,7 @@ class AdminMapperIntegrationTest {
     void shouldMigratePlanAndStudentTaskPermissionCatalog() {
         List<PermissionEntity> planPermissions = permissionMapper.selectListByQuery(
                 QueryWrapper.create()
-                        .where(PERMISSION.PERMISSION_CODE.likeRight("admin:plan"))
+                        .where(PERMISSION.PERMISSION_CODE.likeRaw("admin:plan%"))
                         .orderBy(PERMISSION.SORT_ORDER.asc()));
         PermissionEntity studentTask = permissionMapper.selectOneByQuery(QueryWrapper.create()
                 .where(PERMISSION.PERMISSION_CODE.eq("student:plan:view")));
@@ -292,7 +292,7 @@ class AdminMapperIntegrationTest {
                 String.class);
         List<PermissionEntity> permissions = permissionMapper.selectListByQuery(
                 QueryWrapper.create()
-                        .where(PERMISSION.PERMISSION_CODE.likeRight("admin:face-check"))
+                        .where(PERMISSION.PERMISSION_CODE.likeRaw("admin:face-check%"))
                         .orderBy(PERMISSION.SORT_ORDER.asc()));
         List<String> stagePermissions = jdbcTemplate.queryForList(
                 "SELECT permission_code FROM sys_permission WHERE permission_code IN "
@@ -412,7 +412,7 @@ class AdminMapperIntegrationTest {
     }
 
     /**
-     * Mapper 测试最小上下文，只导入数据库相关自动配置。
+     * Mapper 测试最小上下文，同时装配Flex事务桥接以验证真实回滚。
      */
     @SpringBootConfiguration(proxyBeanMethods = false)
     @ImportAutoConfiguration({
@@ -420,6 +420,7 @@ class AdminMapperIntegrationTest {
             DataSourceTransactionManagerAutoConfiguration.class,
             JdbcTemplateAutoConfiguration.class,
             FlywayAutoConfiguration.class,
+            com.mybatisflex.spring.boot.FlexTransactionAutoConfiguration.class,
             com.mybatisflex.spring.boot.MybatisFlexAutoConfiguration.class
     })
     @MapperScan("me.lj.train.admin.mapper")

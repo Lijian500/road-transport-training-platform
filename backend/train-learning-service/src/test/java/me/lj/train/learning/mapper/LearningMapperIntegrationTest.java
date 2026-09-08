@@ -90,13 +90,14 @@ class LearningMapperIntegrationTest {
         assertThat(foreignKeyCount).isZero();
     }
 
-    /** Mapper 测试仅装配数据库相关组件，避免连接 Nacos、Dubbo 和 RabbitMQ。 */
+    /** 装配数据库与Flex事务桥接，避免连接 Nacos、Dubbo 和 RabbitMQ。 */
     @SpringBootConfiguration(proxyBeanMethods = false)
     @ImportAutoConfiguration({
             DataSourceAutoConfiguration.class,
             DataSourceTransactionManagerAutoConfiguration.class,
             JdbcTemplateAutoConfiguration.class,
             FlywayAutoConfiguration.class,
+            com.mybatisflex.spring.boot.FlexTransactionAutoConfiguration.class,
             com.mybatisflex.spring.boot.MybatisFlexAutoConfiguration.class
     })
     @MapperScan("me.lj.train.learning.mapper")
