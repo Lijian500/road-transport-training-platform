@@ -231,7 +231,8 @@ function canvasToBlob(canvas: HTMLCanvasElement) {
 /** 返回抽验终态提示标题。 */
 function resultTitle(faceCheck: FaceCheckTask) {
   if (faceCheck.status === 'PASSED') return '人脸抽验已通过'
-  if (faceCheck.status === 'TIMED_OUT') return '人脸抽验已超时'
+  if (faceCheck.status === 'TIMED_OUT')
+    return '未在规定时间完成抽验，学习已强制停止，请重新签到学习'
   return '人脸抽验未通过，学习会话已终止'
 }
 
@@ -240,20 +241,22 @@ function resultMessage(faceCheck: FaceCheckTask) {
   const code = faceCheck.failureReason || faceCheck.result
   if (!code) return undefined
   return (
-    {
-      MATCH: '当前照片与登记照匹配',
-      MATCHED: '当前照片与登记照匹配',
-      NOT_MATCH: '当前照片与登记照不匹配，请正对摄像头重拍',
-      REFERENCE_NO_FACE: '登记照中未检测到人脸，请联系管理员重新登记',
-      REFERENCE_MULTIPLE_FACES: '登记照包含多张人脸，请联系管理员重新登记',
-      CANDIDATE_NO_FACE: '当前照片中未检测到人脸，请正对摄像头重拍',
-      CANDIDATE_MULTIPLE_FACES: '当前照片包含多张人脸，请确保画面中只有本人',
-      INVALID_IMAGE: '照片无法识别，请重新拍摄',
-      DEADLINE_EXCEEDED: '未在规定时间内完成人脸抽验',
-      SESSION_TERMINATED: '学习会话已终止',
-      TIMEOUT: '未在规定时间内完成人脸抽验',
-    } as Record<string, string>
-  )[code] || code
+    (
+      {
+        MATCH: '当前照片与登记照匹配',
+        MATCHED: '当前照片与登记照匹配',
+        NOT_MATCH: '当前照片与登记照不匹配，请正对摄像头重拍',
+        REFERENCE_NO_FACE: '登记照中未检测到人脸，请联系管理员重新登记',
+        REFERENCE_MULTIPLE_FACES: '登记照包含多张人脸，请联系管理员重新登记',
+        CANDIDATE_NO_FACE: '当前照片中未检测到人脸，请正对摄像头重拍',
+        CANDIDATE_MULTIPLE_FACES: '当前照片包含多张人脸，请确保画面中只有本人',
+        INVALID_IMAGE: '照片无法识别，请重新拍摄',
+        DEADLINE_EXCEEDED: '未在规定时间内完成人脸抽验',
+        SESSION_TERMINATED: '学习会话已终止',
+        TIMEOUT: '未在规定时间内完成人脸抽验',
+      } as Record<string, string>
+    )[code] || code
+  )
 }
 
 onBeforeUnmount(() => {
@@ -319,7 +322,7 @@ onBeforeUnmount(() => {
         v-else
         :icon="faceCheck.status === 'PASSED' ? 'success' : 'error'"
         :title="resultTitle(faceCheck)"
-        :sub-title="resultMessage(faceCheck)"
+        :sub-title="faceCheck.status === 'TIMED_OUT' ? undefined : resultMessage(faceCheck)"
       />
     </template>
 

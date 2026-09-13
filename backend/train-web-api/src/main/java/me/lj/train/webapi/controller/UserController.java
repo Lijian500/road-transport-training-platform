@@ -49,6 +49,13 @@ public class UserController {
                 new UserQuery(pageNumber, pageSize, keyword, orgId, status))));
     }
 
+    /** 查看人员详情。 */
+    @GetMapping("/{id}")
+    @RequirePermission("admin:user:view")
+    public Result<UserView> detail(@PathVariable Long id) {
+        return Result.ok(RpcResultSupport.unwrap(userService.detail(id)));
+    }
+
     @PostMapping
     @RequirePermission("admin:user:create")
     public Result<UserView> create(@Valid @RequestBody CreateUserRequest request) {
@@ -58,14 +65,14 @@ public class UserController {
                 request.phone(),
                 request.orgId(),
                 request.temporaryPassword(),
-                request.roleIds()))));
+                request.roleIds(), request.vehicleId()))));
     }
 
     @PutMapping("/{id}")
     @RequirePermission("admin:user:update")
     public Result<UserView> update(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest request) {
         return Result.ok(RpcResultSupport.unwrap(userService.update(new UpdateUserCommand(
-                id, request.displayName(), request.phone(), request.orgId()))));
+                id, request.displayName(), request.phone(), request.orgId(), request.vehicleId()))));
     }
 
     @PatchMapping("/{id}/status")
@@ -100,13 +107,13 @@ public class UserController {
             String phone,
             Long orgId,
             @NotBlank(message = "临时密码不能为空") String temporaryPassword,
-            List<Long> roleIds) {
+            List<Long> roleIds, Long vehicleId) {
     }
 
     public record UpdateUserRequest(
             @NotBlank(message = "姓名不能为空") String displayName,
             String phone,
-            Long orgId) {
+            Long orgId, Long vehicleId) {
     }
 
     public record ResetPasswordRequest(

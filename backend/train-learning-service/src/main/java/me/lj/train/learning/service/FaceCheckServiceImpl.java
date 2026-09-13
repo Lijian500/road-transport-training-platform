@@ -100,6 +100,61 @@ public class FaceCheckServiceImpl extends LearningServiceSupport implements Face
     }
 
     @Override
+    public Result<Boolean> attendanceRequired(Long sessionId) {
+        return execute(() -> {
+            LoginUser user = LearningGuard.requireStudent();
+            return requireOwnedSession(sessionId, user.getEnterpriseId(), user.getUserId(), false)
+                    .isFaceCheckEnabled();
+        });
+    }
+
+    @Override
+    public Result<?> verifyAttendance(Long sessionId, String action, String clientInstanceId, byte[] imageBytes) {
+        return executeTransactional(() -> {
+            LoginUser user = LearningGuard.requireStudent();
+            StudySessionEntity session = requireOwnedSession(
+                    sessionId, user.getEnterpriseId(), user.getUserId(), true);
+            boolean validState = "SIGN_IN".equals(action) ? "CREATED".equals(session.getStatus())
+                    : "SIGN_OUT".equals(action) && java.util.Set.of("SIGNED_IN", "PAUSED", "COMPLETED")
+                    .contains(session.getStatus());
+            if (!validState || !session.getClientInstanceId().equals(clientInstanceId)) {
+                throw new BusinessException(AppErrorCode.FACE_CHECK_STATE_INVALID);
+            }
+            if (!validImage(imageBytes)) {
+                throw new BusinessException(AppErrorCode.PARAM_INVALID, "请提交有效的人脸照片");
+            }
+            PrivateImageContentView reference = referenceImageClient.read(user.getUserId());
+            Result<FaceComparisonResult> result = requireVerifier().compare(reference.content(), imageBytes);
+            if (result == null || !result.isSuccess() || result.getData() == null) {
+                throw new BusinessException(AppErrorCode.FACE_CHECK_UNAVAILABLE);
+            }
+            if (!result.getData().samePerson()) {
+                throw new BusinessException(AppErrorCode.FACE_CHECK_STATE_INVALID, "人脸验证未通过，请本人重新拍照");
+            }
+            session.setAttendancePhotoObjectId(referenceImageClient.saveLearningPhoto(imageBytes));
+            session.setAttendanceAction(action);
+            session.setAttendanceSequence(session.getLastSequence() + 1L);
+            session.setAttendanceVerifiedAt(now());
+            sessionMapper.updateByCondition(session, STUDY_SESSION.ID.eq(session.getId()));
+            return true;
+        });
+    }
+
+    /** 在事件处理事务中强制核对当次人脸凭据，成功事件推进序号后凭据自动失效。 */
+    static void requireAttendance(StudySessionEntity session, String action, long sequence, LocalDateTime now) {
+        if (!session.isFaceCheckEnabled()) return;
+        if (!action.equals(session.getAttendanceAction())
+                || !Long.valueOf(sequence).equals(session.getAttendanceSequence())
+                || session.getAttendanceVerifiedAt() == null
+                || session.getAttendanceVerifiedAt().isBefore(now.minusSeconds(60))) {
+            throw new BusinessException(AppErrorCode.FACE_CHECK_STATE_INVALID, "请先完成本次签到或签退的人脸验证");
+        }
+        // 只有对应事件通过凭据校验后，才将照片归入正式签到、签退档案。
+        if ("SIGN_IN".equals(action)) session.setSignInPhotoObjectId(session.getAttendancePhotoObjectId());
+        if ("SIGN_OUT".equals(action)) session.setSignOutPhotoObjectId(session.getAttendancePhotoObjectId());
+    }
+
+    @Override
     public Result<FaceReferenceValidationView> validateReference(byte[] imageBytes) {
         if (!validImage(imageBytes)) {
             return Result.failed(AppErrorCode.PARAM_INVALID, "登记照内容不正确");
@@ -213,6 +268,15 @@ public class FaceCheckServiceImpl extends LearningServiceSupport implements Face
     /** 返回会话当前待处理抽验，供STATE_SYNC恢复弹窗。 */
     FaceCheckView currentPending(Long sessionId) {
         FaceCheckTaskEntity task = currentPendingEntity(sessionId, false);
+        return task == null ? null : toView(task);
+    }
+
+    /** 恢复导致会话终止的抽验结果，避免实时通知丢失后由前端猜测原因。 */
+    FaceCheckView currentTerminal(Long sessionId) {
+        FaceCheckTaskEntity task = taskMapper.selectOneByQuery(QueryWrapper.create()
+                .where(FACE_CHECK_TASK.SESSION_ID.eq(sessionId))
+                .and(FACE_CHECK_TASK.STATUS.in(FAILED, TIMED_OUT))
+                .orderBy(FACE_CHECK_TASK.ID.desc()).limit(1));
         return task == null ? null : toView(task);
     }
 
@@ -426,6 +490,7 @@ public class FaceCheckServiceImpl extends LearningServiceSupport implements Face
         log.setFailureReason(task.getFailureReason());
         log.setSimilarity(task.getSimilarity());
         log.setElapsedMs(elapsedMillis);
+        log.setPhotoObjectId(referenceImageClient.saveLearningPhoto(command.imageBytes()));
         log.setImageSha256(sha256(command.imageBytes()));
         log.setResponsePayload(toJson(view));
         log.setCreatedAt(now());

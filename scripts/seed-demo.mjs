@@ -90,7 +90,7 @@ async function main() {
     await loginDemo(`${state.prefix}_student_${suffix}`)
     if (!state[`vehicle_${suffix}`]) {
       state[`vehicle_${suffix}`] = await admin.call('/admin/vehicles', 'POST', {
-        plateNumber: '演示A0001', vehicleType: '演示货车', orgId: state[`org_${suffix}`].id,
+        plateNumber: '川A00001', vehicleType: '演示货车', orgId: state[`org_${suffix}`].id,
         remark: '虚构演示数据，不对应实际车辆',
       })
       save()

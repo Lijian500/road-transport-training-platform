@@ -4,6 +4,8 @@ import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 
 import {
+  attendanceFaceRequired,
+  verifyAttendanceFace,
   getActiveLearningSession,
   getLearningCourse,
   getLearningPlaybackUrl,
@@ -18,6 +20,7 @@ import {
   type LearningSession,
 } from '@/api/learning'
 import { ApiError } from '@/api/http'
+import CameraCapture from '@/components/CameraCapture/CameraCapture.vue'
 import FaceCheckDialog from '@/components/FaceCheckDialog/FaceCheckDialog.vue'
 import { LearningRealtimeError, useLearningRealtime } from '@/composables/useLearningRealtime'
 import {
@@ -35,6 +38,7 @@ const clientInstanceId = getOrCreateClientInstanceId()
 const loading = ref(false)
 const eventBusy = ref(false)
 const playbackLoading = ref(false)
+const switchingCourseware = ref(false)
 const course = ref<CourseProgress>()
 const session = ref<LearningSession>()
 const conflictSession = ref<LearningSession | null>(null)
@@ -43,13 +47,48 @@ const videoUrl = ref('')
 const video = ref<HTMLVideoElement>()
 const currentFaceCheck = ref<FaceCheckTask | null>(null)
 
+const attendanceAction = ref<'SIGN_IN' | 'SIGN_OUT' | null>(null)
+const attendanceBusy = ref(false)
+let autoPlayNext = false
+
+/** 仅在服务端要求验证时打开现场拍照弹窗。 */
+async function requestAttendance(action: 'SIGN_IN' | 'SIGN_OUT') {
+  autoPlayNext = false
+  if (!session.value || attendanceBusy.value) return
+  attendanceBusy.value = true
+  try {
+    if (session.value.status === 'STUDYING') await pauseCurrentVideo()
+    if (await attendanceFaceRequired(session.value.id)) attendanceAction.value = action
+    else if (action === 'SIGN_IN') await signIn()
+    else await signOut()
+  } catch (error) { showError(error, '签到签退准备失败') }
+  finally { attendanceBusy.value = false }
+}
+
+/** 人脸验证成功后立即提交对应事件，失败时保持弹窗供重新拍照。 */
+async function submitAttendance(photo: File) {
+  if (!session.value || !attendanceAction.value || attendanceBusy.value) return
+  attendanceBusy.value = true
+  try {
+    const action = attendanceAction.value
+    await verifyAttendanceFace(session.value.id, action, clientInstanceId, photo)
+    if (action === 'SIGN_IN') await signIn()
+    else await signOut()
+    attendanceAction.value = null
+  } catch (error) { showError(error, '人脸验证失败') }
+  finally { attendanceBusy.value = false }
+}
+
 let progressTimer: number | undefined
+let faceCheckRefreshTimer: number | undefined
 let eventChain: Promise<unknown> = Promise.resolve()
 let suppressPause = false
 let approvedPlay = false
 let handlingEnd = false
 let restoringPosition = false
 let playbackRetries = 0
+let playbackRequestVersion = 0
+let disposed = false
 
 const learningRealtime = useLearningRealtime({
   clientInstanceId,
@@ -135,11 +174,21 @@ async function signIn() {
 
 /** 选择已解锁课件，学习中切换前先安全暂停。 */
 async function selectCourseware(target: CoursewareProgress) {
-  if (!course.value || !isCoursewareUnlocked(course.value.coursewares, target)) return
+  if (
+    !course.value ||
+    switchingCourseware.value ||
+    playbackLoading.value ||
+    !isCoursewareUnlocked(course.value.coursewares, target)
+  )
+    return
+  switchingCourseware.value = true
+  stopProgressTimer()
+  approvedPlay = false
   try {
     if (session.value?.status === 'STUDYING') {
       await pauseCurrentVideo()
     }
+    pausePlayerSilently()
     selectedCoursewareId.value = target.coursewareSnapshotId
     videoUrl.value = ''
     playbackRetries = 0
@@ -147,25 +196,28 @@ async function selectCourseware(target: CoursewareProgress) {
       await loadPlaybackUrl()
     }
   } catch (error) {
+    autoPlayNext = false
     showError(error, '课件切换失败')
+  } finally {
+    switchingCourseware.value = false
   }
 }
 
 /** 获取当前课件短期OSS地址，地址刷新后恢复服务端确认位置。 */
 async function loadPlaybackUrl() {
   if (!session.value || !selectedCourseware.value) return
+  const requestVersion = ++playbackRequestVersion
+  const coursewareId = selectedCourseware.value.coursewareSnapshotId
   playbackLoading.value = true
   try {
-    const signed = await getLearningPlaybackUrl(
-      session.value.id,
-      selectedCourseware.value.coursewareSnapshotId,
-      clientInstanceId,
-    )
+    const signed = await getLearningPlaybackUrl(session.value.id, coursewareId, clientInstanceId)
+    if (requestVersion !== playbackRequestVersion || coursewareId !== selectedCoursewareId.value)
+      return
     videoUrl.value = signed.url
     await nextTick()
     if (video.value) video.value.load()
   } finally {
-    playbackLoading.value = false
+    if (requestVersion === playbackRequestVersion) playbackLoading.value = false
   }
 }
 
@@ -177,6 +229,12 @@ function onLoadedMetadata() {
   video.value.currentTime = selectedCourseware.value.confirmedPositionMillis / 1000
   window.setTimeout(() => {
     restoringPosition = false
+    if (autoPlayNext) {
+      autoPlayNext = false
+      if (!disposed && realtimeReady.value && session.value?.status === 'PAUSED') {
+        void video.value?.play().catch(() => ElMessage.info('浏览器未允许自动播放，请点击播放继续学习'))
+      }
+    }
   })
 }
 
@@ -193,6 +251,10 @@ function pausePlayerSilently() {
 
 /** 在浏览器真正播放前先获得服务端PLAY状态确认。 */
 async function onVideoPlay() {
+  if (switchingCourseware.value || playbackLoading.value) {
+    pausePlayerSilently()
+    return
+  }
   if (session.value?.status === 'FACE_PENDING') {
     pausePlayerSilently()
     ElMessage.warning('请先完成人脸抽验，再手动继续播放')
@@ -231,7 +293,14 @@ async function onVideoPause() {
     suppressPause = false
     return
   }
-  if (video.value?.ended || handlingEnd || session.value?.status !== 'STUDYING') return
+  if (
+    switchingCourseware.value ||
+    playbackLoading.value ||
+    video.value?.ended ||
+    handlingEnd ||
+    session.value?.status !== 'STUDYING'
+  )
+    return
   try {
     await pauseCurrentVideo()
   } catch (error) {
@@ -281,7 +350,10 @@ async function onVideoEnded() {
           course.value &&
           isCoursewareUnlocked(course.value.coursewares, value),
       )
-      if (next) await selectCourseware(next)
+      if (next && realtimeReady.value && session.value?.status === 'PAUSED') {
+        autoPlayNext = true
+        await selectCourseware(next)
+      }
     }
   } catch (error) {
     showError(error, '课件完成状态同步失败')
@@ -291,8 +363,11 @@ async function onVideoEnded() {
 }
 
 /** OSS地址过期或媒体加载失败时重新签名并恢复确认位置。 */
-async function onVideoError() {
-  if (!videoUrl.value || playbackRetries >= 2) {
+async function onVideoError(event: Event) {
+  if (event.target !== video.value) return
+  // 切换时的空地址、旧播放器事件不属于新课件的加载失败。
+  if (!videoUrl.value || switchingCourseware.value || playbackLoading.value) return
+  if (playbackRetries >= 2) {
     ElMessage.error('视频加载失败，请稍后重新进入课程')
     return
   }
@@ -310,7 +385,7 @@ function onSeeking() {
   if (!video.value || !course.value || !session.value || restoringPosition) return
   if (!course.value.allowSeek) {
     restoringPosition = true
-    video.value.currentTime = session.value.confirmedPositionMillis / 1000
+    video.value.currentTime = (selectedCourseware.value?.confirmedPositionMillis || 0) / 1000
     window.setTimeout(() => {
       restoringPosition = false
     })
@@ -424,7 +499,7 @@ function applySessionState(state: LearningSession) {
 function restoreFaceCheck(state: LearningSession) {
   if (state.currentFaceCheck) {
     currentFaceCheck.value = state.currentFaceCheck
-    if (state.status === 'FACE_PENDING') freezeForFaceCheck()
+    if (state.status === 'FACE_PENDING' || state.status === 'TERMINATED') freezeForFaceCheck()
     return
   }
   if (state.status !== 'FACE_PENDING' && currentFaceCheck.value?.status === 'PENDING') {
@@ -452,6 +527,7 @@ function handleFaceCheckResult(faceCheck: FaceCheckTask) {
 
 /** 停止所有学习计时入口并静默暂停播放器。 */
 function freezeForFaceCheck() {
+  autoPlayNext = false
   stopProgressTimer()
   approvedPlay = false
   pausePlayerSilently()
@@ -461,7 +537,8 @@ function freezeForFaceCheck() {
 async function refreshSessionAfterFaceCheck() {
   if (!session.value) return
   try {
-    applySessionState(await getLearningSession(session.value.id))
+    const state = await getLearningSession(session.value.id)
+    if (!disposed) applySessionState(state)
   } catch (error) {
     showError(error, '抽验后的学习状态同步失败')
   }
@@ -469,23 +546,23 @@ async function refreshSessionAfterFaceCheck() {
 
 /** 倒计时结束后刷新服务端终态，不在浏览器本地擅自判定。 */
 async function handleFaceCheckExpired() {
+  window.clearTimeout(faceCheckRefreshTimer)
   freezeForFaceCheck()
   await refreshSessionAfterFaceCheck()
-  if (session.value?.status === 'TERMINATED' && currentFaceCheck.value?.status === 'PENDING') {
-    currentFaceCheck.value = {
-      ...currentFaceCheck.value,
-      status: 'TIMED_OUT',
-      result: 'TIMEOUT',
-      failureReason: '未在规定时间内完成人脸抽验',
-    }
+  // 服务端超时扫描可能稍晚于本地倒计时，持续等待最终状态，避免弹窗停在零秒。
+  if (!disposed && currentFaceCheck.value?.status === 'PENDING') {
+    faceCheckRefreshTimer = window.setTimeout(() => void handleFaceCheckExpired(), 1000)
   }
 }
 
 /** 关闭抽验终态提示；通过后保持PAUSED并等待学员手动继续。 */
 function acknowledgeFaceCheck() {
+  window.clearTimeout(faceCheckRefreshTimer)
   const passed = currentFaceCheck.value?.status === 'PASSED'
+  const timedOut = currentFaceCheck.value?.status === 'TIMED_OUT'
   currentFaceCheck.value = null
   if (passed) ElMessage.success('人脸抽验已通过，请手动继续播放')
+  if (timedOut) void router.replace(`/student/plans/${planId}`)
 }
 
 /** 将服务端确认结果同步到会话、课程和当前课件视图。 */
@@ -565,6 +642,7 @@ function stopProgressTimer() {
 
 /** 页面隐藏时立即暂停，返回页面后保持暂停等待手动恢复。 */
 function onVisibilityChange() {
+  if (document.hidden) autoPlayNext = false
   if (!document.hidden || session.value?.status !== 'STUDYING') return
   stopProgressTimer()
   if (!realtimeReady.value) {
@@ -578,12 +656,14 @@ function onVisibilityChange() {
 
 /** 连接中断后立即停止计时和播放，等待同步完成后手动恢复。 */
 function handleRealtimeDisconnected() {
+  autoPlayNext = false
   stopProgressTimer()
   pausePlayerSilently()
 }
 
 /** 连接被同浏览器其他页面接管后停止本页学习。 */
 function handleRealtimeReplaced() {
+  autoPlayNext = false
   stopProgressTimer()
   pausePlayerSilently()
   ElMessage.warning('学习连接已被其他页面接管，本页面已停止计时')
@@ -631,12 +711,20 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  disposed = true
+  playbackRequestVersion += 1
+  window.clearTimeout(faceCheckRefreshTimer)
   stopProgressTimer()
   document.removeEventListener('visibilitychange', onVisibilityChange)
 })
 </script>
 
 <template>
+  <el-dialog :model-value="attendanceAction !== null" :title="attendanceAction === 'SIGN_IN' ? '签到人脸验证' : '签退人脸验证'" width="520px" :close-on-click-modal="false" :close-on-press-escape="!attendanceBusy" :show-close="!attendanceBusy" @close="attendanceAction = null">
+    <p>请本人使用摄像头拍照，验证通过后完成{{ attendanceAction === 'SIGN_IN' ? '签到' : '签退' }}。</p>
+    <CameraCapture v-if="attendanceAction && !attendanceBusy" @capture="submitAttendance" />
+    <p v-if="attendanceBusy">正在验证，请稍候……</p>
+  </el-dialog>
   <section v-loading="loading" class="study-page">
     <header class="study-header">
       <div>
@@ -725,6 +813,8 @@ onBeforeUnmount(() => {
             class="courseware-item"
             :class="{ active: selectedCoursewareId === item.coursewareSnapshotId }"
             :disabled="
+              switchingCourseware ||
+              playbackLoading ||
               !isCoursewareUnlocked(course.coursewares, item) ||
               session.status === 'FACE_PENDING' ||
               (session.status === 'STUDYING' && !realtimeReady)
@@ -761,7 +851,7 @@ onBeforeUnmount(() => {
               size="large"
               :loading="eventBusy"
               :disabled="!realtimeReady"
-              @click="signIn"
+              @click="requestAttendance('SIGN_IN')"
             >
               学习签到
             </el-button>
@@ -769,6 +859,8 @@ onBeforeUnmount(() => {
 
           <div v-else v-loading="playbackLoading" class="video-wrapper">
             <video
+              v-if="videoUrl"
+              :key="selectedCoursewareId"
               ref="video"
               :src="videoUrl"
               :class="{ 'connection-disabled': !realtimeReady }"
@@ -808,7 +900,7 @@ onBeforeUnmount(() => {
               v-if="!['CREATED', 'SIGNED_OUT', 'TERMINATED'].includes(session.status)"
               :loading="eventBusy"
               :disabled="!realtimeReady"
-              @click="signOut"
+              @click="requestAttendance('SIGN_OUT')"
             >
               正常签退
             </el-button>
@@ -845,7 +937,7 @@ onBeforeUnmount(() => {
 }
 
 .study-header h1 {
-  margin: 12px 0 6px;
+  margin: 0 0 6px;
 }
 
 .study-header p,

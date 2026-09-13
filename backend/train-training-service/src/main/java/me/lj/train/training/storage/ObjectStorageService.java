@@ -37,6 +37,9 @@ public interface ObjectStorageService {
 
     byte[] readObject(String objectKey);
 
+    /** 将服务端采集的照片写入私有对象。 */
+    void putObject(String objectKey, String contentType, byte[] content);
+
     void deleteObject(String objectKey);
 
     record SignedRequest(

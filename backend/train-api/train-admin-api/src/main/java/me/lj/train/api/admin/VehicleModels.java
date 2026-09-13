@@ -15,4 +15,9 @@ public final class VehicleModels {
             String orgName, String status, String remark, LocalDateTime createdAt) implements Serializable { }
     /** 车辆管理可选的本企业部门。 */
     public record VehicleDepartmentView(Long id, String name) implements Serializable { }
+    /** 人员编辑中可选的车辆，只暴露必要信息。 */
+    public record VehicleOption(Long id, String plateNumber, String status) implements Serializable { }
+    /** 车辆绑定人员的最小信息。 */
+    public record VehicleStudentView(Long id, String username, String displayName, String orgName,
+            String status) implements Serializable { }
 }

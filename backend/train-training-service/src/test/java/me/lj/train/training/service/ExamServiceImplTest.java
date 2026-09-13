@@ -76,6 +76,20 @@ class ExamServiceImplTest {
         UserContext.clear();
     }
 
+    /** 未学习或未完成学习时，直接调用接口也不能创建考试记录。 */
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings = {"NOT_STARTED", "IN_PROGRESS"})
+    void shouldRejectExamBeforeStudyCompleted(String studyStatus) {
+        PlanUserEntity task = task();
+        task.setStudyStatus(studyStatus);
+        when(planUserMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(task);
+
+        Result<ExamRecordView> result = service.open(100L);
+
+        assertThat(result.isSuccess()).isFalse();
+        verify(recordMapper, never()).insertSelective(any(ExamRecordEntity.class));
+    }
+
     @Test
     void shouldOpenOneExamAndProjectInProgressStatus() {
         PlanUserEntity task = task();
@@ -174,6 +188,7 @@ class ExamServiceImplTest {
 
     private PlanUserEntity task() {
         PlanUserEntity task = new PlanUserEntity();
+        task.setStudyStatus("COMPLETED");
         task.setId(500L);
         task.setEnterpriseId(20L);
         task.setPlanId(100L);

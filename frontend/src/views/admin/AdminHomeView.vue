@@ -55,13 +55,7 @@ onMounted(loadOverview)
 
 <template>
   <section v-loading="loading">
-    <header class="page-header">
-      <div>
-        <p>OVERVIEW</p>
-        <h1>管理工作台</h1>
-        <span>欢迎回来，{{ authStore.session?.displayName }}</span>
-      </div>
-    </header>
+
     <div class="overview-grid">
       <article>
         <span>当前身份</span>

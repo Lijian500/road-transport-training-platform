@@ -9,6 +9,9 @@ import me.lj.train.admin.mapper.OrgMapper;
 import me.lj.train.admin.mapper.OrgUserMapper;
 import me.lj.train.admin.mapper.RoleMapper;
 import me.lj.train.admin.mapper.UserMapper;
+import me.lj.train.admin.mapper.VehicleMapper;
+import me.lj.train.admin.model.entity.VehicleEntity;
+import static me.lj.train.admin.model.table.VehicleTableDef.VEHICLE;
 import me.lj.train.admin.mapper.UserRoleMapper;
 import me.lj.train.admin.model.entity.OrgEntity;
 import me.lj.train.admin.model.entity.OrgUserEntity;
@@ -61,6 +64,7 @@ import static me.lj.train.admin.model.table.UserTableDef.USER;
 public class UserServiceImpl extends AdminServiceSupport implements UserService {
 
     private final UserMapper userMapper;
+    private final VehicleMapper vehicleMapper;
     private final OrgMapper orgMapper;
     private final RoleMapper roleMapper;
     private final UserRoleMapper userRoleMapper;
@@ -76,15 +80,39 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
             UserRoleMapper userRoleMapper,
             OrgUserMapper orgUserMapper,
             PasswordEncoder passwordEncoder,
-            AuthorizationCacheService cacheService) {
+            AuthorizationCacheService cacheService,
+            VehicleMapper vehicleMapper) {
         super(transactionManager);
         this.userMapper = userMapper;
+        this.vehicleMapper = vehicleMapper;
         this.orgMapper = orgMapper;
         this.roleMapper = roleMapper;
         this.userRoleMapper = userRoleMapper;
         this.orgUserMapper = orgUserMapper;
         this.passwordEncoder = passwordEncoder;
         this.cacheService = cacheService;
+    }
+
+    @Override
+    public Result<UserView> profile() {
+        return execute(() -> loadView(UserContext.require().getUserId()));
+    }
+
+    @Override
+    public Result<UserView> updateProfile(String displayName, String phone) {
+        return executeTransactional(() -> {
+            Long id = UserContext.require().getUserId();
+            String name = AdminGuard.requireText(displayName, "姓名");
+            String mobile = trim(phone);
+            if (name.length() > 64 || (hasText(mobile) && !mobile.matches("1[3-9][0-9]{9}"))) {
+                throw new BusinessException(AppErrorCode.PARAM_INVALID, "姓名不能超过64字，手机号须为有效的11位号码");
+            }
+            UpdateWrapper<UserEntity> update = UpdateWrapper.of(UserEntity.class)
+                    .set(USER.DISPLAY_NAME, name).set(USER.PHONE, mobile).set(USER.UPDATED_BY, id);
+            userMapper.updateByCondition(update.toEntity(), USER.ID.eq(id));
+            cacheService.invalidateAuthorization(id);
+            return loadView(id);
+        });
     }
 
     @Override
@@ -128,6 +156,7 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
             user.setId(IdGenerator.nextId());
             user.setEnterpriseId(enterpriseId);
             user.setOrgId(org.getId());
+            user.setVehicleId(requireVehicle(command.vehicleId(), enterpriseId, null));
             user.setUsername(username);
             user.setPasswordHash(passwordEncoder.encode(command.temporaryPassword()));
             user.setDisplayName(AdminGuard.requireText(command.displayName(), "姓名"));
@@ -157,6 +186,7 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
                     .set(USER.DISPLAY_NAME, AdminGuard.requireText(command.displayName(), "姓名"))
                     .set(USER.PHONE, trim(command.phone()))
                     .set(USER.ORG_ID, org.getId())
+                    .set(USER.VEHICLE_ID, requireVehicle(command.vehicleId(), enterpriseId, user.getVehicleId()))
                     .set(USER.UPDATED_BY, UserContext.require().getUserId());
             userMapper.updateByCondition(update.toEntity(), USER.ID.eq(user.getId()));
             orgUserMapper.deleteByQuery(QueryWrapper.create().where(ORG_USER.USER_ID.eq(user.getId())));
@@ -365,6 +395,28 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
                 .collect(Collectors.toList()));
     }
 
+    /** 详情查询沿用用户查看权限和企业隔离。 */
+    @Override
+    public Result<UserView> detail(Long id) {
+        return execute(() -> {
+            Long enterpriseId = AdminGuard.requireEnterprisePermission(AdminPermissions.USER_VIEW);
+            requireUser(id, enterpriseId);
+            return loadView(id);
+        });
+    }
+
+    /** 新绑定只能选择本企业启用车辆，已有停用车辆可保留或解绑。 */
+    private Long requireVehicle(Long id, Long enterpriseId, Long currentId) {
+        if (id == null) return null;
+        VehicleEntity vehicle = vehicleMapper.selectOneByQuery(QueryWrapper.create()
+                .where(VEHICLE.ID.eq(id)).and(VEHICLE.ENTERPRISE_ID.eq(enterpriseId)));
+        if (vehicle == null || !enterpriseId.equals(vehicle.getEnterpriseId())
+                || (!id.equals(currentId) && !AdminConstants.STATUS_ENABLED.equals(vehicle.getStatus()))) {
+            throw new BusinessException(AppErrorCode.PARAM_INVALID, "请选择本企业可用车辆");
+        }
+        return id;
+    }
+
     private UserView loadView(Long userId) {
         UserEntity user = userMapper.selectOneById(userId);
         List<UserView> views = toViews(Collections.singletonList(user));
@@ -407,13 +459,20 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
                     .filter(role -> assignedRoleIds.contains(role.getId()))
                     .collect(Collectors.toList()));
         }
+        // 批量读取车牌，避免人员列表逐条查询车辆。
+        Set<Long> vehicleIds = users.stream().map(UserEntity::getVehicleId)
+                .filter(java.util.Objects::nonNull).collect(Collectors.toSet());
+        Map<Long, VehicleEntity> vehicles = vehicleIds.isEmpty() ? Collections.emptyMap()
+                : vehicleMapper.selectListByQuery(QueryWrapper.create().where(VEHICLE.ID.in(vehicleIds))
+                        .and(VEHICLE.ENTERPRISE_ID.eq(users.get(0).getEnterpriseId())))
+                        .stream().collect(Collectors.toMap(VehicleEntity::getId, vehicle -> vehicle));
         return users.stream()
-                .map(user -> toView(user, orgMap.get(user.getOrgId()),
+                .map(user -> toView(user, orgMap.get(user.getOrgId()), vehicles.get(user.getVehicleId()),
                         rolesByUser.getOrDefault(user.getId(), Collections.emptyList())))
                 .collect(Collectors.toList());
     }
 
-    private UserView toView(UserEntity user, OrgEntity org, List<RoleEntity> roles) {
+    private UserView toView(UserEntity user, OrgEntity org, VehicleEntity vehicle, List<RoleEntity> roles) {
         return new UserView(
                 user.getId(),
                 user.getEnterpriseId(),
@@ -428,7 +487,7 @@ public class UserServiceImpl extends AdminServiceSupport implements UserService 
                 roles.stream().map(RoleEntity::getRoleName).collect(Collectors.toList()),
                 user.getFaceReferenceObjectId() != null,
                 user.getFaceReferenceUpdatedAt(),
-                user.getCreatedAt());
+                user.getCreatedAt(), user.getVehicleId(), vehicle == null ? null : vehicle.getPlateNumber());
     }
 
     private OrgUserEntity newOrgUser(Long userId, Long orgId, Long enterpriseId) {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 import {
   cancelPlan,
@@ -16,12 +16,12 @@ import {
   type PlanStatus,
 } from '@/api/training'
 import { ApiError } from '@/api/http'
+import { formatTrainingDate } from '@/utils/trainingDisplay'
 import { getEnabledExamPaperOptions, type PaperOption } from '@/api/exam'
 import PermissionButton from '@/components/PermissionButton/PermissionButton.vue'
 import { usePermissionStore } from '@/stores/permission'
 
 const route = useRoute()
-const router = useRouter()
 const permissionStore = usePermissionStore()
 const planId = String(route.params.id)
 const loading = ref(false)
@@ -91,8 +91,8 @@ function syncForm(value: Plan) {
   Object.assign(form, {
     name: value.name,
     description: value.description || '',
-    startAt: value.startAt,
-    endAt: value.endAt,
+    startAt: value.startAt.slice(0, 10),
+    endAt: value.endAt.slice(0, 10),
     examRequired: value.examRequired,
     examPaperId: value.examPaperId || '',
     examPassScore: value.examPassScore || 60,
@@ -155,8 +155,8 @@ async function saveDraft(showSuccess = true) {
   if (!editable.value || !(await formRef.value?.validate().catch(() => false))) {
     return false
   }
-  if (new Date(form.startAt).getTime() >= new Date(form.endAt).getTime()) {
-    ElMessage.warning('开始时间必须早于结束时间')
+  if (form.startAt.slice(0, 10) > form.endAt.slice(0, 10)) {
+    ElMessage.warning('开始日期不能晚于结束日期')
     return false
   }
   if (
@@ -181,6 +181,8 @@ async function saveDraft(showSuccess = true) {
   try {
     const result = await updatePlan(planId, {
       ...form,
+      startAt: `${form.startAt.slice(0, 10)}T00:00:00`,
+      endAt: `${form.endAt.slice(0, 10)}T23:59:59`,
       examPaperId: form.examRequired ? form.examPaperId : undefined,
       examPassScore: form.examRequired ? form.examPassScore : undefined,
     })
@@ -269,7 +271,7 @@ function formatDuration(seconds: number) {
 
 /** 格式化计划时间用于只读展示。 */
 function formatDateTime(value: string) {
-  return new Date(value).toLocaleString('zh-CN', { hour12: false })
+  return formatTrainingDate(value)
 }
 
 /** 返回计划状态中文文案。 */
@@ -324,13 +326,10 @@ onMounted(load)
 
 <template>
   <section v-loading="loading">
-    <header class="detail-header">
+    <header class="page-toolbar">
       <div>
-        <el-button link type="primary" @click="router.push('/admin/plans')"
-          >← 返回计划列表</el-button
-        >
         <h1>{{ plan?.name || '培训计划详情' }}</h1>
-        <p>草稿可编辑；发布后展示的是不可变的课程规则、课件清单和学员快照。</p>
+
       </div>
       <div v-if="plan" class="header-actions">
         <el-tag :type="statusType(plan.status)" size="large">{{ statusLabel(plan.status) }}</el-tag>
@@ -366,7 +365,7 @@ onMounted(load)
             v-model="form.description"
             :disabled="!editable"
             maxlength="1000"
-            rows="3"
+            :rows="3"
             type="textarea"
           />
         </el-form-item>
@@ -375,16 +374,16 @@ onMounted(load)
             <el-date-picker
               v-model="form.startAt"
               :disabled="!editable"
-              type="datetime"
-              value-format="YYYY-MM-DDTHH:mm:ss"
+              type="date"
+              value-format="YYYY-MM-DD"
             />
           </el-form-item>
           <el-form-item label="结束时间" prop="endAt">
             <el-date-picker
               v-model="form.endAt"
               :disabled="!editable"
-              type="datetime"
-              value-format="YYYY-MM-DDTHH:mm:ss"
+              type="date"
+              value-format="YYYY-MM-DD"
             />
           </el-form-item>
         </div>
@@ -471,6 +470,7 @@ onMounted(load)
         </div>
         <el-form-item label="选择课程">
           <el-select
+            v-if="editable"
             v-model="form.courseIds"
             :disabled="!editable"
             filterable
@@ -484,9 +484,13 @@ onMounted(load)
               :value="option.courseId"
             />
           </el-select>
+          <div v-else class="snapshot-tags">
+            <el-tag v-for="course in plan.courses" :key="course.courseId">{{ course.courseName }}</el-tag>
+          </div>
         </el-form-item>
         <el-form-item label="选择学员">
           <el-select
+            v-if="editable"
             v-model="form.userIds"
             :disabled="!editable"
             filterable
@@ -500,6 +504,9 @@ onMounted(load)
               :value="option.userId"
             />
           </el-select>
+          <div v-else class="snapshot-tags">
+            <el-tag v-for="user in plan.users" :key="user.userId">{{ user.displayName }}（{{ user.username }}）</el-tag>
+          </div>
         </el-form-item>
         <el-form-item v-if="editable">
           <PermissionButton
@@ -586,6 +593,12 @@ onMounted(load)
 </template>
 
 <style scoped>
+.snapshot-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .detail-header,
 .header-actions,
 .form-grid {

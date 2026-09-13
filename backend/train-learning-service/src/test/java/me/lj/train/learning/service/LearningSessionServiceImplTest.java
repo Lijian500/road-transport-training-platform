@@ -83,6 +83,24 @@ class LearningSessionServiceImplTest {
     }
 
     @Test
+    void shouldRestoreFailedFaceCheckFromTerminatedSession() {
+        StudySessionEntity ended = session(101L, "browser-one", "TERMINATED");
+        var faceCheck = new me.lj.train.api.learning.FaceCheckModels.FaceCheckView(
+                400L, ended.getId(), "FAILED", LocalDateTime.now().minusMinutes(2),
+                LocalDateTime.now().minusMinutes(1), 3, 3, 0, "NOT_MATCH",
+                "NOT_MATCH", null, LocalDateTime.now().minusMinutes(1));
+        when(sessionMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(ended);
+        when(progressManager.requireProgress(20L, 10L, 100L, 101L)).thenReturn(progress());
+        when(faceCheckService.currentTerminal(ended.getId())).thenReturn(faceCheck);
+
+        var result = service.getSession(ended.getId());
+
+        assertThat(result.isSuccess()).isTrue();
+        assertThat(result.getData().currentFaceCheck().status()).isEqualTo("FAILED");
+        verify(faceCheckService, never()).currentPending(any());
+    }
+
+    @Test
     void shouldRejectOpeningAnotherCourseWhileSessionIsActive() {
         prepareTransaction();
         when(trainingAccessClient.taskContext(100L)).thenReturn(context());

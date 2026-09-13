@@ -70,6 +70,8 @@ export interface SessionRecord {
   signedOutAt?: string
   terminatedAt?: string
   terminationReason?: string
+  signInPhotoUrl?: string
+  signOutPhotoUrl?: string
 }
 
 export interface EventRecord {
@@ -95,6 +97,7 @@ export interface FaceRecord {
   failureReason?: string
   attemptCount: number
   attempts: Array<{
+    photoUrl?: string
     attemptNo: number
     result: string
     failureReason?: string

@@ -201,8 +201,8 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
                     .set(PLAN.PLAN_NAME, TrainingGuard.requireText(command.name(), "计划名称", 128))
                     .set(PLAN.DESCRIPTION,
                             TrainingGuard.optionalText(command.description(), "计划说明", 1000))
-                    .set(PLAN.START_AT, command.startAt())
-                    .set(PLAN.END_AT, command.endAt())
+                    .set(PLAN.START_AT, command.startAt().toLocalDate().atStartOfDay())
+                    .set(PLAN.END_AT, command.endAt().toLocalDate().atTime(23, 59, 59))
                     .set(PLAN.EXAM_REQUIRED, command.examRequired())
                     .set(PLAN.EXAM_PAPER_ID, examRule.paperId())
                     .set(PLAN.EXAM_PASS_SCORE, examRule.passScore())
@@ -532,8 +532,8 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
             int faceCheckMaxAttempts) {
         TrainingGuard.requireText(name, "计划名称", 128);
         TrainingGuard.optionalText(description, "计划说明", 1000);
-        if (startAt == null || endAt == null || !startAt.isBefore(endAt)) {
-            throw new BusinessException(AppErrorCode.PARAM_INVALID, "计划开始时间必须早于结束时间");
+        if (startAt == null || endAt == null || startAt.toLocalDate().isAfter(endAt.toLocalDate())) {
+            throw new BusinessException(AppErrorCode.PARAM_INVALID, "计划开始日期不能晚于结束日期");
         }
         if (!faceCheckEnabled) {
             return;
@@ -569,8 +569,9 @@ public class PlanServiceImpl extends TrainingServiceSupport implements PlanServi
             int faceCheckMaxAttempts) {
         plan.setPlanName(TrainingGuard.requireText(name, "计划名称", 128));
         plan.setDescription(TrainingGuard.optionalText(description, "计划说明", 1000));
-        plan.setStartAt(startAt);
-        plan.setEndAt(endAt);
+        // 培训周期按自然日保存，包含结束日全天。
+        plan.setStartAt(startAt.toLocalDate().atStartOfDay());
+        plan.setEndAt(endAt.toLocalDate().atTime(23, 59, 59));
         plan.setExamRequired(examRequired);
         plan.setExamPaperId(examRule.paperId());
         plan.setExamPassScore(examRule.passScore());

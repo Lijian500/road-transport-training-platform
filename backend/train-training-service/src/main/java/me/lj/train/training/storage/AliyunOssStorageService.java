@@ -143,7 +143,8 @@ public class AliyunOssStorageService implements ObjectStorageService {
     public List<StoredPart> listParts(String objectKey, String uploadId) {
         return execute("查询已上传分片", () -> {
             List<StoredPart> parts = new ArrayList<>();
-            Long marker = null;
+            // 分片编号从1开始；SDK V2不接受null分页标记，首页从0开始查询。
+            Long marker = 0L;
             boolean truncated;
             do {
                 ListPartsResult result = client.listParts(ListPartsRequest.newBuilder()
@@ -213,12 +214,10 @@ public class AliyunOssStorageService implements ObjectStorageService {
                     .key(objectKey)
                     .build());
             return new ObjectMetadata(result.contentLength(), result.contentType(), result.eTag());
-        } catch (ServiceException exception) {
+        } catch (RuntimeException exception) {
             if (isNotFound(exception)) {
                 return null;
             }
-            throw storageException("读取对象元数据", exception);
-        } catch (RuntimeException exception) {
             throw storageException("读取对象元数据", exception);
         }
     }
@@ -262,6 +261,15 @@ public class AliyunOssStorageService implements ObjectStorageService {
                 .bucket(properties.getBucket())
                 .key(objectKey)
                 .build()));
+    }
+
+    /** 核验照片以私有权限写入，禁止覆盖已有证据。 */
+    @Override
+    public void putObject(String objectKey, String contentType, byte[] content) {
+        executeVoid("保存学习照片", () -> client.putObject(PutObjectRequest.newBuilder()
+                .bucket(properties.getBucket()).key(objectKey).contentType(contentType)
+                .objectAcl("private").forbidOverwrite(true)
+                .body(com.aliyun.sdk.service.oss2.transport.BinaryData.fromBytes(content)).build()));
     }
 
     @PreDestroy
@@ -313,9 +321,14 @@ public class AliyunOssStorageService implements ObjectStorageService {
         return businessException;
     }
 
+    /** SDK V2会用OperationException包装服务异常，沿原因链识别对象或上传会话不存在。 */
     private boolean isNotFound(Throwable exception) {
-        return exception instanceof ServiceException serviceException
-                && serviceException.statusCode() == 404;
+        for (Throwable cause = exception; cause != null; cause = cause.getCause()) {
+            if (cause instanceof ServiceException serviceException) {
+                return serviceException.statusCode() == 404;
+            }
+        }
+        return false;
     }
 
     @FunctionalInterface

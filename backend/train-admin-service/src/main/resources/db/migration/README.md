@@ -10,5 +10,6 @@
 - `V6__course_permission.sql`：课程及课件管理权限，并补发给内置企业管理员角色。
 - `V7__training_plan_permission.sql`：培训计划与学员任务权限，并补发给内置企业管理员和学员角色。
 - `V8__student_learning_permission.sql`：视频学习权限，并补发给已有内置学员角色。
+- `V14__user_vehicle_binding.sql`：增加人员可空的车辆关联及企业内查询索引，支持多人绑定同一辆车。
 
 数据库结构变更只能追加新版本迁移，不修改已在共享环境执行过的迁移文件。

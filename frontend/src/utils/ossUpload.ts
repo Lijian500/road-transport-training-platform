@@ -72,7 +72,11 @@ export function uploadSignedBlob(
         reject(new OssUploadError(xhr.status, `OSS上传失败（HTTP ${xhr.status}）`))
       }
     }
-    xhr.onerror = () => reject(new OssUploadError(0, 'OSS网络连接失败'))
+    xhr.onerror = () =>
+      reject(new OssUploadError(
+        0,
+        `OSS连接失败，请检查网络及Bucket跨域配置是否允许当前来源：${window.location.origin}`,
+      ))
     xhr.onabort = () => reject(new DOMException('上传已取消', 'AbortError'))
     signal?.addEventListener('abort', () => xhr.abort(), { once: true })
     xhr.send(blob)

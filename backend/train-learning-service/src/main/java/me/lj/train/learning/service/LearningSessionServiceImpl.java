@@ -121,7 +121,7 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
     public Result<PlanProgressView> getPlanProgress(Long planId) {
         return executeTransactional(() -> {
             LoginUser user = LearningGuard.requireStudent();
-            LearningTaskContextView context = trainingAccessClient.taskContext(planId);
+            LearningTaskContextView context = trainingAccessClient.progressContext(planId);
             progressManager.ensureProgress(user.getEnterpriseId(), user.getUserId(), context);
             return progressManager.toPlanView(user.getEnterpriseId(), user.getUserId(), context);
         });
@@ -316,6 +316,9 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
                     "期望事件序号为" + (session.getLastSequence() + 1L));
         }
         LocalDateTime serverTime = now();
+        if ("SIGN_IN".equals(command.eventType()) || "SIGN_OUT".equals(command.eventType())) {
+            FaceCheckServiceImpl.requireAttendance(session, command.eventType(), command.sequence(), serverTime);
+        }
         boolean settleSignOut = false;
         if ("SIGN_OUT".equals(command.eventType())) {
             settleSignOut = canSettleSignOut(session, serverTime);
@@ -637,7 +640,9 @@ public class LearningSessionServiceImpl extends LearningServiceSupport
                 session.getCurrentCoursewareSnapshotId(), session.getLastSequence(),
                 session.getLastConfirmedPositionMs(), progress.getEffectiveDurationMs(),
                 progress.getRequiredDurationMs(), session.getLastEventAt(), session.getCreatedAt(),
-                faceCheckService.currentPending(session.getId()));
+                TERMINATED.equals(session.getStatus())
+                        ? faceCheckService.currentTerminal(session.getId())
+                        : faceCheckService.currentPending(session.getId()));
     }
 
     private void validateEvent(SubmitEventCommand command) {

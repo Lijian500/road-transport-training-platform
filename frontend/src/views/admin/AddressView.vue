@@ -177,11 +177,8 @@ onMounted(load)
 
 <template>
   <section>
-    <header class="page-title page-title--actions">
-      <div>
-        <h1>地址管理</h1>
-        <p>维护全国省、市、区县三级行政地址，展开节点可查看下级地址。</p>
-      </div>
+    <header class="page-toolbar">
+
       <el-button
         v-if="permissionStore.has('admin:address:create')"
         type="primary"

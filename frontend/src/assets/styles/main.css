@@ -73,6 +73,28 @@ input {
   font: inherit;
 }
 
+/* 页面说明由历史标签替代，业务操作保持为紧凑工具栏。 */
+.page-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.page-toolbar h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.page-toolbar > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .page-title {
   position: relative;
   margin-bottom: 24px;

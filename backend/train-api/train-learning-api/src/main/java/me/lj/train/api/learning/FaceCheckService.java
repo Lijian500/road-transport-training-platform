@@ -10,6 +10,13 @@ import me.lj.train.common.core.result.Result;
  */
 public interface FaceCheckService {
 
+    /** 查询签到、签退是否需要当次人脸验证。 */
+    Result<Boolean> attendanceRequired(Long sessionId);
+
+    /** 校验本人照片并签发绑定当前事件序号的短期凭据。 */
+    Result<?> verifyAttendance(Long sessionId, String action, String clientInstanceId, byte[] imageBytes);
+
+
     /** 校验登记照中是否恰好包含一张可识别人脸，不保存图片。 */
     Result<FaceReferenceValidationView> validateReference(byte[] imageBytes);
 

@@ -5,6 +5,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import me.lj.train.common.core.result.Result;
+import me.lj.train.api.admin.UserService;
+import me.lj.train.api.admin.AdminModels.UserView;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.web.bind.annotation.PutMapping;
 import me.lj.train.webapi.model.AuthSessionView;
 import me.lj.train.webapi.security.SessionService;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -23,6 +27,24 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
+    @DubboReference(check = false, retries = 0)
+    private UserService userService;
+
+    /** 查看本人资料，身份由登录上下文决定。 */
+    @GetMapping("/profile")
+    public Result<UserView> profile() {
+        return userService.profile();
+    }
+
+    /** 修改本人基本资料。 */
+    @PutMapping("/profile")
+    public Result<UserView> updateProfile(
+            @Valid @RequestBody ProfileRequest request) {
+        return userService.updateProfile(request.displayName(), request.phone());
+    }
+
+    public record ProfileRequest(@NotBlank String displayName, String phone) { }
 
     private final SessionService sessionService;
 

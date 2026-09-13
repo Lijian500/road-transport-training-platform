@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 import {
   cancelUploadSession,
@@ -40,7 +40,6 @@ interface PersistedVideoUpload extends ResumableUploadRecord {
 }
 
 const route = useRoute()
-const router = useRouter()
 const permissionStore = usePermissionStore()
 const courseId = String(route.params.id)
 const resumeStorageKey = `training:course-upload:${courseId}`
@@ -546,11 +545,10 @@ onBeforeUnmount(() => {
 
 <template>
   <section v-loading="loading">
-    <header class="page-title page-title--actions">
+    <header class="page-toolbar">
       <div>
-        <el-button link type="primary" @click="router.push('/admin/courses')">← 返回课程列表</el-button>
         <h1>{{ course?.name || '课程详情' }}</h1>
-        <p>课程规则、封面及视频文件均按当前组织隔离管理。</p>
+
       </div>
       <div v-if="course" class="header-actions">
         <el-tag :type="statusType(course.status)" size="large">

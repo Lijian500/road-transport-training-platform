@@ -12,7 +12,11 @@ public final class LearningAccessModels {
     private LearningAccessModels() {
     }
 
-    public record LearningTaskQuery(Long planId) implements Serializable {
+    public record LearningTaskQuery(Long planId, boolean progressOnly) implements Serializable {
+        /** 默认仍校验当前计划是否允许学习。 */
+        public LearningTaskQuery(Long planId) {
+            this(planId, false);
+        }
     }
 
     public record LearningPlaybackCommand(

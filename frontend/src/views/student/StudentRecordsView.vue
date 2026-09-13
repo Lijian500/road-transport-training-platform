@@ -72,10 +72,7 @@ onMounted(applyRoute)
 
 <template>
   <section>
-    <header class="page-title">
-      <h1>我的学习档案</h1>
-      <p>查看历次培训的有效学时、考试成绩和完成情况。</p>
-    </header>
+
     <el-alert v-if="error" :title="error" type="error" show-icon :closable="false" />
     <AppTable
       :data="rows"

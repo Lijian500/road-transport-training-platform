@@ -86,6 +86,34 @@ describe('useLearningRealtime', () => {
     expect(realtime.ready.value).toBe(true)
   })
 
+  it('绑定持续失败时在总超时后结束等待并停止重连', async () => {
+    const { realtime } = mountComposable()
+    const binding = realtime.bind('900')
+    const rejected = expect(binding).rejects.toMatchObject({ code: 'REALTIME_BIND_TIMEOUT' })
+    FakeWebSocket.instances[0]!.open()
+    await vi.advanceTimersByTimeAsync(11_000)
+    FakeWebSocket.instances[1]!.open()
+    await vi.advanceTimersByTimeAsync(11_000)
+    FakeWebSocket.instances[2]!.open()
+    await vi.advanceTimersByTimeAsync(8_000)
+
+    await rejected
+    expect(realtime.ready.value).toBe(false)
+    await vi.advanceTimersByTimeAsync(60_000)
+    expect(FakeWebSocket.instances).toHaveLength(3)
+  })
+
+  it('握手始终未完成时也会结束绑定等待', async () => {
+    const { realtime } = mountComposable()
+    const binding = realtime.bind('900')
+    const rejected = expect(binding).rejects.toMatchObject({ code: 'REALTIME_BIND_TIMEOUT' })
+
+    await vi.advanceTimersByTimeAsync(30_000)
+
+    await rejected
+    expect(FakeWebSocket.instances[0]!.readyState).toBe(FakeWebSocket.CLOSED)
+  })
+
   it('连接建立后启动心跳并在断开时停止', async () => {
     const { realtime } = mountComposable()
     const binding = realtime.bind('900')

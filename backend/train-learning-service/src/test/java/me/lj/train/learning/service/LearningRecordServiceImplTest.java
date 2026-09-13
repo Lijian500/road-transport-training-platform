@@ -26,11 +26,12 @@ class LearningRecordServiceImplTest {
     @Mock private StudyEventLogMapper events;
     @Mock private FaceCheckTaskMapper faces;
     @Mock private FaceCheckLogMapper logs;
+    @Mock private me.lj.train.learning.support.FaceReferenceImageClient images;
     private LearningRecordServiceImpl service;
 
     /** 设置只有本人档案权限的学员。 */
     @BeforeEach void setUp() {
-        service = new LearningRecordServiceImpl(transactions, progress, sessions, events, faces, logs);
+        service = new LearningRecordServiceImpl(transactions, progress, sessions, events, faces, logs, images);
         LoginUser user = new LoginUser(); user.setEnterpriseId(20L); user.setUserId(10L);
         user.setPermissions(List.of("student:plan:view")); UserContext.set(user);
     }
@@ -41,7 +42,7 @@ class LearningRecordServiceImplTest {
         when(progress.selectListByQuery(any(QueryWrapper.class))).thenReturn(List.of());
         assertThat(service.myCourses(1L).getData()).isEmpty();
         verify(progress, never()).insertSelective(any(StudyProgressEntity.class));
-        verifyNoInteractions(transactions, sessions, events, faces, logs);
+        verifyNoInteractions(transactions, sessions, events, faces, logs, images);
     }
 
     @Test void shouldRejectAnotherStudentsSessionBeforeReadingEvidence() {
@@ -72,6 +73,37 @@ class LearningRecordServiceImplTest {
         assertThat(result.getData().getRecords().get(0).status()).isEqualTo("TIMED_OUT");
         assertThat(result.getData().getRecords().get(0).attempts()).isEmpty();
         verifyNoInteractions(transactions);
+    }
+
+    /** 返回各次抽验自己的照片，历史未留存记录保留空值。 */
+    @Test void shouldIncludeEachAttemptPhoto() {
+        when(sessions.selectOneByQuery(any(QueryWrapper.class))).thenReturn(session());
+        FaceCheckTaskEntity task = new FaceCheckTaskEntity(); task.setId(3L);
+        Page<FaceCheckTaskEntity> page = new Page<>(1, 10); page.setRecords(List.of(task)); page.setTotalRow(1);
+        when(faces.paginate(anyInt(), anyInt(), any(QueryWrapper.class))).thenReturn(page);
+        FaceCheckLogEntity first = new FaceCheckLogEntity(); first.setTaskId(3L); first.setPhotoObjectId(8L);
+        FaceCheckLogEntity second = new FaceCheckLogEntity(); second.setTaskId(3L);
+        when(logs.selectListByQuery(any(QueryWrapper.class))).thenReturn(List.of(first, second));
+        when(images.learningPhotoUrl(8L)).thenReturn("https://example.test/photo");
+        var result = service.myFaceChecks(1L, 1, 10);
+        assertThat(result.isSuccess()).isTrue();
+        assertThat(result.getData().getRecords().get(0).attempts())
+                .extracting(me.lj.train.api.learning.LearningRecordModels.FaceAttemptView::photoUrl)
+                .containsExactly("https://example.test/photo", null);
+    }
+
+    /** 签到、签退照片分别映射到对应的会话字段。 */
+    @Test void shouldIncludeAttendancePhotos() {
+        StudySessionEntity row = session(); row.setSignInPhotoObjectId(8L); row.setSignOutPhotoObjectId(9L);
+        Page<StudySessionEntity> page = new Page<>(1, 10); page.setRecords(List.of(row)); page.setTotalRow(1);
+        when(sessions.paginate(anyInt(), anyInt(), any(QueryWrapper.class))).thenReturn(page);
+        when(images.learningPhotoUrl(8L)).thenReturn("sign-in");
+        when(images.learningPhotoUrl(9L)).thenReturn("sign-out");
+        var result = service.mySessions(new me.lj.train.api.learning.LearningRecordModels.SessionQuery(
+                1, 10, 1L, null, null, null));
+        assertThat(result.isSuccess()).isTrue();
+        assertThat(result.getData().getRecords().get(0).signInPhotoUrl()).isEqualTo("sign-in");
+        assertThat(result.getData().getRecords().get(0).signOutPhotoUrl()).isEqualTo("sign-out");
     }
 
     @Test void shouldRejectAdminEntryForStudent() {

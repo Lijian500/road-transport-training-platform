@@ -21,5 +21,11 @@ public interface PrivateImageStorageService {
 
     Result<SignedRequestView> previewUrl(Long storageObjectId);
 
+    /** 保存当前学员的学习核验照片，仅供档案预览。 */
+    Result<Long> saveLearningPhoto(byte[] content);
+
+    /** 校验企业及档案权限后生成短期照片预览地址。 */
+    Result<SignedRequestView> learningPhotoPreview(Long storageObjectId);
+
     Result<?> delete(Long storageObjectId);
 }

@@ -93,6 +93,7 @@ class FaceCheckServiceImplTest {
         prepareSubmission(task, session);
         when(verifierProvider.getIfAvailable()).thenReturn(verifier);
         when(referenceImageClient.read(10L)).thenReturn(referenceImage());
+        when(referenceImageClient.saveLearningPhoto(any(byte[].class))).thenReturn(900L);
         when(verifier.compare(any(byte[].class), any(byte[].class)))
                 .thenReturn(Result.ok(comparison(0.80D)));
         when(progressMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(progress);
@@ -105,7 +106,9 @@ class FaceCheckServiceImplTest {
         assertThat(task.getAttemptCount()).isEqualTo(1);
         assertThat(session.getStatus()).isEqualTo(LearningSessionServiceImpl.PAUSED);
         assertThat(session.getNextFaceCheckEffectiveDurationMs()).isGreaterThan(100_000L);
-        verify(logMapper).insertSelective(any(FaceCheckLogEntity.class));
+        var photoLog = org.mockito.ArgumentCaptor.forClass(FaceCheckLogEntity.class);
+        verify(logMapper).insertSelective(photoLog.capture());
+        assertThat(photoLog.getValue().getPhotoObjectId()).isEqualTo(900L);
         verify(outboxService).appendFaceCheckEvent(
                 eq(400L), eq("RESULT:PASSED:1"),
                 eq(FaceCheckEvents.RESULT_ROUTING_KEY), any(), eq(NOW));
@@ -119,6 +122,7 @@ class FaceCheckServiceImplTest {
         prepareSubmission(task, session);
         when(verifierProvider.getIfAvailable()).thenReturn(verifier);
         when(referenceImageClient.read(10L)).thenReturn(referenceImage());
+        when(referenceImageClient.saveLearningPhoto(any(byte[].class))).thenReturn(900L);
         when(verifier.compare(any(byte[].class), any(byte[].class)))
                 .thenReturn(Result.ok(comparison(0.10D)));
 
@@ -129,6 +133,10 @@ class FaceCheckServiceImplTest {
         assertThat(result.getData().status()).isEqualTo("FAILED");
         assertThat(session.getStatus()).isEqualTo(LearningSessionServiceImpl.TERMINATED);
         assertThat(session.getTerminationReason()).isEqualTo("FACE_CHECK_FAILED");
+        var photoLog = org.mockito.ArgumentCaptor.forClass(FaceCheckLogEntity.class);
+        verify(logMapper).insertSelective(photoLog.capture());
+        assertThat(photoLog.getValue().getPhotoObjectId()).isEqualTo(900L);
+        assertThat(service.currentTerminal(session.getId()).status()).isEqualTo("FAILED");
         verify(sessionMapper).updateByCondition(eq(session), any());
     }
 
@@ -145,6 +153,7 @@ class FaceCheckServiceImplTest {
         assertThat(task.getStatus()).isEqualTo("TIMED_OUT");
         assertThat(session.getStatus()).isEqualTo(LearningSessionServiceImpl.TERMINATED);
         assertThat(session.getTerminationReason()).isEqualTo("FACE_CHECK_TIMEOUT");
+        assertThat(service.currentTerminal(session.getId()).status()).isEqualTo("TIMED_OUT");
         verify(taskMapper).updateByCondition(eq(task), any());
         verify(sessionMapper).updateByCondition(eq(session), any());
     }

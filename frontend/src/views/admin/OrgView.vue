@@ -106,11 +106,8 @@ onMounted(load)
 
 <template>
   <section>
-    <header class="page-title page-title--actions">
-      <div>
-        <h1>部门管理</h1>
-        <p>维护当前组织的部门层级，根组织节点不可删除。</p>
-      </div>
+    <header class="page-toolbar">
+
       <PermissionButton permission="admin:org:create" type="primary" @click="openCreate()">
         新建部门
       </PermissionButton>

@@ -12,6 +12,7 @@ import {
   type EventRecord,
   type FaceRecord,
 } from '@/api/records'
+import RecordPhoto from './RecordPhoto.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
 import { recordDuration, recordLabel, recordTime } from '@/utils/recordDisplay'
 
@@ -259,6 +260,16 @@ watch(() => [props.taskId, props.audience], load, { immediate: true })
             recordTime(row.signedOutAt || row.terminatedAt)
           }}</template></el-table-column
         >
+        <el-table-column label="签到照片" width="110">
+          <template #default="{ row }"
+            ><RecordPhoto :src="row.signInPhotoUrl" label="签到照片"
+          /></template>
+        </el-table-column>
+        <el-table-column label="签退照片" width="110">
+          <template #default="{ row }"
+            ><RecordPhoto :src="row.signOutPhotoUrl" label="签退照片"
+          /></template>
+        </el-table-column>
         <el-table-column label="终止原因" min-width="140"
           ><template #default="{ row }">{{
             recordLabel(row.terminationReason)
@@ -338,6 +349,16 @@ watch(() => [props.taskId, props.audience], load, { immediate: true })
                     :image-size="45"
                   />
                   <el-table v-else :data="row.attempts">
+                    <el-table-column label="抽验照片" width="110">
+                      <template #default="{ row: attempt }"
+                        ><RecordPhoto :src="attempt.photoUrl" label="抽验照片"
+                      /></template>
+                    </el-table-column>
+                    <el-table-column label="提交时间" min-width="180">
+                      <template #default="{ row: attempt }">{{
+                        recordTime(attempt.createdAt)
+                      }}</template>
+                    </el-table-column>
                     <el-table-column label="提交次数" prop="attemptNo" /><el-table-column
                       label="结果"
                       ><template #default="{ row: attempt }">{{

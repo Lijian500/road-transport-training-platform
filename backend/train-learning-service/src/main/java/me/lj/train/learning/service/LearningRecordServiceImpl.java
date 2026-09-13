@@ -14,6 +14,7 @@ import me.lj.train.common.security.context.UserContext;
 import me.lj.train.common.security.model.LoginUser;
 import me.lj.train.learning.mapper.*;
 import me.lj.train.learning.model.entity.*;
+import me.lj.train.learning.support.FaceReferenceImageClient;
 import me.lj.train.learning.support.LearningGuard;
 import me.lj.train.learning.support.LearningServiceSupport;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -36,16 +37,18 @@ public class LearningRecordServiceImpl extends LearningServiceSupport implements
     private final StudyEventLogMapper eventMapper;
     private final FaceCheckTaskMapper faceTaskMapper;
     private final FaceCheckLogMapper faceLogMapper;
+    private final FaceReferenceImageClient imageClient;
 
     public LearningRecordServiceImpl(PlatformTransactionManager transactions, StudyProgressMapper progressMapper,
             StudySessionMapper sessionMapper, StudyEventLogMapper eventMapper,
-            FaceCheckTaskMapper faceTaskMapper, FaceCheckLogMapper faceLogMapper) {
+            FaceCheckTaskMapper faceTaskMapper, FaceCheckLogMapper faceLogMapper, FaceReferenceImageClient imageClient) {
         super(transactions);
         this.progressMapper = progressMapper;
         this.sessionMapper = sessionMapper;
         this.eventMapper = eventMapper;
         this.faceTaskMapper = faceTaskMapper;
         this.faceLogMapper = faceLogMapper;
+        this.imageClient = imageClient;
     }
 
     /** 学员批量读取学时，分页调用最多允许100个任务。 */
@@ -148,7 +151,8 @@ public class LearningRecordServiceImpl extends LearningServiceSupport implements
         return PageResult.of(page.getRecords().stream().map(row -> new SessionRecordView(row.getId(),
                 row.getTaskId(), row.getPlanId(), row.getPlanCourseId(), row.getCourseName(), row.getStatus(),
                 row.getCreatedAt(), row.getSignedInAt(), row.getStartedAt(), row.getSignedOutAt(),
-                row.getTerminatedAt(), row.getTerminationReason())).toList(), page.getTotalRow(), request);
+                row.getTerminatedAt(), row.getTerminationReason(), imageClient.learningPhotoUrl(row.getSignInPhotoObjectId()),
+                imageClient.learningPhotoUrl(row.getSignOutPhotoObjectId()))).toList(), page.getTotalRow(), request);
     }
 
     /** 每次读取子记录都重新验证会话所有权，防止更换会话ID越权。 */
@@ -194,7 +198,8 @@ public class LearningRecordServiceImpl extends LearningServiceSupport implements
         return PageResult.of(page.getRecords().stream().map(row -> new FaceRecordView(row.getId(), row.getStatus(),
                 row.getTriggeredAt(), row.getDeadlineAt(), row.getCompletedAt(), row.getFailureReason(), row.getAttemptCount(),
                 logs.getOrDefault(row.getId(), List.of()).stream().map(log -> new FaceAttemptView(log.getAttemptNo(),
-                        log.getResult(), log.getFailureReason(), log.getSimilarity(), log.getElapsedMs(), log.getCreatedAt())).toList()))
+                        log.getResult(), log.getFailureReason(), log.getSimilarity(), log.getElapsedMs(), log.getCreatedAt(),
+                        imageClient.learningPhotoUrl(log.getPhotoObjectId()))).toList()))
                 .toList(), page.getTotalRow(), request);
     }
 

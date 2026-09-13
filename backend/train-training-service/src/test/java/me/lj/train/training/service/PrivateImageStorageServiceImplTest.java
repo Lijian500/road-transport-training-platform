@@ -65,6 +65,42 @@ class PrivateImageStorageServiceImplTest {
         UserContext.clear();
     }
 
+    /** 留存照片时强制使用当前学员和企业，并写入独立的证据对象类型。 */
+    @Test
+    void shouldSaveLearningPhotoForCurrentStudent() {
+        UserContext.set(operator(11L, Collections.singletonList("student:learning:study")));
+        when(transactionManager.getTransaction(any(TransactionDefinition.class))).thenReturn(transactionStatus);
+        when(objectStorageService.isEnabled()).thenReturn(true);
+        when(objectStorageService.bucketName()).thenReturn("private-bucket");
+        byte[] content = {(byte) 0xff, (byte) 0xd8, (byte) 0xff, 0};
+        var result = service.saveLearningPhoto(content);
+        assertThat(result.isSuccess()).isTrue();
+        var captor = org.mockito.ArgumentCaptor.forClass(StorageObjectEntity.class);
+        verify(storageObjectMapper).insertSelective(captor.capture());
+        assertThat(captor.getValue().getOwnerUserId()).isEqualTo(11L);
+        assertThat(captor.getValue().getEnterpriseId()).isEqualTo(UserContext.require().getEnterpriseId());
+        assertThat(captor.getValue().getObjectType()).isEqualTo("LEARNING_PHOTO");
+        verify(objectStorageService).putObject(captor.getValue().getObjectKey(), "image/jpeg", content);
+    }
+
+    /** 登记照管理权限不能替代学习档案阅读权限。 */
+    @Test
+    void shouldRejectPhotoPreviewWithoutRecordPermission() {
+        assertThat(service.learningPhotoPreview(100L).getCode()).isEqualTo(AppErrorCode.FORBIDDEN.getCode());
+        org.mockito.Mockito.verifyNoInteractions(storageObjectMapper, objectStorageService);
+    }
+
+    /** 照片查询必须同时受企业、所有者、对象类型和状态约束。 */
+    @Test
+    void shouldScopeStudentPhotoPreview() {
+        UserContext.set(operator(11L, Collections.singletonList("student:plan:view")));
+        assertThat(service.learningPhotoPreview(100L).getCode()).isEqualTo(AppErrorCode.RESOURCE_NOT_FOUND.getCode());
+        var captor = org.mockito.ArgumentCaptor.forClass(QueryWrapper.class);
+        verify(storageObjectMapper).selectOneByQuery(captor.capture());
+        assertThat(captor.getValue().toSQL()).contains("enterprise_id", "owner_user_id", "LEARNING_PHOTO", "ACTIVE");
+        org.mockito.Mockito.verifyNoInteractions(objectStorageService);
+    }
+
     @Test
     void shouldCreatePrivateDirectUploadSession() {
         when(transactionManager.getTransaction(any(TransactionDefinition.class)))
@@ -87,6 +123,15 @@ class PrivateImageStorageServiceImplTest {
         assertThat(result.getData().uploadRequest().method()).isEqualTo("PUT");
         verify(uploadSessionMapper).insertSelective(any());
         verify(transactionManager).commit(transactionStatus);
+    }
+
+    @Test
+    void shouldRejectDeletingAnotherStudentsReference() {
+        UserContext.set(operator(12L, Collections.emptyList()));
+        when(transactionManager.getTransaction(any(TransactionDefinition.class))).thenReturn(transactionStatus);
+        when(storageObjectMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(faceObject(11L));
+        assertThat(service.delete(100L).getCode()).isEqualTo(AppErrorCode.FORBIDDEN.getCode());
+        verify(storageObjectMapper, never()).updateByCondition(any(StorageObjectEntity.class), any());
     }
 
     @Test

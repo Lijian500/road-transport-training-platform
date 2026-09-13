@@ -30,6 +30,8 @@ const realtimeMock = vi.hoisted(() => ({
 }))
 
 const apiMock = vi.hoisted(() => ({
+  attendanceFaceRequired: vi.fn(),
+  verifyAttendanceFace: vi.fn(),
   getActiveLearningSession: vi.fn(),
   getLearningCourse: vi.fn(),
   getLearningPlaybackUrl: vi.fn(),
@@ -67,6 +69,7 @@ describe('StudyView实时连接保护', () => {
     realtimeMock.ready.value = true
     realtimeMock.connectionState.value = 'connected'
     vi.clearAllMocks()
+    realtimeMock.sendEvent.mockReset()
     apiMock.getLearningCourse.mockResolvedValue(course())
     apiMock.openLearningSession.mockResolvedValue(session('PAUSED'))
     realtimeMock.bind.mockResolvedValue(session('PAUSED'))
@@ -90,11 +93,140 @@ describe('StudyView实时连接保护', () => {
     wrapper?.unmount()
     wrapper = undefined
     vi.restoreAllMocks()
+    vi.useRealTimers()
     if (pausedDescriptor) {
       Object.defineProperty(HTMLMediaElement.prototype, 'paused', pausedDescriptor)
     } else {
       delete (HTMLMediaElement.prototype as { paused?: boolean }).paused
     }
+  })
+
+  it('当前视频结束并经服务端确认完成后自动播放下一视频', async () => {
+    vi.useFakeTimers()
+    const value = course()
+    value.coursewares.push({ ...value.coursewares[0]!, coursewareSnapshotId: '302', title: '第二课', sortOrder: 2, confirmedPositionMillis: 0, status: 'NOT_STARTED' })
+    apiMock.getLearningCourse.mockResolvedValue(value)
+    realtimeMock.sendEvent.mockImplementation(async () => {
+      const result = { ...eventResult('PAUSED'), confirmedPositionMillis: 60000, coursewareCompleted: true }
+      realtimeMock.options?.onProgressConfirmed?.(result)
+      return result
+    })
+    wrapper = mountStudyView()
+    await flushPromises()
+    await wrapper.get('video').trigger('ended')
+    await flushPromises()
+    expect(apiMock.getLearningPlaybackUrl).toHaveBeenLastCalledWith('900', '302', expect.any(String))
+    await wrapper.get('video').trigger('loadedmetadata')
+    await vi.advanceTimersByTimeAsync(0)
+    expect(HTMLMediaElement.prototype.play).toHaveBeenCalled()
+  })
+
+  it('要求人脸验证的签到先拍照，通过后才发送签到事件', async () => {
+    apiMock.openLearningSession.mockResolvedValue(session('CREATED'))
+    realtimeMock.bind.mockResolvedValue(session('CREATED'))
+    apiMock.attendanceFaceRequired.mockResolvedValue(true)
+    apiMock.verifyAttendanceFace.mockResolvedValue(undefined)
+    realtimeMock.sendEvent.mockResolvedValue(eventResult('SIGNED_IN'))
+    wrapper = mountStudyView()
+    await flushPromises()
+    await wrapper.findAll('button').find((button) => button.text() === '学习签到')!.trigger('click')
+    await flushPromises()
+    expect(realtimeMock.sendEvent).not.toHaveBeenCalled()
+    wrapper.findComponent({ name: 'CameraCapture' }).vm.$emit('capture', new File(['photo'], 'face.jpg', { type: 'image/jpeg' }))
+    await flushPromises()
+    expect(apiMock.verifyAttendanceFace).toHaveBeenCalledWith('900', 'SIGN_IN', expect.any(String), expect.any(File))
+    expect(realtimeMock.sendEvent).toHaveBeenCalled()
+  })
+
+  it('人脸验证失败不会发送签到事件', async () => {
+    apiMock.openLearningSession.mockResolvedValue(session('CREATED'))
+    realtimeMock.bind.mockResolvedValue(session('CREATED'))
+    apiMock.attendanceFaceRequired.mockResolvedValue(true)
+    apiMock.verifyAttendanceFace.mockRejectedValue(new Error('人脸不匹配'))
+    wrapper = mountStudyView()
+    await flushPromises()
+    await wrapper.findAll('button').find((button) => button.text() === '学习签到')!.trigger('click')
+    await flushPromises()
+    wrapper.findComponent({ name: 'CameraCapture' }).vm.$emit('capture', new File(['photo'], 'face.jpg'))
+    await flushPromises()
+    expect(realtimeMock.sendEvent).not.toHaveBeenCalled()
+    expect(wrapper.find('.attendance-camera').exists()).toBe(true)
+  })
+
+  it('切换期间不挂载空地址播放器，加载新课件后恢复其确认位置', async () => {
+    const value = course()
+    value.coursewares[0]!.status = 'COMPLETED'
+    value.coursewares.push({
+      ...value.coursewares[0]!,
+      coursewareSnapshotId: '302',
+      title: '第二课',
+      sortOrder: 2,
+      confirmedPositionMillis: 5000,
+      status: 'IN_PROGRESS',
+    })
+    apiMock.getLearningCourse.mockResolvedValue(value)
+    wrapper = mountStudyView()
+    await flushPromises()
+    let resolveUrl!: (value: { url: string }) => void
+    apiMock.getLearningPlaybackUrl.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveUrl = resolve
+        }),
+    )
+    await wrapper.findAll('.courseware-item')[1]!.trigger('click')
+    expect(wrapper.find('video').exists()).toBe(false)
+    resolveUrl({ url: 'https://example.com/second.mp4' })
+    await flushPromises()
+    const player = wrapper.get('video')
+    expect(player.attributes('src')).toBe('https://example.com/second.mp4')
+    await player.trigger('loadedmetadata')
+    expect((player.element as HTMLVideoElement).currentTime).toBe(5)
+    await player.trigger('seeking')
+    expect((player.element as HTMLVideoElement).currentTime).toBe(5)
+  })
+
+  it('超时结果确认后点击知道了返回对应计划', async () => {
+    wrapper = mountStudyView()
+    await flushPromises()
+    apiMock.getLearningSession.mockResolvedValue(session('TERMINATED'))
+    realtimeMock.options?.onFaceCheckResult?.({ ...faceCheck(), status: 'TIMED_OUT' })
+    await flushPromises()
+    wrapper.findComponent({ name: 'FaceCheckDialog' }).vm.$emit('acknowledged')
+    await flushPromises()
+    expect(routerMock.replace).toHaveBeenCalledWith('/student/plans/100')
+  })
+
+  it('服务端超时扫描稍晚时继续同步，不让弹窗停留在零秒', async () => {
+    vi.useFakeTimers()
+    wrapper = mountStudyView()
+    await flushPromises()
+    const pending = { ...faceCheck(), deadlineAt: new Date(Date.now() - 1000).toISOString() }
+    realtimeMock.options?.onFaceCheckRequired?.(pending)
+    apiMock.getLearningSession
+      .mockResolvedValueOnce({ ...session('FACE_PENDING'), currentFaceCheck: pending })
+      .mockResolvedValueOnce({ ...session('TERMINATED'), currentFaceCheck: { ...pending, status: 'TIMED_OUT' } })
+    wrapper.findComponent({ name: 'FaceCheckDialog' }).vm.$emit('expired')
+    await flushPromises()
+    expect(wrapper.find('.face-check-dialog').text()).toContain('PENDING')
+    await vi.advanceTimersByTimeAsync(1000)
+    await flushPromises()
+    expect(wrapper.find('.face-check-dialog').text()).toContain('TIMED_OUT')
+  })
+
+  it('抽验失败通知丢失后按服务端终态恢复，不因已过截止时间误报超时', async () => {
+    wrapper = mountStudyView()
+    await flushPromises()
+    const pending = { ...faceCheck(), deadlineAt: new Date(Date.now() - 1000).toISOString() }
+    realtimeMock.options?.onFaceCheckRequired?.(pending)
+    apiMock.getLearningSession.mockResolvedValue({
+      ...session('TERMINATED'), currentFaceCheck: { ...pending, status: 'FAILED' },
+    })
+    wrapper.findComponent({ name: 'FaceCheckDialog' }).vm.$emit('expired')
+    await flushPromises()
+    expect(wrapper.find('.face-check-dialog').text()).toBe('FAILED')
+    wrapper.findComponent({ name: 'FaceCheckDialog' }).vm.$emit('acknowledged')
+    expect(routerMock.replace).not.toHaveBeenCalled()
   })
 
   it('连接断开时立即暂停播放器和计时入口', async () => {
@@ -138,10 +270,13 @@ function mountStudyView() {
     global: {
       directives: { loading: () => undefined },
       stubs: {
+        ElDialog: { props: ['modelValue'], template: '<div v-if="modelValue"><slot /></div>' },
+        CameraCapture: { name: 'CameraCapture', template: '<div class="attendance-camera" />' },
         ElAlert: { template: '<div><slot /></div>' },
         ElButton: { template: '<button><slot /></button>' },
         ElCard: { template: '<div><slot name="header" /><slot /></div>' },
         FaceCheckDialog: {
+          name: 'FaceCheckDialog',
           props: ['faceCheck'],
           template: '<div class="face-check-dialog">{{ faceCheck?.status }}</div>',
         },

@@ -143,6 +143,20 @@ export interface PlanPayload {
   userIds?: string[]
 }
 
+/** 任务列表一次性获取的只读汇总学时。 */
+export interface StudentPlanProgress {
+  planId: string
+  requiredDurationMillis: number
+  effectiveDurationMillis: number
+}
+
+/** 批量读取本人计划的汇总进度，避免逐条加载完整课程明细。 */
+export function getStudentPlanProgress(planIds: string[]) {
+  return http.get<StudentPlanProgress[]>('/training/student/plans/progress', {
+    params: { planIds: planIds.join(',') },
+  })
+}
+
 export interface StudentPlan {
   taskId: string
   planId: string

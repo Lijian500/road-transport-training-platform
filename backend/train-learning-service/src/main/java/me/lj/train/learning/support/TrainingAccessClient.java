@@ -24,6 +24,11 @@ public class TrainingAccessClient {
         return unwrap(learningAccessService.getTaskContext(new LearningTaskQuery(planId)));
     }
 
+    /** 读取当前学员的计划快照用于进度展示，不授予播放权限。 */
+    public LearningTaskContextView progressContext(Long planId) {
+        return unwrap(learningAccessService.getTaskContext(new LearningTaskQuery(planId, true)));
+    }
+
     public SignedRequestView playbackUrl(LearningPlaybackCommand command) {
         return unwrap(learningAccessService.createCoursewarePlaybackUrl(command));
     }

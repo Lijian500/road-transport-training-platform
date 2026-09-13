@@ -14,7 +14,7 @@ import static me.lj.train.training.constant.TrainingConstants.PLAN_PUBLISHED;
 import static me.lj.train.training.model.table.PlanTableDef.PLAN;
 
 /**
- * 根据计划起止时间幂等推进计划生命周期。
+ * 根据计划起止时间及全员结业情况幂等推进计划生命周期。
  */
 @Component
 public class PlanLifecycleService {
@@ -41,6 +41,8 @@ public class PlanLifecycleService {
     }
 
     private void refreshStatuses(Long enterpriseId, Long planId) {
+        // 同时修复历史已全员结业的计划，并兜底并发完成后的状态推进。
+        planMapper.finishCompletedPlans(enterpriseId, planId);
         LocalDateTime now = LocalDateTime.now();
         UpdateWrapper<PlanEntity> starting = UpdateWrapper.of(PlanEntity.class)
                 .set(PLAN.STATUS, PLAN_IN_PROGRESS)

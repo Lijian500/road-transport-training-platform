@@ -65,6 +65,28 @@ class FaceReferenceServiceImplTest {
     }
 
     @Test
+    void shouldAllowOwnReferenceWriteButRejectOtherUsersWithoutPermission() {
+        UserContext.set(operator(Collections.emptyList()));
+        when(transactionManager.getTransaction(any(TransactionDefinition.class))).thenReturn(transactionStatus);
+        when(userMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(user(10L, 20L));
+        assertThat(service.bind(new BindFaceReferenceCommand(10L, 101L)).isSuccess()).isTrue();
+        assertThat(service.bind(new BindFaceReferenceCommand(11L, 101L)).getCode())
+                .isEqualTo(AppErrorCode.FORBIDDEN.getCode());
+    }
+
+    @Test
+    void shouldAllowPlatformAdministratorToMaintainOwnReference() {
+        LoginUser platform = operator(Collections.emptyList());
+        platform.setEnterpriseId(null);
+        platform.setPlatformAdmin(true);
+        UserContext.set(platform);
+        when(transactionManager.getTransaction(any(TransactionDefinition.class))).thenReturn(transactionStatus);
+        when(userMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(user(10L, null));
+        assertThat(service.bind(new BindFaceReferenceCommand(10L, 101L)).isSuccess()).isTrue();
+        assertThat(service.get(10L).isSuccess()).isTrue();
+    }
+
+    @Test
     void shouldReturnPreviousObjectWhenReplacingReference() {
         when(transactionManager.getTransaction(any(TransactionDefinition.class)))
                 .thenReturn(transactionStatus);

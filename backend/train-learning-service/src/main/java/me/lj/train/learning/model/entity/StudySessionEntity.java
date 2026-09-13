@@ -10,6 +10,29 @@ import java.time.LocalDateTime;
 @Table("study_session")
 public class StudySessionEntity {
 
+    private String attendanceAction;
+    private Long attendanceSequence;
+    private LocalDateTime attendanceVerifiedAt;
+
+    public String getAttendanceAction() { return attendanceAction; }
+    public void setAttendanceAction(String value) { attendanceAction = value; }
+    public Long getAttendanceSequence() { return attendanceSequence; }
+    public void setAttendanceSequence(Long value) { attendanceSequence = value; }
+    public LocalDateTime getAttendanceVerifiedAt() { return attendanceVerifiedAt; }
+    public void setAttendanceVerifiedAt(LocalDateTime value) { attendanceVerifiedAt = value; }
+
+    private Long attendancePhotoObjectId;
+    public Long getAttendancePhotoObjectId() { return attendancePhotoObjectId; }
+    public void setAttendancePhotoObjectId(Long value) { attendancePhotoObjectId = value; }
+
+    private Long signInPhotoObjectId;
+    public Long getSignInPhotoObjectId() { return signInPhotoObjectId; }
+    public void setSignInPhotoObjectId(Long value) { signInPhotoObjectId = value; }
+
+    private Long signOutPhotoObjectId;
+    public Long getSignOutPhotoObjectId() { return signOutPhotoObjectId; }
+    public void setSignOutPhotoObjectId(Long value) { signOutPhotoObjectId = value; }
+
     @Id(keyType = KeyType.None)
     private Long id;
     private Long enterpriseId;

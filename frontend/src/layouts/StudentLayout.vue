@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
 
+import AccountMenu from '@/components/AccountMenu/AccountMenu.vue'
+import WorkspacePages from '@/components/WorkspacePages/WorkspacePages.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
@@ -34,11 +36,12 @@ async function logout() {
         <RouterLink v-if="authStore.session?.workspaces.includes('admin')" to="/admin">
           管理工作台
         </RouterLink>
+        <AccountMenu />
         <button type="button" @click="logout">退出登录</button>
       </nav>
     </header>
     <main class="workspace__content">
-      <RouterView />
+      <WorkspacePages home="/student" />
     </main>
   </div>
 </template>
@@ -137,7 +140,7 @@ nav a.router-link-active {
   width: 100%;
   max-width: 1480px;
   margin: 0 auto;
-  padding: clamp(32px, 5vw, 64px) clamp(20px, 6vw, 80px);
+  padding: 16px clamp(20px, 6vw, 80px) clamp(32px, 5vw, 64px);
 }
 
 @media (width <= 640px) {

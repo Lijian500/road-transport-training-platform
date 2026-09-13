@@ -24,10 +24,7 @@ onMounted(load)
 
 <template>
   <section>
-    <header class="page-title">
-      <h1>权限目录</h1>
-      <p>权限由系统迁移脚本固定维护，组织角色只能进行分配。</p>
-    </header>
+
     <div class="table-card">
       <el-table
         v-loading="loading"

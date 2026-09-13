@@ -101,9 +101,14 @@ class LearningAccessServiceImplTest {
         assertThat(result.getData().courses()).isEmpty();
     }
 
-    @Test
-    void shouldAllowRetainedStorageObjectForPublishedSnapshotPlayback() {
+    /** 正常学习与提前结业回看都能取得视频签名。 */
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings = {"IN_PROGRESS", "FINISHED"})
+    void shouldAllowRetainedStorageObjectForPublishedSnapshotPlayback(String planStatus) {
         PlanUserEntity task = assignedTask();
+        task.setCompletionStatus("COMPLETED");
+        PlanEntity plan = activePlan();
+        plan.setStatus(planStatus);
         PlanCourseEntity course = new PlanCourseEntity();
         course.setId(200L);
         PlanCoursewareSnapshotEntity snapshot = new PlanCoursewareSnapshotEntity();
@@ -113,7 +118,7 @@ class LearningAccessServiceImplTest {
         object.setId(400L);
         object.setObjectKey("plans/100/video.mp4");
         object.setStatus("RETAINED");
-        when(planMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(activePlan());
+        when(planMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(plan);
         when(planUserMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(task);
         when(planCourseMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(course);
         when(snapshotMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(snapshot);
@@ -135,6 +140,54 @@ class LearningAccessServiceImplTest {
                 .contains("'ACTIVE'")
                 .contains("'RETAINED'");
         verify(lifecycleService).refreshStatus(20L, 100L);
+    }
+
+    /** 仅允许已结业学员在原培训周期内回看，不放开取消、过期或未结业任务。 */
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource({
+            "FINISHED, COMPLETED, -1, 1, true", "FINISHED, NOT_COMPLETED, -1, 1, false",
+            "FINISHED, COMPLETED, -2, -1, false", "CANCELLED, COMPLETED, -1, 1, false",
+            "FINISHED, COMPLETED, 1, 2, false"
+    })
+    void shouldLimitReplayToCompletedTasksWithinPeriod(String status, String completion,
+                                                       int startDays, int endDays, boolean allowed) {
+        PlanEntity plan = activePlan();
+        plan.setStatus(status);
+        plan.setStartAt(LocalDateTime.now().plusDays(startDays));
+        plan.setEndAt(LocalDateTime.now().plusDays(endDays));
+        PlanUserEntity task = assignedTask();
+        task.setCompletionStatus(completion);
+        when(planMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(plan);
+        when(planUserMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(task);
+
+        assertThat(service.getTaskContext(new LearningTaskQuery(100L)).isSuccess()).isEqualTo(allowed);
+    }
+
+    @Test
+    void shouldAllowFinishedPlanProgressButRejectPlayback() {
+        PlanEntity plan = activePlan();
+        plan.setStatus("FINISHED");
+        plan.setEndAt(LocalDateTime.now().minusDays(1));
+        when(planMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(plan);
+        when(planUserMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(assignedTask());
+        when(planCourseMapper.selectListByQuery(any(QueryWrapper.class)))
+                .thenReturn(Collections.emptyList());
+
+        assertThat(service.getTaskContext(new LearningTaskQuery(100L, true)).isSuccess()).isTrue();
+        assertThat(service.getTaskContext(new LearningTaskQuery(100L)).getCode())
+                .isEqualTo(AppErrorCode.LEARNING_ACCESS_DENIED.getCode());
+        assertThat(service.createCoursewarePlaybackUrl(
+                new LearningPlaybackCommand(500L, 100L, 200L, 300L)).getCode())
+                .isEqualTo(AppErrorCode.LEARNING_ACCESS_DENIED.getCode());
+        verifyNoInteractions(objectStorageService);
+    }
+
+    @Test
+    void shouldRejectUnassignedProgressQuery() {
+        when(planMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(activePlan());
+        when(planUserMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(null);
+        assertThat(service.getTaskContext(new LearningTaskQuery(100L, true)).getCode())
+                .isEqualTo(AppErrorCode.LEARNING_ACCESS_DENIED.getCode());
     }
 
     private PlanEntity activePlan() {

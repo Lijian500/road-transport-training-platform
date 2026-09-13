@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import {
@@ -25,7 +26,9 @@ import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
 import PermissionButton from '@/components/PermissionButton/PermissionButton.vue'
 
-const activeTab = ref('questions')
+const route = useRoute()
+const router = useRouter()
+const activeTab = ref(route.query.tab === 'papers' ? 'papers' : 'questions')
 const loading = ref(false)
 const saving = ref(false)
 const questionRows = ref<ExamQuestion[]>([])
@@ -370,15 +373,14 @@ function showError(error: unknown) {
   ElMessage.error(error instanceof ApiError ? error.message : '操作失败，请稍后重试')
 }
 
-onMounted(loadQuestions)
+watch(activeTab, (tab) => { void router.replace({ path: '/admin/exam', query: { tab } }) })
+watch(() => route.query.tab, (tab) => { activeTab.value = tab === 'papers' ? 'papers' : 'questions' })
+onMounted(load)
 </script>
 
 <template>
   <section>
-    <header class="page-title">
-      <h1>考试管理</h1>
-      <p>维护单选题和判断题，启用试卷时将手工题与随机补齐结果固化。</p>
-    </header>
+
 
     <el-tabs v-model="activeTab" @tab-change="load">
       <el-tab-pane label="题库" name="questions">
@@ -474,7 +476,9 @@ onMounted(loadQuestions)
               新建试卷
             </PermissionButton>
           </template>
-          <el-table-column label="试卷名称" min-width="190" prop="name" />
+          <el-table-column label="试卷名称" min-width="190">
+            <template #default="{ row }"><el-button link type="primary" @click="router.push(`/admin/exam/papers/${row.id}`)">{{ row.name }}</el-button></template>
+          </el-table-column>
           <el-table-column label="题目" width="100">
             <template #default="{ row }"
               >{{ row.manualQuestionCount + row.randomQuestionCount }}题</template
@@ -495,6 +499,7 @@ onMounted(loadQuestions)
           </el-table-column>
           <el-table-column label="操作" width="210" fixed="right">
             <template #default="{ row }">
+              <el-button link type="primary" @click="router.push(`/admin/exam/papers/${row.id}`)">详情</el-button>
               <PermissionButton
                 v-if="row.status === 'DRAFT'"
                 permission="admin:exam:manage"

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
 
+import AccountMenu from '@/components/AccountMenu/AccountMenu.vue'
+import WorkspacePages from '@/components/WorkspacePages/WorkspacePages.vue'
 import { useAuthStore } from '@/stores/auth'
 import { usePermissionStore } from '@/stores/permission'
 
@@ -125,18 +127,12 @@ async function logout() {
           <strong>{{ authStore.session?.enterpriseName || '平台管理中心' }}</strong>
         </div>
         <div class="workspace__account">
-          <span class="workspace__avatar">
-            {{ authStore.session?.displayName?.slice(0, 1) || '管' }}
-          </span>
-          <span class="workspace__account-copy">
-            <strong>{{ authStore.session?.displayName }}</strong>
-            <small>{{ authStore.session?.username }}</small>
-          </span>
+          <AccountMenu />
           <el-button plain @click="logout">退出登录</el-button>
         </div>
       </header>
       <main class="workspace__content">
-        <RouterView />
+        <WorkspacePages home="/admin" />
       </main>
     </section>
   </div>
@@ -332,7 +328,7 @@ nav a.router-link-exact-active .workspace__nav-dot {
   width: 100%;
   max-width: 1680px;
   margin: 0 auto;
-  padding: clamp(24px, 3.5vw, 48px);
+  padding: 16px clamp(24px, 3.5vw, 48px) clamp(24px, 3.5vw, 48px);
 }
 
 @media (width <= 760px) {
@@ -373,7 +369,7 @@ nav a.router-link-exact-active .workspace__nav-dot {
   }
 
   .workspace__content {
-    padding: 22px 16px 32px;
+    padding: 16px 16px 32px;
   }
 }
 </style>

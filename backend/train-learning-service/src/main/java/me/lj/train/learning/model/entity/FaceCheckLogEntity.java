@@ -6,9 +6,13 @@ import com.mybatisflex.annotation.Table;
 
 import java.time.LocalDateTime;
 
-/** 人脸抽验提交日志实体，照片仅保留不可逆摘要。 */
+/** 人脸抽验提交日志实体，保留照片私有对象引用及摘要。 */
 @Table("face_check_log")
 public class FaceCheckLogEntity {
+
+    private Long photoObjectId;
+    public Long getPhotoObjectId() { return photoObjectId; }
+    public void setPhotoObjectId(Long value) { photoObjectId = value; }
 
     @Id(keyType = KeyType.None)
     private Long id;

@@ -17,6 +17,16 @@ let createObjectUrlDescriptor: PropertyDescriptor | undefined
 let revokeObjectUrlDescriptor: PropertyDescriptor | undefined
 
 describe('FaceCheckDialog', () => {
+  it('超时弹窗仅保留知道了按钮及指定提示', async () => {
+    wrapper = mountDialog({ ...faceCheck('PENDING'), status: 'TIMED_OUT' })
+    expect(wrapper.findComponent({ name: 'ElResult' }).attributes('title')).toBe(
+      '未在规定时间完成抽验，学习已强制停止，请重新签到学习',
+    )
+    expect(wrapper.findAll('button').map((button) => button.text())).toEqual(['知道了'])
+    await wrapper.get('button').trigger('click')
+    expect(wrapper.emitted('acknowledged')).toHaveLength(1)
+  })
+
   beforeEach(() => {
     mediaDevicesDescriptor = Object.getOwnPropertyDescriptor(navigator, 'mediaDevices')
     createObjectUrlDescriptor = Object.getOwnPropertyDescriptor(URL, 'createObjectURL')
@@ -133,7 +143,10 @@ function findButton(target: VueWrapper, text: string) {
 }
 
 /** 恢复测试前URL静态方法，兼容jsdom未实现对象URL的环境。 */
-function restoreUrlMethod(name: 'createObjectURL' | 'revokeObjectURL', descriptor?: PropertyDescriptor) {
+function restoreUrlMethod(
+  name: 'createObjectURL' | 'revokeObjectURL',
+  descriptor?: PropertyDescriptor,
+) {
   if (descriptor) {
     Object.defineProperty(URL, name, descriptor)
   } else {
@@ -148,7 +161,10 @@ function mountDialog(faceCheck: FaceCheckTask) {
     global: {
       stubs: {
         ElAlert: true,
-        ElButton: { template: '<button @click="$emit(\'click\')"><slot /></button>' },
+        ElButton: {
+          emits: ['click'],
+          template: '<button @click="$emit(\'click\')"><slot /></button>',
+        },
         ElDialog: { template: '<div><slot /><slot name="footer" /></div>' },
         ElResult: true,
       },

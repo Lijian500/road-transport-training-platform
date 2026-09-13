@@ -52,8 +52,7 @@ public class FaceReferenceServiceImpl extends AdminServiceSupport implements Fac
             if (command == null || command.storageObjectId() == null) {
                 throw new BusinessException(AppErrorCode.PARAM_INVALID, "登记照存储对象不能为空");
             }
-            Long enterpriseId = AdminGuard.requireEnterprisePermission(
-                    AdminPermissions.FACE_CHECK_MANAGE);
+            Long enterpriseId = requireWriteEnterprise(command.userId());
             UserEntity user = requireUser(command.userId(), enterpriseId, true);
             Long previousObjectId = user.getFaceReferenceObjectId();
             LocalDateTime now = LocalDateTime.now();
@@ -62,7 +61,7 @@ public class FaceReferenceServiceImpl extends AdminServiceSupport implements Fac
                     .set(USER.FACE_REFERENCE_UPDATED_AT, now)
                     .set(USER.UPDATED_BY, UserContext.require().getUserId());
             userMapper.updateByCondition(update.toEntity(), USER.ID.eq(user.getId())
-                    .and(USER.ENTERPRISE_ID.eq(enterpriseId)));
+                    .and((enterpriseId == null ? USER.ENTERPRISE_ID.isNull() : USER.ENTERPRISE_ID.eq(enterpriseId))));
             return new FaceReferenceChangeView(
                     new FaceReferenceView(user.getId(), command.storageObjectId(), true, now),
                     previousObjectId);
@@ -72,8 +71,7 @@ public class FaceReferenceServiceImpl extends AdminServiceSupport implements Fac
     @Override
     public Result<FaceReferenceChangeView> remove(Long userId) {
         return executeTransactional(() -> {
-            Long enterpriseId = AdminGuard.requireEnterprisePermission(
-                    AdminPermissions.FACE_CHECK_MANAGE);
+            Long enterpriseId = requireWriteEnterprise(userId);
             UserEntity user = requireUser(userId, enterpriseId, true);
             Long previousObjectId = user.getFaceReferenceObjectId();
             UpdateWrapper<UserEntity> update = UpdateWrapper.of(UserEntity.class)
@@ -81,18 +79,25 @@ public class FaceReferenceServiceImpl extends AdminServiceSupport implements Fac
                     .set(USER.FACE_REFERENCE_UPDATED_AT, null)
                     .set(USER.UPDATED_BY, UserContext.require().getUserId());
             userMapper.updateByCondition(update.toEntity(), USER.ID.eq(user.getId())
-                    .and(USER.ENTERPRISE_ID.eq(enterpriseId)));
+                    .and((enterpriseId == null ? USER.ENTERPRISE_ID.isNull() : USER.ENTERPRISE_ID.eq(enterpriseId))));
             return new FaceReferenceChangeView(
                     new FaceReferenceView(user.getId(), null, false, null), previousObjectId);
         });
     }
 
-    /**
-     * 学员仅能解析本人登记照；管理员查看他人时必须具备查看权限。
-     */
+    /** 本人可维护登记照，其他人员仍需管理权限。 */
+    private Long requireWriteEnterprise(Long userId) {
+        LoginUser operator = UserContext.require();
+        if (operator.getUserId().equals(userId) && (operator.getEnterpriseId() != null || operator.isPlatformAdmin())) {
+            return operator.getEnterpriseId();
+        }
+        return AdminGuard.requireEnterprisePermission(AdminPermissions.FACE_CHECK_MANAGE);
+    }
+
+    /** 学员仅能解析本人登记照；查看他人时必须具备管理端权限。 */
     private Long requireReadEnterprise(LoginUser operator, Long userId) {
         if (userId != null && userId.equals(operator.getUserId())) {
-            if (operator.getEnterpriseId() == null) {
+            if (operator.getEnterpriseId() == null && !operator.isPlatformAdmin()) {
                 throw new BusinessException(AppErrorCode.FORBIDDEN);
             }
             return operator.getEnterpriseId();
@@ -104,7 +109,7 @@ public class FaceReferenceServiceImpl extends AdminServiceSupport implements Fac
     private UserEntity requireUser(Long userId, Long enterpriseId, boolean lock) {
         QueryWrapper query = QueryWrapper.create()
                 .where(USER.ID.eq(userId))
-                .and(USER.ENTERPRISE_ID.eq(enterpriseId));
+                .and((enterpriseId == null ? USER.ENTERPRISE_ID.isNull() : USER.ENTERPRISE_ID.eq(enterpriseId)));
         if (lock) {
             query.forUpdate();
         }
@@ -112,7 +117,9 @@ public class FaceReferenceServiceImpl extends AdminServiceSupport implements Fac
         if (user == null) {
             throw new BusinessException(AppErrorCode.USER_NOT_FOUND);
         }
-        AdminGuard.checkEnterprise(user.getEnterpriseId(), enterpriseId);
+        if (!java.util.Objects.equals(user.getEnterpriseId(), enterpriseId)) {
+            throw new BusinessException(AppErrorCode.DATA_SCOPE_VIOLATION);
+        }
         return user;
     }
 

@@ -5,6 +5,9 @@ import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.update.UpdateWrapper;
 import me.lj.train.admin.mapper.OrgMapper;
 import me.lj.train.admin.mapper.VehicleMapper;
+import me.lj.train.admin.mapper.UserMapper;
+import me.lj.train.admin.model.entity.UserEntity;
+import static me.lj.train.admin.model.table.UserTableDef.USER;
 import me.lj.train.admin.model.entity.OrgEntity;
 import me.lj.train.admin.model.entity.VehicleEntity;
 import me.lj.train.admin.support.AdminGuard;
@@ -35,11 +38,51 @@ import static me.lj.train.admin.model.table.OrgTableDef.ORG;
 public class VehicleServiceImpl extends AdminServiceSupport implements VehicleService {
     private final VehicleMapper mapper;
     private final OrgMapper orgMapper;
+    private final UserMapper userMapper;
 
-    public VehicleServiceImpl(PlatformTransactionManager transactions, VehicleMapper mapper, OrgMapper orgMapper) {
+    public VehicleServiceImpl(PlatformTransactionManager transactions, VehicleMapper mapper, OrgMapper orgMapper,
+            UserMapper userMapper) {
         super(transactions);
         this.mapper = mapper;
         this.orgMapper = orgMapper;
+        this.userMapper = userMapper;
+    }
+
+    /** 人员维护权限可独立获取车辆选项，不要求车辆管理权限。 */
+    @Override public Result<PageResult<VehicleOption>> options(int pageNumber, int pageSize, String keyword) {
+        return execute(() -> {
+            Long enterpriseId = AdminGuard.requireEnterpriseAnyPermission(USER_CREATE, USER_UPDATE);
+            PageRequest request = new PageRequest(pageNumber, pageSize);
+            String search = text(keyword, "车牌号", 64, false);
+            Page<VehicleEntity> page = mapper.paginate(request.getPageNumber(), request.getPageSize(),
+                    QueryWrapper.create().where(VEHICLE.ENTERPRISE_ID.eq(enterpriseId))
+                            .and(VEHICLE.STATUS.eq("ENABLED"))
+                            .and(VEHICLE.PLATE_NUMBER.like(search).when(search != null))
+                            .orderBy(VEHICLE.PLATE_NUMBER.asc(), VEHICLE.ID.asc()));
+            return PageResult.of(page.getRecords().stream()
+                    .map(row -> new VehicleOption(row.getId(), row.getPlateNumber(), row.getStatus())).toList(),
+                    page.getTotalRow(), request);
+        });
+    }
+
+    /** 按车辆和企业双重过滤，批量补齐部门名称。 */
+    @Override public Result<PageResult<VehicleStudentView>> students(Long id, int pageNumber, int pageSize) {
+        return execute(() -> {
+            Long enterpriseId = AdminGuard.requireEnterprisePermission(VEHICLE_VIEW);
+            requireVehicle(id, enterpriseId);
+            PageRequest request = new PageRequest(pageNumber, pageSize);
+            Page<UserEntity> page = userMapper.paginate(request.getPageNumber(), request.getPageSize(),
+                    QueryWrapper.create().where(USER.ENTERPRISE_ID.eq(enterpriseId)).and(USER.VEHICLE_ID.eq(id))
+                            .orderBy(USER.CREATED_AT.desc(), USER.ID.desc()));
+            List<Long> orgIds = page.getRecords().stream().map(UserEntity::getOrgId)
+                    .filter(java.util.Objects::nonNull).distinct().toList();
+            Map<Long, String> orgNames = orgIds.isEmpty() ? Map.of() : orgMapper.selectListByQuery(
+                    QueryWrapper.create().where(ORG.ENTERPRISE_ID.eq(enterpriseId)).and(ORG.ID.in(orgIds)))
+                    .stream().collect(Collectors.toMap(OrgEntity::getId, OrgEntity::getOrgName));
+            return PageResult.of(page.getRecords().stream().map(row -> new VehicleStudentView(row.getId(),
+                    row.getUsername(), row.getDisplayName(), row.getOrgId() == null ? null : orgNames.get(row.getOrgId()),
+                    row.getStatus())).toList(), page.getTotalRow(), request);
+        });
     }
 
     /** 数据库分页查询并批量补齐部门名称。 */
@@ -103,9 +146,9 @@ public class VehicleServiceImpl extends AdminServiceSupport implements VehicleSe
         Long enterpriseId = AdminGuard.requireEnterprisePermission(editing ? VEHICLE_UPDATE : VEHICLE_CREATE);
         if (command == null) throw new BusinessException(AppErrorCode.PARAM_INVALID);
         VehicleEntity row = editing ? requireVehicle(command.id(), enterpriseId) : new VehicleEntity();
-        String plate = text(command.plateNumber(), "车牌号", 16, true).toUpperCase(Locale.ROOT);
-        if (plate.length() < 3 || plate.chars().anyMatch(Character::isWhitespace)) {
-            throw new BusinessException(AppErrorCode.PARAM_INVALID, "车牌号应为3至16位且不能包含空白");
+        String plate = text(command.plateNumber(), "车牌号", 8, true).toUpperCase(Locale.ROOT);
+        if (!plate.matches("[\\u4e00-\\u9fff][A-Z][A-Z0-9]{5,6}")) {
+            throw new BusinessException(AppErrorCode.PARAM_INVALID, "车牌号须为汉字+字母+5位序号（新能源6位），共7或8位");
         }
         String type = text(command.vehicleType(), "车辆类型", 64, true);
         String remark = text(command.remark(), "备注", 255, false);

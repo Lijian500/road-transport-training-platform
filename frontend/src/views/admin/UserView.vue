@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, onBeforeUnmount, reactive, ref, watch } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
 
 import {
@@ -13,6 +13,7 @@ import {
   getOrgTree,
   getRoleOptions,
   getUsers,
+  getUser,
   resetUserPassword,
   updateUser,
   type OrgNode,
@@ -21,6 +22,8 @@ import {
   type User,
   type UserPayload,
 } from '@/api/admin'
+import CameraCapture from '@/components/CameraCapture/CameraCapture.vue'
+import { getVehicleOptions, type VehicleOption } from '@/api/vehicles'
 import { ApiError } from '@/api/http'
 import AppDialog from '@/components/AppDialog/AppDialog.vue'
 import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
@@ -30,6 +33,47 @@ import StatusTag from '@/components/StatusTag/StatusTag.vue'
 import { usePermissionStore } from '@/stores/permission'
 import { uploadSignedBlob } from '@/utils/ossUpload'
 import { isValidPassword, PASSWORD_RULE_MESSAGE, validatePassword } from '@/utils/validation'
+
+const vehicleOptions = ref<VehicleOption[]>([])
+const vehicleLoading = ref(false)
+const detailUser = ref<User>()
+const detailVisible = ref(false)
+let vehicleVersion = 0
+let localFaceUrl = ''
+
+/** 按车牌搜索本企业可用车辆，同时保留当前绑定车辆的回显。 */
+async function searchVehicles(keyword = '') {
+  const version = ++vehicleVersion
+  vehicleLoading.value = true
+  try {
+    const result = await getVehicleOptions(keyword)
+    if (version !== vehicleVersion) return
+    const current = vehicleOptions.value.find((vehicle) => vehicle.id === form.vehicleId)
+    vehicleOptions.value = result.records
+    if (current && !result.records.some((vehicle) => vehicle.id === current.id)) vehicleOptions.value.unshift(current)
+  } catch (error) { showError(error) }
+  finally { if (version === vehicleVersion) vehicleLoading.value = false }
+}
+
+/** 详情从服务端重新读取，展示最新部门、角色和绑定车牌。 */
+async function openDetail(row: User) {
+  try { detailUser.value = await getUser(row.id); detailVisible.value = true }
+  catch (error) { showError(error) }
+}
+
+/** 回收本地照片预览，避免反复采集占用内存。 */
+function clearLocalFace() {
+  if (localFaceUrl) URL.revokeObjectURL(localFaceUrl)
+  localFaceUrl = ''
+}
+
+/** 文件选择和摄像头采集统一进入待上传预览。 */
+function acceptFace(file: File) {
+  clearLocalFace()
+  faceFile.value = file
+  localFaceUrl = URL.createObjectURL(file)
+  facePreviewUrl.value = localFaceUrl
+}
 
 const loading = ref(false)
 const permissionStore = usePermissionStore()
@@ -49,7 +93,9 @@ const query = reactive({
 const dialogVisible = ref(false)
 const editingId = ref<string>()
 const formRef = ref<FormInstance>()
+/** 初始化人员表单，车牌为非必填。 */
 const emptyUser = (): UserPayload => ({
+  vehicleId: null,
   username: '',
   displayName: '',
   phone: '',
@@ -95,6 +141,7 @@ const faceUser = ref<User>()
 const faceFile = ref<File>()
 const facePreviewUrl = ref('')
 const facePreviewLoading = ref(false)
+const faceCameraActive = ref(false)
 
 /** 判断当前账号是否可维护登记照。 */
 function canManageFaceReference() {
@@ -103,6 +150,7 @@ function canManageFaceReference() {
 
 /** 打开登记照弹窗，并清理上一次选择和短期预览。 */
 function openFaceReference(row: User) {
+  clearLocalFace()
   faceUser.value = row
   faceFile.value = undefined
   facePreviewUrl.value = ''
@@ -123,7 +171,7 @@ function selectFaceFile(event: Event) {
     ElMessage.warning('登记照不能超过 5MB')
     return
   }
-  faceFile.value = file
+  acceptFace(file)
 }
 
 /** 通过短期签名直传登记照并完成用户绑定。 */
@@ -146,6 +194,7 @@ async function saveFaceReference() {
     const reference = await completeFaceReferenceUploadSession(user.id, uploadSession.id)
     user.faceReferenceEnrolled = reference.enrolled
     user.faceReferenceUpdatedAt = reference.updatedAt
+    clearLocalFace()
     faceFile.value = undefined
     facePreviewUrl.value = ''
     ElMessage.success('登记照已更新')
@@ -191,12 +240,14 @@ async function removeFaceReference() {
   }
 }
 
+/** 加载部门与可分配角色。 */
 async function loadBaseData() {
   const [orgResult, roleResult] = await Promise.all([getOrgTree(), getRoleOptions()])
   orgTree.value = orgResult
   roles.value = roleResult
 }
 
+/** 按当前条件分页读取人员。 */
 async function load() {
   loading.value = true
   try {
@@ -213,6 +264,7 @@ async function load() {
   }
 }
 
+/** 初始化新增人员表单。 */
 function openCreate() {
   editingId.value = undefined
   Object.assign(form, emptyUser(), {
@@ -220,9 +272,12 @@ function openCreate() {
     roleIds: roles.value.filter((role) => role.code === 'STUDENT').map((role) => role.id),
   })
   dialogVisible.value = true
+  void searchVehicles()
 }
 
+/** 回显人员资料和当前绑定车牌。 */
 function openEdit(row: User) {
+  vehicleOptions.value = row.vehicleId ? [{ id: row.vehicleId, plateNumber: row.plateNumber || '原绑定车辆', status: 'ENABLED' }] : []
   editingId.value = row.id
   Object.assign(form, emptyUser(), {
     username: row.username,
@@ -230,8 +285,10 @@ function openEdit(row: User) {
     phone: row.phone,
     orgId: row.orgId,
     roleIds: row.roleIds,
+    vehicleId: row.vehicleId || null,
   })
   dialogVisible.value = true
+  void searchVehicles()
 }
 
 /** 保存新增或编辑的组织用户。 */
@@ -246,9 +303,10 @@ async function save() {
         displayName: form.displayName,
         phone: form.phone,
         orgId: form.orgId,
+        vehicleId: form.vehicleId || null,
       })
     } else {
-      await createUser(form)
+      await createUser({ ...form, vehicleId: form.vehicleId || null })
     }
     ElMessage.success(editingId.value ? '用户信息已更新' : '用户创建成功')
     dialogVisible.value = false
@@ -260,6 +318,7 @@ async function save() {
   }
 }
 
+/** 确认后切换用户状态。 */
 async function toggleStatus(row: User) {
   const status: Status = row.status === 'ENABLED' ? 'DISABLED' : 'ENABLED'
   await ElMessageBox.confirm(
@@ -276,12 +335,14 @@ async function toggleStatus(row: User) {
   }
 }
 
+/** 打开密码重置表单。 */
 function openReset(row: User) {
   resetUser.value = row
   temporaryPassword.value = ''
   resetVisible.value = true
 }
 
+/** 验证密码规则并重置用户密码。 */
 async function resetPassword() {
   if (!resetUser.value || !isValidPassword(temporaryPassword.value)) {
     ElMessage.warning(PASSWORD_RULE_MESSAGE)
@@ -300,12 +361,14 @@ async function resetPassword() {
   }
 }
 
+/** 回显用户已分配的角色。 */
 function openRoles(row: User) {
   roleUser.value = row
   selectedRoleIds.value = [...row.roleIds]
   roleVisible.value = true
 }
 
+/** 保存用户角色。 */
 async function saveRoles() {
   if (!roleUser.value) {
     return
@@ -342,14 +405,19 @@ function search() {
   void load()
 }
 
+/** 清空筛选条件并重新查询。 */
 function resetSearch() {
   Object.assign(query, { keyword: '', orgId: '', status: '', pageNumber: 1 })
   void load()
 }
 
+/** 统一显示人员操作错误。 */
 function showError(error: unknown) {
   ElMessage.error(error instanceof ApiError ? error.message : '操作失败，请稍后重试')
 }
+
+watch(faceVisible, (visible) => { if (!visible) { clearLocalFace(); faceFile.value = undefined; facePreviewUrl.value = '' } })
+onBeforeUnmount(clearLocalFace)
 
 onMounted(async () => {
   try {
@@ -363,10 +431,7 @@ onMounted(async () => {
 
 <template>
   <section>
-    <header class="page-title">
-      <h1>用户管理</h1>
-      <p>维护本组织账号、所属部门、状态和角色。</p>
-    </header>
+
     <AppTable
       :data="rows"
       :loading="loading"
@@ -414,6 +479,7 @@ onMounted(async () => {
       <el-table-column label="用户名" min-width="130" prop="username" />
       <el-table-column label="姓名" min-width="110" prop="displayName" />
       <el-table-column label="部门" min-width="130" prop="orgName" />
+      <el-table-column label="绑定车牌" min-width="130"><template #default="{ row }">{{ row.plateNumber || '未绑定' }}</template></el-table-column>
       <el-table-column label="角色" min-width="180">
         <template #default="{ row }">{{ row.roleNames.join('、') || '-' }}</template>
       </el-table-column>
@@ -430,8 +496,9 @@ onMounted(async () => {
           </small>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="360">
+      <el-table-column fixed="right" label="操作" width="410">
         <template #default="{ row }">
+          <el-button link type="primary" @click="openDetail(row)">详情</el-button>
           <PermissionButton
             permission="admin:user:update"
             link
@@ -489,6 +556,11 @@ onMounted(async () => {
             default-expand-all
           />
         </el-form-item>
+        <el-form-item label="绑定车牌">
+          <el-select v-model="form.vehicleId" clearable filterable remote :remote-method="searchVehicles" :loading="vehicleLoading" placeholder="请选择车牌（非必填，可输入搜索）">
+            <el-option v-for="vehicle in vehicleOptions" :key="vehicle.id" :value="vehicle.id" :label="vehicle.plateNumber" />
+          </el-select>
+        </el-form-item>
         <template v-if="!editingId">
           <el-form-item label="初始角色" prop="roleIds">
             <el-select v-model="form.roleIds" multiple>
@@ -523,9 +595,24 @@ onMounted(async () => {
       </el-checkbox-group>
     </AppDialog>
 
+    <el-dialog v-model="detailVisible" title="用户详情" width="min(700px, 95vw)">
+      <el-descriptions v-if="detailUser" :column="2" border>
+        <el-descriptions-item label="用户名">{{ detailUser.username }}</el-descriptions-item>
+        <el-descriptions-item label="姓名">{{ detailUser.displayName }}</el-descriptions-item>
+        <el-descriptions-item label="手机号">{{ detailUser.phone || '未填写' }}</el-descriptions-item>
+        <el-descriptions-item label="部门">{{ detailUser.orgName || '未分配' }}</el-descriptions-item>
+        <el-descriptions-item label="绑定车牌">{{ detailUser.plateNumber || '未绑定' }}</el-descriptions-item>
+        <el-descriptions-item label="状态">{{ detailUser.status === 'ENABLED' ? '启用' : '禁用' }}</el-descriptions-item>
+        <el-descriptions-item label="角色">{{ detailUser.roleNames.join('、') || '未分配' }}</el-descriptions-item>
+        <el-descriptions-item label="人脸登记">{{ detailUser.faceReferenceEnrolled ? '已登记' : '未登记' }}</el-descriptions-item>
+      </el-descriptions>
+    </el-dialog>
+
     <el-dialog
       v-model="faceVisible"
       :close-on-click-modal="!saving"
+      :close-on-press-escape="!saving"
+      :show-close="!saving"
       :title="`${faceUser?.displayName || ''} · 人脸登记照`"
       destroy-on-close
       width="560px"
@@ -539,7 +626,7 @@ onMounted(async () => {
         "
         :type="faceUser?.faceReferenceEnrolled ? 'success' : 'warning'"
       />
-      <div v-loading="facePreviewLoading" class="face-preview">
+      <div v-if="!faceCameraActive" v-loading="facePreviewLoading" class="face-preview">
         <img v-if="facePreviewUrl" :src="facePreviewUrl" alt="用户登记照预览" />
         <el-empty v-else description="登记照默认不加载，请按需获取短期预览" :image-size="80" />
       </div>
@@ -552,7 +639,7 @@ onMounted(async () => {
           获取预览
         </el-button>
         <label v-if="canManageFaceReference()" class="face-file-button">
-          <input accept="image/jpeg,image/png" type="file" @change="selectFaceFile" />
+          <input :disabled="saving" accept="image/jpeg,image/png" type="file" @change="selectFaceFile" />
           <span>{{
             faceFile ? '重新选择' : faceUser?.faceReferenceEnrolled ? '选择替换照片' : '选择照片'
           }}</span>
@@ -567,6 +654,7 @@ onMounted(async () => {
           删除登记照
         </el-button>
       </div>
+      <CameraCapture v-if="faceVisible && canManageFaceReference() && !saving" @capture="acceptFace" @active-change="faceCameraActive = $event" />
       <p v-if="faceFile" class="face-file-name">待上传：{{ faceFile.name }}</p>
       <template #footer>
         <el-button :disabled="saving" @click="faceVisible = false">关闭</el-button>

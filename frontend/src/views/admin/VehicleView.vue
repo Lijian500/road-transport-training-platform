@@ -3,6 +3,8 @@ import { onMounted, reactive, ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   getVehicles,
+  getVehicleStudents,
+  type VehicleStudent,
   getVehicleDepartments,
   createVehicle,
   updateVehicle,
@@ -24,6 +26,39 @@ const dialog = ref(false)
 const editingId = ref('')
 const query = reactive({ pageNumber: 1, pageSize: 10, keyword: '', status: '', orgId: '' })
 const form = reactive({ plateNumber: '', vehicleType: '', orgId: '', remark: '' })
+const studentsVisible = ref(false)
+const students = ref<VehicleStudent[]>([])
+const studentsTotal = ref(0)
+const studentsPage = ref(1)
+const studentsLoading = ref(false)
+const selectedVehicle = ref<Vehicle>()
+let studentsVersion = 0
+
+/** 打开车辆绑定人员列表，清理上次分页。 */
+function openStudents(row: Vehicle) {
+  selectedVehicle.value = row
+  students.value = []
+  studentsTotal.value = 0
+  studentsPage.value = 1
+  studentsVisible.value = true
+  void loadStudents()
+}
+
+/** 分页查看该车辆绑定的本企业学员，丢弃切换车辆后的过期响应。 */
+async function loadStudents(page = studentsPage.value) {
+  if (!selectedVehicle.value) return
+  const current = ++studentsVersion
+  studentsPage.value = page
+  studentsLoading.value = true
+  try {
+    const result = await getVehicleStudents(selectedVehicle.value.id, page)
+    if (current !== studentsVersion) return
+    students.value = result.records
+    studentsTotal.value = result.total
+  } catch (reason) { if (current === studentsVersion) showError(reason) }
+  finally { if (current === studentsVersion) studentsLoading.value = false }
+}
+
 let version = 0
 
 /** 分页读取车辆，筛选变化时丢弃旧响应。 */
@@ -82,6 +117,11 @@ async function save() {
     ElMessage.warning('请填写车牌号和车辆类型')
     return
   }
+  form.plateNumber = form.plateNumber.trim().toUpperCase()
+  if (!/^[\u4e00-\u9fff][A-Z][A-Z0-9]{5,6}$/.test(form.plateNumber)) {
+    ElMessage.warning('车牌号须为汉字+字母+5位序号（新能源6位），共7或8位')
+    return
+  }
   saving.value = true
   try {
     const data = { ...form, orgId: form.orgId || undefined }
@@ -128,10 +168,7 @@ onMounted(() => {
 
 <template>
   <section>
-    <header class="page-title">
-      <h1>车辆管理</h1>
-      <p>维护本企业车辆基础信息及所属部门。</p>
-    </header>
+
     <AppTable
       :data="rows"
       :total="total"
@@ -184,8 +221,9 @@ onMounted(() => {
       <el-table-column label="创建时间" min-width="180"
         ><template #default="{ row }">{{ recordTime(row.createdAt) }}</template></el-table-column
       >
-      <el-table-column label="操作" fixed="right" width="135"
+      <el-table-column label="操作" fixed="right" width="225"
         ><template #default="{ row }">
+          <el-button link type="primary" @click="openStudents(row)">绑定学员</el-button>
           <el-button
             v-if="permission.has('admin:vehicle:update')"
             link
@@ -203,6 +241,15 @@ onMounted(() => {
         </template></el-table-column
       >
     </AppTable>
+    <el-dialog v-model="studentsVisible" :title="`${selectedVehicle?.plateNumber || ''} · 绑定学员`" width="min(760px, 95vw)">
+      <el-table v-loading="studentsLoading" :data="students">
+        <el-table-column prop="displayName" label="姓名" />
+        <el-table-column prop="username" label="用户名" />
+        <el-table-column prop="orgName" label="所属部门" />
+        <el-table-column label="状态"><template #default="{ row }">{{ row.status === 'ENABLED' ? '启用' : '禁用' }}</template></el-table-column>
+      </el-table>
+      <el-pagination :current-page="studentsPage" :page-size="10" :total="studentsTotal" layout="total, prev, pager, next" @current-change="loadStudents" />
+    </el-dialog>
     <el-dialog
       v-model="dialog"
       :title="editingId ? '编辑车辆' : '新增车辆'"
@@ -211,7 +258,7 @@ onMounted(() => {
     >
       <el-form label-width="90px" @submit.prevent="save">
         <el-form-item label="车牌号" required
-          ><el-input v-model="form.plateNumber" maxlength="16"
+          ><el-input v-model="form.plateNumber" maxlength="8" show-word-limit placeholder="如：川A12345 / 川AD12345"
         /></el-form-item>
         <el-form-item label="车辆类型" required
           ><el-input v-model="form.vehicleType" maxlength="64" placeholder="如：重型货车、客车"

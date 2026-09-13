@@ -181,10 +181,7 @@ onMounted(load)
 
 <template>
   <section>
-    <header class="page-title">
-      <h1>角色管理</h1>
-      <p>创建组织自定义角色并分配菜单和操作权限，内置角色不可修改。</p>
-    </header>
+
     <AppTable
       :data="rows"
       :loading="loading"

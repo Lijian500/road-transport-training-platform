@@ -162,6 +162,10 @@ public final class PlanModels {
             LocalDateTime updatedAt) implements Serializable {
     }
 
+    /** 批量查询任务要求学时，未开始学习时也取发布快照的完整要求。 */
+    public record StudentPlanDurationView(Long taskId, Long planId,
+            long requiredDurationMillis) implements Serializable { }
+
     public record StudentPlanView(
             Long taskId,
             Long planId,

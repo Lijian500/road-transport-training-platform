@@ -170,3 +170,19 @@ export function getLearningPlaybackUrl(
     { params: { clientInstanceId } },
   )
 }
+
+/** 查询会话的签到签退人脸要求，以服务端规则为准。 */
+export function attendanceFaceRequired(sessionId: string) {
+  return http.get<boolean>(`/learning/sessions/${sessionId}/attendance-face`)
+}
+
+/** 验证当次签到签退照片，凭据仅可用于当前浏览器的下一事件。 */
+export function verifyAttendanceFace(sessionId: string, action: string, clientInstanceId: string, photo: File) {
+  const data = new FormData()
+  data.append('action', action)
+  data.append('clientInstanceId', clientInstanceId)
+  data.append('photo', photo)
+  return http.post<void>(`/learning/sessions/${sessionId}/attendance-face`, data, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+}

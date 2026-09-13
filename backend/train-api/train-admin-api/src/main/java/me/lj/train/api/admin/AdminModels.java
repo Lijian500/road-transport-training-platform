@@ -231,14 +231,16 @@ public final class AdminModels {
             String phone,
             Long orgId,
             String temporaryPassword,
-            List<Long> roleIds) implements Serializable {
+            List<Long> roleIds,
+            Long vehicleId) implements Serializable {
     }
 
     public record UpdateUserCommand(
             Long id,
             String displayName,
             String phone,
-            Long orgId) implements Serializable {
+            Long orgId,
+            Long vehicleId) implements Serializable {
     }
 
     public record ResetPasswordCommand(Long id, String temporaryPassword) implements Serializable {
@@ -261,7 +263,9 @@ public final class AdminModels {
             List<String> roleNames,
             boolean faceReferenceEnrolled,
             LocalDateTime faceReferenceUpdatedAt,
-            LocalDateTime createdAt) implements Serializable {
+            LocalDateTime createdAt,
+            Long vehicleId,
+            String plateNumber) implements Serializable {
     }
 
     public record RoleQuery(

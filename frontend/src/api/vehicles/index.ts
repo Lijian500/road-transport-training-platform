@@ -17,6 +17,34 @@ export interface VehicleInput {
   remark?: string
 }
 
+export interface VehicleOption {
+  id: string
+  plateNumber: string
+  status: string
+}
+
+export interface VehicleStudent {
+  id: string
+  username: string
+  displayName: string
+  orgName?: string
+  status: string
+}
+
+/** 人员维护按车牌搜索车辆候选项，可进一步输入关键词缩小范围。 */
+export function getVehicleOptions(keyword = '') {
+  return http.get<PageResult<VehicleOption>>('/admin/vehicles/options', {
+    params: { keyword, pageNumber: 1, pageSize: 100 },
+  })
+}
+
+/** 分页查看车辆绑定的人员。 */
+export function getVehicleStudents(id: string, pageNumber = 1) {
+  return http.get<PageResult<VehicleStudent>>(`/admin/vehicles/${id}/students`, {
+    params: { pageNumber, pageSize: 10 },
+  })
+}
+
 /** 分页查询本企业车辆。 */
 export function getVehicles(params: {
   pageNumber: number

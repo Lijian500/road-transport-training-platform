@@ -17,4 +17,8 @@ public interface VehicleService {
     Result<?> changeStatus(Long id, String status);
     /** 列出车辆管理可选部门，不额外要求部门管理权限。 */
     Result<List<VehicleDepartmentView>> departments();
+    /** 按关键字分页查找本企业车辆，供人员绑定选用。 */
+    Result<PageResult<VehicleOption>> options(int pageNumber, int pageSize, String keyword);
+    /** 分页查看车辆绑定的人员。 */
+    Result<PageResult<VehicleStudentView>> students(Long id, int pageNumber, int pageSize);
 }

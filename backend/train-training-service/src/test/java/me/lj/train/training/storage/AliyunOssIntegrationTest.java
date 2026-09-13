@@ -48,6 +48,8 @@ class AliyunOssIntegrationTest {
 
         try {
             assertThat(storage.isEnabled()).as(storage.disabledMessage()).isTrue();
+            // 完成接口先查询对象是否存在；未合并时的404必须被正常识别。
+            assertThat(storage.headObject(objectKey)).isNull();
             uploadId = storage.initiateMultipartUpload(objectKey, "video/mp4");
 
             uploadPart(httpClient, storage, objectKey, uploadId, 1,
@@ -60,6 +62,7 @@ class AliyunOssIntegrationTest {
             assertThat(parts).extracting(StoredPart::sizeBytes)
                     .containsExactly((long) FIRST_PART_SIZE, (long) SECOND_PART_SIZE);
 
+            assertThat(storage.headObject(objectKey)).isNull();
             storage.completeMultipartUpload(objectKey, uploadId, parts);
             completed = true;
             ObjectMetadata metadata = storage.headObject(objectKey);

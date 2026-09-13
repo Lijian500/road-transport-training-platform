@@ -11,7 +11,7 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Component;
 
 /**
- * 按当前学员身份读取登记照，学习服务不持久化任何原图。
+ * 按当前学员身份读取登记照，学习服务仅保存照片对象引用。
  */
 @Component
 public class FaceReferenceImageClient {
@@ -37,6 +37,19 @@ public class FaceReferenceImageClient {
                     "登记照暂时无法读取");
         }
         return content;
+    }
+
+    /** 保存当次核验照片并返回私有对象标识。 */
+    public Long saveLearningPhoto(byte[] content) {
+        Long id = unwrap(privateImageStorageService.saveLearningPhoto(content), "学习照片保存失败");
+        if (id == null) throw new BusinessException(AppErrorCode.STORAGE_OPERATION_FAILED, "学习照片保存失败");
+        return id;
+    }
+
+    /** 历史未留存照片时无需访问对象存储。 */
+    public String learningPhotoUrl(Long id) {
+        if (id == null) return null;
+        return unwrap(privateImageStorageService.learningPhotoPreview(id), "学习照片预览失败").url();
     }
 
     private <T> T unwrap(Result<T> result, String emptyMessage) {

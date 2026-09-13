@@ -42,6 +42,8 @@ import static me.lj.train.training.constant.TrainingConstants.ASSIGNMENT_ASSIGNE
 import static me.lj.train.training.constant.TrainingConstants.OBJECT_ACTIVE;
 import static me.lj.train.training.constant.TrainingConstants.OBJECT_RETAINED;
 import static me.lj.train.training.constant.TrainingConstants.PLAN_IN_PROGRESS;
+import static me.lj.train.training.constant.TrainingConstants.PLAN_FINISHED;
+import static me.lj.train.training.constant.TrainingConstants.COMPLETION_COMPLETED;
 import static me.lj.train.training.constant.TrainingPermissions.STUDENT_LEARNING_STUDY;
 import static me.lj.train.training.model.table.PlanCourseTableDef.PLAN_COURSE;
 import static me.lj.train.training.model.table.PlanCoursewareSnapshotTableDef.PLAN_COURSEWARE_SNAPSHOT;
@@ -88,7 +90,7 @@ public class LearningAccessServiceImpl extends TrainingServiceSupport implements
     @Override
     public Result<LearningTaskContextView> getTaskContext(LearningTaskQuery query) {
         return execute(() -> {
-            Context context = requireContext(query == null ? null : query.planId());
+            Context context = requireContext(query == null ? null : query.planId(), query != null && query.progressOnly());
             List<PlanCourseEntity> courses = planCourseMapper.selectListByQuery(QueryWrapper.create()
                     .where(PLAN_COURSE.ENTERPRISE_ID.eq(context.enterpriseId))
                     .and(PLAN_COURSE.PLAN_ID.eq(context.plan.getId()))
@@ -163,6 +165,11 @@ public class LearningAccessServiceImpl extends TrainingServiceSupport implements
     }
 
     private Context requireContext(Long planId) {
+        return requireContext(planId, false);
+    }
+
+    /** 进度查询允许非草稿计划；提前结业允许周期内回看，过期或取消仍禁止播放。 */
+    private Context requireContext(Long planId, boolean progressOnly) {
         Long enterpriseId = TrainingGuard.requireEnterprisePermission(STUDENT_LEARNING_STUDY);
         Long userId = UserContext.require().getUserId();
         if (planId == null) {
@@ -178,9 +185,15 @@ public class LearningAccessServiceImpl extends TrainingServiceSupport implements
                 .and(PLAN_USER.PLAN_ID.eq(planId))
                 .and(PLAN_USER.USER_ID.eq(userId)));
         LocalDateTime now = LocalDateTime.now();
-        if (plan == null || task == null || !ASSIGNMENT_ASSIGNED.equals(task.getAssignmentStatus())
-                || !PLAN_IN_PROGRESS.equals(plan.getStatus())
-                || now.isBefore(plan.getStartAt()) || !now.isBefore(plan.getEndAt())) {
+        if (plan == null || task == null
+                || (!ASSIGNMENT_ASSIGNED.equals(task.getAssignmentStatus())
+                && !(progressOnly && "CANCELLED".equals(plan.getStatus())
+                && "CANCELLED".equals(task.getAssignmentStatus())))
+                || "DRAFT".equals(plan.getStatus())
+                || (!progressOnly && (!(PLAN_IN_PROGRESS.equals(plan.getStatus())
+                || (PLAN_FINISHED.equals(plan.getStatus())
+                && COMPLETION_COMPLETED.equals(task.getCompletionStatus())))
+                || now.isBefore(plan.getStartAt()) || !now.isBefore(plan.getEndAt())))) {
             throw new BusinessException(AppErrorCode.LEARNING_ACCESS_DENIED);
         }
         return new Context(enterpriseId, plan, task);

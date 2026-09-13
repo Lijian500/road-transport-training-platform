@@ -20,6 +20,7 @@ import {
 
 const HEARTBEAT_INTERVAL_MILLIS = 20_000
 const ACK_TIMEOUT_MILLIS = 10_000
+const BIND_TIMEOUT_MILLIS = 30_000
 
 interface LearningRealtimeOptions {
   clientInstanceId: string
@@ -74,6 +75,7 @@ export function useLearningRealtime(options: LearningRealtimeOptions) {
   let studySessionId: string | undefined
   let pendingEvent: PendingEvent | undefined
   let heartbeatTimer: ReturnType<typeof setInterval> | undefined
+  let bindTimer: ReturnType<typeof setTimeout> | undefined
   let establishing = false
   let closing = false
   let replacementNotified = false
@@ -98,6 +100,15 @@ export function useLearningRealtime(options: LearningRealtimeOptions) {
     const promise = new Promise<LearningSession>((resolve, reject) => {
       bindWaiters.push({ resolve, reject })
     })
+    // 重连不能延长首次绑定的总等待时间，超时后释放页面加载状态。
+    if (!bindTimer) {
+      bindTimer = setTimeout(() => {
+        rejectBindWaiters(
+          new LearningRealtimeError('学习连接建立超时，请刷新页面重试', 'REALTIME_BIND_TIMEOUT'),
+        )
+        close()
+      }, BIND_TIMEOUT_MILLIS)
+    }
     if (ready.value && latestSession.value) {
       resolveBindWaiters(latestSession.value)
     } else if (connectionState.value === 'connected') {
@@ -554,11 +565,15 @@ export function useLearningRealtime(options: LearningRealtimeOptions) {
 
   /** 完成所有等待实时会话就绪的Promise。 */
   function resolveBindWaiters(session: LearningSession) {
+    clearTimeout(bindTimer)
+    bindTimer = undefined
     bindWaiters.splice(0).forEach((waiter) => waiter.resolve(session))
   }
 
   /** 拒绝所有等待实时会话就绪的Promise。 */
   function rejectBindWaiters(error: LearningRealtimeError) {
+    clearTimeout(bindTimer)
+    bindTimer = undefined
     bindWaiters.splice(0).forEach((waiter) => waiter.reject(error))
   }
 

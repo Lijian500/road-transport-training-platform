@@ -20,6 +20,22 @@ public class VehicleController {
     @DubboReference(check = false, timeout = 5000, retries = 0)
     private VehicleService service;
 
+    /** 人员新增和编辑独立查询可绑定的车辆。 */
+    @GetMapping("/options")
+    @RequirePermission({"admin:user:create", "admin:user:update"})
+    public Result<PageResult<VehicleOption>> options(@RequestParam(defaultValue = "1") int pageNumber,
+            @RequestParam(defaultValue = "20") int pageSize, @RequestParam(required = false) String keyword) {
+        return Result.ok(RpcResultSupport.unwrap(service.options(pageNumber, pageSize, keyword)));
+    }
+
+    /** 查看本企业车辆的绑定人员。 */
+    @GetMapping("/{id}/students")
+    @RequirePermission("admin:vehicle:view")
+    public Result<PageResult<VehicleStudentView>> students(@PathVariable Long id,
+            @RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
+        return Result.ok(RpcResultSupport.unwrap(service.students(id, pageNumber, pageSize)));
+    }
+
     /** 分页查询本企业车辆。 */
     @GetMapping
     @RequirePermission("admin:vehicle:view")
@@ -59,7 +75,7 @@ public class VehicleController {
     }
 
     /** 车辆编辑请求。 */
-    public record VehicleRequest(@NotBlank @Size(min = 3, max = 16) String plateNumber,
+    public record VehicleRequest(@NotBlank @Size(min = 7, max = 8, message = "车牌号须为7或8位") String plateNumber,
             @NotBlank @Size(max = 64) String vehicleType, Long orgId, @Size(max = 255) String remark) {
         /** 转为RPC写入契约。 */
         SaveVehicleCommand toCommand(Long id) { return new SaveVehicleCommand(id, plateNumber, vehicleType, orgId, remark); }

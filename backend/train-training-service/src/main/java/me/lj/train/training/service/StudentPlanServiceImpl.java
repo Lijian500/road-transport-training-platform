@@ -3,6 +3,10 @@ package me.lj.train.training.service;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import me.lj.train.api.training.PlanModels.StudentPlanQuery;
+import me.lj.train.api.training.PlanModels.StudentPlanDurationView;
+import me.lj.train.training.mapper.PlanCourseMapper;
+import me.lj.train.training.model.entity.PlanCourseEntity;
+import static me.lj.train.training.model.table.PlanCourseTableDef.PLAN_COURSE;
 import me.lj.train.api.training.PlanModels.StudentPlanView;
 import me.lj.train.api.training.StudentPlanService;
 import me.lj.train.common.core.exception.BusinessException;
@@ -41,6 +45,7 @@ import static me.lj.train.training.model.table.PlanUserTableDef.PLAN_USER;
 public class StudentPlanServiceImpl extends TrainingServiceSupport implements StudentPlanService {
 
     private final PlanMapper planMapper;
+    private final PlanCourseMapper planCourseMapper;
     private final PlanUserMapper planUserMapper;
     private final PlanLifecycleService lifecycleService;
     private final PlanViewAssembler viewAssembler;
@@ -50,12 +55,13 @@ public class StudentPlanServiceImpl extends TrainingServiceSupport implements St
             PlanMapper planMapper,
             PlanUserMapper planUserMapper,
             PlanLifecycleService lifecycleService,
-            PlanViewAssembler viewAssembler) {
+            PlanViewAssembler viewAssembler, PlanCourseMapper planCourseMapper) {
         super(transactionManager);
         this.planMapper = planMapper;
         this.planUserMapper = planUserMapper;
         this.lifecycleService = lifecycleService;
         this.viewAssembler = viewAssembler;
+        this.planCourseMapper = planCourseMapper;
     }
 
     @Override
@@ -118,6 +124,37 @@ public class StudentPlanServiceImpl extends TrainingServiceSupport implements St
             }
             TrainingGuard.checkEnterprise(plan.getEnterpriseId(), enterpriseId);
             return viewAssembler.toStudentPlanView(plan, task, true);
+        });
+    }
+
+    /** 两次批量查询即可获取整页任务学时，过滤其他学员、企业及草稿计划。 */
+    @Override
+    public Result<List<StudentPlanDurationView>> getMyPlanDurations(List<Long> planIds) {
+        return execute(() -> {
+            Long enterpriseId = TrainingGuard.requireEnterprisePermission(STUDENT_PLAN_VIEW);
+            Long userId = UserContext.require().getUserId();
+            if (planIds == null || planIds.size() > 100
+                    || planIds.stream().anyMatch(id -> id == null || id <= 0)) {
+                throw new BusinessException(AppErrorCode.PARAM_INVALID, "培训计划范围不正确");
+            }
+            if (planIds.isEmpty()) return Collections.emptyList();
+            List<PlanUserEntity> tasks = planUserMapper.selectListByQuery(QueryWrapper.create()
+                    .select(PLAN_USER.ALL_COLUMNS).from(PLAN_USER)
+                    .innerJoin(PLAN).on(PLAN.ID.eq(PLAN_USER.PLAN_ID)
+                            .and(PLAN.ENTERPRISE_ID.eq(PLAN_USER.ENTERPRISE_ID)))
+                    .where(PLAN_USER.ENTERPRISE_ID.eq(enterpriseId))
+                    .and(PLAN_USER.USER_ID.eq(userId)).and(PLAN.ID.in(planIds))
+                    .and(PLAN.STATUS.ne(PLAN_DRAFT)).and(PLAN.DELETED_AT.isNull()));
+            if (tasks.isEmpty()) return Collections.emptyList();
+            List<Long> ownedPlanIds = tasks.stream().map(PlanUserEntity::getPlanId).distinct().toList();
+            Map<Long, Long> required = planCourseMapper.selectListByQuery(QueryWrapper.create()
+                    .select(PLAN_COURSE.PLAN_ID, PLAN_COURSE.REQUIRED_DURATION_SECONDS)
+                    .where(PLAN_COURSE.ENTERPRISE_ID.eq(enterpriseId))
+                    .and(PLAN_COURSE.PLAN_ID.in(ownedPlanIds))).stream()
+                    .collect(Collectors.groupingBy(PlanCourseEntity::getPlanId,
+                            Collectors.summingLong(course -> course.getRequiredDurationSeconds() * 1000L)));
+            return tasks.stream().map(task -> new StudentPlanDurationView(task.getId(), task.getPlanId(),
+                    required.getOrDefault(task.getPlanId(), 0L))).toList();
         });
     }
 

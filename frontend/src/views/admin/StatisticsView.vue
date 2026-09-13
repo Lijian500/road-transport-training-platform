@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatTrainingDate } from '@/utils/trainingDisplay'
 import { onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 
@@ -264,11 +265,8 @@ onMounted(() => {
 
 <template>
   <section>
-    <header class="page-title statistics-title">
-      <div>
-        <h1>培训统计</h1>
-        <p>汇总计划完成情况、学员考试结果和服务端有效学时。</p>
-      </div>
+    <header class="page-toolbar">
+
       <AppFilterField label="统计范围">
         <el-select
           v-model="scopePlanId"
@@ -393,8 +391,8 @@ onMounted(() => {
           </el-table-column>
           <el-table-column label="培训时间" min-width="190">
             <template #default="{ row }">
-              <div>{{ formatDateTime(row.startAt) }}</div>
-              <div class="secondary-text">至 {{ formatDateTime(row.endAt) }}</div>
+              <div>{{ formatTrainingDate(row.startAt) }}</div>
+              <div class="secondary-text">至 {{ formatTrainingDate(row.endAt) }}</div>
             </template>
           </el-table-column>
           <el-table-column label="考试" width="90">

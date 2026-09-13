@@ -98,6 +98,8 @@ export interface AddressPayload {
 }
 
 export interface User {
+  vehicleId?: string | null
+  plateNumber?: string
   id: string
   enterpriseId: string
   orgId: string
@@ -139,6 +141,7 @@ export interface FaceReferenceFileDeclaration {
 }
 
 export interface UserPayload {
+  vehicleId?: string | null
   username: string
   displayName: string
   phone?: string
@@ -267,8 +270,13 @@ export function createUser(data: UserPayload) {
   return http.post<User>('/admin/users', data)
 }
 
-export function updateUser(id: string, data: Pick<UserPayload, 'displayName' | 'phone' | 'orgId'>) {
+export function updateUser(id: string, data: Pick<UserPayload, 'displayName' | 'phone' | 'orgId' | 'vehicleId'>) {
   return http.put<User>(`/admin/users/${id}`, data)
+}
+
+/** 获取人员详情，包含当前绑定车牌。 */
+export function getUser(id: string) {
+  return http.get<User>(`/admin/users/${id}`)
 }
 
 export function changeUserStatus(id: string, status: Status) {

@@ -82,6 +82,25 @@ class PlanServiceImplTest {
     }
 
     @Test
+    void shouldStoreSameDayPlanFromMidnightThroughEndOfDay() {
+        prepareTransaction();
+        UserContext.set(operator(20L, "admin:plan:create"));
+        when(planMapper.selectOneByQuery(any(QueryWrapper.class))).thenReturn(plan(PLAN_DRAFT));
+        LocalDateTime date = LocalDateTime.of(2026, 9, 12, 12, 30);
+
+        Result<?> result = service.create(new me.lj.train.api.training.PlanModels.CreatePlanCommand(
+                "单日培训", null, date, date, false, null, null,
+                false, 300, 600, 60, 3));
+
+        assertThat(result.isSuccess()).isTrue();
+        org.mockito.ArgumentCaptor<PlanEntity> captor =
+                org.mockito.ArgumentCaptor.forClass(PlanEntity.class);
+        verify(planMapper).insertSelective(captor.capture());
+        assertThat(captor.getValue().getStartAt()).isEqualTo(date.toLocalDate().atStartOfDay());
+        assertThat(captor.getValue().getEndAt()).isEqualTo(date.toLocalDate().atTime(23, 59, 59));
+    }
+
+    @Test
     void shouldRejectCrossEnterprisePlan() {
         PlanEntity foreignPlan = plan(PLAN_DRAFT);
         foreignPlan.setEnterpriseId(21L);

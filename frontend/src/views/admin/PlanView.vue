@@ -13,6 +13,7 @@ import {
   type PlanStatus,
 } from '@/api/training'
 import { ApiError } from '@/api/http'
+import { formatTrainingDate } from '@/utils/trainingDisplay'
 import { getEnabledExamPaperOptions, type PaperOption } from '@/api/exam'
 import AppDialog from '@/components/AppDialog/AppDialog.vue'
 import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
@@ -109,8 +110,8 @@ async function save() {
   if (!(await formRef.value?.validate().catch(() => false))) {
     return
   }
-  if (new Date(form.startAt).getTime() >= new Date(form.endAt).getTime()) {
-    ElMessage.warning('开始时间必须早于结束时间')
+  if (form.startAt.slice(0, 10) > form.endAt.slice(0, 10)) {
+    ElMessage.warning('开始日期不能晚于结束日期')
     return
   }
   if (
@@ -133,6 +134,8 @@ async function save() {
   try {
     const plan = await createPlan({
       ...form,
+      startAt: `${form.startAt.slice(0, 10)}T00:00:00`,
+      endAt: `${form.endAt.slice(0, 10)}T23:59:59`,
       examPaperId: form.examRequired ? form.examPaperId : undefined,
       examPassScore: form.examRequired ? form.examPassScore : undefined,
     })
@@ -232,13 +235,13 @@ function statusType(status: PlanStatus) {
 
 /** 格式化计划时间用于列表展示。 */
 function formatDateTime(value: string) {
-  return new Date(value).toLocaleString('zh-CN', { hour12: false })
+  return formatTrainingDate(value)
 }
 
 /** 将日期转换为后端LocalDateTime兼容格式。 */
 function toLocalDateTime(value: Date) {
   const offset = value.getTimezoneOffset() * 60_000
-  return new Date(value.getTime() - offset).toISOString().slice(0, 19)
+  return new Date(value.getTime() - offset).toISOString().slice(0, 10)
 }
 
 /** 统一展示接口错误。 */
@@ -251,10 +254,7 @@ onMounted(load)
 
 <template>
   <section>
-    <header class="page-title">
-      <h1>培训计划</h1>
-      <p>选择已启用课程和有效学员，发布后冻结培训规则与课件清单。</p>
-    </header>
+
     <AppTable
       :data="rows"
       :loading="loading"
@@ -354,12 +354,12 @@ onMounted(load)
         <el-form-item label="开始时间" prop="startAt">
           <el-date-picker
             v-model="form.startAt"
-            type="datetime"
-            value-format="YYYY-MM-DDTHH:mm:ss"
+            type="date"
+            value-format="YYYY-MM-DD"
           />
         </el-form-item>
         <el-form-item label="结束时间" prop="endAt">
-          <el-date-picker v-model="form.endAt" type="datetime" value-format="YYYY-MM-DDTHH:mm:ss" />
+          <el-date-picker v-model="form.endAt" type="date" value-format="YYYY-MM-DD" />
         </el-form-item>
         <el-form-item label="需要考试">
           <el-switch v-model="form.examRequired" />

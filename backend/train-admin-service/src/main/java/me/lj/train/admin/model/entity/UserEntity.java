@@ -12,6 +12,11 @@ public class UserEntity extends AuditEntity {
 
     private Long enterpriseId;
     private Long orgId;
+    /** 每人最多绑定一辆车，车辆可被多人共用。 */
+    private Long vehicleId;
+
+    public Long getVehicleId() { return vehicleId; }
+    public void setVehicleId(Long vehicleId) { this.vehicleId = vehicleId; }
     private String username;
     private String passwordHash;
     private String displayName;

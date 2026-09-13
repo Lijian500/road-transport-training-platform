@@ -39,6 +39,26 @@ public class FaceCheckController {
     @DubboReference(check = false, timeout = 15000, retries = 0)
     private FaceCheckService faceCheckService;
 
+    /** 查询本会话签到签退的人脸要求。 */
+    @GetMapping("/sessions/{sessionId}/attendance-face")
+    @RequirePermission(PERMISSION)
+    public Result<Boolean> attendanceRequired(@PathVariable Long sessionId) {
+        return faceCheckService.attendanceRequired(sessionId);
+    }
+
+    /** 现场采集照片校验成功后，服务端才允许对应签到签退事件。 */
+    @PostMapping(value = "/sessions/{sessionId}/attendance-face", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequirePermission(PERMISSION)
+    public Result<?> verifyAttendance(@PathVariable Long sessionId, @RequestParam String action,
+            @RequestParam String clientInstanceId, @RequestPart("photo") MultipartFile photo) {
+        validatePhoto(photo);
+        try {
+            return faceCheckService.verifyAttendance(sessionId, action, clientInstanceId, photo.getBytes());
+        } catch (IOException exception) {
+            throw new BusinessException(AppErrorCode.PARAM_INVALID, "人脸照片读取失败");
+        }
+    }
+
     /** 查询学习会话当前待处理或最近完成的人脸抽验。 */
     @GetMapping("/sessions/{sessionId}/face-check")
     @RequirePermission(PERMISSION)

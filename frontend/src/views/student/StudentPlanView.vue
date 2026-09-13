@@ -3,8 +3,9 @@ import { onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 
-import { getStudentPlans, type PlanStatus, type StudentPlan } from '@/api/training'
+import { getStudentPlans, getStudentPlanProgress, type PlanStatus, type StudentPlan } from '@/api/training'
 import { ApiError } from '@/api/http'
+import { formatTrainingDate, formatLearningDuration, learningPercentage } from '@/utils/trainingDisplay'
 import AppFilterField from '@/components/AppFilterField/AppFilterField.vue'
 import AppTable from '@/components/AppTable/AppTable.vue'
 
@@ -12,6 +13,7 @@ const router = useRouter()
 const loading = ref(false)
 const rows = ref<StudentPlan[]>([])
 const total = ref(0)
+const progress = ref<Record<string, { completed: number; required: number }>>({})
 const query = reactive({
   pageNumber: 1,
   pageSize: 10,
@@ -25,6 +27,18 @@ async function load() {
     const result = await getStudentPlans(query)
     rows.value = result.records
     total.value = result.total
+    progress.value = {}
+    if (result.records.length) {
+      try {
+        const values = await getStudentPlanProgress(result.records.map((row) => row.planId))
+        progress.value = Object.fromEntries(values.map((value) => [value.planId, {
+          completed: value.effectiveDurationMillis,
+          required: value.requiredDurationMillis,
+        }]))
+      } catch {
+        ElMessage.warning('任务进度加载失败，请重新查询')
+      }
+    }
   } catch (error) {
     showError(error)
   } finally {
@@ -94,7 +108,7 @@ function completionStatusLabel(status: string) {
 
 /** 格式化计划培训周期。 */
 function formatDateTime(value: string) {
-  return new Date(value).toLocaleString('zh-CN', { hour12: false })
+  return formatTrainingDate(value)
 }
 
 /** 统一展示任务查询错误。 */
@@ -107,10 +121,7 @@ onMounted(load)
 
 <template>
   <section>
-    <header class="page-title">
-      <h1>我的培训任务</h1>
-      <p>这里只展示管理员已经发布并明确分配给你的培训计划。</p>
-    </header>
+
     <AppTable
       :data="rows"
       :loading="loading"
@@ -139,9 +150,23 @@ onMounted(load)
           {{ formatDateTime(row.startAt) }} — {{ formatDateTime(row.endAt) }}
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="100">
+      <el-table-column label="是否需要考试" width="120">
+        <template #default="{ row }">{{ row.examRequired ? '是' : '否' }}</template>
+      </el-table-column>
+      <el-table-column label="培训进度" min-width="240">
         <template #default="{ row }">
-          <el-tag :type="statusType(row.status)">{{ statusLabel(row.status) }}</el-tag>
+          <template v-if="progress[row.planId]">
+            <span>{{ formatLearningDuration(progress[row.planId]!.completed) }} / {{ formatLearningDuration(progress[row.planId]!.required) }}</span>
+            <el-progress :percentage="learningPercentage(progress[row.planId]!.completed, progress[row.planId]!.required)" />
+          </template>
+          <span v-else>暂无进度数据</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="任务状态" width="100">
+        <template #default="{ row }">
+          <el-tag :type="row.completionStatus === 'COMPLETED' ? 'success' : statusType(row.status)">
+            {{ row.completionStatus === 'COMPLETED' ? '已完成' : statusLabel(row.status) }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="学习状态" min-width="120">

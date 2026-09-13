@@ -174,10 +174,7 @@ onMounted(load)
 
 <template>
   <section>
-    <header class="page-title">
-      <h1>课程管理</h1>
-      <p>维护企业培训课程、课程规则、封面和视频课件。</p>
-    </header>
+
     <AppTable
       :data="rows"
       :loading="loading"

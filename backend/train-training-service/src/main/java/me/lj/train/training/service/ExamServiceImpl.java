@@ -38,6 +38,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static me.lj.train.training.constant.TrainingConstants.ASSIGNMENT_ASSIGNED;
+import static me.lj.train.training.constant.TrainingConstants.STUDY_COMPLETED;
 import static me.lj.train.training.constant.TrainingConstants.EXAM_FAILED;
 import static me.lj.train.training.constant.TrainingConstants.EXAM_IN_PROGRESS;
 import static me.lj.train.training.constant.TrainingConstants.EXAM_PASSED;
@@ -150,6 +151,11 @@ public class ExamServiceImpl extends TrainingServiceSupport implements ExamServi
         ExamRecordEntity existing = recordMapper.selectOneByQuery(QueryWrapper.create()
                 .where(EXAM_RECORD.ENTERPRISE_ID.eq(owner.enterpriseId()))
                 .and(EXAM_RECORD.TASK_ID.eq(task.getId())));
+        // 已交卷结果仍可查看，开始或继续考试必须先完成学习。
+        if (!STUDY_COMPLETED.equals(task.getStudyStatus())
+                && (existing == null || EXAM_RECORD_IN_PROGRESS.equals(existing.getStatus()))) {
+            throw new BusinessException(AppErrorCode.EXAM_ACCESS_DENIED, "学习完成后才能参加考试");
+        }
         if (existing != null) {
             settleIfExpired(existing, now);
             return toView(requireRecord(existing.getId(), owner, false));

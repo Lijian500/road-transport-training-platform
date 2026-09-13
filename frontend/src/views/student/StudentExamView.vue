@@ -246,7 +246,6 @@ onBeforeUnmount(stopCountdown)
   <section v-loading="loading" class="exam-page">
     <header class="exam-header">
       <div>
-        <el-button link type="primary" @click="backToPlan">← 返回培训任务</el-button>
         <h1>{{ record?.paperName || '在线考试' }}</h1>
         <p v-if="record">满分 {{ record.totalScore }} 分，{{ record.passScore }} 分及格</p>
       </div>
@@ -393,7 +392,7 @@ onBeforeUnmount(stopCountdown)
 }
 
 .exam-header h1 {
-  margin: 12px 0 6px;
+  margin: 0 0 6px;
 }
 
 .exam-header p,

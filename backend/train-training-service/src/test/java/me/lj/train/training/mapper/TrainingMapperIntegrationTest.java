@@ -24,6 +24,14 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
+import me.lj.train.training.service.TrainingCompletionService;
 
 import static me.lj.train.training.model.table.CourseTableDef.COURSE;
 import static me.lj.train.training.model.table.CoursewareTableDef.COURSEWARE;
@@ -69,6 +77,12 @@ class TrainingMapperIntegrationTest {
     private UploadSessionMapper uploadSessionMapper;
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private PlanMapper planMapper;
+    @Autowired
+    private PlanUserMapper planUserMapper;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     @DynamicPropertySource
     static void configureDataSource(DynamicPropertyRegistry registry) {
@@ -76,6 +90,75 @@ class TrainingMapperIntegrationTest {
         registry.add("spring.datasource.username", MYSQL::getUsername);
         registry.add("spring.datasource.password", MYSQL::getPassword);
         registry.add("spring.datasource.driver-class-name", MYSQL::getDriverClassName);
+    }
+
+    /** 两个结业事务各自持有学员锁时都能完成，提交后才推进同一个计划。 */
+    @Test
+    void shouldCompleteConcurrentTasksWithoutLockingPlanBeforeCommit() throws Exception {
+        long planId = System.nanoTime();
+        jdbcTemplate.update("INSERT INTO train_plan (id, enterprise_id, plan_name, start_at, end_at, "
+                        + "status, exam_required, created_by, updated_by) VALUES (?, 921, '并发结业', NOW(), "
+                        + "DATE_ADD(NOW(), INTERVAL 1 DAY), 'IN_PROGRESS', 1, 0, 0)", planId);
+        for (int index = 0; index < 2; index++) {
+            jdbcTemplate.update("INSERT INTO train_plan_user (id, enterprise_id, plan_id, user_id, "
+                            + "username, display_name, study_status, exam_status, created_by, updated_by) "
+                            + "VALUES (?, 921, ?, ?, 'student', '测试学员', 'COMPLETED', 'PASSED', 0, 0)",
+                    planId + index, planId, index + 1);
+        }
+        TrainingCompletionService completion = new TrainingCompletionService(planMapper, planUserMapper, transactionManager);
+        CyclicBarrier readyToCommit = new CyclicBarrier(2);
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        try {
+            Future<?> first = executor.submit(() -> completeTaskAtBarrier(completion, planId, readyToCommit));
+            Future<?> second = executor.submit(() -> completeTaskAtBarrier(completion, planId + 1, readyToCommit));
+            first.get(30, TimeUnit.SECONDS);
+            second.get(30, TimeUnit.SECONDS);
+            assertThat(jdbcTemplate.queryForObject("SELECT COUNT(*) FROM train_plan_user WHERE plan_id = ? "
+                    + "AND completion_status = 'COMPLETED'", Integer.class, planId)).isEqualTo(2);
+            assertThat(jdbcTemplate.queryForObject("SELECT status FROM train_plan WHERE id = ?", String.class, planId))
+                    .isEqualTo("FINISHED");
+        } finally {
+            executor.shutdownNow();
+            executor.awaitTermination(30, TimeUnit.SECONDS);
+        }
+    }
+
+    /** 提交屏障确保两个事务同时持有各自的学员任务锁，复现原锁顺序的风险。 */
+    private void completeTaskAtBarrier(TrainingCompletionService completion, long taskId, CyclicBarrier barrier) {
+        new TransactionTemplate(transactionManager).executeWithoutResult(status -> {
+            completion.recalculate(taskId, 921L, LocalDateTime.now());
+            try {
+                barrier.await(10, TimeUnit.SECONDS);
+            } catch (Exception exception) {
+                throw new IllegalStateException("结业事务未能到达提交屏障", exception);
+            }
+        });
+    }
+
+    /** 真实 SQL 验证全员结业、空计划、未完成学员以及取消计划的边界。 */
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource({
+            "IN_PROGRESS, 1, 0, 1", "IN_PROGRESS, 2, 0, 1",
+            "IN_PROGRESS, 1, 1, 0", "IN_PROGRESS, 0, 0, 0",
+            "CANCELLED, 1, 0, 0", "DRAFT, 1, 0, 0"
+    })
+    void shouldFinishOnlyPlansWithAllAssignedUsersCompleted(String status, int completed,
+                                                          int incomplete, int expected) {
+        long planId = System.nanoTime();
+        jdbcTemplate.update("INSERT INTO train_plan (id, enterprise_id, plan_name, start_at, end_at, "
+                        + "status, created_by, updated_by) VALUES (?, 920, '结业测试', NOW(), "
+                        + "DATE_ADD(NOW(), INTERVAL 1 DAY), ?, 0, 0)", planId, status);
+        for (int index = 0; index < completed + incomplete; index++) {
+            jdbcTemplate.update("INSERT INTO train_plan_user (id, enterprise_id, plan_id, user_id, "
+                            + "username, display_name, completion_status, created_by, updated_by) "
+                            + "VALUES (?, 920, ?, ?, 'student', '测试学员', ?, 0, 0)",
+                    planId + index, planId, index + 1,
+                    index < completed ? "COMPLETED" : "NOT_COMPLETED");
+        }
+
+        assertThat(planMapper.finishCompletedPlans(921L, planId)).isZero();
+        assertThat(planMapper.finishCompletedPlans(920L, planId)).isEqualTo(expected);
+        assertThat(planMapper.finishCompletedPlans(920L, planId)).isZero();
     }
 
     @Test

@@ -1,12 +1,11 @@
 <script setup lang="ts">
+import { formatTrainingDate } from '@/utils/trainingDisplay'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getStudentOverview, type StudentOverview } from '@/api/records'
-import { useAuthStore } from '@/stores/auth'
-import { recordLabel, recordTime } from '@/utils/recordDisplay'
+import { recordLabel } from '@/utils/recordDisplay'
 
 const router = useRouter()
-const auth = useAuthStore()
 const overview = ref<StudentOverview>()
 const loading = ref(false)
 const error = ref('')
@@ -36,10 +35,7 @@ onMounted(load)
 
 <template>
   <section v-loading="loading">
-    <header class="page-title">
-      <h1>你好，{{ auth.session?.displayName }}</h1>
-      <p>完成每一次安全培训，让每一程更安心。</p>
-    </header>
+
     <el-alert v-if="error" :title="error" type="error" show-icon :closable="false"
       ><el-button link @click="load">重新加载</el-button></el-alert
     >
@@ -74,7 +70,7 @@ onMounted(load)
           <div>
             <h3>{{ task.planName }}</h3>
             <p>
-              截止 {{ recordTime(task.endAt) }} · 学习{{ recordLabel(task.studyStatus) }} · 考试{{
+              截止 {{ formatTrainingDate(task.endAt) }} · 学习{{ recordLabel(task.studyStatus) }} · 考试{{
                 recordLabel(task.examStatus)
               }}
             </p>

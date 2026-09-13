@@ -18,7 +18,6 @@ import me.lj.train.api.training.StorageModels.SignedRequestView;
 import me.lj.train.common.core.exception.BusinessException;
 import me.lj.train.common.core.result.AppErrorCode;
 import me.lj.train.common.core.result.Result;
-import me.lj.train.webapi.security.RequirePermission;
 import me.lj.train.webapi.support.RpcResultSupport;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
@@ -34,15 +33,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 
 /**
- * 管理员人脸登记照上传、校验、绑定与受控预览接口。
+ * 本人或有权管理员维护登记照；RPC服务逐层校验用户及对象归属。
  */
 @RestController
 @RequestMapping("/api/admin/users/{userId}/face-reference")
 public class FaceReferenceController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FaceReferenceController.class);
-    private static final String VIEW_PERMISSION = "admin:face-check:view";
-    private static final String MANAGE_PERMISSION = "admin:face-check:manage";
 
     @DubboReference(check = false, timeout = 10000, retries = 0)
     private FaceReferenceService faceReferenceService;
@@ -55,14 +52,12 @@ public class FaceReferenceController {
 
     /** 查询用户当前登记状态。 */
     @GetMapping
-    @RequirePermission(VIEW_PERMISSION)
     public Result<FaceReferenceResponse> get(@PathVariable Long userId) {
         return Result.ok(toResponse(RpcResultSupport.unwrap(faceReferenceService.get(userId))));
     }
 
     /** 创建登记照私有OSS直传会话。 */
     @PostMapping("/upload-sessions")
-    @RequirePermission(MANAGE_PERMISSION)
     public Result<PrivateImageUploadSessionView> createUploadSession(
             @PathVariable Long userId,
             @Valid @RequestBody FaceReferenceFileRequest request) {
@@ -77,7 +72,6 @@ public class FaceReferenceController {
      * 完成OSS上传，确认图片中只有一张人脸后再原子替换用户登记照指针。
      */
     @PostMapping("/upload-sessions/{sessionId}/complete")
-    @RequirePermission(MANAGE_PERMISSION)
     public Result<FaceReferenceResponse> completeUploadSession(
             @PathVariable Long userId,
             @PathVariable Long sessionId) {
@@ -111,7 +105,6 @@ public class FaceReferenceController {
 
     /** 获取登记照短期预览地址。 */
     @GetMapping("/preview-url")
-    @RequirePermission(VIEW_PERMISSION)
     public Result<SignedRequestView> previewUrl(@PathVariable Long userId) {
         FaceReferenceView reference = RpcResultSupport.unwrap(faceReferenceService.get(userId));
         if (!reference.enrolled() || reference.storageObjectId() == null) {
@@ -123,7 +116,6 @@ public class FaceReferenceController {
 
     /** 删除当前登记照，并将原OSS对象交给存储服务清理。 */
     @DeleteMapping
-    @RequirePermission(MANAGE_PERMISSION)
     public Result<?> remove(@PathVariable Long userId) {
         FaceReferenceChangeView changed = RpcResultSupport.unwrap(
                 faceReferenceService.remove(userId));

@@ -403,12 +403,7 @@ onMounted(initialize)
 
 <template>
   <section>
-    <header class="page-title">
-      <div>
-        <h1>组织管理</h1>
-        <p>创建企业或行管组织，并初始化组织管理员账号与行政辖区。</p>
-      </div>
-    </header>
+
     <AppTable
       :data="rows"
       :loading="loading"

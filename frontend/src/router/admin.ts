@@ -132,6 +132,12 @@ const adminRoutes: RouteRecordRaw[] = [
         },
       },
       {
+        path: 'exam/papers/:id',
+        name: 'admin-exam-paper-detail',
+        component: () => import('@/views/admin/ExamPaperDetailView.vue'),
+        meta: { title: '试卷详情', requiresAuth: true, workspace: 'admin', permission: 'admin:exam:view' },
+      },
+      {
         path: 'statistics',
         name: 'admin-statistics',
         component: () => import('@/views/admin/StatisticsView.vue'),

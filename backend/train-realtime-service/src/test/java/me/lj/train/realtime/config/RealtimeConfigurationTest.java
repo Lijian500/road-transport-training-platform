@@ -1,6 +1,7 @@
 package me.lj.train.realtime.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.lj.train.realtime.protocol.RealtimeMessages.ServerEnvelope;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.env.YamlPropertySourceLoader;
 import org.springframework.core.env.MutablePropertySources;
@@ -36,6 +37,30 @@ class RealtimeConfigurationTest {
         String json = objectMapper.writeValueAsString(new Payload(900L, null));
 
         assertThat(json).isEqualTo("{\"id\":\"900\"}");
+    }
+
+    /** 使用实际序列化配置验证协议序号为数字，业务ID仍为字符串。 */
+    @Test
+    void shouldSerializeEnvelopeSequenceAsNumber() throws Exception {
+        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+        new RealtimeConfiguration().realtimeJsonCustomizer().customize(builder);
+        ObjectMapper objectMapper = builder.build();
+
+        for (Long sequence : new Long[] {0L, 3L, null}) {
+            ServerEnvelope envelope = new ServerEnvelope(
+                    "STATE_SYNC", "request-1", "900", sequence, null,
+                    new Payload(900L, null));
+            var json = objectMapper.readTree(objectMapper.writeValueAsString(envelope));
+
+            assertThat(json.path("payload").path("id").asText()).isEqualTo("900");
+            assertThat(json.path("payload").path("id").isTextual()).isTrue();
+            if (sequence == null) {
+                assertThat(json.has("seq")).isFalse();
+            } else {
+                assertThat(json.path("seq").isIntegralNumber()).isTrue();
+                assertThat(json.path("seq").longValue()).isEqualTo(sequence);
+            }
+        }
     }
 
     private record Payload(Long id, String optional) {

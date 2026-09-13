@@ -6,6 +6,7 @@ import me.lj.train.common.core.result.Result;
 import me.lj.train.common.security.context.UserContext;
 import me.lj.train.common.security.model.LoginUser;
 import me.lj.train.training.mapper.PlanMapper;
+import me.lj.train.training.mapper.PlanCourseMapper;
 import me.lj.train.training.mapper.PlanUserMapper;
 import me.lj.train.training.model.entity.PlanUserEntity;
 import org.junit.jupiter.api.AfterEach;
@@ -30,6 +31,7 @@ class StudentPlanServiceImplTest {
 
     @Mock private PlatformTransactionManager transactionManager;
     @Mock private PlanMapper planMapper;
+    @Mock private PlanCourseMapper planCourseMapper;
     @Mock private PlanUserMapper planUserMapper;
     @Mock private PlanLifecycleService lifecycleService;
     @Mock private PlanViewAssembler viewAssembler;
@@ -39,7 +41,7 @@ class StudentPlanServiceImplTest {
     @BeforeEach
     void setUp() {
         service = new StudentPlanServiceImpl(
-                transactionManager, planMapper, planUserMapper, lifecycleService, viewAssembler);
+                transactionManager, planMapper, planUserMapper, lifecycleService, viewAssembler, planCourseMapper);
         LoginUser learner = new LoginUser();
         learner.setUserId(10L);
         learner.setEnterpriseId(20L);
@@ -50,6 +52,44 @@ class StudentPlanServiceImplTest {
     @AfterEach
     void tearDown() {
         UserContext.clear();
+    }
+
+    @Test
+    void shouldBatchRequiredDurationsWithoutInitializingProgress() {
+        PlanUserEntity task = new PlanUserEntity();
+        task.setId(500L);
+        task.setPlanId(100L);
+        me.lj.train.training.model.entity.PlanCourseEntity first =
+                new me.lj.train.training.model.entity.PlanCourseEntity();
+        first.setPlanId(100L);
+        first.setRequiredDurationSeconds(60);
+        me.lj.train.training.model.entity.PlanCourseEntity second =
+                new me.lj.train.training.model.entity.PlanCourseEntity();
+        second.setPlanId(100L);
+        second.setRequiredDurationSeconds(120);
+        when(planUserMapper.selectListByQuery(any(QueryWrapper.class))).thenReturn(java.util.List.of(task));
+        when(planCourseMapper.selectListByQuery(any(QueryWrapper.class))).thenReturn(java.util.List.of(first, second));
+
+        var result = service.getMyPlanDurations(java.util.List.of(100L, 999L));
+
+        assertThat(result.isSuccess()).isTrue();
+        assertThat(result.getData()).hasSize(1);
+        assertThat(result.getData().get(0).requiredDurationMillis()).isEqualTo(180000L);
+        org.mockito.ArgumentCaptor<QueryWrapper> tasks = org.mockito.ArgumentCaptor.forClass(QueryWrapper.class);
+        org.mockito.Mockito.verify(planUserMapper).selectListByQuery(tasks.capture());
+        assertThat(tasks.getValue().toSQL()).contains("enterprise_id", "user_id", "20", "10", "DRAFT", "deleted_at");
+        org.mockito.ArgumentCaptor<QueryWrapper> courses = org.mockito.ArgumentCaptor.forClass(QueryWrapper.class);
+        org.mockito.Mockito.verify(planCourseMapper).selectListByQuery(courses.capture());
+        assertThat(courses.getValue().toSQL()).contains("100").doesNotContain("999");
+        org.mockito.Mockito.verifyNoMoreInteractions(planUserMapper, planCourseMapper);
+        verifyNoInteractions(planMapper, lifecycleService, viewAssembler);
+    }
+
+    @Test
+    void shouldRejectOversizedProgressBatchBeforeQuerying() {
+        var result = service.getMyPlanDurations(Collections.nCopies(101, 100L));
+        assertThat(result.getCode()).isEqualTo(AppErrorCode.PARAM_INVALID.getCode());
+        verifyNoInteractions(planUserMapper, planCourseMapper);
     }
 
     @Test

@@ -6,6 +6,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { getStudentPlan, type StudentPlan } from '@/api/training'
 import { getPlanLearningProgress, type PlanLearningProgress } from '@/api/learning'
 import { ApiError } from '@/api/http'
+import { formatTrainingDate, formatLearningDuration, learningPercentage } from '@/utils/trainingDisplay'
 import { usePermissionStore } from '@/stores/permission'
 
 const route = useRoute()
@@ -17,8 +18,20 @@ const permissionStore = usePermissionStore()
 
 const canEnterExam = computed(() => {
   if (!plan.value?.examRequired || !permissionStore.has('student:exam:take')) return false
-  return plan.value.status === 'IN_PROGRESS' || plan.value.examStatus !== 'NOT_STARTED'
+  if (['PASSED', 'FAILED'].includes(plan.value.examStatus)) return true
+  return plan.value.studyStatus === 'COMPLETED' &&
+    (plan.value.status === 'IN_PROGRESS' || plan.value.examStatus === 'IN_PROGRESS')
 })
+
+/** 按培训周期开放学习；提前结业的学员仍可回看课程。 */
+function canStudy() {
+  const value = plan.value
+  if (!value || !permissionStore.has('student:learning:study')) return false
+  const now = Date.now()
+  return now >= new Date(value.startAt).getTime() && now < new Date(value.endAt).getTime() &&
+    (value.status === 'IN_PROGRESS' ||
+      (value.status === 'FINISHED' && value.completionStatus === 'COMPLETED'))
+}
 
 /** 加载当前登录学员被分配的计划及冻结课程规则。 */
 async function load() {
@@ -26,7 +39,7 @@ async function load() {
   try {
     const planId = String(route.params.id)
     plan.value = await getStudentPlan(planId)
-    if (permissionStore.has('student:learning:study') && plan.value.status === 'IN_PROGRESS') {
+    if (permissionStore.has('student:learning:study')) {
       learningProgress.value = await getPlanLearningProgress(planId)
     }
   } catch (error) {
@@ -39,6 +52,11 @@ async function load() {
 /** 返回指定计划课程的服务端学习进度。 */
 function courseProgress(planCourseId: string) {
   return learningProgress.value?.courses.find((value) => value.planCourseId === planCourseId)
+}
+
+/** 返回视频累计确认的最远位置，补学回放时不倒退已完成进度。 */
+function coursewareProgress(planCourseId: string, snapshotId: string) {
+  return courseProgress(planCourseId)?.coursewares.find((item) => item.coursewareSnapshotId === snapshotId)
 }
 
 /** 进入当前计划课程的视频学习页面。 */
@@ -69,19 +87,17 @@ async function enterExam() {
 
 /** 将毫秒有效学时格式化为易读文本。 */
 function formatMillis(milliseconds: number) {
-  return formatDuration(Math.floor(milliseconds / 1000))
+  return formatLearningDuration(milliseconds)
 }
 
 /** 将秒数格式化为易读时长。 */
 function formatDuration(seconds: number) {
-  const hours = Math.floor(seconds / 3600)
-  const minutes = Math.ceil((seconds % 3600) / 60)
-  return `${hours ? `${hours}小时` : ''}${minutes ? `${minutes}分钟` : '0分钟'}`
+  return formatLearningDuration(seconds * 1000)
 }
 
 /** 格式化计划时间。 */
 function formatDateTime(value: string) {
-  return new Date(value).toLocaleString('zh-CN', { hour12: false })
+  return formatTrainingDate(value)
 }
 
 /** 返回培训计划状态中文文案。 */
@@ -160,21 +176,19 @@ onMounted(load)
 
 <template>
   <section v-loading="loading">
-    <header class="detail-header">
+    <header class="page-toolbar">
       <div>
-        <el-button link type="primary" @click="router.push('/student/plans')"
-          >← 返回我的任务</el-button
-        >
         <h1>{{ plan?.name || '培训任务详情' }}</h1>
-        <p>{{ plan?.description || '管理员未填写计划说明' }}</p>
+
       </div>
-      <el-tag v-if="plan" :type="statusType(plan.status)" size="large">
-        {{ statusLabel(plan.status) }}
+      <el-tag v-if="plan" :type="plan.completionStatus === 'COMPLETED' ? 'success' : statusType(plan.status)" size="large">
+        {{ plan.completionStatus === 'COMPLETED' ? '已完成' : statusLabel(plan.status) }}
       </el-tag>
     </header>
 
     <template v-if="plan">
       <el-descriptions :column="2" border>
+        <el-descriptions-item label="计划说明" :span="2">{{ plan.description || '无' }}</el-descriptions-item>
         <el-descriptions-item label="开始时间">{{
           formatDateTime(plan.startAt)
         }}</el-descriptions-item>
@@ -207,7 +221,8 @@ onMounted(load)
           </el-descriptions-item>
         </el-descriptions>
         <div class="exam-actions">
-          <span v-if="!canEnterExam && plan.status !== 'IN_PROGRESS'">
+          <span v-if="!canEnterExam && plan.studyStatus !== 'COMPLETED'">学习完成后才能参加考试。</span>
+          <span v-else-if="!canEnterExam && plan.status !== 'IN_PROGRESS'">
             {{ plan.status === 'PUBLISHED' ? '计划开始后可参加考试' : '当前计划不可新开考试' }}
           </span>
           <span v-else>同一培训计划只有一次考试记录，系统会自动保存答题进度。</span>
@@ -235,7 +250,7 @@ onMounted(load)
             <div class="course-actions">
               <div v-if="courseProgress(course.id)" class="course-progress">
                 <span>
-                  有效学时
+                  课程总进度（有效学时）
                   {{ formatMillis(courseProgress(course.id)!.effectiveDurationMillis) }} /
                   {{ formatMillis(courseProgress(course.id)!.requiredDurationMillis) }}
                 </span>
@@ -246,15 +261,18 @@ onMounted(load)
                 </el-tag>
               </div>
               <el-button
-                v-if="
-                  plan.status === 'IN_PROGRESS' && permissionStore.has('student:learning:study')
-                "
+                v-if="canStudy()"
                 type="primary"
                 @click="startStudy(course.id)"
               >
                 {{ courseProgress(course.id)?.status === 'COMPLETED' ? '回看课程' : '开始学习' }}
               </el-button>
             </div>
+            <el-progress
+              v-if="courseProgress(course.id)"
+              class="course-total-progress"
+              :percentage="learningPercentage(courseProgress(course.id)!.effectiveDurationMillis, courseProgress(course.id)!.requiredDurationMillis)"
+            />
             <el-descriptions :column="4" border size="small">
               <el-descriptions-item label="规定学时">
                 {{ formatDuration(course.requiredDurationSeconds) }}
@@ -273,6 +291,19 @@ onMounted(load)
               <el-table-column label="课件标题" min-width="180" prop="title" />
               <el-table-column label="视频时长" min-width="110">
                 <template #default="{ row }">{{ formatDuration(row.durationSeconds) }}</template>
+              </el-table-column>
+              <el-table-column label="完成情况" min-width="260">
+                <template #default="{ row }">
+                  <template v-if="coursewareProgress(course.id, row.id)">
+                    <span>
+                      {{ studyStatusLabel(coursewareProgress(course.id, row.id)!.status) }} ·
+                      {{ formatMillis(coursewareProgress(course.id, row.id)!.maxConfirmedPositionMillis) }} /
+                      {{ formatMillis(row.durationSeconds * 1000) }}
+                    </span>
+                    <el-progress :percentage="learningPercentage(coursewareProgress(course.id, row.id)!.maxConfirmedPositionMillis, row.durationSeconds * 1000)" />
+                  </template>
+                  <span v-else>暂无进度数据</span>
+                </template>
               </el-table-column>
               <el-table-column label="顺序" width="80" prop="sortOrder" />
             </el-table>
@@ -310,6 +341,10 @@ onMounted(load)
 
 .course-card {
   margin-top: 22px;
+}
+
+.course-total-progress {
+  margin-bottom: 16px;
 }
 
 .courseware-table {

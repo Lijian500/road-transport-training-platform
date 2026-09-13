@@ -1,6 +1,8 @@
 # 论文与演示证据索引
 
-本表记录证据来自哪里及能支持什么结论。最新状态以[阶段报告](../test/acceptance-2026-09-09.md)为准；操作见[本机启动](../deployment/local-demo.md)和[真实媒体验收](../test/media-acceptance.md)。路径相对仓库根目录，tmp和output为本机忽略目录。
+本表记录证据来自哪里及能支持什么结论。历史验证结果见[09-09阶段报告](../test/acceptance-2026-09-09.md)，当前实现增量见[变更总索引](../changes/README.md)和[首次回溯记录](../changes/2026-09-13-since-09-07.md)；操作见[本机启动](../deployment/local-demo.md)和[真实媒体验收](../test/media-acceptance.md)。路径相对仓库根目录，tmp和output为本机忽略目录。
+
+2026-09-13按工作区（基准`374d762`及未提交改动）静态核对，本次未执行测试或更新Word论文。后续按[变更总索引](../changes/README.md)和[首次回溯记录](../changes/2026-09-13-since-09-07.md)维护增量依据，历史测试不自动覆盖当前实现。本次未确认本机忽略目录中的证据文件仍可复现。下表原有“通过”均为09-09及其引用报告的历史结果；后端CI适用`fcbb50688adcf1ee1130e6c27af977f69f645d1f`，前端CI适用`7ca2f9413edda1f6c7159c6f7492d1d152a8eba9`（[CI记录](../test/ci-2026-09-09.json)）。
 
 | 论文论点或演示内容 | 证据入口 | 当前边界 |
 | --- | --- | --- |
@@ -18,9 +20,16 @@
 | MySQL持久化与服务重启 | 手册消息恢复步骤、事件ID关联的Outbox与消费日志 | 未执行；只读采集，不直接改完成状态 |
 | 11项数据库条件测试 | [Backend CI](https://github.com/Lijian500/road-transport-training-platform/actions/runs/34250552187)、docs/test/ci-2026-09-09.json | 管理8、培训2、学习1项全部通过，门禁确认0跳过 |
 | 自然到期计划历史档案 | 学员与管理档案截图、结束时间及任务ID | 待真实完成及自然到期，禁止改库制造历史成绩 |
+| 人员车辆绑定、个人资料与登记照 | UserServiceImpl、VehicleServiceImpl、FaceReferenceServiceImpl及对应页面/测试 | 09-13静态依据；新增交互及权限拒绝场景本次未执行 |
+| 签到签退摄像头与60秒凭据 | FaceCheckServiceImpl.verifyAttendance/requireAttendance、CameraCapture、StudyView及相关测试 | 测试存在不等于已通过；需实际摄像头、过期及序号复用证据 |
+| 核验照片留存与受控预览 | 学习库V4/V5、PrivateImageStorageServiceImpl、LearningRecordServiceImpl及档案页面 | 09-13静态依据；历史可空，迁移、OSS与越权场景需新证据 |
+| 自然日、先学后考、全员结业及周期内回看 | PlanServiceImpl、ExamServiceImpl、PlanLifecycleService、LearningAccessServiceImpl及相关测试 | 本次未执行；TO_EXAM统计仍未过滤学习完成，不代表可立即开考的任务数 |
+| 规定学时、播放进度及切换续播 | LearningSessionServiceImpl、StudentPlanDetailView、StudyView、实时协议及相关测试 | 区分课件位置、有效学时与结业；当前截图及真实播放需重验 |
 
 ## 每次实验的记录字段
 
-归档代码版本或未提交差异、时间和时区、JDK/Node/浏览器版本、单实例服务与基础设施位置、计划/任务/会话ID、操作步骤、预期、实测、结论以及证据路径。失败也保留记录，并说明重跑是否使用了新的独立数据集。照片授权与原图仅在本机保存；公开报告不包含凭据、Cookie、签名URL和原始照片。
+关联变更编号及拟支持的论文章节，再归档代码版本或未提交差异、时间和时区、JDK/Node/浏览器版本、单实例服务与基础设施位置、计划/任务/会话ID、操作步骤、预期、实测、结论以及证据路径。失败也保留记录，并说明重跑是否使用了新的独立数据集。照片授权与原图仅在本机保存；公开报告不包含凭据、Cookie、签名URL和原始照片。
 
 截图分为真实接口页面、UI契约夹具和真实媒体三类，图题明确注明来源。不要将带ui-fixture文件名的图片改名为真实成绩。实际媒体完成后，由真实报告数据填写结果表，再将讲稿中“尚未执行”改为与证据一致的表述。
+
+论文更新完成后在变更记录回填论文版本、章节和覆盖代码范围；不能仅因底稿或索引已改就标记Word已同步。

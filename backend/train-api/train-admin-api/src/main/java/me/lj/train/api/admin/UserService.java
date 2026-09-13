@@ -15,7 +15,17 @@ import me.lj.train.common.core.result.Result;
  */
 public interface UserService {
 
+    /** 查看当前登录人的基本信息。 */
+    Result<UserView> profile();
+
+    /** 仅修改本人姓名和手机号，不接收用户ID或权限字段。 */
+    Result<UserView> updateProfile(String displayName, String phone);
+
+
     Result<PageResult<UserView>> page(UserQuery query);
+
+    /** 查看本企业人员详情。 */
+    Result<UserView> detail(Long id);
 
     Result<UserView> create(CreateUserCommand command);
 
