@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" viewBox="0 0 1000 500">
+<title>平台管理员用例图</title>
+<rect width="100%" height="100%" fill="white"/>
+<rect x="260" y="12" width="720" height="476" fill="white" stroke="black" stroke-width="1.4"/>
+<polyline points="160,250.0 412,112.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="160,250.0 412,192.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="160,250.0 412,272.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="160,250.0 412,352.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="160,250.0 412,432.0" fill="none" stroke="black" stroke-width="1.4"/>
+<text x="620.0" y="51.98" text-anchor="middle" font-family="SimSun,serif" font-size="26">道路运输企业在线培训系统</text>
+<circle cx="130.0" cy="218.0" r="13" fill="white" stroke="black" stroke-width="1.4"/>
+<polyline points="130.0,231.0 130.0,264.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="105.0,243.0 155.0,243.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="130.0,264.0 107.0,290.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="130.0,264.0 153.0,290.0" fill="none" stroke="black" stroke-width="1.4"/>
+<text x="130.0" y="329.98" text-anchor="middle" font-family="SimSun,serif" font-size="26">平台管理员</text>
+<ellipse cx="624.5" cy="112.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="117.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">维护组织档案</text>
+<ellipse cx="624.5" cy="192.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="197.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">启停组织及重置管理员密码</text>
+<ellipse cx="624.5" cy="272.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="277.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">维护行政区域字典</text>
+<ellipse cx="624.5" cy="352.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="357.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">查看管理工作台</text>
+<ellipse cx="624.5" cy="432.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="437.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">维护本人资料及登记照</text>
+</svg>

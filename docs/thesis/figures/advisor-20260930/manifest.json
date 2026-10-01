@@ -1,0 +1,72 @@
+[
+  {
+    "name": "usecase-platform",
+    "title": "平台管理员用例图",
+    "width": 1000,
+    "height": 500,
+    "shapes": 14
+  },
+  {
+    "name": "usecase-enterprise",
+    "title": "企业管理员用例图",
+    "width": 1000,
+    "height": 740,
+    "shapes": 20
+  },
+  {
+    "name": "usecase-student",
+    "title": "学员用例图",
+    "width": 1000,
+    "height": 660,
+    "shapes": 18
+  },
+  {
+    "name": "function-structure",
+    "title": "系统功能结构图",
+    "width": 1000,
+    "height": 850,
+    "shapes": 23
+  },
+  {
+    "name": "er-overview",
+    "title": "核心业务概念 ER 总览",
+    "width": 1000,
+    "height": 870,
+    "shapes": 61
+  },
+  {
+    "name": "er-admin",
+    "title": "管理域概念 ER 图",
+    "width": 1000,
+    "height": 1000,
+    "shapes": 59
+  },
+  {
+    "name": "er-training",
+    "title": "培训与考试域概念 ER 图",
+    "width": 1000,
+    "height": 1270,
+    "shapes": 104
+  },
+  {
+    "name": "er-learning",
+    "title": "学习监管域概念 ER 图",
+    "width": 1000,
+    "height": 1190,
+    "shapes": 77
+  },
+  {
+    "name": "architecture",
+    "title": "系统总体架构图",
+    "width": 1200,
+    "height": 900,
+    "shapes": 29
+  },
+  {
+    "name": "learning-flow",
+    "title": "学习进度受理与结果传播流程",
+    "width": 1100,
+    "height": 740,
+    "shapes": 20
+  }
+]

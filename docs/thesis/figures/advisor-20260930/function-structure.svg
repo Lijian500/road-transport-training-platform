@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="850" viewBox="0 0 1000 850">
+<title>系统功能结构图</title>
+<rect width="100%" height="100%" fill="white"/>
+<polyline points="500,77 500,625" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="500,167.5 455,167.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="500,167.5 545,167.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="500,337.5 455,337.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="500,337.5 545,337.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="500,507.5 455,507.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="500,507.5 545,507.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="500,625 500,655" fill="none" stroke="black" stroke-width="1.4"/>
+<rect x="230" y="15" width="540" height="62" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="500.0" y="52.44" text-anchor="middle" font-family="SimSun,serif" font-size="28">道路运输企业在线培训系统</text>
+<rect x="45" y="145" width="410" height="45" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="250.0" y="173.25" text-anchor="middle" font-family="SimSun,serif" font-size="25">基础管理</text>
+<rect x="45" y="190" width="410" height="100" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="250.0" y="215.39000000000001" text-anchor="middle" font-family="SimSun,serif" font-size="23">组织与行政区域</text>
+<text x="250.0" y="245.29000000000002" text-anchor="middle" font-family="SimSun,serif" font-size="23">部门、人员与车辆</text>
+<text x="250.0" y="275.19" text-anchor="middle" font-family="SimSun,serif" font-size="23">角色权限与登记照</text>
+<rect x="545" y="145" width="410" height="45" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="750.0" y="173.25" text-anchor="middle" font-family="SimSun,serif" font-size="25">课程课件</text>
+<rect x="545" y="190" width="410" height="100" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="750.0" y="215.39000000000001" text-anchor="middle" font-family="SimSun,serif" font-size="23">课程及规则维护</text>
+<text x="750.0" y="245.29000000000002" text-anchor="middle" font-family="SimSun,serif" font-size="23">视频上传与课件编排</text>
+<text x="750.0" y="275.19" text-anchor="middle" font-family="SimSun,serif" font-size="23">受控媒体访问</text>
+<rect x="45" y="315" width="410" height="45" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="250.0" y="343.25" text-anchor="middle" font-family="SimSun,serif" font-size="25">培训计划</text>
+<rect x="45" y="360" width="410" height="100" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="250.0" y="385.39" text-anchor="middle" font-family="SimSun,serif" font-size="23">课程及人员分配</text>
+<text x="250.0" y="415.28999999999996" text-anchor="middle" font-family="SimSun,serif" font-size="23">计划发布与快照</text>
+<text x="250.0" y="445.19" text-anchor="middle" font-family="SimSun,serif" font-size="23">周期及结业状态</text>
+<rect x="545" y="315" width="410" height="45" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="750.0" y="343.25" text-anchor="middle" font-family="SimSun,serif" font-size="25">学习与身份核验</text>
+<rect x="545" y="360" width="410" height="100" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="750.0" y="385.39" text-anchor="middle" font-family="SimSun,serif" font-size="23">签到、播放与签退</text>
+<text x="750.0" y="415.28999999999996" text-anchor="middle" font-family="SimSun,serif" font-size="23">学时确认与断线恢复</text>
+<text x="750.0" y="445.19" text-anchor="middle" font-family="SimSun,serif" font-size="23">随机抽验及核验记录</text>
+<rect x="45" y="485" width="410" height="45" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="250.0" y="513.25" text-anchor="middle" font-family="SimSun,serif" font-size="25">题库考试</text>
+<rect x="45" y="530" width="410" height="100" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="250.0" y="555.39" text-anchor="middle" font-family="SimSun,serif" font-size="23">题库与试卷维护</text>
+<text x="250.0" y="585.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">学习完成后开考</text>
+<text x="250.0" y="615.1899999999999" text-anchor="middle" font-family="SimSun,serif" font-size="23">答案保存与服务端判分</text>
+<rect x="545" y="485" width="410" height="45" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="750.0" y="513.25" text-anchor="middle" font-family="SimSun,serif" font-size="25">档案统计</text>
+<rect x="545" y="530" width="410" height="100" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="750.0" y="555.39" text-anchor="middle" font-family="SimSun,serif" font-size="23">本人培训档案</text>
+<text x="750.0" y="585.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">企业学习明细及照片</text>
+<text x="750.0" y="615.1899999999999" text-anchor="middle" font-family="SimSun,serif" font-size="23">培训进度与结果统计</text>
+<rect x="295" y="655" width="410" height="45" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="500.0" y="683.25" text-anchor="middle" font-family="SimSun,serif" font-size="25">个人账户</text>
+<rect x="295" y="700" width="410" height="100" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="500.0" y="725.39" text-anchor="middle" font-family="SimSun,serif" font-size="23">登录与密码维护</text>
+<text x="500.0" y="755.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">本人资料与登记照</text>
+<text x="500.0" y="785.1899999999999" text-anchor="middle" font-family="SimSun,serif" font-size="23">按权限进入工作台</text>
+</svg>

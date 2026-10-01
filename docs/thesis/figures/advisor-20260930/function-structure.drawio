@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" version="24.7.17">
+  <diagram id="function-structure" name="系统功能结构图">
+    <mxGraphModel dx="1000" dy="850" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1000" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="e1" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="77" as="sourcePoint" />
+            <mxPoint x="500" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="167.5" as="sourcePoint" />
+            <mxPoint x="455" y="167.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="167.5" as="sourcePoint" />
+            <mxPoint x="545" y="167.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="337.5" as="sourcePoint" />
+            <mxPoint x="455" y="337.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="337.5" as="sourcePoint" />
+            <mxPoint x="545" y="337.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="507.5" as="sourcePoint" />
+            <mxPoint x="455" y="507.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e19" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="507.5" as="sourcePoint" />
+            <mxPoint x="545" y="507.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e22" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="625" as="sourcePoint" />
+            <mxPoint x="500" y="655" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n0" value="道路运输企业在线培训系统" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=28;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="230" y="15" width="540" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="n2" value="基础管理" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=25;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="45" y="145" width="410" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" value="组织与行政区域&lt;br&gt;部门、人员与车辆&lt;br&gt;角色权限与登记照" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="45" y="190" width="410" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" value="课程课件" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=25;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="545" y="145" width="410" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" value="课程及规则维护&lt;br&gt;视频上传与课件编排&lt;br&gt;受控媒体访问" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="545" y="190" width="410" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" value="培训计划" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=25;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="45" y="315" width="410" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" value="课程及人员分配&lt;br&gt;计划发布与快照&lt;br&gt;周期及结业状态" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="45" y="360" width="410" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" value="学习与身份核验" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=25;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="545" y="315" width="410" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n12" value="签到、播放与签退&lt;br&gt;学时确认与断线恢复&lt;br&gt;随机抽验及核验记录" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="545" y="360" width="410" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n14" value="题库考试" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=25;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="45" y="485" width="410" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n15" value="题库与试卷维护&lt;br&gt;学习完成后开考&lt;br&gt;答案保存与服务端判分" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="45" y="530" width="410" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n17" value="档案统计" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=25;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="545" y="485" width="410" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n18" value="本人培训档案&lt;br&gt;企业学习明细及照片&lt;br&gt;培训进度与结果统计" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="545" y="530" width="410" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n20" value="个人账户" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=25;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="295" y="655" width="410" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n21" value="登录与密码维护&lt;br&gt;本人资料与登记照&lt;br&gt;按权限进入工作台" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="295" y="700" width="410" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

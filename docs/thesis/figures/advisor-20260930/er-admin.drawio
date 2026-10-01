@@ -1,0 +1,254 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" version="24.7.17">
+  <diagram id="er-admin" name="管理域概念 ER 图">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1000" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="e2" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="142.2826086956522" y="130.0" as="sourcePoint" />
+            <mxPoint x="106.20432831585146" y="90.95056711833334" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="197.7173913043478" y="130.0" as="sourcePoint" />
+            <mxPoint x="233.79567168414854" y="90.95056711833334" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="472.2826086956522" y="130.0" as="sourcePoint" />
+            <mxPoint x="436.20432831585146" y="90.95056711833334" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="527.7173913043479" y="130.0" as="sourcePoint" />
+            <mxPoint x="563.7956716841485" y="90.95056711833334" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="802.2826086956521" y="130.0" as="sourcePoint" />
+            <mxPoint x="766.2043283158515" y="90.95056711833334" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="857.7173913043479" y="130.0" as="sourcePoint" />
+            <mxPoint x="893.7956716841485" y="90.95056711833334" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="142.2826086956522" y="510.0" as="sourcePoint" />
+            <mxPoint x="106.20432831585146" y="470.95056711833337" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e19" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="197.7173913043478" y="510.0" as="sourcePoint" />
+            <mxPoint x="233.79567168414854" y="470.95056711833337" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e22" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="472.2826086956522" y="510.0" as="sourcePoint" />
+            <mxPoint x="436.20432831585146" y="470.95056711833337" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e24" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="527.7173913043479" y="510.0" as="sourcePoint" />
+            <mxPoint x="563.7956716841485" y="470.95056711833337" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e27" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="802.2826086956521" y="510.0" as="sourcePoint" />
+            <mxPoint x="766.2043283158515" y="470.95056711833337" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e29" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="857.7173913043479" y="510.0" as="sourcePoint" />
+            <mxPoint x="893.7956716841485" y="470.95056711833337" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e31" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250.0" y="160.0" as="sourcePoint" />
+            <mxPoint x="293.0" y="160.0" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e33" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="377.0" y="160.0" as="sourcePoint" />
+            <mxPoint x="420.0" y="160.0" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e36" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="580.0" y="160.0" as="sourcePoint" />
+            <mxPoint x="623.0" y="160.0" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e38" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="707.0" y="160.0" as="sourcePoint" />
+            <mxPoint x="750.0" y="160.0" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e41" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170.0" y="190.0" as="sourcePoint" />
+            <mxPoint x="170.0" y="266.0" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e43" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170.0" y="334.0" as="sourcePoint" />
+            <mxPoint x="170.0" y="510.0" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e46" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500.0" y="190.0" as="sourcePoint" />
+            <mxPoint x="500.0" y="266.0" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e48" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500.0" y="334.0" as="sourcePoint" />
+            <mxPoint x="500.0" y="510.0" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e51" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="580.0" y="540.0" as="sourcePoint" />
+            <mxPoint x="623.0" y="540.0" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e53" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="707.0" y="540.0" as="sourcePoint" />
+            <mxPoint x="750.0" y="540.0" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n0" value="组织／部门" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="90" y="130" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n1" value="&lt;u&gt;组织编号&lt;/u&gt;" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="12.5" y="44" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" value="组织性质" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="182.5" y="44" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" value="用户" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="420" y="130" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" value="&lt;u&gt;用户编号&lt;/u&gt;" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="342.5" y="44" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" value="姓名" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="512.5" y="44" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n10" value="车辆" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="750" y="130" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" value="&lt;u&gt;车辆编号&lt;/u&gt;" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="672.5" y="44" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n13" value="车牌号码" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="842.5" y="44" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n15" value="行政区域" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="90" y="510" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n16" value="&lt;u&gt;区域编号&lt;/u&gt;" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="12.5" y="424" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n18" value="行政代码" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="182.5" y="424" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n20" value="角色" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="420" y="510" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n21" value="&lt;u&gt;角色编号&lt;/u&gt;" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="342.5" y="424" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n23" value="角色名称" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="512.5" y="424" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n25" value="权限" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="750" y="510" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n26" value="&lt;u&gt;权限编号&lt;/u&gt;" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="672.5" y="424" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n28" value="权限编码" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="842.5" y="424" width="145" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="n30" value="归属" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="293.0" y="126.0" width="84" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="n32" value="1" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="258.0" y="130.0" width="27" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="n34" value="0..N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="372.0" y="130.0" width="53" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="n35" value="绑定" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="623.0" y="126.0" width="84" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="n37" value="0..N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="575.0" y="130.0" width="53" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="n39" value="0..1" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="702.0" y="130.0" width="53" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="n40" value="辖区" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="128.0" y="266.0" width="84" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="n42" value="0..N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="175.0" y="201.0" width="53" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="n44" value="0..1" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="175.0" y="355.5" width="53" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="n45" value="授予" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="458.0" y="266.0" width="84" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="n47" value="M" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="505.0" y="201.0" width="27" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="n49" value="N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="505.0" y="355.5" width="27" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="n50" value="授权" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="623.0" y="506.0" width="84" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="n52" value="M" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="588.0" y="510.0" width="27" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="n54" value="N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="715.0" y="510.0" width="27" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="n55" value="M:N 联系通过用户角色、角色权限表实现。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="75" y="740" width="850" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n56" value="组织用户表保存用户的主部门归属；组织层级由父节点标识表达。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="40" y="795" width="920" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n57" value="行政区域仅建立辖区模型；跨企业监管查询尚未实现。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="50" y="850" width="900" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n58" value="下划线表示标识属性；连线表示逻辑关系。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="100" y="905" width="800" height="45" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

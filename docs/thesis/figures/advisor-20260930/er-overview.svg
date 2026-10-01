@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="870" viewBox="0 0 1000 870">
+<title>核心业务概念 ER 总览</title>
+<rect width="100%" height="100%" fill="white"/>
+<polyline points="205.0,74.0 260.5,74.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="344.5,74.0 400.0,74.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="565.0,74.0 635.5,74.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="719.5,74.0 790.0,74.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="205.0,304.0 260.5,304.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="344.5,304.0 400.0,304.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="482.5,275.0 482.5,223.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="482.5,155.0 482.5,103.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="433.0,333.0 364.5,363.0 364.5,426.5 344.5,426.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="260.5,426.5 122.5,426.5 122.5,520.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="482.5,333.0 482.5,392.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="482.5,460.5 482.5,520.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="532.0,333.0 615.5,363.0 615.5,426.5 635.5,426.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="719.5,426.5 872.5,426.5 872.5,520.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="122.5,578.0 122.5,635.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="122.5,703.0 122.5,760.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="172.0,578.0 240.5,608.0 240.5,669.0 260.5,669.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="344.5,669.0 482.5,669.0 482.5,760.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="565.0,789.0 635.5,789.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="719.5,789.0 790.0,789.0" fill="none" stroke="black" stroke-width="1.4"/>
+<rect x="40" y="45" width="165" height="58" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="122.5" y="79.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">企业</text>
+<rect x="400" y="45" width="165" height="58" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="482.5" y="79.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">学员</text>
+<rect x="790" y="45" width="165" height="58" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="872.5" y="79.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">车辆</text>
+<rect x="40" y="275" width="165" height="58" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="122.5" y="309.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">培训计划</text>
+<rect x="400" y="275" width="165" height="58" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="482.5" y="309.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">参训任务</text>
+<rect x="40" y="520" width="165" height="58" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="122.5" y="554.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">学习会话</text>
+<rect x="400" y="520" width="165" height="58" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="482.5" y="554.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">课程进度</text>
+<rect x="790" y="520" width="165" height="58" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="872.5" y="554.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">考试记录</text>
+<rect x="40" y="760" width="165" height="58" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="122.5" y="794.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">受理事件</text>
+<rect x="400" y="760" width="165" height="58" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="482.5" y="794.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">抽验任务</text>
+<rect x="790" y="760" width="165" height="58" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="872.5" y="794.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">抽验提交</text>
+<polygon points="302.5,40.0 344.5,74.0 302.5,108.0 260.5,74.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="302.5" y="79.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">归属</text>
+<text x="232.75" y="62.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
+<text x="372.25" y="62.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<polygon points="677.5,40.0 719.5,74.0 677.5,108.0 635.5,74.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="677.5" y="79.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">绑定</text>
+<text x="600.25" y="62.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="754.75" y="62.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..1</text>
+<polygon points="302.5,270.0 344.5,304.0 302.5,338.0 260.5,304.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="302.5" y="309.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">分配</text>
+<text x="232.75" y="292.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
+<text x="372.25" y="292.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<polygon points="482.5,155.0 524.5,189.0 482.5,223.0 440.5,189.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="482.5" y="194.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">参训</text>
+<text x="514.0" y="244.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="501.0" y="137.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
+<polygon points="302.5,392.5 344.5,426.5 302.5,460.5 260.5,426.5" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="302.5" y="431.56" text-anchor="middle" font-family="SimSun,serif" font-size="22">产生</text>
+<text x="383.0" y="362.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
+<text x="191.5" y="415.1" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<polygon points="482.5,392.5 524.5,426.5 482.5,460.5 440.5,426.5" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="482.5" y="431.56" text-anchor="middle" font-family="SimSun,serif" font-size="22">累计</text>
+<text x="501.0" y="362.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
+<text x="514.0" y="501.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<polygon points="677.5,392.5 719.5,426.5 677.5,460.5 635.5,426.5" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="677.5" y="431.56" text-anchor="middle" font-family="SimSun,serif" font-size="22">考试</text>
+<text x="634.0" y="362.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
+<text x="796.0" y="415.1" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..1</text>
+<polygon points="122.5,635.0 164.5,669.0 122.5,703.0 80.5,669.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="122.5" y="674.0600000000001" text-anchor="middle" font-family="SimSun,serif" font-size="22">记录</text>
+<text x="141.0" y="607.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
+<text x="154.0" y="741.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<polygon points="302.5,635.0 344.5,669.0 302.5,703.0 260.5,669.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="302.5" y="674.0600000000001" text-anchor="middle" font-family="SimSun,serif" font-size="22">触发</text>
+<text x="259.0" y="607.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
+<text x="413.5" y="657.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<polygon points="677.5,755.0 719.5,789.0 677.5,823.0 635.5,789.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="677.5" y="794.0600000000001" text-anchor="middle" font-family="SimSun,serif" font-size="22">提交</text>
+<text x="600.25" y="777.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
+<text x="754.75" y="777.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+</svg>

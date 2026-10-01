@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="660" viewBox="0 0 1000 660">
+<title>学员用例图</title>
+<rect width="100%" height="100%" fill="white"/>
+<rect x="260" y="12" width="720" height="636" fill="white" stroke="black" stroke-width="1.4"/>
+<polyline points="160,330.0 412,112.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="160,330.0 412,192.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="160,330.0 412,272.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="160,330.0 412,352.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="160,330.0 412,432.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="160,330.0 412,512.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="160,330.0 412,592.0" fill="none" stroke="black" stroke-width="1.4"/>
+<text x="620.0" y="51.98" text-anchor="middle" font-family="SimSun,serif" font-size="26">道路运输企业在线培训系统</text>
+<circle cx="130.0" cy="298.0" r="13" fill="white" stroke="black" stroke-width="1.4"/>
+<polyline points="130.0,311.0 130.0,344.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="105.0,323.0 155.0,323.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="130.0,344.0 107.0,370.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="130.0,344.0 153.0,370.0" fill="none" stroke="black" stroke-width="1.4"/>
+<text x="130.0" y="409.98" text-anchor="middle" font-family="SimSun,serif" font-size="26">学员</text>
+<ellipse cx="624.5" cy="112.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="117.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">查看本人培训任务</text>
+<ellipse cx="624.5" cy="192.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="197.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">签到及观看课程</text>
+<ellipse cx="624.5" cy="272.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="277.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">暂停、恢复和补足学时</text>
+<ellipse cx="624.5" cy="352.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="357.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">提交人脸核验及签退</text>
+<ellipse cx="624.5" cy="432.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="437.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">学习完成后参加考试</text>
+<ellipse cx="624.5" cy="512.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="517.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">查询本人档案与成绩</text>
+<ellipse cx="624.5" cy="592.0" rx="212.5" ry="27.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="624.5" y="597.75" text-anchor="middle" font-family="SimSun,serif" font-size="25">维护本人资料及登记照</text>
+</svg>
