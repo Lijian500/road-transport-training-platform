@@ -1,0 +1,2407 @@
+{
+  "sourceCommit": "13d64637efc3727b42d9e871b74aa92bfa4fb454",
+  "date": "2026-10-09",
+  "scope": "backend clean verify",
+  "startedAtUtc": "2026-10-09T09:58:40Z",
+  "finishedAtUtc": "2026-10-09T10:04:28Z",
+  "exitCode": 0,
+  "total": {
+    "tests": 266,
+    "passed": 266,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suiteCount": 61,
+  "expectedSuiteCount": 61,
+  "missingSuites": [],
+  "unexpectedSuites": [],
+  "mandatoryGates": {
+    "AdminMapperIntegrationTest": true,
+    "TrainingMapperIntegrationTest": true,
+    "LearningMapperIntegrationTest": true,
+    "AliyunOssIntegrationTest": true,
+    "OpenCvFaceVerifierIntegrationTest": true,
+    "LearningOutboxRabbitIntegrationTest": true
+  },
+  "allPassed": true,
+  "suites": [
+    {
+      "name": "me.lj.train.admin.config.BootstrapInitializerTest",
+      "module": "train-admin-service",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 1.803,
+      "cases": [
+        {
+          "name": "shouldInitializeWithConfiguredValuesWhenBootstrapIsEnabled",
+          "className": "me.lj.train.admin.config.BootstrapInitializerTest",
+          "seconds": 1.725,
+          "status": "passed"
+        },
+        {
+          "name": "shouldNotInitializeWhenBootstrapIsDisabled",
+          "className": "me.lj.train.admin.config.BootstrapInitializerTest",
+          "seconds": 0.007,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.config.CoursePermissionCacheInitializerTest",
+      "module": "train-admin-service",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 0.024,
+      "cases": [
+        {
+          "name": "shouldKeepStartupAvailableWhenRedisCacheInvalidationFails",
+          "className": "me.lj.train.admin.config.CoursePermissionCacheInitializerTest",
+          "seconds": 0.011,
+          "status": "passed"
+        },
+        {
+          "name": "shouldInvalidateBuiltInEnterpriseAdministratorCaches",
+          "className": "me.lj.train.admin.config.CoursePermissionCacheInitializerTest",
+          "seconds": 0.004,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.config.PlanPermissionCacheInitializerTest",
+      "module": "train-admin-service",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 0.624,
+      "cases": [
+        {
+          "name": "shouldInvalidateBuiltInAdministratorAndStudentCaches",
+          "className": "me.lj.train.admin.config.PlanPermissionCacheInitializerTest",
+          "seconds": 0.589,
+          "status": "passed"
+        },
+        {
+          "name": "shouldKeepStartupAvailableWhenCacheInvalidationFails",
+          "className": "me.lj.train.admin.config.PlanPermissionCacheInitializerTest",
+          "seconds": 0.023,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.mapper.AdminMapperIntegrationTest",
+      "module": "train-admin-service",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 8,
+      "seconds": 22.694,
+      "cases": [
+        {
+          "name": "shouldRollbackChangesAcrossMultipleMappers",
+          "className": "me.lj.train.admin.mapper.AdminMapperIntegrationTest",
+          "seconds": 0.134,
+          "status": "passed"
+        },
+        {
+          "name": "shouldIncrementLoginVersionWithDatabaseExpression",
+          "className": "me.lj.train.admin.mapper.AdminMapperIntegrationTest",
+          "seconds": 0.039,
+          "status": "passed"
+        },
+        {
+          "name": "shouldInsertAndDeleteAllRelationEntities",
+          "className": "me.lj.train.admin.mapper.AdminMapperIntegrationTest",
+          "seconds": 0.113,
+          "status": "passed"
+        },
+        {
+          "name": "shouldQueryAndPaginateOnlyWithinSpecifiedEnterprise",
+          "className": "me.lj.train.admin.mapper.AdminMapperIntegrationTest",
+          "seconds": 0.063,
+          "status": "passed"
+        },
+        {
+          "name": "shouldMigratePlanAndStudentTaskPermissionCatalog",
+          "className": "me.lj.train.admin.mapper.AdminMapperIntegrationTest",
+          "seconds": 0.016,
+          "status": "passed"
+        },
+        {
+          "name": "shouldLoadComplexQueriesFromMapperXml",
+          "className": "me.lj.train.admin.mapper.AdminMapperIntegrationTest",
+          "seconds": 0.134,
+          "status": "passed"
+        },
+        {
+          "name": "shouldMigrateCompleteCoursePermissionCatalog",
+          "className": "me.lj.train.admin.mapper.AdminMapperIntegrationTest",
+          "seconds": 0.007,
+          "status": "passed"
+        },
+        {
+          "name": "shouldMigrateFaceExamAndStatisticsPermissions",
+          "className": "me.lj.train.admin.mapper.AdminMapperIntegrationTest",
+          "seconds": 0.035,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.mapper.MapperXmlContractTest",
+      "module": "train-admin-service",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 0.087,
+      "cases": [
+        {
+          "name": "shouldLoadRoleAndUserMapperStatements",
+          "className": "me.lj.train.admin.mapper.MapperXmlContractTest",
+          "seconds": 0.084,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.service.AdminAuthServiceImplTest",
+      "module": "train-admin-service",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 7,
+      "seconds": 0.147,
+      "cases": [
+        {
+          "name": "shouldReturnRpcResultWithRolesAndPermissionsAfterSuccessfulLogin",
+          "className": "me.lj.train.admin.service.AdminAuthServiceImplTest",
+          "seconds": 0.027,
+          "status": "passed"
+        },
+        {
+          "name": "shouldKeepExistingSameSuperAdminIdempotently",
+          "className": "me.lj.train.admin.service.AdminAuthServiceImplTest",
+          "seconds": 0.047,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRollbackAndExposeInvalidBootstrapPassword",
+          "className": "me.lj.train.admin.service.AdminAuthServiceImplTest",
+          "seconds": 0.018,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRollbackAndExposeMapperFailureDuringBootstrap",
+          "className": "me.lj.train.admin.service.AdminAuthServiceImplTest",
+          "seconds": 0.016,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRollbackAndExposeInvalidBootstrapConfiguration",
+          "className": "me.lj.train.admin.service.AdminAuthServiceImplTest",
+          "seconds": 0.01,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCreateSuperAdminAndCommitTransaction",
+          "className": "me.lj.train.admin.service.AdminAuthServiceImplTest",
+          "seconds": 0.01,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnAccountDisabledErrorForDisabledAccount",
+          "className": "me.lj.train.admin.service.AdminAuthServiceImplTest",
+          "seconds": 0.007,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.service.AdminServiceSupportTest",
+      "module": "train-admin-service",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5,
+      "seconds": 0.066,
+      "cases": [
+        {
+          "name": "shouldCommitVoidTransactionalExecutionOnSuccess",
+          "className": "me.lj.train.admin.service.AdminServiceSupportTest",
+          "seconds": 0.009,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRollbackBeforeReturningBusinessError",
+          "className": "me.lj.train.admin.service.AdminServiceSupportTest",
+          "seconds": 0.005,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCommitTransactionalExecutionOnSuccess",
+          "className": "me.lj.train.admin.service.AdminServiceSupportTest",
+          "seconds": 0.007,
+          "status": "passed"
+        },
+        {
+          "name": "shouldNotStartTransactionForPlainExecution",
+          "className": "me.lj.train.admin.service.AdminServiceSupportTest",
+          "seconds": 0.003,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRollbackAndReturnSystemErrorForRuntimeException",
+          "className": "me.lj.train.admin.service.AdminServiceSupportTest",
+          "seconds": 0.01,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+      "module": "train-admin-service",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 14,
+      "seconds": 0.272,
+      "cases": [
+        {
+          "name": "shouldRejectMissingOrIllegalArea",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.092,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectUnknownOrganizationNature",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.003,
+          "status": "passed"
+        },
+        {
+          "name": "shouldApplyOrganizationNatureFilterToListQuery",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.014,
+          "status": "passed"
+        },
+        {
+          "name": "shouldGrantNewEnterpriseBuiltInRolesTheirDomainPermissions",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.013,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCreateEnterpriseWithAdministratorAndStudentRoles",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.008,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAssembleAreaPathsInBatchesForOrganizationList",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.031,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectPasswordResetForNonAdministrator",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.01,
+          "status": "passed"
+        },
+        {
+          "name": "shouldListEnterpriseAdministratorsForPlatformAdministrator",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.008,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCreateRegulatorWithoutStudentRole",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.006,
+          "status": "passed"
+        },
+        {
+          "name": "shouldResetEnterpriseAdministratorPasswordAndInvalidateSession",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.005,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAllowRegulatorToSelectProvinceCityOrDistrict",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRequireHistoricalEnterpriseToCompleteDistrictOnUpdate",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.008,
+          "status": "passed"
+        },
+        {
+          "name": "shouldKeepOrganizationNatureAndAllowAreaChangeOnUpdate",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.043,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectEnterpriseWhenAreaIsNotDistrict",
+          "className": "me.lj.train.admin.service.EnterpriseServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.service.FaceReferenceServiceImplTest",
+      "module": "train-admin-service",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5,
+      "seconds": 0.059,
+      "cases": [
+        {
+          "name": "shouldRejectCrossEnterpriseReferenceBinding",
+          "className": "me.lj.train.admin.service.FaceReferenceServiceImplTest",
+          "seconds": 0.005,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAllowStudentToReadOwnReferenceWithoutAdminPermission",
+          "className": "me.lj.train.admin.service.FaceReferenceServiceImplTest",
+          "seconds": 0.005,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAllowOwnReferenceWriteButRejectOtherUsersWithoutPermission",
+          "className": "me.lj.train.admin.service.FaceReferenceServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAllowPlatformAdministratorToMaintainOwnReference",
+          "className": "me.lj.train.admin.service.FaceReferenceServiceImplTest",
+          "seconds": 0.003,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnPreviousObjectWhenReplacingReference",
+          "className": "me.lj.train.admin.service.FaceReferenceServiceImplTest",
+          "seconds": 0.008,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.service.OrgServiceImplTest",
+      "module": "train-admin-service",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 0.214,
+      "cases": [
+        {
+          "name": "shouldKeepDepartmentReferencedByVehicle",
+          "className": "me.lj.train.admin.service.OrgServiceImplTest",
+          "seconds": 0.197,
+          "status": "passed"
+        },
+        {
+          "name": "shouldSoftDeleteEmptyDepartment",
+          "className": "me.lj.train.admin.service.OrgServiceImplTest",
+          "seconds": 0.01,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.service.RolePermissionServiceImplTest",
+      "module": "train-admin-service",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 0.437,
+      "cases": [
+        {
+          "name": "shouldSoftDeleteUnassignedCustomRoleAndKeepPermissionRelations",
+          "className": "me.lj.train.admin.service.RolePermissionServiceImplTest",
+          "seconds": 0.432,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.service.TrainingParticipantServiceImplTest",
+      "module": "train-admin-service",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 0.017,
+      "cases": [
+        {
+          "name": "shouldRejectUserWithoutStudentRole",
+          "className": "me.lj.train.admin.service.TrainingParticipantServiceImplTest",
+          "seconds": 0.007,
+          "status": "passed"
+        },
+        {
+          "name": "shouldValidateEnabledStudentAndReturnOrganizationSnapshot",
+          "className": "me.lj.train.admin.service.TrainingParticipantServiceImplTest",
+          "seconds": 0.007,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.service.UserServiceImplTest",
+      "module": "train-admin-service",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10,
+      "seconds": 0.336,
+      "cases": [
+        {
+          "name": "shouldRejectForeignVehicleBinding",
+          "className": "me.lj.train.admin.service.UserServiceImplTest",
+          "seconds": 0.168,
+          "status": "passed"
+        },
+        {
+          "name": "shouldProtectLastAdministratorAfterLockingEnterprise",
+          "className": "me.lj.train.admin.service.UserServiceImplTest",
+          "seconds": 0.037,
+          "status": "passed"
+        },
+        {
+          "name": "shouldUpdateOnlyCurrentProfileWithoutManagementPermission",
+          "className": "me.lj.train.admin.service.UserServiceImplTest",
+          "seconds": 0.014,
+          "status": "passed"
+        },
+        {
+          "name": "shouldClearVehicleBinding",
+          "className": "me.lj.train.admin.service.UserServiceImplTest",
+          "seconds": 0.03,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectInvalidProfilePhoneBeforeWriting",
+          "className": "me.lj.train.admin.service.UserServiceImplTest",
+          "seconds": 0.009,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRequireExplicitRoleWhenOrganizationHasNoStudentRole",
+          "className": "me.lj.train.admin.service.UserServiceImplTest",
+          "seconds": 0.035,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectCrossEnterpriseRoleAssignment",
+          "className": "me.lj.train.admin.service.UserServiceImplTest",
+          "seconds": 0.007,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAllowMultipleUsersToBindSameVehicle",
+          "className": "me.lj.train.admin.service.UserServiceImplTest",
+          "seconds": 0.014,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectDisabledVehicleBinding",
+          "className": "me.lj.train.admin.service.UserServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnForbiddenAndRollbackWhenAssigningElevatedRole",
+          "className": "me.lj.train.admin.service.UserServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.service.VehicleServiceImplTest",
+      "module": "train-admin-service",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 14,
+      "seconds": 0.318,
+      "cases": [
+        {
+          "name": "shouldRejectInvalidPlate(String)[1]",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.024,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectInvalidPlate(String)[2]",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.017,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectInvalidPlate(String)[3]",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.032,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectInvalidPlate(String)[4]",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.007,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectInvalidPlate(String)[5]",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.014,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectInvalidPlate(String)[6]",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.011,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectForeignVehicleStudents",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.011,
+          "status": "passed"
+        },
+        {
+          "name": "shouldConvertConcurrentPlateConflictAndRollback",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.009,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectForeignOrDeletedDepartment",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.034,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectMissingPermissionBeforeQuerying",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.007,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAcceptRegularAndNewEnergyPlate(String)[1]",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.01,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAcceptRegularAndNewEnergyPlate(String)[2]",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.007,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectCrossEnterpriseStatusChange",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.01,
+          "status": "passed"
+        },
+        {
+          "name": "shouldListVehicleWithoutDepartment",
+          "className": "me.lj.train.admin.service.VehicleServiceImplTest",
+          "seconds": 0.015,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.admin.support.AuthorizationCacheServiceTest",
+      "module": "train-admin-service",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3,
+      "seconds": 0.966,
+      "cases": [
+        {
+          "name": "shouldLoadEnterpriseUsersOnceAndRefreshCachesAfterCommit",
+          "className": "me.lj.train.admin.support.AuthorizationCacheServiceTest",
+          "seconds": 0.823,
+          "status": "passed"
+        },
+        {
+          "name": "shouldNotAccessRedisWhenTransactionRollsBack",
+          "className": "me.lj.train.admin.support.AuthorizationCacheServiceTest",
+          "seconds": 0.011,
+          "status": "passed"
+        },
+        {
+          "name": "shouldSynchronizeLoginVersionAtomicallyOnlyAfterCommit",
+          "className": "me.lj.train.admin.support.AuthorizationCacheServiceTest",
+          "seconds": 0.124,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.common.security.jwt.JwtTokenServiceTest",
+      "module": "train-common",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 0.854,
+      "cases": [
+        {
+          "name": "shouldCreateAndDecodeRsaAccessToken",
+          "className": "me.lj.train.common.security.jwt.JwtTokenServiceTest",
+          "seconds": 0.805,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.common.security.support.PasswordPolicyTest",
+      "module": "train-common",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 0.007,
+      "cases": [
+        {
+          "name": "shouldRequireLengthLetterAndDigit",
+          "className": "me.lj.train.common.security.support.PasswordPolicyTest",
+          "seconds": 0.004,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.common.security.support.PermissionMatcherTest",
+      "module": "train-common",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 0.046,
+      "cases": [
+        {
+          "name": "shouldMatchExactAndWildcardPermission",
+          "className": "me.lj.train.common.security.support.PermissionMatcherTest",
+          "seconds": 0.006,
+          "status": "passed"
+        },
+        {
+          "name": "shouldMatchAnyGrantedPermission",
+          "className": "me.lj.train.common.security.support.PermissionMatcherTest",
+          "seconds": 0.002,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.face.adapter.config.FaceAdapterAutoConfigurationTest",
+      "module": "train-face-adapter",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 0.907,
+      "cases": [
+        {
+          "name": "shouldFailFastWhenEnabledWithoutModelPaths",
+          "className": "me.lj.train.face.adapter.config.FaceAdapterAutoConfigurationTest",
+          "seconds": 0.626,
+          "status": "passed"
+        },
+        {
+          "name": "shouldNotLoadModelsUnlessExplicitlyEnabled",
+          "className": "me.lj.train.face.adapter.config.FaceAdapterAutoConfigurationTest",
+          "seconds": 0.075,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.face.adapter.model.FaceResultTest",
+      "module": "train-face-adapter",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4,
+      "seconds": 0.017,
+      "cases": [
+        {
+          "name": "shouldBuildDetectionStateFromFaceCountAndProtectFaceList",
+          "className": "me.lj.train.face.adapter.model.FaceResultTest",
+          "seconds": 0.009,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnExplicitStatusWhenImageCannotBeCompared",
+          "className": "me.lj.train.face.adapter.model.FaceResultTest",
+          "seconds": 0.001,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnMatchAndDisplayPercentage",
+          "className": "me.lj.train.face.adapter.model.FaceResultTest",
+          "seconds": 0.001,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectInconsistentDetectionState",
+          "className": "me.lj.train.face.adapter.model.FaceResultTest",
+          "seconds": 0.001,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.face.adapter.opencv.OpenCvFaceVerifierConfigTest",
+      "module": "train-face-adapter",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3,
+      "seconds": 0.189,
+      "cases": [
+        {
+          "name": "shouldRejectUnsafeLimitsAndThresholds",
+          "className": "me.lj.train.face.adapter.opencv.OpenCvFaceVerifierConfigTest",
+          "seconds": 0.086,
+          "status": "passed"
+        },
+        {
+          "name": "shouldFailFastWhenModelFileDoesNotExist",
+          "className": "me.lj.train.face.adapter.opencv.OpenCvFaceVerifierConfigTest",
+          "seconds": 0.015,
+          "status": "passed"
+        },
+        {
+          "name": "shouldUseDocumentedDefaults",
+          "className": "me.lj.train.face.adapter.opencv.OpenCvFaceVerifierConfigTest",
+          "seconds": 0.006,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.face.adapter.opencv.OpenCvFaceVerifierIntegrationTest",
+      "module": "train-face-adapter",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 1.788,
+      "cases": [
+        {
+          "name": "shouldDetectMultipleFacesAndCompareIdentities",
+          "className": "me.lj.train.face.adapter.opencv.OpenCvFaceVerifierIntegrationTest",
+          "seconds": 1.786,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.gateway.filter.AuthenticationGlobalFilterTest",
+      "module": "train-gateway",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4,
+      "seconds": 3.386,
+      "cases": [
+        {
+          "name": "shouldRejectLearningWebSocketWithoutAccessCookie",
+          "className": "me.lj.train.gateway.filter.AuthenticationGlobalFilterTest",
+          "seconds": 3.261,
+          "status": "passed"
+        },
+        {
+          "name": "shouldForwardValidLearningWebSocketWithTrustedHeaders",
+          "className": "me.lj.train.gateway.filter.AuthenticationGlobalFilterTest",
+          "seconds": 0.05,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectProtectedRequestWithoutAccessCookie",
+          "className": "me.lj.train.gateway.filter.AuthenticationGlobalFilterTest",
+          "seconds": 0.015,
+          "status": "passed"
+        },
+        {
+          "name": "shouldStripForgedTrustedHeadersOnPublicRequest",
+          "className": "me.lj.train.gateway.filter.AuthenticationGlobalFilterTest",
+          "seconds": 0.017,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.learning.mapper.LearningMapperIntegrationTest",
+      "module": "train-learning-service",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 21.823,
+      "cases": [
+        {
+          "name": "shouldMigrateLearningTablesWithIdempotencyAndActiveSessionIndexes",
+          "className": "me.lj.train.learning.mapper.LearningMapperIntegrationTest",
+          "seconds": 0.143,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.learning.service.AttendanceFaceGuardTest",
+      "module": "train-learning-service",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3,
+      "seconds": 0.023,
+      "cases": [
+        {
+          "name": "archivesPhotoOnlyForVerifiedAction",
+          "className": "me.lj.train.learning.service.AttendanceFaceGuardTest",
+          "seconds": 0.003,
+          "status": "passed"
+        },
+        {
+          "name": "rejectsMissingExpiredAndReusedProof",
+          "className": "me.lj.train.learning.service.AttendanceFaceGuardTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "doesNotRequireProofWhenPlanDisablesFaceChecks",
+          "className": "me.lj.train.learning.service.AttendanceFaceGuardTest",
+          "seconds": 0.002,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.learning.service.FaceCheckServiceImplTest",
+      "module": "train-learning-service",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4,
+      "seconds": 0.317,
+      "cases": [
+        {
+          "name": "shouldResumePausedStateAfterFaceCheckPasses",
+          "className": "me.lj.train.learning.service.FaceCheckServiceImplTest",
+          "seconds": 0.213,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnStoredResponseForDuplicateRequest",
+          "className": "me.lj.train.learning.service.FaceCheckServiceImplTest",
+          "seconds": 0.065,
+          "status": "passed"
+        },
+        {
+          "name": "shouldTerminateSessionWhenFailureAttemptsAreExhausted",
+          "className": "me.lj.train.learning.service.FaceCheckServiceImplTest",
+          "seconds": 0.015,
+          "status": "passed"
+        },
+        {
+          "name": "shouldTerminateSessionWhenFaceCheckTimesOut",
+          "className": "me.lj.train.learning.service.FaceCheckServiceImplTest",
+          "seconds": 0.015,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.learning.service.LearningOutboxPublisherTest",
+      "module": "train-learning-service",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 0.41,
+      "cases": [
+        {
+          "name": "shouldRetryReturnedMessageEvenWhenBrokerAcknowledgesIt",
+          "className": "me.lj.train.learning.service.LearningOutboxPublisherTest",
+          "seconds": 0.393,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRetryFailedEventAndMarkItSentAfterRabbitRecovers",
+          "className": "me.lj.train.learning.service.LearningOutboxPublisherTest",
+          "seconds": 0.013,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.learning.service.LearningOutboxRabbitIntegrationTest",
+      "module": "train-learning-service",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 0.684,
+      "cases": [
+        {
+          "name": "shouldRecoverUnroutableEventAndKeepIdentityAcrossPublisherRecreation",
+          "className": "me.lj.train.learning.service.LearningOutboxRabbitIntegrationTest",
+          "seconds": 0.682,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.learning.service.LearningRecordServiceImplTest",
+      "module": "train-learning-service",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 8,
+      "seconds": 0.306,
+      "cases": [
+        {
+          "name": "shouldIncludeTimedOutFaceTaskWithoutAnySubmittedPhoto",
+          "className": "me.lj.train.learning.service.LearningRecordServiceImplTest",
+          "seconds": 0.228,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectAnotherEnterpriseSession",
+          "className": "me.lj.train.learning.service.LearningRecordServiceImplTest",
+          "seconds": 0.012,
+          "status": "passed"
+        },
+        {
+          "name": "shouldNotInterpretEmptyTaskIdsAsAllTasks",
+          "className": "me.lj.train.learning.service.LearningRecordServiceImplTest",
+          "seconds": 0.006,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectAdminEntryForStudent",
+          "className": "me.lj.train.learning.service.LearningRecordServiceImplTest",
+          "seconds": 0.006,
+          "status": "passed"
+        },
+        {
+          "name": "shouldIncludeAttendancePhotos",
+          "className": "me.lj.train.learning.service.LearningRecordServiceImplTest",
+          "seconds": 0.009,
+          "status": "passed"
+        },
+        {
+          "name": "shouldIncludeEachAttemptPhoto",
+          "className": "me.lj.train.learning.service.LearningRecordServiceImplTest",
+          "seconds": 0.007,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnNoProgressWithoutCreatingRows",
+          "className": "me.lj.train.learning.service.LearningRecordServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectAnotherStudentsSessionBeforeReadingEvidence",
+          "className": "me.lj.train.learning.service.LearningRecordServiceImplTest",
+          "seconds": 0.005,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+      "module": "train-learning-service",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 14,
+      "seconds": 4.142,
+      "cases": [
+        {
+          "name": "shouldResumeSameCourseAndBrowserSession",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 3.575,
+          "status": "passed"
+        },
+        {
+          "name": "shouldSignOutExpiredStudyingSessionWithoutCreditingTime",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.139,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectSkippedSequenceBeforeCreditingTime",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.052,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnStoredResponseForDuplicateRequestWithoutUpdatingProgress",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.07,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRestoreFailedFaceCheckFromTerminatedSession",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.041,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectBindingAnotherBrowserInstance",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.019,
+          "status": "passed"
+        },
+        {
+          "name": "shouldBindCompletedSessionForFinalSignOut",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.013,
+          "status": "passed"
+        },
+        {
+          "name": "shouldSupplementCompletedCoursewareWithoutLosingHistoryOrCreditingPlay",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.084,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectOpeningAnotherCourseWhileSessionIsActive",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.022,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCreateSessionWithCourseSnapshotOrder",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.051,
+          "status": "passed"
+        },
+        {
+          "name": "shouldSignOutInvalidTaskWithoutCreditingTime",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.02,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectBindingFinalSession",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.007,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectBindingSessionOwnedByAnotherUser",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.005,
+          "status": "passed"
+        },
+        {
+          "name": "shouldKeepUnfinishedCoursewarePositionWhenPlayReportsZero",
+          "className": "me.lj.train.learning.service.LearningSessionServiceImplTest",
+          "seconds": 0.013,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.learning.service.LearningSessionTimeoutServiceTest",
+      "module": "train-learning-service",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 0.161,
+      "cases": [
+        {
+          "name": "shouldContinueScanningAfterFirstFullBatch",
+          "className": "me.lj.train.learning.service.LearningSessionTimeoutServiceTest",
+          "seconds": 0.16,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.learning.service.LearningStatisticsServiceImplTest",
+      "module": "train-learning-service",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3,
+      "seconds": 0.048,
+      "cases": [
+        {
+          "name": "shouldAggregateMultipleCoursesByTask",
+          "className": "me.lj.train.learning.service.LearningStatisticsServiceImplTest",
+          "seconds": 0.037,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectAccountWithoutStatisticsPermission",
+          "className": "me.lj.train.learning.service.LearningStatisticsServiceImplTest",
+          "seconds": 0.003,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnEmptySummaryWithoutQueryingWhenTaskRangeIsEmpty",
+          "className": "me.lj.train.learning.service.LearningStatisticsServiceImplTest",
+          "seconds": 0.003,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.learning.service.LearningTimeCalculatorTest",
+      "module": "train-learning-service",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5,
+      "seconds": 0.155,
+      "cases": [
+        {
+          "name": "shouldApplyToleranceToCoursewareCompletionPosition",
+          "className": "me.lj.train.learning.service.LearningTimeCalculatorTest",
+          "seconds": 0.112,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCreditNinetyFiveSecondsForHundredSecondsWithJitter",
+          "className": "me.lj.train.learning.service.LearningTimeCalculatorTest",
+          "seconds": 0.002,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectForwardSeekWhenCourseDisallowsIt",
+          "className": "me.lj.train.learning.service.LearningTimeCalculatorTest",
+          "seconds": 0.008,
+          "status": "passed"
+        },
+        {
+          "name": "shouldUseSmallestTrustedDelta",
+          "className": "me.lj.train.learning.service.LearningTimeCalculatorTest",
+          "seconds": 0.002,
+          "status": "passed"
+        },
+        {
+          "name": "shouldNotCreditTimeoutOrBackwardPlayback",
+          "className": "me.lj.train.learning.service.LearningTimeCalculatorTest",
+          "seconds": 0.001,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.realtime.config.RealtimeConfigurationTest",
+      "module": "train-realtime-service",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3,
+      "seconds": 0.665,
+      "cases": [
+        {
+          "name": "shouldEnableDubboConsumerByDefault",
+          "className": "me.lj.train.realtime.config.RealtimeConfigurationTest",
+          "seconds": 0.303,
+          "status": "passed"
+        },
+        {
+          "name": "shouldSerializeEnvelopeSequenceAsNumber",
+          "className": "me.lj.train.realtime.config.RealtimeConfigurationTest",
+          "seconds": 0.301,
+          "status": "passed"
+        },
+        {
+          "name": "shouldSerializeBusinessIdAsStringAndOmitNullFields",
+          "className": "me.lj.train.realtime.config.RealtimeConfigurationTest",
+          "seconds": 0.003,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.realtime.connection.LearningConnectionRegistryTest",
+      "module": "train-realtime-service",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 0.024,
+      "cases": [
+        {
+          "name": "shouldReplaceSameUserSessionAndBrowserConnection",
+          "className": "me.lj.train.realtime.connection.LearningConnectionRegistryTest",
+          "seconds": 0.02,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.realtime.rpc.LearningRpcClientTest",
+      "module": "train-realtime-service",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 1.847,
+      "cases": [
+        {
+          "name": "shouldSetAndClearUserContextInSameRpcTask",
+          "className": "me.lj.train.realtime.rpc.LearningRpcClientTest",
+          "seconds": 1.793,
+          "status": "passed"
+        },
+        {
+          "name": "shouldClearUserContextWhenRpcThrows",
+          "className": "me.lj.train.realtime.rpc.LearningRpcClientTest",
+          "seconds": 0.042,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.realtime.security.RealtimeAuthenticationWebFilterTest",
+      "module": "train-realtime-service",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4,
+      "seconds": 0.117,
+      "cases": [
+        {
+          "name": "shouldRejectHandshakeWithoutAccessCookie",
+          "className": "me.lj.train.realtime.security.RealtimeAuthenticationWebFilterTest",
+          "seconds": 0.069,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectInvalidJwtCookie",
+          "className": "me.lj.train.realtime.security.RealtimeAuthenticationWebFilterTest",
+          "seconds": 0.028,
+          "status": "passed"
+        },
+        {
+          "name": "shouldForwardAuthenticatedPrincipal",
+          "className": "me.lj.train.realtime.security.RealtimeAuthenticationWebFilterTest",
+          "seconds": 0.009,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectOriginOutsideExactAllowlist",
+          "className": "me.lj.train.realtime.security.RealtimeAuthenticationWebFilterTest",
+          "seconds": 0.008,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.realtime.security.RealtimeAuthorizationServiceTest",
+      "module": "train-realtime-service",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5,
+      "seconds": 0.563,
+      "cases": [
+        {
+          "name": "shouldRejectChangedLoginVersion",
+          "className": "me.lj.train.realtime.security.RealtimeAuthorizationServiceTest",
+          "seconds": 0.396,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectMissingStudyPermission",
+          "className": "me.lj.train.realtime.security.RealtimeAuthorizationServiceTest",
+          "seconds": 0.029,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectForcedPasswordChange",
+          "className": "me.lj.train.realtime.security.RealtimeAuthorizationServiceTest",
+          "seconds": 0.014,
+          "status": "passed"
+        },
+        {
+          "name": "shouldBuildFullLoginUserFromAuthorizationCache",
+          "className": "me.lj.train.realtime.security.RealtimeAuthorizationServiceTest",
+          "seconds": 0.011,
+          "status": "passed"
+        },
+        {
+          "name": "shouldFallbackToAdminServiceWhenAuthorizationCacheMisses",
+          "className": "me.lj.train.realtime.security.RealtimeAuthorizationServiceTest",
+          "seconds": 0.078,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.realtime.security.RealtimeSecurityChainTest",
+      "module": "train-realtime-service",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 1.667,
+      "cases": [
+        {
+          "name": "shouldPreservePrincipalAfterSpringSecurityWrapsExchange",
+          "className": "me.lj.train.realtime.security.RealtimeSecurityChainTest",
+          "seconds": 1.665,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.realtime.service.FaceCheckRealtimeConsumerTest",
+      "module": "train-realtime-service",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 0.233,
+      "cases": [
+        {
+          "name": "shouldPushFaceCheckToMatchingConnectionOnly",
+          "className": "me.lj.train.realtime.service.FaceCheckRealtimeConsumerTest",
+          "seconds": 0.229,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+      "module": "train-realtime-service",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10,
+      "seconds": 3.687,
+      "cases": [
+        {
+          "name": "shouldCloseDirectConnectionWithoutTrustedPrincipal",
+          "className": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+          "seconds": 0.24,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnProtocolErrorForInvalidJson",
+          "className": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+          "seconds": 0.106,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCloseOversizedMessageWith1009",
+          "className": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+          "seconds": 0.009,
+          "status": "passed"
+        },
+        {
+          "name": "shouldBindThenSubmitLearningEventSerially",
+          "className": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+          "seconds": 0.144,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCloseConnectionWith4403WhenAuthorizationIsRevoked",
+          "className": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+          "seconds": 1.015,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCloseConnectionAfterHeartbeatTimeout",
+          "className": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+          "seconds": 1.009,
+          "status": "passed"
+        },
+        {
+          "name": "shouldMapSequenceRpcErrorToResyncRequired",
+          "className": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+          "seconds": 0.021,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCloseWithRetryableCodeWhenAuthorizationInfrastructureFails",
+          "className": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+          "seconds": 1.009,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectLearningEventBeforeBinding",
+          "className": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+          "seconds": 0.011,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCloseConnectionWith4401WhenAccessTokenExpires",
+          "className": "me.lj.train.realtime.websocket.LearningWebSocketHandlerTest",
+          "seconds": 0.107,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.mapper.TrainingMapperIntegrationTest",
+      "module": "train-training-service",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 9,
+      "seconds": 23.16,
+      "cases": [
+        {
+          "name": "shouldMigrateCourseAndPlanTenantTablesWithIndexesAndNoForeignKeys",
+          "className": "me.lj.train.training.mapper.TrainingMapperIntegrationTest",
+          "seconds": 0.175,
+          "status": "passed"
+        },
+        {
+          "name": "shouldFinishOnlyPlansWithAllAssignedUsersCompleted(String, int, int, int)[1]",
+          "className": "me.lj.train.training.mapper.TrainingMapperIntegrationTest",
+          "seconds": 0.134,
+          "status": "passed"
+        },
+        {
+          "name": "shouldFinishOnlyPlansWithAllAssignedUsersCompleted(String, int, int, int)[2]",
+          "className": "me.lj.train.training.mapper.TrainingMapperIntegrationTest",
+          "seconds": 0.049,
+          "status": "passed"
+        },
+        {
+          "name": "shouldFinishOnlyPlansWithAllAssignedUsersCompleted(String, int, int, int)[3]",
+          "className": "me.lj.train.training.mapper.TrainingMapperIntegrationTest",
+          "seconds": 0.028,
+          "status": "passed"
+        },
+        {
+          "name": "shouldFinishOnlyPlansWithAllAssignedUsersCompleted(String, int, int, int)[4]",
+          "className": "me.lj.train.training.mapper.TrainingMapperIntegrationTest",
+          "seconds": 0.018,
+          "status": "passed"
+        },
+        {
+          "name": "shouldFinishOnlyPlansWithAllAssignedUsersCompleted(String, int, int, int)[5]",
+          "className": "me.lj.train.training.mapper.TrainingMapperIntegrationTest",
+          "seconds": 0.02,
+          "status": "passed"
+        },
+        {
+          "name": "shouldFinishOnlyPlansWithAllAssignedUsersCompleted(String, int, int, int)[6]",
+          "className": "me.lj.train.training.mapper.TrainingMapperIntegrationTest",
+          "seconds": 0.021,
+          "status": "passed"
+        },
+        {
+          "name": "shouldPersistCourseAssetsAndIsolateMapperQueriesByEnterprise",
+          "className": "me.lj.train.training.mapper.TrainingMapperIntegrationTest",
+          "seconds": 0.114,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCompleteConcurrentTasksWithoutLockingPlanBeforeCommit",
+          "className": "me.lj.train.training.mapper.TrainingMapperIntegrationTest",
+          "seconds": 0.113,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.CourseServiceImplTest",
+      "module": "train-training-service",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 9,
+      "seconds": 0.36,
+      "cases": [
+        {
+          "name": "shouldQueueDraftCoverAndCoursewareObjectsWhenDeletingCourse",
+          "className": "me.lj.train.training.service.CourseServiceImplTest",
+          "seconds": 0.239,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRetainHistoricalObjectWhenDeletingCoursewareFromDisabledCourse",
+          "className": "me.lj.train.training.service.CourseServiceImplTest",
+          "seconds": 0.01,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectEnableWhenRequiredDurationExceedsReadyVideos",
+          "className": "me.lj.train.training.service.CourseServiceImplTest",
+          "seconds": 0.009,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectEnableWhileUploadSessionIsIncomplete",
+          "className": "me.lj.train.training.service.CourseServiceImplTest",
+          "seconds": 0.035,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectCrossEnterpriseCourseReturnedByMapper",
+          "className": "me.lj.train.training.service.CourseServiceImplTest",
+          "seconds": 0.008,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectPlatformAdministratorBeforeReadingEnterpriseCourse",
+          "className": "me.lj.train.training.service.CourseServiceImplTest",
+          "seconds": 0.006,
+          "status": "passed"
+        },
+        {
+          "name": "shouldEnableDraftWithReadyVideoAndNoActiveUpload",
+          "className": "me.lj.train.training.service.CourseServiceImplTest",
+          "seconds": 0.021,
+          "status": "passed"
+        },
+        {
+          "name": "shouldKeepEnabledCourseReadOnly",
+          "className": "me.lj.train.training.service.CourseServiceImplTest",
+          "seconds": 0.008,
+          "status": "passed"
+        },
+        {
+          "name": "shouldPersistCompleteCoursewareOrder",
+          "className": "me.lj.train.training.service.CourseServiceImplTest",
+          "seconds": 0.012,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.CourseStorageServiceImplTest",
+      "module": "train-training-service",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 11,
+      "seconds": 0.149,
+      "cases": [
+        {
+          "name": "shouldRejectPartNumberOutsideSessionRange",
+          "className": "me.lj.train.training.service.CourseStorageServiceImplTest",
+          "seconds": 0.034,
+          "status": "passed"
+        },
+        {
+          "name": "shouldBindDatabaseMetadataWhenOssWasAlreadyMergedBeforeRetry",
+          "className": "me.lj.train.training.service.CourseStorageServiceImplTest",
+          "seconds": 0.014,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectIncompleteOrWrongSizedMultipartParts",
+          "className": "me.lj.train.training.service.CourseStorageServiceImplTest",
+          "seconds": 0.006,
+          "status": "passed"
+        },
+        {
+          "name": "shouldQueueInvalidObjectWhenImmediateDeletionFails",
+          "className": "me.lj.train.training.service.CourseStorageServiceImplTest",
+          "seconds": 0.014,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnCompletePartViewWhenOssObjectWasAlreadyMerged",
+          "className": "me.lj.train.training.service.CourseStorageServiceImplTest",
+          "seconds": 0.008,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAbortAndDeleteMergedObjectWhenCancellingVideoSession",
+          "className": "me.lj.train.training.service.CourseStorageServiceImplTest",
+          "seconds": 0.006,
+          "status": "passed"
+        },
+        {
+          "name": "shouldKeepUploadedObjectWhenReadingHeaderTemporarilyFails",
+          "className": "me.lj.train.training.service.CourseStorageServiceImplTest",
+          "seconds": 0.005,
+          "status": "passed"
+        },
+        {
+          "name": "shouldExposeDisabledCapabilityWithoutTouchingCourseData",
+          "className": "me.lj.train.training.service.CourseStorageServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnCompletedSessionIdempotentlyWithoutCallingOssAgain",
+          "className": "me.lj.train.training.service.CourseStorageServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnExplicitErrorWhenCreatingUploadWhileStorageIsDisabled",
+          "className": "me.lj.train.training.service.CourseStorageServiceImplTest",
+          "seconds": 0.03,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRetainOldCoverWhenReplacingCoverOfHistoricalCourse",
+          "className": "me.lj.train.training.service.CourseStorageServiceImplTest",
+          "seconds": 0.01,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.ExamPaperServiceImplTest",
+      "module": "train-training-service",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 0.072,
+      "cases": [
+        {
+          "name": "shouldFreezeManualAndRandomQuestionsWhenEnabled",
+          "className": "me.lj.train.training.service.ExamPaperServiceImplTest",
+          "seconds": 0.064,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectEnableWhenRandomCandidatesAreInsufficient",
+          "className": "me.lj.train.training.service.ExamPaperServiceImplTest",
+          "seconds": 0.005,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.ExamQuestionServiceImplTest",
+      "module": "train-training-service",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 0.13,
+      "cases": [
+        {
+          "name": "shouldCreateSingleChoiceQuestionWithNormalizedAnswer",
+          "className": "me.lj.train.training.service.ExamQuestionServiceImplTest",
+          "seconds": 0.125,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectDuplicateSingleChoiceOptions",
+          "className": "me.lj.train.training.service.ExamQuestionServiceImplTest",
+          "seconds": 0.003,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.ExamServiceImplTest",
+      "module": "train-training-service",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 6,
+      "seconds": 0.416,
+      "cases": [
+        {
+          "name": "shouldGradeAnswerAndRecalculateCompletion",
+          "className": "me.lj.train.training.service.ExamServiceImplTest",
+          "seconds": 0.334,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectExamBeforeStudyCompleted(String)[1]",
+          "className": "me.lj.train.training.service.ExamServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectExamBeforeStudyCompleted(String)[2]",
+          "className": "me.lj.train.training.service.ExamServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldSettleExpiredSubmissionAsTimeout",
+          "className": "me.lj.train.training.service.ExamServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldOpenOneExamAndProjectInProgressStatus",
+          "className": "me.lj.train.training.service.ExamServiceImplTest",
+          "seconds": 0.059,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnSubmittedResultWithoutGradingAgain",
+          "className": "me.lj.train.training.service.ExamServiceImplTest",
+          "seconds": 0.005,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.LearningAccessServiceImplTest",
+      "module": "train-training-service",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 11,
+      "seconds": 1.032,
+      "cases": [
+        {
+          "name": "shouldRejectUnassignedProgressQuery",
+          "className": "me.lj.train.training.service.LearningAccessServiceImplTest",
+          "seconds": 0.536,
+          "status": "passed"
+        },
+        {
+          "name": "shouldLimitReplayToCompletedTasksWithinPeriod(String, String, int, int, boolean)[1]",
+          "className": "me.lj.train.training.service.LearningAccessServiceImplTest",
+          "seconds": 0.082,
+          "status": "passed"
+        },
+        {
+          "name": "shouldLimitReplayToCompletedTasksWithinPeriod(String, String, int, int, boolean)[2]",
+          "className": "me.lj.train.training.service.LearningAccessServiceImplTest",
+          "seconds": 0.011,
+          "status": "passed"
+        },
+        {
+          "name": "shouldLimitReplayToCompletedTasksWithinPeriod(String, String, int, int, boolean)[3]",
+          "className": "me.lj.train.training.service.LearningAccessServiceImplTest",
+          "seconds": 0.012,
+          "status": "passed"
+        },
+        {
+          "name": "shouldLimitReplayToCompletedTasksWithinPeriod(String, String, int, int, boolean)[4]",
+          "className": "me.lj.train.training.service.LearningAccessServiceImplTest",
+          "seconds": 0.013,
+          "status": "passed"
+        },
+        {
+          "name": "shouldLimitReplayToCompletedTasksWithinPeriod(String, String, int, int, boolean)[5]",
+          "className": "me.lj.train.training.service.LearningAccessServiceImplTest",
+          "seconds": 0.014,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAllowFinishedPlanProgressButRejectPlayback",
+          "className": "me.lj.train.training.service.LearningAccessServiceImplTest",
+          "seconds": 0.039,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectStudentWhoIsNotAssignedToPlan",
+          "className": "me.lj.train.training.service.LearningAccessServiceImplTest",
+          "seconds": 0.008,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnOnlyAssignedTaskContext",
+          "className": "me.lj.train.training.service.LearningAccessServiceImplTest",
+          "seconds": 0.01,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAllowRetainedStorageObjectForPublishedSnapshotPlayback(String)[1]",
+          "className": "me.lj.train.training.service.LearningAccessServiceImplTest",
+          "seconds": 0.088,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAllowRetainedStorageObjectForPublishedSnapshotPlayback(String)[2]",
+          "className": "me.lj.train.training.service.LearningAccessServiceImplTest",
+          "seconds": 0.018,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.LearningTaskProjectionConsumerTest",
+      "module": "train-training-service",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3,
+      "seconds": 0.416,
+      "cases": [
+        {
+          "name": "shouldProjectStudyCompletionAndRecalculateTrainingCompletion",
+          "className": "me.lj.train.training.service.LearningTaskProjectionConsumerTest",
+          "seconds": 0.393,
+          "status": "passed"
+        },
+        {
+          "name": "shouldIgnoreAlreadyConsumedEvent",
+          "className": "me.lj.train.training.service.LearningTaskProjectionConsumerTest",
+          "seconds": 0.005,
+          "status": "passed"
+        },
+        {
+          "name": "shouldNotRegressCompletedTaskWhenStartedEventArrivesLate",
+          "className": "me.lj.train.training.service.LearningTaskProjectionConsumerTest",
+          "seconds": 0.009,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.PlanServiceImplTest",
+      "module": "train-training-service",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 6,
+      "seconds": 0.165,
+      "cases": [
+        {
+          "name": "shouldPublishAndFreezeCoursewareAndParticipantSnapshots",
+          "className": "me.lj.train.training.service.PlanServiceImplTest",
+          "seconds": 0.087,
+          "status": "passed"
+        },
+        {
+          "name": "shouldStoreSameDayPlanFromMidnightThroughEndOfDay",
+          "className": "me.lj.train.training.service.PlanServiceImplTest",
+          "seconds": 0.007,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectFaceCheckPlanWhenParticipantHasNoReference",
+          "className": "me.lj.train.training.service.PlanServiceImplTest",
+          "seconds": 0.01,
+          "status": "passed"
+        },
+        {
+          "name": "shouldKeepPublishedPlanImmutable",
+          "className": "me.lj.train.training.service.PlanServiceImplTest",
+          "seconds": 0.013,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectCrossEnterprisePlan",
+          "className": "me.lj.train.training.service.PlanServiceImplTest",
+          "seconds": 0.028,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectPublishWithoutCourseAndParticipant",
+          "className": "me.lj.train.training.service.PlanServiceImplTest",
+          "seconds": 0.011,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.PrivateImageStorageServiceImplTest",
+      "module": "train-training-service",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 7,
+      "seconds": 0.122,
+      "cases": [
+        {
+          "name": "shouldRejectDeletingAnotherStudentsReference",
+          "className": "me.lj.train.training.service.PrivateImageStorageServiceImplTest",
+          "seconds": 0.065,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReadOnlyOwnersPrivateImageAndReturnDigest",
+          "className": "me.lj.train.training.service.PrivateImageStorageServiceImplTest",
+          "seconds": 0.005,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectPhotoPreviewWithoutRecordPermission",
+          "className": "me.lj.train.training.service.PrivateImageStorageServiceImplTest",
+          "seconds": 0.002,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCreatePrivateDirectUploadSession",
+          "className": "me.lj.train.training.service.PrivateImageStorageServiceImplTest",
+          "seconds": 0.02,
+          "status": "passed"
+        },
+        {
+          "name": "shouldSaveLearningPhotoForCurrentStudent",
+          "className": "me.lj.train.training.service.PrivateImageStorageServiceImplTest",
+          "seconds": 0.011,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectOtherStudentReadingPrivateImage",
+          "className": "me.lj.train.training.service.PrivateImageStorageServiceImplTest",
+          "seconds": 0.006,
+          "status": "passed"
+        },
+        {
+          "name": "shouldScopeStudentPhotoPreview",
+          "className": "me.lj.train.training.service.PrivateImageStorageServiceImplTest",
+          "seconds": 0.005,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.StudentPlanServiceImplTest",
+      "module": "train-training-service",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4,
+      "seconds": 0.147,
+      "cases": [
+        {
+          "name": "shouldHidePlanWhenCurrentLearnerIsNotAssigned",
+          "className": "me.lj.train.training.service.StudentPlanServiceImplTest",
+          "seconds": 0.086,
+          "status": "passed"
+        },
+        {
+          "name": "shouldBatchRequiredDurationsWithoutInitializingProgress",
+          "className": "me.lj.train.training.service.StudentPlanServiceImplTest",
+          "seconds": 0.014,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectOversizedProgressBatchBeforeQuerying",
+          "className": "me.lj.train.training.service.StudentPlanServiceImplTest",
+          "seconds": 0.038,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectTaskReturnedForAnotherLearner",
+          "className": "me.lj.train.training.service.StudentPlanServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.TrainingCompletionServiceTest",
+      "module": "train-training-service",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 7,
+      "seconds": 0.066,
+      "cases": [
+        {
+          "name": "shouldRefreshPlanOnlyAfterCommit(boolean)[1]",
+          "className": "me.lj.train.training.service.TrainingCompletionServiceTest",
+          "seconds": 0.017,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRefreshPlanOnlyAfterCommit(boolean)[2]",
+          "className": "me.lj.train.training.service.TrainingCompletionServiceTest",
+          "seconds": 0.003,
+          "status": "passed"
+        },
+        {
+          "name": "shouldCompleteOnlyAfterStudyAndRequiredExamPass",
+          "className": "me.lj.train.training.service.TrainingCompletionServiceTest",
+          "seconds": 0.003,
+          "status": "passed"
+        },
+        {
+          "name": "shouldKeepIncompleteWhenExamHasNotPassed",
+          "className": "me.lj.train.training.service.TrainingCompletionServiceTest",
+          "seconds": 0.002,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRefreshPlanForAlreadyCompletedTask",
+          "className": "me.lj.train.training.service.TrainingCompletionServiceTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldApplyCompletionRequirements(boolean, String, String, boolean)[1]",
+          "className": "me.lj.train.training.service.TrainingCompletionServiceTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldApplyCompletionRequirements(boolean, String, String, boolean)[2]",
+          "className": "me.lj.train.training.service.TrainingCompletionServiceTest",
+          "seconds": 0.008,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.TrainingRecordServiceImplTest",
+      "module": "train-training-service",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5,
+      "seconds": 0.137,
+      "cases": [
+        {
+          "name": "shouldRejectAnotherEnterprise",
+          "className": "me.lj.train.training.service.TrainingRecordServiceImplTest",
+          "seconds": 0.093,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectReversedDateRangeBeforeQuerying",
+          "className": "me.lj.train.training.service.TrainingRecordServiceImplTest",
+          "seconds": 0.003,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReadFinishedPlanWithoutStartingLearningOrExam",
+          "className": "me.lj.train.training.service.TrainingRecordServiceImplTest",
+          "seconds": 0.028,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRequireStatisticsPermissionForAdministratorEntry",
+          "className": "me.lj.train.training.service.TrainingRecordServiceImplTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectAnotherStudentsTaskEvenWhenRepositoryReturnsIt",
+          "className": "me.lj.train.training.service.TrainingRecordServiceImplTest",
+          "seconds": 0.005,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.service.TrainingStatisticsServiceImplTest",
+      "module": "train-training-service",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3,
+      "seconds": 0.04,
+      "cases": [
+        {
+          "name": "shouldReturnExamAndPlanDurationInParticipantDetail",
+          "className": "me.lj.train.training.service.TrainingStatisticsServiceImplTest",
+          "seconds": 0.011,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectAccountWithoutStatisticsPermission",
+          "className": "me.lj.train.training.service.TrainingStatisticsServiceImplTest",
+          "seconds": 0.013,
+          "status": "passed"
+        },
+        {
+          "name": "shouldSummarizeOperationalTasksAndRequiredDuration",
+          "className": "me.lj.train.training.service.TrainingStatisticsServiceImplTest",
+          "seconds": 0.008,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.storage.AliyunOssIntegrationTest",
+      "module": "train-training-service",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 2.107,
+      "cases": [
+        {
+          "name": "shouldUploadPartsPreviewRangeAndDeletePrivateObject",
+          "className": "me.lj.train.training.storage.AliyunOssIntegrationTest",
+          "seconds": 2.045,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.storage.AliyunOssStorageServiceTest",
+      "module": "train-training-service",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4,
+      "seconds": 1.158,
+      "cases": [
+        {
+          "name": "shouldListFirstPageFromZero",
+          "className": "me.lj.train.training.storage.AliyunOssStorageServiceTest",
+          "seconds": 0.149,
+          "status": "passed"
+        },
+        {
+          "name": "shouldReturnNullForMissingObject",
+          "className": "me.lj.train.training.storage.AliyunOssStorageServiceTest",
+          "seconds": 0.006,
+          "status": "passed"
+        },
+        {
+          "name": "shouldPreservePermissionAndNetworkFailures",
+          "className": "me.lj.train.training.storage.AliyunOssStorageServiceTest",
+          "seconds": 0.021,
+          "status": "passed"
+        },
+        {
+          "name": "shouldIgnoreWrappedMissingUploadOnAbort",
+          "className": "me.lj.train.training.storage.AliyunOssStorageServiceTest",
+          "seconds": 0.015,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.storage.StorageCleanupSchedulerTest",
+      "module": "train-training-service",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3,
+      "seconds": 2.699,
+      "cases": [
+        {
+          "name": "shouldSkipCleanupWhenOssIsDisabled",
+          "className": "me.lj.train.training.storage.StorageCleanupSchedulerTest",
+          "seconds": 2.399,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAbortExpiredMultipartAndRetryPendingObjectDeletion",
+          "className": "me.lj.train.training.storage.StorageCleanupSchedulerTest",
+          "seconds": 0.254,
+          "status": "passed"
+        },
+        {
+          "name": "shouldKeepPendingStateWhenOssDeletionFails",
+          "className": "me.lj.train.training.storage.StorageCleanupSchedulerTest",
+          "seconds": 0.034,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.training.storage.UploadFileValidatorTest",
+      "module": "train-training-service",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5,
+      "seconds": 0.035,
+      "cases": [
+        {
+          "name": "shouldValidateDeclaredTypeSizeAndDuration",
+          "className": "me.lj.train.training.storage.UploadFileValidatorTest",
+          "seconds": 0.012,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAcceptJpegPngAndWebpHeaders",
+          "className": "me.lj.train.training.storage.UploadFileValidatorTest",
+          "seconds": 0.002,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectVideoWithoutFtypHeader",
+          "className": "me.lj.train.training.storage.UploadFileValidatorTest",
+          "seconds": 0.002,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectObjectSizeAndContentTypeMismatch",
+          "className": "me.lj.train.training.storage.UploadFileValidatorTest",
+          "seconds": 0.004,
+          "status": "passed"
+        },
+        {
+          "name": "shouldAcceptMp4FtypHeader",
+          "className": "me.lj.train.training.storage.UploadFileValidatorTest",
+          "seconds": 0.002,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.webapi.controller.StudentPlanControllerTest",
+      "module": "train-web-api",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 1,
+      "seconds": 1.915,
+      "cases": [
+        {
+          "name": "shouldMergeExistingProgressAndKeepUnstartedRequirements",
+          "className": "me.lj.train.webapi.controller.StudentPlanControllerTest",
+          "seconds": 1.885,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "me.lj.train.webapi.security.TrustedUserContextFilterTest",
+      "module": "train-web-api",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "seconds": 0.916,
+      "cases": [
+        {
+          "name": "shouldSetAndAlwaysClearUserContext",
+          "className": "me.lj.train.webapi.security.TrustedUserContextFilterTest",
+          "seconds": 0.12,
+          "status": "passed"
+        },
+        {
+          "name": "shouldRejectProtectedRequestWithoutTrustedHeaders",
+          "className": "me.lj.train.webapi.security.TrustedUserContextFilterTest",
+          "seconds": 0.174,
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "startedAt": "2026-10-09T17:58:40+08:00",
+  "finishedAt": "2026-10-09T18:04:28+08:00",
+  "environment": {
+    "hostOs": "Ubuntu 22.04.5 LTS",
+    "testImageOs": "Ubuntu 24.04.5 LTS",
+    "java": "Eclipse Temurin 17.0.20.1+1",
+    "maven": "3.9.16",
+    "docker": "29.7.1",
+    "dockerApiVersion": "1.44",
+    "dockerMinimumApiVersion": "1.40",
+    "mysql": "8.4.11",
+    "rabbitmq": "3.9.11",
+    "testcontainers": "1.21.2",
+    "dockerJava": "3.4.2",
+    "mavenImage": "maven:3.9-eclipse-temurin-17",
+    "mavenImageDigest": "sha256:1a352420f7aba21f5ad08df31bab55f74c013fb491f1ae8ab1dd7ff9ed698584",
+    "mysqlImageDigest": "sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb",
+    "jvmLimits": {
+      "mavenHeapMiB": 256,
+      "testHeapMiB": 384,
+      "activeProcessorCount": 2
+    }
+  },
+  "sourceVerification": {
+    "backendFilesCompared": 385,
+    "gitArchiveHashesMatched": true,
+    "workingTreeContentMatched": true,
+    "checkoutLineEndingDifferences": 34,
+    "uncommittedSourceChanges": false
+  },
+  "boundaries": [
+    "本轮仅后端；前端结果仍采用历史归档",
+    "OSS使用196608字节合成输入，不验证浏览器解码",
+    "人脸采用4张授权照片与默认阈值0.363，不估计准确率或活体效果",
+    "RabbitMQ真实投递但持久化Mapper为替身，不代表MySQL跨服务重启闭环"
+  ],
+  "cleanup": {
+    "remoteTaskDirectoryRemoved": true,
+    "localSensitivePackageRemoved": true,
+    "temporaryTestContainersReclaimed": true
+  },
+  "evidence": {
+    "sanitizedLog": "docs/test/backend-2026-10-09-build.txt",
+    "sourceManifest": "docs/test/backend-source-manifest-2026-10-09.json",
+    "sha256": {
+      "backend-source-manifest-2026-10-09.json": "9ef1da49e0569dc8833f08fd06a702b13880c920819027c01cbc1365f6cb821a",
+      "backend-2026-10-09-build.txt": "d49a2cc1a4e362d272ae4a36fbdc82adcc46ccc2424d4db379454c396eb09560"
+    }
+  }
+}
