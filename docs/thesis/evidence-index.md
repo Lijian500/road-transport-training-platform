@@ -10,7 +10,7 @@
 
 | 论文论点或演示内容 | 证据入口 | 当前边界 |
 | --- | --- | --- |
-| 第5章8幅当前界面演示截图（图5-1～图5-8） | [8图图库与来源说明](figures/screenshots-20261009/README.md)、[截图批次](../changes/2026-10-09-thesis-ui-screenshots.md)、[公开验证JSON](../test/thesis-ui-screenshots-2026-10-09.json) | 当前Vue页面＋纯虚构API／WebSocket夹具，照片与敏感信息已遮挡；Word替换及98页版式复核完成，不证明真实摄像头、考试成绩或培训闭环已验收 |
+| 第5章8幅当前界面演示截图（图5-1～图5-8） | [8图图库与来源说明](figures/screenshots-20261009/README.md)、[10月9日采集批次](../changes/2026-10-09-thesis-ui-screenshots.md)及[历史验证JSON](../test/thesis-ui-screenshots-2026-10-09.json)、[10月10日注记清理批次](../changes/2026-10-10-thesis-screenshot-annotations.md)及[当前验证JSON](../test/thesis-ui-screenshots-2026-10-10.json) | 当前Vue页面＋纯虚构API／WebSocket夹具，照片与敏感信息已遮挡；底部来源行已清理并重新替换Word，98页、69项目录及版式复核通过；不证明真实摄像头、考试成绩或培训闭环已验收 |
 | 当前后端全量自动化 | docs/test/acceptance-2026-10-09.md、backend-2026-10-09.json、backend-2026-10-09-build.txt、backend-source-manifest-2026-10-09.json | 10-09提交13d64637，61类266项全部通过，六个条件测试类均实际执行；不替代前端及完整业务流程 |
 | 私有OSS分片、签名Range与删除 | AliyunOssIntegrationTest、本轮后端JSON | 1项通过、0跳过；196608字节合成输入，未验证浏览器解码、CORS或续签 |
 | 自制100秒MP4可解码 | tmp/media/training-demo.json、tmp/media/video-browser-check.json、tmp/media-video-full-decode.log | 本机视频解码通过，未经过OSS或学习计时 |
@@ -38,6 +38,6 @@
 
 关联变更编号及拟支持的论文章节，再归档代码版本或未提交差异、时间和时区、JDK/Node/浏览器版本、单实例服务与基础设施位置、计划/任务/会话ID、操作步骤、预期、实测、结论以及证据路径。失败也保留记录，并说明重跑是否使用了新的独立数据集。照片授权与原图仅在本机保存；公开报告不包含凭据、Cookie、签名URL和原始照片。
 
-截图按真实接口页面、UI契约夹具和真实媒体区分，图片内来源注记或随图说明必须明确出处；本次8图的来源及边界见[截图批次](../changes/2026-10-09-thesis-ui-screenshots.md)。不要将带ui-fixture文件名的图片改名为真实成绩。实际媒体完成后，由真实报告数据填写结果表，再将讲稿中“尚未执行”改为与证据一致的表述。
+截图按真实接口页面、UI契约夹具和真实媒体区分，出处保存在图片内注记或随图来源记录中；本组8图按[10月10日批次](../changes/2026-10-10-thesis-screenshot-annotations.md)清理底部重复标注，原来源与边界继续见[图库说明](figures/screenshots-20261009/README.md)及[10月9日采集批次](../changes/2026-10-09-thesis-ui-screenshots.md)。不要将带ui-fixture文件名的图片改名为真实成绩。实际媒体完成后，由真实报告数据填写结果表，再将讲稿中“尚未执行”改为与证据一致的表述。
 
 论文更新完成后在变更记录回填论文版本、章节和覆盖代码范围；不能仅因底稿或索引已改就标记Word已同步。

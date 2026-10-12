@@ -1,5 +1,7 @@
 # 论文材料
 
+2026-10-10已按用户要求完成[截图底部注记清理](../changes/2026-10-10-thesis-screenshot-annotations.md)：删除图5-1～图5-8底部整行来源标注并替换当前Word；98页、69项目录、正式图题同页及版式复核通过，全部XML及用户当前正文保留。[本次验证JSON](../test/thesis-ui-screenshots-2026-10-10.json)另行归档，原演示数据来源和证据边界保留于[图库说明](figures/screenshots-20261009/README.md)与[证据索引](evidence-index.md)，不新增正文说明或实验结论。
+
 2026-10-09已按[截图替换批次](../changes/2026-10-09-thesis-ui-screenshots.md)将图5-1～图5-8替换为当前Vue页面与纯虚构API／WebSocket数据的演示截图；[8图图库与来源说明](figures/screenshots-20261009/README.md)及[公开验证JSON](../test/thesis-ui-screenshots-2026-10-09.json)已归档。人脸及敏感信息已遮挡，图5-5明确标出拍照前／后两个阶段；保持16∶9和14.8×8.325厘米，98页、69项目录、图题及分页复核通过。真实浏览器培训闭环仍待验收，截图不增加实验结论。
 
 2026-10-09已在当前提交 `13d64637` 完成后端全量实测：61类266项全部通过，失败、错误、跳过均为0；真实OSS、授权照片模型、18项MySQL及RabbitMQ条件测试均已执行。[本轮报告](../test/acceptance-2026-10-09.md)与[逐项JSON](../test/backend-2026-10-09.json)已归档，Markdown与Word已同步，中英文摘要、6.1/6.2、7.1/7.2、附录A和目录已更新，98页版式复核通过；实际章节、指纹与验证统一见[本次批次](../changes/2026-10-09-backend-full-verification.md)。前端历史数字与完整浏览器培训流程保持原证据范围；界面演示截图另按[截图批次](../changes/2026-10-09-thesis-ui-screenshots.md)登记。

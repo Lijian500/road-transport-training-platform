@@ -215,6 +215,6 @@ sequenceDiagram
 | 学习照片留存与预览 | train-training-service/.../PrivateImageStorageServiceImpl.java、train-learning-service/.../LearningRecordServiceImpl.java |
 | 档案聚合 | train-web-api/.../TrainingRecordController.java |
 | 企业车辆 | train-admin-service/.../VehicleServiceImpl.java |
-| 截图 | [docs/thesis/figures/screenshots-20261009](figures/screenshots-20261009/README.md)，图5-1～图5-8为当前Vue界面＋纯虚构接口夹具；来源与验证见[截图批次](../changes/2026-10-09-thesis-ui-screenshots.md) |
+| 截图 | [docs/thesis/figures/screenshots-20261009](figures/screenshots-20261009/README.md)，图5-1～图5-8为当前Vue界面＋纯虚构接口夹具；采集见[10月9日批次](../changes/2026-10-09-thesis-ui-screenshots.md)，底部注记清理与当前验证见[10月10日批次](../changes/2026-10-10-thesis-screenshot-annotations.md) |
 
 原始截图与运行日志保留在本机忽略目录；论文采用的8幅脱敏演示PNG及来源说明已按[截图批次](../changes/2026-10-09-thesis-ui-screenshots.md)归档。公开材料仅包含虚构账号展示名、掩码车牌及非敏感业务字段，不包含演示密码、认证会话、真实照片或私有签名地址；演示成绩不作为真实培训结果。
