@@ -14,7 +14,8 @@
 <polyline points="802.2826086956521,510.0 766.2043283158515,470.95056711833337" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="857.7173913043479,510.0 893.7956716841485,470.95056711833337" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="250.0,160.0 293.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="377.0,160.0 420.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="369.0,157.0 428.0,157.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="369.0,163.0 428.0,163.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="580.0,160.0 623.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="707.0,160.0 750.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="170.0,190.0 170.0,266.0" fill="none" stroke="black" stroke-width="1.4"/>
@@ -30,7 +31,7 @@
 <ellipse cx="255.0" cy="68.0" rx="72.5" ry="24.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="255.0" y="72.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">组织性质</text>
 <rect x="420" y="130" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
-<text x="500.0" y="165.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">用户</text>
+<text x="500.0" y="165.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">组织用户</text>
 <ellipse cx="415.0" cy="68.0" rx="72.5" ry="24.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="415.0" y="72.6" text-anchor="middle" font-family="SimSun,serif" font-size="20" text-decoration="underline">用户编号</text>
 <ellipse cx="585.0" cy="68.0" rx="72.5" ry="24.0" fill="white" stroke="black" stroke-width="1.4"/>
@@ -62,15 +63,15 @@
 <polygon points="335.0,126.0 377.0,160.0 335.0,194.0 293.0,160.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="335.0" y="165.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">归属</text>
 <text x="271.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
-<text x="398.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="398.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
 <polygon points="665.0,126.0 707.0,160.0 665.0,194.0 623.0,160.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="665.0" y="165.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">绑定</text>
-<text x="601.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
-<text x="728.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..1</text>
+<text x="601.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
+<text x="728.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
 <polygon points="170.0,266.0 212.0,300.0 170.0,334.0 128.0,300.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="170.0" y="305.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">辖区</text>
-<text x="201.5" y="219.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
-<text x="201.5" y="374.1" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..1</text>
+<text x="188.5" y="219.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
+<text x="188.5" y="374.1" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
 <polygon points="500.0,266.0 542.0,300.0 500.0,334.0 458.0,300.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="500.0" y="305.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">授予</text>
 <text x="518.5" y="219.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">M</text>
@@ -83,4 +84,5 @@
 <text x="500.0" y="822.79" text-anchor="middle" font-family="SimSun,serif" font-size="23">组织用户表保存用户的主部门归属；组织层级由父节点标识表达。</text>
 <text x="500.0" y="877.79" text-anchor="middle" font-family="SimSun,serif" font-size="23">行政区域仅建立辖区模型；跨企业监管查询尚未实现。</text>
 <text x="500.0" y="932.79" text-anchor="middle" font-family="SimSun,serif" font-size="23">下划线表示标识属性；连线表示逻辑关系。</text>
+<text x="500.0" y="975.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1／N／M表示关系基数；单线表示部分参与，双线表示全参与。</text>
 </svg>

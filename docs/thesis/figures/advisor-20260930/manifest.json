@@ -32,28 +32,28 @@
     "title": "核心业务概念 ER 总览",
     "width": 1000,
     "height": 870,
-    "shapes": 61
+    "shapes": 71
   },
   {
     "name": "er-admin",
     "title": "管理域概念 ER 图",
     "width": 1000,
     "height": 1000,
-    "shapes": 59
+    "shapes": 61
   },
   {
     "name": "er-training",
     "title": "培训与考试域概念 ER 图",
     "width": 1000,
     "height": 1270,
-    "shapes": 104
+    "shapes": 122
   },
   {
     "name": "er-learning",
     "title": "学习监管域概念 ER 图",
     "width": 1000,
     "height": 1190,
-    "shapes": 77
+    "shapes": 84
   },
   {
     "name": "architecture",

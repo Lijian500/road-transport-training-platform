@@ -85,53 +85,59 @@
         </mxCell>
         <mxCell id="e33" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="377.0" y="160.0" as="sourcePoint" />
-            <mxPoint x="420.0" y="160.0" as="targetPoint" />
+            <mxPoint x="369.0" y="157.0" as="sourcePoint" />
+            <mxPoint x="428.0" y="157.0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e36" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+        <mxCell id="e34" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369.0" y="163.0" as="sourcePoint" />
+            <mxPoint x="428.0" y="163.0" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e37" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="580.0" y="160.0" as="sourcePoint" />
             <mxPoint x="623.0" y="160.0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e38" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+        <mxCell id="e39" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="707.0" y="160.0" as="sourcePoint" />
             <mxPoint x="750.0" y="160.0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e41" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+        <mxCell id="e42" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="170.0" y="190.0" as="sourcePoint" />
             <mxPoint x="170.0" y="266.0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e43" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+        <mxCell id="e44" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="170.0" y="334.0" as="sourcePoint" />
             <mxPoint x="170.0" y="510.0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e46" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+        <mxCell id="e47" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="500.0" y="190.0" as="sourcePoint" />
             <mxPoint x="500.0" y="266.0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e48" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+        <mxCell id="e49" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="500.0" y="334.0" as="sourcePoint" />
             <mxPoint x="500.0" y="510.0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e51" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+        <mxCell id="e52" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="580.0" y="540.0" as="sourcePoint" />
             <mxPoint x="623.0" y="540.0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e53" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+        <mxCell id="e54" edge="1" parent="1" style="endArrow=none;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="707.0" y="540.0" as="sourcePoint" />
             <mxPoint x="750.0" y="540.0" as="targetPoint" />
@@ -146,7 +152,7 @@
         <mxCell id="n3" value="组织性质" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
           <mxGeometry x="182.5" y="44" width="145" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="n5" value="用户" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+        <mxCell id="n5" value="组织用户" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
           <mxGeometry x="420" y="130" width="160" height="60" as="geometry" />
         </mxCell>
         <mxCell id="n6" value="&lt;u&gt;用户编号&lt;/u&gt;" vertex="1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
@@ -197,56 +203,59 @@
         <mxCell id="n32" value="1" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
           <mxGeometry x="258.0" y="130.0" width="27" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="n34" value="0..N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
-          <mxGeometry x="372.0" y="130.0" width="53" height="28" as="geometry" />
+        <mxCell id="n35" value="N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="385.0" y="130.0" width="27" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="n35" value="绑定" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+        <mxCell id="n36" value="绑定" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
           <mxGeometry x="623.0" y="126.0" width="84" height="68" as="geometry" />
         </mxCell>
-        <mxCell id="n37" value="0..N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
-          <mxGeometry x="575.0" y="130.0" width="53" height="28" as="geometry" />
+        <mxCell id="n38" value="N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="588.0" y="130.0" width="27" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="n39" value="0..1" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
-          <mxGeometry x="702.0" y="130.0" width="53" height="28" as="geometry" />
+        <mxCell id="n40" value="1" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="715.0" y="130.0" width="27" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="n40" value="辖区" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+        <mxCell id="n41" value="辖区" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
           <mxGeometry x="128.0" y="266.0" width="84" height="68" as="geometry" />
         </mxCell>
-        <mxCell id="n42" value="0..N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
-          <mxGeometry x="175.0" y="201.0" width="53" height="28" as="geometry" />
+        <mxCell id="n43" value="N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="175.0" y="201.0" width="27" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="n44" value="0..1" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
-          <mxGeometry x="175.0" y="355.5" width="53" height="28" as="geometry" />
+        <mxCell id="n45" value="1" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="175.0" y="355.5" width="27" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="n45" value="授予" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+        <mxCell id="n46" value="授予" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
           <mxGeometry x="458.0" y="266.0" width="84" height="68" as="geometry" />
         </mxCell>
-        <mxCell id="n47" value="M" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+        <mxCell id="n48" value="M" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
           <mxGeometry x="505.0" y="201.0" width="27" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="n49" value="N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+        <mxCell id="n50" value="N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
           <mxGeometry x="505.0" y="355.5" width="27" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="n50" value="授权" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+        <mxCell id="n51" value="授权" vertex="1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=22;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
           <mxGeometry x="623.0" y="506.0" width="84" height="68" as="geometry" />
         </mxCell>
-        <mxCell id="n52" value="M" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+        <mxCell id="n53" value="M" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
           <mxGeometry x="588.0" y="510.0" width="27" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="n54" value="N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+        <mxCell id="n55" value="N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
           <mxGeometry x="715.0" y="510.0" width="27" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="n55" value="M:N 联系通过用户角色、角色权限表实现。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+        <mxCell id="n56" value="M:N 联系通过用户角色、角色权限表实现。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
           <mxGeometry x="75" y="740" width="850" height="45" as="geometry" />
         </mxCell>
-        <mxCell id="n56" value="组织用户表保存用户的主部门归属；组织层级由父节点标识表达。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+        <mxCell id="n57" value="组织用户表保存用户的主部门归属；组织层级由父节点标识表达。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
           <mxGeometry x="40" y="795" width="920" height="45" as="geometry" />
         </mxCell>
-        <mxCell id="n57" value="行政区域仅建立辖区模型；跨企业监管查询尚未实现。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+        <mxCell id="n58" value="行政区域仅建立辖区模型；跨企业监管查询尚未实现。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
           <mxGeometry x="50" y="850" width="900" height="45" as="geometry" />
         </mxCell>
-        <mxCell id="n58" value="下划线表示标识属性；连线表示逻辑关系。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+        <mxCell id="n59" value="下划线表示标识属性；连线表示逻辑关系。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
           <mxGeometry x="100" y="905" width="800" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="n60" value="1／N／M表示关系基数；单线表示部分参与，双线表示全参与。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="30" y="955" width="940" height="32" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

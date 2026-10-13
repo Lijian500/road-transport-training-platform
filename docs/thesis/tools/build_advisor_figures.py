@@ -28,12 +28,35 @@ class Figure:
         self.items.append(node)
         return node
 
-    def line(self, points, label="", at=None, size=22, dashed=False, arrow=False):
+    def line(self, points, label="", at=None, size=22, dashed=False, arrow=False, double=False):
         """添加无箭头连接；基数标签使用独立文字节点避免压线。"""
-        self.items.append(dict(id="e" + str(len(self.items)), kind="line", points=points, dashed=dashed, arrow=arrow))
+        paths = [self.parallel_line(points, offset) for offset in (-3, 3)] if double else [points]
+        for path in paths:
+            self.items.append(dict(id="e" + str(len(self.items)), kind="line", points=path, dashed=dashed, arrow=arrow))
         if label:
             x, y = at or points[len(points) // 2]
             self.shape("text", label, x, y, max(46, len(label) * size * .65), 30, size)
+
+    def parallel_line(self, points, offset):
+        """平移折线并衔接转角；端点伸入节点，由节点填色裁去多余部分。"""
+        directions = []
+        for start, end in zip(points, points[1:]):
+            dx, dy = end[0] - start[0], end[1] - start[1]
+            length = math.hypot(dx, dy)
+            directions.append((dx / length, dy / length))
+        result = []
+        for index, (x, y) in enumerate(points):
+            before = directions[max(0, index - 1)]
+            after = directions[min(index, len(directions) - 1)]
+            divisor = 1 + before[0] * after[0] + before[1] * after[1]
+            px = x - offset * (before[1] + after[1]) / divisor
+            py = y + offset * (before[0] + after[0]) / divisor
+            if index == 0:
+                px, py = px - after[0] * 8, py - after[1] * 8
+            elif index == len(points) - 1:
+                px, py = px + before[0] * 8, py + before[1] * 8
+            result.append((px, py))
+        return result
 
     def center(self, node):
         """返回节点中心。"""
@@ -51,8 +74,8 @@ class Figure:
             rate = 1 / max(abs(dx) / (node["w"] / 2), abs(dy) / (node["h"] / 2))
         return cx + dx * rate, cy + dy * rate
 
-    def connect(self, left, right, left_card="", right_card=""):
-        """连接两个节点并在端点附近显示关系基数。"""
+    def connect(self, left, right, left_card="", right_card="", total=False, card_at=None):
+        """连接节点；全参与使用双线，必要时指定基数位置以避开折线。"""
         start = self.attach(left, self.center(right))
         end = self.attach(right, self.center(left))
         points = [start, end]
@@ -71,7 +94,7 @@ class Figure:
                     start=(lx+direction*left['w']/2,ly)
                     end=(rx,ry-vertical*right['h']/2)
                     points=[start,(rx,ly),end]
-        self.line(points)
+        self.line(points, double=total)
         segments=list(zip(points,points[1:]))
         orthogonal=[pair for pair in segments if pair[0][0]==pair[1][0] or pair[0][1]==pair[1][1]]
         segment=max(orthogonal or segments,key=lambda pair: abs(pair[1][0]-pair[0][0])+abs(pair[1][1]-pair[0][1]))
@@ -87,7 +110,8 @@ class Figure:
                     y=(a[1]+right['y']-105)/2
                 tx=x-width/2 if horizontal else x+5
                 tx=min(tx,self.width-width-6)
-                self.shape("text",label,tx,y-30 if horizontal else y-14,width,28,20)
+                tx,ty=card_at if card_at is not None else (tx,y-30 if horizontal else y-14)
+                self.shape("text",label,tx,ty,width,28,20)
 
     def entity(self, label, x, y, key, attribute=None, width=172):
         """建立实体和关键属性，主键属性加下划线。"""
@@ -103,8 +127,9 @@ class Figure:
             self.connect(node, attr)
         return node
 
-    def relation(self, left, right, label, x, y, left_card="1", right_card="N", width=84):
-        """以菱形表示联系，实体端标注可选性和基数。"""
+    def relation(self, left, right, label, x, y, left_card="1", right_card="N", width=84,
+                 left_total=False, right_total=False, left_card_at=None):
+        """绘制 Chen 联系；基数看对侧数量，单／双线表达本侧参与约束。"""
         lx,ly=self.center(left)
         rx,ry=self.center(right)
         x=(lx+rx)/2-width/2
@@ -114,9 +139,14 @@ class Figure:
             upper,lower=(left,right) if ly<ry else (right,left)
             y=(upper['y']+upper['h']+lower['y']-(100 if lower.get('has_attributes') else 0))/2-34
         relation = self.shape("diamond", label, x, y, width, 68, 22)
-        self.connect(left, relation, left_card)
-        self.connect(relation, right, "", right_card)
+        self.connect(left, relation, left_card, total=left_total, card_at=left_card_at)
+        self.connect(relation, right, "", right_card, total=right_total)
         return relation
+
+    def chen_legend(self, y, size=20):
+        """统一说明 Chen 图的数量、参与约束和标识属性。"""
+        self.shape("text", "1／N／M表示关系基数；单线表示部分参与，双线表示全参与。",
+                   30, y, self.width - 60, 32, size)
 
     def write(self):
         """绘制矢量、栅格和可编辑 XML，并记录验证清单。"""
@@ -265,16 +295,17 @@ def overview():
                            ("session","学习会话",40,520),("progress","课程进度",400,520),("exam","考试记录",790,520),
                            ("event","受理事件",40,760),("face","抽验任务",400,760),("attempt","抽验提交",790,760)]:
         nodes[key]=fig.shape("rect",label,x,y,165,58,25)
-    fig.relation(nodes["org"],nodes["user"],"归属",252,40,"1","0..N")
-    fig.relation(nodes["user"],nodes["vehicle"],"绑定",640,40,"0..N","0..1")
-    fig.relation(nodes["plan"],nodes["task"],"分配",252,270,"1","0..N")
-    fig.relation(nodes["task"],nodes["user"],"参训",430,156,"0..N","1")
-    fig.relation(nodes["task"],nodes["session"],"产生",245,403,"1","0..N")
-    fig.relation(nodes["task"],nodes["progress"],"累计",430,406,"1","0..N")
-    fig.relation(nodes["task"],nodes["exam"],"考试",660,406,"1","0..1")
-    fig.relation(nodes["session"],nodes["event"],"记录",70,640,"1","0..N")
-    fig.relation(nodes["session"],nodes["face"],"触发",240,643,"1","0..N")
-    fig.relation(nodes["face"],nodes["attempt"],"提交",635,755,"1","0..N")
+    fig.relation(nodes["org"],nodes["user"],"归属",252,40,"1","N",right_total=True)
+    fig.relation(nodes["user"],nodes["vehicle"],"绑定",640,40,"N","1")
+    fig.relation(nodes["plan"],nodes["task"],"分配",252,270,"1","N",right_total=True)
+    fig.relation(nodes["task"],nodes["user"],"参训",430,156,"N","1",left_total=True)
+    fig.relation(nodes["task"],nodes["session"],"产生",245,403,"1","N",right_total=True)
+    fig.relation(nodes["task"],nodes["progress"],"累计",430,406,"1","N",right_total=True)
+    fig.relation(nodes["task"],nodes["exam"],"考试",660,406,"1","1",right_total=True)
+    fig.relation(nodes["session"],nodes["event"],"记录",70,640,"1","N",right_total=True)
+    fig.relation(nodes["session"],nodes["face"],"触发",240,643,"1","N",right_total=True)
+    fig.relation(nodes["face"],nodes["attempt"],"提交",635,755,"1","N",right_total=True)
+    fig.chen_legend(831)
     return fig
 
 
@@ -282,20 +313,21 @@ def admin_er():
     """管理域按身份、授权和组织关系建模，关联表在数据字典中映射。"""
     fig=Figure("er-admin","管理域概念 ER 图",1000,1000)
     org=fig.entity("组织／部门",60,130,"组织编号","组织性质")
-    user=fig.entity("用户",425,130,"用户编号","姓名")
+    user=fig.entity("组织用户",425,130,"用户编号","姓名")
     vehicle=fig.entity("车辆",785,130,"车辆编号","车牌号码")
     area=fig.entity("行政区域",60,510,"区域编号","行政代码")
     role=fig.entity("角色",425,510,"角色编号","角色名称")
     permission=fig.entity("权限",785,510,"权限编号","权限编码")
-    fig.relation(org,user,"归属",270,125,"1","0..N")
-    fig.relation(user,vehicle,"绑定",640,125,"0..N","0..1")
-    fig.relation(org,area,"辖区",90,355,"0..N","0..1")
+    fig.relation(org,user,"归属",270,125,"1","N",right_total=True)
+    fig.relation(user,vehicle,"绑定",640,125,"N","1")
+    fig.relation(org,area,"辖区",90,355,"N","1")
     fig.relation(user,role,"授予",455,355,"M","N")
     fig.relation(role,permission,"授权",640,505,"M","N")
     fig.shape("text","M:N 联系通过用户角色、角色权限表实现。",75,740,850,45,24)
     fig.shape("text","组织用户表保存用户的主部门归属；组织层级由父节点标识表达。",40,795,920,45,23)
     fig.shape("text","行政区域仅建立辖区模型；跨企业监管查询尚未实现。",50,850,900,45,23)
     fig.shape("text","下划线表示标识属性；连线表示逻辑关系。",100,905,800,45,23)
+    fig.chen_legend(955)
     return fig
 
 
@@ -314,18 +346,21 @@ def training_er():
     record=fig.shape("rect","考试记录",90,1110,160,60)
     answer=fig.shape("rect","考试答案",420,1110,160,60)
     question=fig.shape("rect","题库题目",750,1110,160,60)
-    fig.relation(course,ware,"包含",258,125,"1","0..N")
-    fig.relation(ware,storage,"引用",622,125,"0..N","1")
-    fig.relation(plan,snap,"冻结",258,460,"1","0..N")
-    fig.relation(snap,wsnap,"冻结",622,460,"1","0..N")
-    fig.relation(course,snap,"来源",258,307,"1","0..N")
-    fig.relation(plan,task,"分配",70,660,"1","0..N")
-    fig.relation(plan,paper,"使用",257,660,"0..N","0..1")
-    fig.relation(paper,paperq,"固化",622,795,"1","0..N")
-    fig.relation(task,record,"参加",70,982,"1","0..1")
-    fig.relation(record,answer,"作答",258,1105,"1","0..N")
-    fig.relation(paperq,question,"来源",805,982,"0..N","1")
-    fig.shape("text","发布后课程规则与课件目录固定；答案按试卷题目快照判分。",40,1210,920,40,23)
+    fig.relation(course,ware,"包含",258,125,"1","N",right_total=True)
+    fig.relation(ware,storage,"引用",622,125,"N","1",left_total=True)
+    fig.relation(plan,snap,"冻结",258,460,"1","N",right_total=True)
+    fig.relation(snap,wsnap,"冻结",622,460,"1","N",left_total=True,right_total=True)
+    fig.relation(course,snap,"来源",258,307,"1","N",right_total=True)
+    fig.relation(plan,task,"分配",70,660,"1","N",right_total=True)
+    fig.relation(plan,paper,"使用",257,660,"N","1")
+    fig.relation(paper,paperq,"固化",622,795,"1","N",right_total=True)
+    fig.relation(task,record,"参加",70,982,"1","1",right_total=True)
+    fig.relation(record,answer,"作答",258,1105,"1","N",right_total=True)
+    # 将基数放在竖直段旁，避免新增斜向连线穿过数字。
+    fig.relation(paperq,answer,"对应",622,982,"1","N",right_total=True,left_card_at=(735,913))
+    fig.relation(paperq,question,"来源",805,982,"N","1",left_total=True)
+    fig.shape("text","发布后课程规则与课件目录固定；答案按试卷题目快照判分。",40,1195,920,40,23)
+    fig.chen_legend(1236,18)
     return fig
 
 
@@ -341,14 +376,15 @@ def learning_er():
     photo=fig.entity("照片对象",405,880,"对象编号","所有者")
     ware=fig.entity("课件进度",775,880,"课件进度编号","确认位置")
     fig.entity("发件记录",40,880,"发件编号","事件标识")
-    fig.relation(session,event,"受理",258,125,"1","0..N")
-    fig.relation(session,face,"触发",70,338,"1","0..N")
-    fig.relation(face,log,"提交",258,485,"1","0..N")
-    fig.relation(log,photo,"引用",435,698,"0..N","0..1")
-    fig.relation(progress,ware,"汇总",805,698,"1","0..N")
-    fig.relation(task,progress,"累计",805,338,"1","0..N")
+    fig.relation(session,event,"受理",258,125,"1","N",right_total=True)
+    fig.relation(session,face,"触发",70,338,"1","N",right_total=True)
+    fig.relation(face,log,"提交",258,485,"1","N",right_total=True)
+    fig.relation(log,photo,"引用",435,698,"N","1")
+    fig.relation(progress,ware,"汇总",805,698,"1","N",left_total=True,right_total=True)
+    fig.relation(task,progress,"累计",805,338,"1","N",right_total=True)
     fig.shape("text","发件记录与进度在同一本地事务中保存，按事件标识投递。",40,1050,920,42,23)
     fig.shape("text","会话签到、签退也可引用照片；历史无照片记录允许为空。",40,1100,920,42,23)
+    fig.chen_legend(1150)
     return fig
 
 

@@ -20,26 +20,40 @@
 <polyline points="802.2826086956521,800.0 766.2043283158515,760.9505671183333" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="857.7173913043479,800.0 893.7956716841485,760.9505671183333" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="250.0,160.0 293.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="377.0,160.0 420.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="580.0,160.0 623.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="369.0,157.0 428.0,157.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="369.0,163.0 428.0,163.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="572.0,157.0 631.0,157.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="572.0,163.0 631.0,163.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="707.0,160.0 750.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="250.0,495.0 293.0,495.0" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="377.0,495.0 420.0,495.0" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="580.0,495.0 623.0,495.0" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="707.0,495.0 750.0,495.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="369.0,492.0 428.0,492.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="369.0,498.0 428.0,498.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="572.0,492.0 631.0,492.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="572.0,498.0 631.0,498.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="699.0,492.0 758.0,492.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="699.0,498.0 758.0,498.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="218.0,190.0 273.0,220.0 273.0,277.5 293.0,277.5" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="377.0,277.5 500.0,277.5 500.0,465.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="369.0,274.5 503.0,274.5 503.0,473.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="369.0,280.5 497.0,280.5 497.0,473.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="170.0,525.0 170.0,578.5" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="170.0,646.5 170.0,800.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="173.0,638.5 173.0,808.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="167.0,638.5 167.0,808.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="218.0,525.0 273.0,555.0 273.0,612.5 293.0,612.5" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="377.0,612.5 500.0,612.5 500.0,800.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="580.0,830.0 623.0,830.0" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="707.0,830.0 750.0,830.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="699.0,827.0 758.0,827.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="699.0,833.0 758.0,833.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="170.0,860.0 170.0,951.0" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="170.0,1019.0 170.0,1110.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="173.0,1011.0 173.0,1118.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="167.0,1011.0 167.0,1118.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="250.0,1140.0 293.0,1140.0" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="377.0,1140.0 420.0,1140.0" fill="none" stroke="black" stroke-width="1.4"/>
-<polyline points="830.0,860.0 830.0,951.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="369.0,1137.0 428.0,1137.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="369.0,1143.0 428.0,1143.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="782.0,860.0 727.0,890.0 727.0,985.0 707.0,985.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="631.0,988.0 503.0,988.0 503.0,1118.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="631.0,982.0 497.0,982.0 497.0,1118.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="833.0,852.0 833.0,959.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="827.0,852.0 827.0,959.0" fill="none" stroke="black" stroke-width="1.4"/>
 <polyline points="830.0,1019.0 830.0,1110.0" fill="none" stroke="black" stroke-width="1.4"/>
 <rect x="90" y="130" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="170.0" y="165.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">课程</text>
@@ -104,46 +118,51 @@
 <polygon points="335.0,126.0 377.0,160.0 335.0,194.0 293.0,160.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="335.0" y="165.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">包含</text>
 <text x="271.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
-<text x="398.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="398.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
 <polygon points="665.0,126.0 707.0,160.0 665.0,194.0 623.0,160.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="665.0" y="165.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">引用</text>
-<text x="601.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="601.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
 <text x="728.5" y="148.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
 <polygon points="335.0,461.0 377.0,495.0 335.0,529.0 293.0,495.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="335.0" y="500.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">冻结</text>
 <text x="271.5" y="483.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
-<text x="398.5" y="483.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="398.5" y="483.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
 <polygon points="665.0,461.0 707.0,495.0 665.0,529.0 623.0,495.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="665.0" y="500.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">冻结</text>
 <text x="601.5" y="483.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
-<text x="728.5" y="483.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="728.5" y="483.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
 <polygon points="335.0,243.5 377.0,277.5 335.0,311.5 293.0,277.5" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="335.0" y="282.56" text-anchor="middle" font-family="SimSun,serif" font-size="22">来源</text>
 <text x="291.5" y="219.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
-<text x="531.5" y="323.35" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="518.5" y="323.35" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
 <polygon points="170.0,578.5 212.0,612.5 170.0,646.5 128.0,612.5" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="170.0" y="617.5600000000001" text-anchor="middle" font-family="SimSun,serif" font-size="22">分配</text>
 <text x="188.5" y="554.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
-<text x="201.5" y="675.35" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="188.5" y="675.35" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
 <polygon points="335.0,578.5 377.0,612.5 335.0,646.5 293.0,612.5" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="335.0" y="617.5600000000001" text-anchor="middle" font-family="SimSun,serif" font-size="22">使用</text>
-<text x="304.5" y="554.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
-<text x="531.5" y="658.35" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..1</text>
+<text x="291.5" y="554.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
+<text x="518.5" y="658.35" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
 <polygon points="665.0,796.0 707.0,830.0 665.0,864.0 623.0,830.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="665.0" y="835.0600000000001" text-anchor="middle" font-family="SimSun,serif" font-size="22">固化</text>
 <text x="601.5" y="818.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
-<text x="728.5" y="818.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="728.5" y="818.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
 <polygon points="170.0,951.0 212.0,985.0 170.0,1019.0 128.0,985.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="170.0" y="990.0600000000001" text-anchor="middle" font-family="SimSun,serif" font-size="22">参加</text>
 <text x="188.5" y="889.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
-<text x="201.5" y="1091.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..1</text>
+<text x="188.5" y="1091.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
 <polygon points="335.0,1106.0 377.0,1140.0 335.0,1174.0 293.0,1140.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="335.0" y="1145.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">作答</text>
 <text x="271.5" y="1128.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
-<text x="398.5" y="1128.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="398.5" y="1128.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
+<polygon points="665.0,951.0 707.0,985.0 665.0,1019.0 623.0,985.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="665.0" y="990.0600000000001" text-anchor="middle" font-family="SimSun,serif" font-size="22">对应</text>
+<text x="748.5" y="931.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
+<text x="518.5" y="1091.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
 <polygon points="830.0,951.0 872.0,985.0 830.0,1019.0 788.0,985.0" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="830.0" y="990.0600000000001" text-anchor="middle" font-family="SimSun,serif" font-size="22">来源</text>
-<text x="861.5" y="889.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">0..N</text>
+<text x="848.5" y="889.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
 <text x="848.5" y="1091.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
-<text x="500.0" y="1235.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">发布后课程规则与课件目录固定；答案按试卷题目快照判分。</text>
+<text x="500.0" y="1220.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">发布后课程规则与课件目录固定；答案按试卷题目快照判分。</text>
+<text x="500.0" y="1256.1399999999999" text-anchor="middle" font-family="SimSun,serif" font-size="18">1／N／M表示关系基数；单线表示部分参与，双线表示全参与。</text>
 </svg>

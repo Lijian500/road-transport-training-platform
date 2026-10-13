@@ -1,0 +1,2385 @@
+{
+  "date": "2026-10-13",
+  "baseline_commit": "63e27c11fdf0570c0ba1be50b2d4166c2f6ea7ed",
+  "input_sha256": "0e78d11291406ae2291eaca251d9259e41c763a49bf373e864bd9176d166fe66",
+  "output_sha256": "638e2d016175d36f451d589512bceacf8f6251472282d22fc4c78437d5885fb6",
+  "output_file": "docs/thesis/李剑_计算机科学与技术_基于Dubbo的道路运输企业在线培训系统设计与实现.docx",
+  "pages": 95,
+  "pdf_sha256": "83cf7c271723d7d47d406ae942bdd2926fffbc02454468b08a653ff80c0a6654",
+  "standard_renderer": {
+    "status": "failed",
+    "reason": "LibreOffice soffice.exe was not found on PATH"
+  },
+  "actual_renderer": "独立隐藏WPS只读导出任务副本；捆绑Poppler按100DPI渲染",
+  "automatic_checks": {
+    "protected_text_unchanged": true,
+    "bookmarks_unchanged": true,
+    "graphic_sizes_unchanged": true,
+    "headings_unchanged": true,
+    "styles_unchanged": true,
+    "heading_format_unchanged": true,
+    "shared_paragraph_properties_unchanged": true,
+    "fields_unchanged": true,
+    "tables_unchanged": true,
+    "formulas_unchanged": true,
+    "sections_unchanged": true,
+    "graphics_unchanged": true,
+    "only_authorized_word_members_changed": true,
+    "exactly_21_reference_entries": true,
+    "all_1_to_21_cited": true,
+    "all_citations_actual_superscript": true,
+    "69_toc_entries_match_actual_footers": true,
+    "four_er_figures_caption_ratio_and_bounds": true,
+    "all_95_pages_rendered": true
+  },
+  "figures": {
+    "4-3": {
+      "physical_page": 25,
+      "caption": "图4-3核心业务概念ER总览",
+      "image_above_on_same_page": true,
+      "relative_ratio_error": 2.19780219781196e-05,
+      "image_inside_page": true
+    },
+    "4-4": {
+      "physical_page": 26,
+      "caption": "图4-4管理域概念ER图",
+      "image_above_on_same_page": true,
+      "relative_ratio_error": 2.220446049250313e-16,
+      "image_inside_page": true
+    },
+    "4-5": {
+      "physical_page": 27,
+      "caption": "图4-5培训与考试域概念ER图",
+      "image_above_on_same_page": true,
+      "relative_ratio_error": 0.00015350877193009982,
+      "image_inside_page": true
+    },
+    "4-6": {
+      "physical_page": 28,
+      "caption": "图4-6学习监管域概念ER图",
+      "image_above_on_same_page": true,
+      "relative_ratio_error": 0.00021062485373279927,
+      "image_inside_page": true
+    }
+  },
+  "relations": [
+    {
+      "figure": "er-overview",
+      "left": "企业",
+      "relationship": "归属",
+      "right": "学员",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-overview",
+      "left": "学员",
+      "relationship": "绑定",
+      "right": "车辆",
+      "left_card": "N",
+      "right_card": "1",
+      "left_total": false,
+      "right_total": false
+    },
+    {
+      "figure": "er-overview",
+      "left": "培训计划",
+      "relationship": "分配",
+      "right": "参训任务",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-overview",
+      "left": "参训任务",
+      "relationship": "参训",
+      "right": "学员",
+      "left_card": "N",
+      "right_card": "1",
+      "left_total": true,
+      "right_total": false
+    },
+    {
+      "figure": "er-overview",
+      "left": "参训任务",
+      "relationship": "产生",
+      "right": "学习会话",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-overview",
+      "left": "参训任务",
+      "relationship": "累计",
+      "right": "课程进度",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-overview",
+      "left": "参训任务",
+      "relationship": "考试",
+      "right": "考试记录",
+      "left_card": "1",
+      "right_card": "1",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-overview",
+      "left": "学习会话",
+      "relationship": "记录",
+      "right": "受理事件",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-overview",
+      "left": "学习会话",
+      "relationship": "触发",
+      "right": "抽验任务",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-overview",
+      "left": "抽验任务",
+      "relationship": "提交",
+      "right": "抽验提交",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-admin",
+      "left": "组织／部门",
+      "relationship": "归属",
+      "right": "组织用户",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-admin",
+      "left": "组织用户",
+      "relationship": "绑定",
+      "right": "车辆",
+      "left_card": "N",
+      "right_card": "1",
+      "left_total": false,
+      "right_total": false
+    },
+    {
+      "figure": "er-admin",
+      "left": "组织／部门",
+      "relationship": "辖区",
+      "right": "行政区域",
+      "left_card": "N",
+      "right_card": "1",
+      "left_total": false,
+      "right_total": false
+    },
+    {
+      "figure": "er-admin",
+      "left": "组织用户",
+      "relationship": "授予",
+      "right": "角色",
+      "left_card": "M",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": false
+    },
+    {
+      "figure": "er-admin",
+      "left": "角色",
+      "relationship": "授权",
+      "right": "权限",
+      "left_card": "M",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": false
+    },
+    {
+      "figure": "er-training",
+      "left": "课程",
+      "relationship": "包含",
+      "right": "视频课件",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-training",
+      "left": "视频课件",
+      "relationship": "引用",
+      "right": "存储对象",
+      "left_card": "N",
+      "right_card": "1",
+      "left_total": true,
+      "right_total": false
+    },
+    {
+      "figure": "er-training",
+      "left": "培训计划",
+      "relationship": "冻结",
+      "right": "计划课程",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-training",
+      "left": "计划课程",
+      "relationship": "冻结",
+      "right": "课件快照",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": true,
+      "right_total": true
+    },
+    {
+      "figure": "er-training",
+      "left": "课程",
+      "relationship": "来源",
+      "right": "计划课程",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-training",
+      "left": "培训计划",
+      "relationship": "分配",
+      "right": "参训任务",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-training",
+      "left": "培训计划",
+      "relationship": "使用",
+      "right": "试卷",
+      "left_card": "N",
+      "right_card": "1",
+      "left_total": false,
+      "right_total": false
+    },
+    {
+      "figure": "er-training",
+      "left": "试卷",
+      "relationship": "固化",
+      "right": "试卷题目",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-training",
+      "left": "参训任务",
+      "relationship": "参加",
+      "right": "考试记录",
+      "left_card": "1",
+      "right_card": "1",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-training",
+      "left": "考试记录",
+      "relationship": "作答",
+      "right": "考试答案",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-training",
+      "left": "试卷题目",
+      "relationship": "对应",
+      "right": "考试答案",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-training",
+      "left": "试卷题目",
+      "relationship": "来源",
+      "right": "题库题目",
+      "left_card": "N",
+      "right_card": "1",
+      "left_total": true,
+      "right_total": false
+    },
+    {
+      "figure": "er-learning",
+      "left": "学习会话",
+      "relationship": "受理",
+      "right": "学习事件",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-learning",
+      "left": "学习会话",
+      "relationship": "触发",
+      "right": "抽验任务",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-learning",
+      "left": "抽验任务",
+      "relationship": "提交",
+      "right": "抽验提交",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    },
+    {
+      "figure": "er-learning",
+      "left": "抽验提交",
+      "relationship": "引用",
+      "right": "照片对象",
+      "left_card": "N",
+      "right_card": "1",
+      "left_total": false,
+      "right_total": false
+    },
+    {
+      "figure": "er-learning",
+      "left": "课程进度",
+      "relationship": "汇总",
+      "right": "课件进度",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": true,
+      "right_total": true
+    },
+    {
+      "figure": "er-learning",
+      "left": "参训任务",
+      "relationship": "累计",
+      "right": "课程进度",
+      "left_card": "1",
+      "right_card": "N",
+      "left_total": false,
+      "right_total": true
+    }
+  ],
+  "changed_zip_members": [
+    "word/document.xml",
+    "word/media/image10.png",
+    "word/media/image11.png"
+  ],
+  "text_replacements": {
+    "计划发布时将课程规则与课件目录冻结到计划快照": "计划课程至少包含一份课件快照，发布后课程规则与课件目录固定",
+    "任务侧单线、考试记录侧双线表达参与约束，记录下保存各题答案。": "每条答案必须对应一条考试记录及一道试卷题目。",
+    "课程及课件进度保存累计事实。": "课程进度及至少一条课件进度同步初始化并保存累计事实。"
+  },
+  "before_body_counts": {
+    "chapters": {
+      "1": {
+        "title": "1 绪论",
+        "paragraph_cjk": 2344,
+        "table_cjk": 0,
+        "paragraph_count": 23,
+        "table_count": 0,
+        "total_cjk": 2344
+      },
+      "2": {
+        "title": "2 相关理论与关键技术",
+        "paragraph_cjk": 2343,
+        "table_cjk": 0,
+        "paragraph_count": 37,
+        "table_count": 0,
+        "total_cjk": 2343
+      },
+      "3": {
+        "title": "3 需求与可行性分析",
+        "paragraph_cjk": 3219,
+        "table_cjk": 234,
+        "paragraph_count": 51,
+        "table_count": 2,
+        "total_cjk": 3453
+      },
+      "4": {
+        "title": "4 系统设计",
+        "paragraph_cjk": 3894,
+        "table_cjk": 2109,
+        "paragraph_count": 102,
+        "table_count": 17,
+        "total_cjk": 6003
+      },
+      "5": {
+        "title": "5 系统实现",
+        "paragraph_cjk": 2460,
+        "table_cjk": 0,
+        "paragraph_count": 41,
+        "table_count": 0,
+        "total_cjk": 2460
+      },
+      "6": {
+        "title": "6 测试与结果分析",
+        "paragraph_cjk": 2125,
+        "table_cjk": 488,
+        "paragraph_count": 34,
+        "table_count": 4,
+        "total_cjk": 2613
+      },
+      "7": {
+        "title": "7 总结与展望",
+        "paragraph_cjk": 661,
+        "table_cjk": 0,
+        "paragraph_count": 9,
+        "table_count": 0,
+        "total_cjk": 661
+      }
+    },
+    "paragraph_cjk": 17046,
+    "table_cjk": 2831,
+    "total_cjk": 19877,
+    "counting_rule": "仅真实Heading 1下第1～7章；汉字范围U+4E00～U+9FFF；标题及图题计入段落，正文表格单列；目录、摘要、致谢、参考文献和附录不计入。"
+  },
+  "after_body_counts": {
+    "chapters": {
+      "1": {
+        "title": "1 绪论",
+        "paragraph_cjk": 2344,
+        "table_cjk": 0,
+        "paragraph_count": 23,
+        "table_count": 0,
+        "total_cjk": 2344
+      },
+      "2": {
+        "title": "2 相关理论与关键技术",
+        "paragraph_cjk": 2343,
+        "table_cjk": 0,
+        "paragraph_count": 37,
+        "table_count": 0,
+        "total_cjk": 2343
+      },
+      "3": {
+        "title": "3 需求与可行性分析",
+        "paragraph_cjk": 3219,
+        "table_cjk": 234,
+        "paragraph_count": 51,
+        "table_count": 2,
+        "total_cjk": 3453
+      },
+      "4": {
+        "title": "4 系统设计",
+        "paragraph_cjk": 3906,
+        "table_cjk": 2109,
+        "paragraph_count": 102,
+        "table_count": 17,
+        "total_cjk": 6015
+      },
+      "5": {
+        "title": "5 系统实现",
+        "paragraph_cjk": 2460,
+        "table_cjk": 0,
+        "paragraph_count": 41,
+        "table_count": 0,
+        "total_cjk": 2460
+      },
+      "6": {
+        "title": "6 测试与结果分析",
+        "paragraph_cjk": 2125,
+        "table_cjk": 488,
+        "paragraph_count": 34,
+        "table_count": 4,
+        "total_cjk": 2613
+      },
+      "7": {
+        "title": "7 总结与展望",
+        "paragraph_cjk": 661,
+        "table_cjk": 0,
+        "paragraph_count": 9,
+        "table_count": 0,
+        "total_cjk": 661
+      }
+    },
+    "paragraph_cjk": 17058,
+    "table_cjk": 2831,
+    "total_cjk": 19889,
+    "counting_rule": "仅真实Heading 1下第1～7章；汉字范围U+4E00～U+9FFF；标题及图题计入段落，正文表格单列；目录、摘要、致谢、参考文献和附录不计入。"
+  },
+  "toc_entries": [
+    {
+      "title": "摘要",
+      "label": "I",
+      "actual_heading_pages": [
+        {
+          "physical_page": 6,
+          "footer_labels": []
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 6,
+          "footer_labels": [],
+          "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+          "next_physical_page": 7,
+          "anchor_footer_labels": [
+            "II"
+          ]
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "Abstract",
+      "label": "II",
+      "actual_heading_pages": [
+        {
+          "physical_page": 7,
+          "footer_labels": [
+            "II"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 7,
+          "footer_labels": [
+            "II"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "1 绪论",
+      "label": "1",
+      "actual_heading_pages": [
+        {
+          "physical_page": 8,
+          "footer_labels": []
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 8,
+          "footer_labels": [],
+          "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+          "next_physical_page": 9,
+          "anchor_footer_labels": [
+            "2"
+          ]
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "1.1 研究背景与问题提出",
+      "label": "1",
+      "actual_heading_pages": [
+        {
+          "physical_page": 8,
+          "footer_labels": []
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 8,
+          "footer_labels": [],
+          "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+          "next_physical_page": 9,
+          "anchor_footer_labels": [
+            "2"
+          ]
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "1.2 研究目标与意义",
+      "label": "1",
+      "actual_heading_pages": [
+        {
+          "physical_page": 8,
+          "footer_labels": []
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 8,
+          "footer_labels": [],
+          "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+          "next_physical_page": 9,
+          "anchor_footer_labels": [
+            "2"
+          ]
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "1.3 国内外相关研究进展",
+      "label": "2",
+      "actual_heading_pages": [
+        {
+          "physical_page": 9,
+          "footer_labels": [
+            "2"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 9,
+          "footer_labels": [
+            "2"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "1.4 研究方法与论文组织",
+      "label": "3",
+      "actual_heading_pages": [
+        {
+          "physical_page": 10,
+          "footer_labels": [
+            "3"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 10,
+          "footer_labels": [
+            "3"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "2 相关理论与关键技术",
+      "label": "4",
+      "actual_heading_pages": [
+        {
+          "physical_page": 11,
+          "footer_labels": [
+            "4"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 11,
+          "footer_labels": [
+            "4"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "2.1 Java与TypeScript编程语言",
+      "label": "4",
+      "actual_heading_pages": [
+        {
+          "physical_page": 11,
+          "footer_labels": [
+            "4"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 11,
+          "footer_labels": [
+            "4"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "2.2 Spring Boot与Vue开发框架",
+      "label": "4",
+      "actual_heading_pages": [
+        {
+          "physical_page": 11,
+          "footer_labels": [
+            "4"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 11,
+          "footer_labels": [
+            "4"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "2.3 Dubbo远程调用与Nacos服务治理",
+      "label": "4",
+      "actual_heading_pages": [
+        {
+          "physical_page": 11,
+          "footer_labels": [
+            "4"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 11,
+          "footer_labels": [
+            "4"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "2.4 MySQL数据库与持久化技术",
+      "label": "5",
+      "actual_heading_pages": [
+        {
+          "physical_page": 12,
+          "footer_labels": [
+            "5"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 12,
+          "footer_labels": [
+            "5"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "2.5 WebSocket通信与学习状态控制",
+      "label": "5",
+      "actual_heading_pages": [
+        {
+          "physical_page": 12,
+          "footer_labels": [
+            "5"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 12,
+          "footer_labels": [
+            "5"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "2.6 RabbitMQ与消息最终一致性",
+      "label": "6",
+      "actual_heading_pages": [
+        {
+          "physical_page": 13,
+          "footer_labels": [
+            "6"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 13,
+          "footer_labels": [
+            "6"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "2.7 OpenCV与人脸核验技术",
+      "label": "6",
+      "actual_heading_pages": [
+        {
+          "physical_page": 13,
+          "footer_labels": [
+            "6"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 13,
+          "footer_labels": [
+            "6"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "2.8 OSS对象存储与媒体访问",
+      "label": "7",
+      "actual_heading_pages": [
+        {
+          "physical_page": 14,
+          "footer_labels": [
+            "7"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 14,
+          "footer_labels": [
+            "7"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3 需求与可行性分析",
+      "label": "8",
+      "actual_heading_pages": [
+        {
+          "physical_page": 15,
+          "footer_labels": [
+            "8"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 15,
+          "footer_labels": [
+            "8"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.1 用户角色与业务范围",
+      "label": "8",
+      "actual_heading_pages": [
+        {
+          "physical_page": 15,
+          "footer_labels": [
+            "8"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 15,
+          "footer_labels": [
+            "8"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.1.1 参与者及其权限范围",
+      "label": "8",
+      "actual_heading_pages": [
+        {
+          "physical_page": 15,
+          "footer_labels": [
+            "8"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 15,
+          "footer_labels": [
+            "8"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.1.2 角色用例分析",
+      "label": "9",
+      "actual_heading_pages": [
+        {
+          "physical_page": 16,
+          "footer_labels": [
+            "9"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 16,
+          "footer_labels": [
+            "9"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.2 培训业务流程与功能需求",
+      "label": "11",
+      "actual_heading_pages": [
+        {
+          "physical_page": 18,
+          "footer_labels": [
+            "11"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 18,
+          "footer_labels": [
+            "11"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.2.1 课程与计划发布",
+      "label": "11",
+      "actual_heading_pages": [
+        {
+          "physical_page": 18,
+          "footer_labels": [
+            "11"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 18,
+          "footer_labels": [
+            "11"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.2.2 学习与异常恢复",
+      "label": "12",
+      "actual_heading_pages": [
+        {
+          "physical_page": 19,
+          "footer_labels": [
+            "12"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 19,
+          "footer_labels": [
+            "12"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.2.3 抽验与考试",
+      "label": "12",
+      "actual_heading_pages": [
+        {
+          "physical_page": 19,
+          "footer_labels": [
+            "12"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 19,
+          "footer_labels": [
+            "12"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.2.4 档案与统计",
+      "label": "12",
+      "actual_heading_pages": [
+        {
+          "physical_page": 19,
+          "footer_labels": [
+            "12"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 19,
+          "footer_labels": [
+            "12"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.3 非功能需求",
+      "label": "13",
+      "actual_heading_pages": [
+        {
+          "physical_page": 20,
+          "footer_labels": [
+            "13"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 20,
+          "footer_labels": [
+            "13"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.4 方案可行性与选择",
+      "label": "13",
+      "actual_heading_pages": [
+        {
+          "physical_page": 20,
+          "footer_labels": [
+            "13"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 20,
+          "footer_labels": [
+            "13"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.4.1 技术可行性",
+      "label": "13",
+      "actual_heading_pages": [
+        {
+          "physical_page": 20,
+          "footer_labels": [
+            "13"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 20,
+          "footer_labels": [
+            "13"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.4.2 经济可行性",
+      "label": "14",
+      "actual_heading_pages": [
+        {
+          "physical_page": 21,
+          "footer_labels": [
+            "14"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 21,
+          "footer_labels": [
+            "14"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.4.3 操作可行性",
+      "label": "14",
+      "actual_heading_pages": [
+        {
+          "physical_page": 21,
+          "footer_labels": [
+            "14"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 21,
+          "footer_labels": [
+            "14"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "3.4.4 方案比较与选择",
+      "label": "14",
+      "actual_heading_pages": [
+        {
+          "physical_page": 21,
+          "footer_labels": [
+            "14"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 21,
+          "footer_labels": [
+            "14"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "4 系统设计",
+      "label": "16",
+      "actual_heading_pages": [
+        {
+          "physical_page": 23,
+          "footer_labels": [
+            "16"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 23,
+          "footer_labels": [
+            "16"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "4.1 总体架构",
+      "label": "16",
+      "actual_heading_pages": [
+        {
+          "physical_page": 23,
+          "footer_labels": [
+            "16"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 23,
+          "footer_labels": [
+            "16"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "4.2 系统功能结构",
+      "label": "17",
+      "actual_heading_pages": [
+        {
+          "physical_page": 24,
+          "footer_labels": [
+            "17"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 24,
+          "footer_labels": [
+            "17"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "4.3 数据库设计",
+      "label": "18",
+      "actual_heading_pages": [
+        {
+          "physical_page": 25,
+          "footer_labels": [
+            "18"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 25,
+          "footer_labels": [
+            "18"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "4.3.1 主要业务实体",
+      "label": "18",
+      "actual_heading_pages": [
+        {
+          "physical_page": 25,
+          "footer_labels": [
+            "18"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 25,
+          "footer_labels": [
+            "18"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "4.3.2 快照与历史解释",
+      "label": "22",
+      "actual_heading_pages": [
+        {
+          "physical_page": 29,
+          "footer_labels": [
+            "22"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 29,
+          "footer_labels": [
+            "22"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "4.3.3 唯一性与删除约束",
+      "label": "23",
+      "actual_heading_pages": [
+        {
+          "physical_page": 30,
+          "footer_labels": [
+            "23"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 30,
+          "footer_labels": [
+            "23"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "4.3.4 核心数据表结构",
+      "label": "23",
+      "actual_heading_pages": [
+        {
+          "physical_page": 30,
+          "footer_labels": [
+            "23"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 30,
+          "footer_labels": [
+            "23"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "4.4 学习消息处理流程",
+      "label": "35",
+      "actual_heading_pages": [
+        {
+          "physical_page": 42,
+          "footer_labels": [
+            "35"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 42,
+          "footer_labels": [
+            "35"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "4.5 抽验与考试状态设计",
+      "label": "36",
+      "actual_heading_pages": [
+        {
+          "physical_page": 43,
+          "footer_labels": [
+            "36"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 43,
+          "footer_labels": [
+            "36"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "4.6 安全与只读查询设计",
+      "label": "36",
+      "actual_heading_pages": [
+        {
+          "physical_page": 43,
+          "footer_labels": [
+            "36"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 43,
+          "footer_labels": [
+            "36"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "5 系统实现",
+      "label": "38",
+      "actual_heading_pages": [
+        {
+          "physical_page": 45,
+          "footer_labels": [
+            "38"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 45,
+          "footer_labels": [
+            "38"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "5.1 工程组织与基础管理实现",
+      "label": "38",
+      "actual_heading_pages": [
+        {
+          "physical_page": 45,
+          "footer_labels": [
+            "38"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 45,
+          "footer_labels": [
+            "38"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "5.2 课程资源与计划实现",
+      "label": "39",
+      "actual_heading_pages": [
+        {
+          "physical_page": 46,
+          "footer_labels": [
+            "39"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 46,
+          "footer_labels": [
+            "39"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "5.3 有效学时与补学实现",
+      "label": "40",
+      "actual_heading_pages": [
+        {
+          "physical_page": 47,
+          "footer_labels": [
+            "40"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 47,
+          "footer_labels": [
+            "40"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "5.4 幂等与异步结果实现",
+      "label": "41",
+      "actual_heading_pages": [
+        {
+          "physical_page": 48,
+          "footer_labels": [
+            "41"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 48,
+          "footer_labels": [
+            "41"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "5.5 抽验与考试实现",
+      "label": "42",
+      "actual_heading_pages": [
+        {
+          "physical_page": 49,
+          "footer_labels": [
+            "42"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 49,
+          "footer_labels": [
+            "42"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "5.6 档案聚合与界面交互实现",
+      "label": "43",
+      "actual_heading_pages": [
+        {
+          "physical_page": 50,
+          "footer_labels": [
+            "43"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 50,
+          "footer_labels": [
+            "43"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "6 测试与结果分析",
+      "label": "45",
+      "actual_heading_pages": [
+        {
+          "physical_page": 52,
+          "footer_labels": [
+            "45"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 52,
+          "footer_labels": [
+            "45"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "6.1 测试环境与验证范围",
+      "label": "45",
+      "actual_heading_pages": [
+        {
+          "physical_page": 52,
+          "footer_labels": [
+            "45"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 52,
+          "footer_labels": [
+            "45"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "6.2 自动化测试结果",
+      "label": "46",
+      "actual_heading_pages": [
+        {
+          "physical_page": 53,
+          "footer_labels": [
+            "46"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 53,
+          "footer_labels": [
+            "46"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "6.3 核心业务用例分析",
+      "label": "47",
+      "actual_heading_pages": [
+        {
+          "physical_page": 54,
+          "footer_labels": [
+            "47"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 54,
+          "footer_labels": [
+            "47"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "6.4 合成计时实验与结果解释",
+      "label": "47",
+      "actual_heading_pages": [
+        {
+          "physical_page": 54,
+          "footer_labels": [
+            "47"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 54,
+          "footer_labels": [
+            "47"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "6.5 数据库事务与消息路由结果",
+      "label": "48",
+      "actual_heading_pages": [
+        {
+          "physical_page": 55,
+          "footer_labels": [
+            "48"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 55,
+          "footer_labels": [
+            "48"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "6.6 WebSocket心跳性能分析",
+      "label": "49",
+      "actual_heading_pages": [
+        {
+          "physical_page": 56,
+          "footer_labels": [
+            "49"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 56,
+          "footer_labels": [
+            "49"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "7 总结与展望",
+      "label": "50",
+      "actual_heading_pages": [
+        {
+          "physical_page": 57,
+          "footer_labels": [
+            "50"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 57,
+          "footer_labels": [
+            "50"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "7.1 研究总结",
+      "label": "50",
+      "actual_heading_pages": [
+        {
+          "physical_page": 57,
+          "footer_labels": [
+            "50"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 57,
+          "footer_labels": [
+            "50"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "7.2 局限与后续工作",
+      "label": "50",
+      "actual_heading_pages": [
+        {
+          "physical_page": 57,
+          "footer_labels": [
+            "50"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 57,
+          "footer_labels": [
+            "50"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "致谢",
+      "label": "51",
+      "actual_heading_pages": [
+        {
+          "physical_page": 58,
+          "footer_labels": [
+            "51"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 58,
+          "footer_labels": [
+            "51"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "参考文献",
+      "label": "52",
+      "actual_heading_pages": [
+        {
+          "physical_page": 59,
+          "footer_labels": [
+            "52"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 59,
+          "footer_labels": [
+            "52"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "附录A 项目证据与复现入口",
+      "label": "54",
+      "actual_heading_pages": [
+        {
+          "physical_page": 61,
+          "footer_labels": [
+            "54"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 61,
+          "footer_labels": [
+            "54"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "A.1 业务与实现",
+      "label": "54",
+      "actual_heading_pages": [
+        {
+          "physical_page": 61,
+          "footer_labels": [
+            "54"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 61,
+          "footer_labels": [
+            "54"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "A.2 测试与数据",
+      "label": "54",
+      "actual_heading_pages": [
+        {
+          "physical_page": 61,
+          "footer_labels": [
+            "54"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 61,
+          "footer_labels": [
+            "54"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "A.3 实验配置与记录规范",
+      "label": "54",
+      "actual_heading_pages": [
+        {
+          "physical_page": 61,
+          "footer_labels": [
+            "54"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 61,
+          "footer_labels": [
+            "54"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "附录B 数据表结构字典",
+      "label": "55",
+      "actual_heading_pages": [
+        {
+          "physical_page": 62,
+          "footer_labels": [
+            "55"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 62,
+          "footer_labels": [
+            "55"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "B.1 管理数据库",
+      "label": "55",
+      "actual_heading_pages": [
+        {
+          "physical_page": 62,
+          "footer_labels": [
+            "55"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 62,
+          "footer_labels": [
+            "55"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "B.2 培训数据库",
+      "label": "63",
+      "actual_heading_pages": [
+        {
+          "physical_page": 70,
+          "footer_labels": [
+            "63"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 70,
+          "footer_labels": [
+            "63"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    },
+    {
+      "title": "B.3 学习数据库",
+      "label": "80",
+      "actual_heading_pages": [
+        {
+          "physical_page": 87,
+          "footer_labels": [
+            "80"
+          ]
+        }
+      ],
+      "matching_heading_pages": [
+        {
+          "physical_page": 87,
+          "footer_labels": [
+            "80"
+          ],
+          "mapping_source": "实际标题页的可见页脚"
+        }
+      ],
+      "matches_actual_page_footer": true
+    }
+  ],
+  "reference_count": 21,
+  "changed_physical_pages": [
+    27,
+    28
+  ],
+  "unchanged_page_pixels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95
+  ],
+  "visual_review": {
+    "complete": true,
+    "reviewed_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95
+    ],
+    "method": "三组使用view_image original逐页查看95页；独立复核三项约束与新图，根代理另看修改页",
+    "groups": [
+      {
+        "pages": [
+          1,
+          32
+        ],
+        "result": "无新增排版问题；27、28页关系及正文一致，图题同页"
+      },
+      {
+        "pages": [
+          33,
+          64
+        ],
+        "result": "无新增问题；34、40、41、64页续表裁切与输入一致"
+      },
+      {
+        "pages": [
+          65,
+          95
+        ],
+        "result": "无新增问题；66、87页表头缺字及70、72、91、93、94页裁切与输入一致"
+      }
+    ],
+    "modified_pages_pass": true,
+    "no_new_layout_defects": true,
+    "whole_document_has_no_existing_defects": false,
+    "existing_issues": [
+      {
+        "physical_pages": [
+          34,
+          40,
+          41,
+          64,
+          70,
+          72,
+          91,
+          93,
+          94
+        ],
+        "description": "续表表头文字上半部分在WPS导出渲染中被裁切",
+        "unchanged_from_before": true
+      },
+      {
+        "physical_pages": [
+          66,
+          87
+        ],
+        "description": "顶部索引续表表头文字在WPS导出渲染中缺失",
+        "unchanged_from_before": true
+      }
+    ]
+  },
+  "business_tests_run": false,
+  "previous_registered_input_sha256": "0e78d11291406ae2291eaca251d9259e41c763a49bf373e864bd9176d166fe66",
+  "semantic_changes_match_three_p2": true,
+  "changed_figure_files": [
+    "docs/thesis/figures/advisor-20260930/er-learning.drawio",
+    "docs/thesis/figures/advisor-20260930/er-learning.png",
+    "docs/thesis/figures/advisor-20260930/er-learning.svg",
+    "docs/thesis/figures/advisor-20260930/er-training.drawio",
+    "docs/thesis/figures/advisor-20260930/er-training.png",
+    "docs/thesis/figures/advisor-20260930/er-training.svg",
+    "docs/thesis/figures/advisor-20260930/manifest.json",
+    "docs/thesis/figures/advisor-20260930/README.md"
+  ],
+  "unchanged_other_eight_figures": true,
+  "generator_before_sha256": "cb6a09c1ede734c91cd11920c77e2e4dcb7a33946a4afde955682c36fecc14ad",
+  "generator_after_sha256": "84836a15a4d4219fb0ae27d0dcbc21cf4b602d6d8cbabea26727c056fe3b36ee",
+  "scope": {
+    "resolved": [
+      "试卷题目与考试答案联系",
+      "计划课程全参与",
+      "课程进度全参与"
+    ],
+    "unresolved_out_of_requested_scope": [
+      "P3 Outbox图内事务说明",
+      "既有续表排版"
+    ],
+    "business_source_changed": false,
+    "business_tests_run": false
+  },
+  "code_baseline_review": {
+    "branch": "main",
+    "previous_registered_baseline": "63e27c11fdf0570c0ba1be50b2d4166c2f6ea7ed",
+    "source_scopes": [
+      "backend",
+      "frontend",
+      "scripts",
+      "database",
+      "deploy",
+      ".github"
+    ],
+    "committed_source_diff": [],
+    "staged_source_diff": [],
+    "unstaged_source_diff": [],
+    "preexisting_uncommitted_changes_preserved": true,
+    "method_evidence": [
+      "ExamServiceImpl.save/upsertAnswer/grade",
+      "PlanServiceImpl.replaceSnapshotsAndTasks",
+      "TrainingServiceSupport.executeTransactional",
+      "LearningProgressManager.ensureProgress",
+      "LearningSessionServiceImpl.getPlanProgress/getCourse/openSession"
+    ]
+  },
+  "figure_files": [
+    {
+      "path": "docs/thesis/figures/advisor-20260930/er-training.png",
+      "sha256": "16dc9643816a8d98f2fedbeb9f0ea2a8fef1b6f0891c251eec7169861da6d09f"
+    },
+    {
+      "path": "docs/thesis/figures/advisor-20260930/er-training.svg",
+      "sha256": "6024f8fe248e31234d9e7a52decc39d72a2680797e35ded2d37fadf5a7245e65"
+    },
+    {
+      "path": "docs/thesis/figures/advisor-20260930/er-training.drawio",
+      "sha256": "eefc78f67f0936364d4375afc50b16183e52c77645699672098165fe20672b63"
+    },
+    {
+      "path": "docs/thesis/figures/advisor-20260930/er-learning.png",
+      "sha256": "02d849080183e69237ce2479630fb65806744cf740bd886e9b950c62f29199b1"
+    },
+    {
+      "path": "docs/thesis/figures/advisor-20260930/er-learning.svg",
+      "sha256": "23a7a6e42908190279285062bf13510c576c5be08e34f3b2b368787bdadb8361"
+    },
+    {
+      "path": "docs/thesis/figures/advisor-20260930/er-learning.drawio",
+      "sha256": "1016123492aec5c1c6f2d21f37023b16d6bf628d40d8929f8b6ee8acb16db915"
+    }
+  ]
+}
