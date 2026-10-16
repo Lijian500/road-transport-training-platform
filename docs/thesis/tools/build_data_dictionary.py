@@ -200,6 +200,9 @@ def enrich_table(table):
         if table["name"] == "train_plan" and column["name"] in ("exam_paper_id", "exam_pass_score"):
             column["comment"] = {"exam_paper_id": "关联试卷ID", "exam_pass_score": "计划考试及格分快照"}[column["name"]]
             column["description_source"] = "依据考试实现修正历史 DDL 的预留表述"
+        if table["name"] == "face_check_task" and column["name"] == "status":
+            column["comment"] = "PENDING、PASSED、FAILED、TIMED_OUT或CANCELLED"
+            column["description_source"] = "依据 FaceCheckServiceImpl.cancelPending 补充取消终态"
         if column["name"] in ("object_type", "upload_type") and table["name"] in ("train_storage_object", "train_private_image_upload_session"):
             column["comment"] += "；当前实现亦支持 LEARNING_PHOTO 学习照片"
             column["description_source"] = "DDL 与 PrivateImageStorageServiceImpl"

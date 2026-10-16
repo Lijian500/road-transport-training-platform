@@ -24,3 +24,5 @@ ER 图统一采用经典 Chen 记法：实体矩形、属性椭圆、联系菱�
 总览突出主线，分域图只列关键属性；关联表、完整字段与有序索引组合由[数据字典](../../../../database/design/data-dictionary.md)承接。管理域的“组织用户”限定为具有组织归属的账号，平台账号不纳入该归属联系。图中关系为逻辑关联，迁移及外部表DDL均没有声明物理外键；可选车辆、零次抽验提交和任务的可选考试记录通过参与约束表达。外部行政区域实体的id已按[真实DDL](../../../../database/design/sys_address.source.sql)确认是自增主键，现有ER图的标识与之相符。
 
 用 diagrams.net 打开 `.drawio` 可编辑每个节点和连线。统一生成方式是在项目根目录运行 `python docs/thesis/tools/build_advisor_figures.py`，依赖 Pillow 和 Windows 宋体；图元数据集中在该脚本。手工编辑 drawio 后应重新导出 SVG／PNG 并替换 Word 对应插图；再次运行生成器会按脚本内容覆盖同名图源与图片。
+
+2026-10-14按[终稿四项修复批次](../../../changes/2026-10-14-thesis-final-fixes.md)修订图4-6、图4-7：发件记录与对应业务状态在同一本地事务中保存，进度处理按业务条件产生Outbox事件。两图的生成器、drawio、SVG、PNG和Word嵌入图已同步；图元结构、关系与尺寸保留。5.4节另说明任务阶段事件和抽验实时通知的条件。

@@ -115,7 +115,7 @@
 <text x="830.0" y="295.06" text-anchor="middle" font-family="SimSun,serif" font-size="22">累计</text>
 <text x="848.5" y="219.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1</text>
 <text x="848.5" y="359.1" text-anchor="middle" font-family="SimSun,serif" font-size="20">N</text>
-<text x="500.0" y="1076.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">发件记录与进度在同一本地事务中保存，按事件标识投递。</text>
+<text x="500.0" y="1076.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">发件记录与对应业务状态在同一本地事务中保存，按事件标识投递。</text>
 <text x="500.0" y="1126.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">会话签到、签退也可引用照片；历史无照片记录允许为空。</text>
 <text x="500.0" y="1170.6" text-anchor="middle" font-family="SimSun,serif" font-size="20">1／N／M表示关系基数；单线表示部分参与，双线表示全参与。</text>
 </svg>

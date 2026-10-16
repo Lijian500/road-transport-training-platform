@@ -1006,7 +1006,7 @@
 | training_task_id | BIGINT | 无 | 否 | 无 | 培训任务ID；逻辑关联 train_plan_user.id |
 | plan_id | BIGINT | 无 | 否 | 无 | 培训计划ID；逻辑关联 train_plan.id |
 | plan_course_id | BIGINT | 无 | 否 | 无 | 计划课程ID；逻辑关联 train_plan_course.id |
-| status | VARCHAR(20) | 无 | 否 | 无 | PENDING、PASSED、FAILED或TIMED_OUT |
+| status | VARCHAR(20) | 无 | 否 | 无 | PENDING、PASSED、FAILED、TIMED_OUT或CANCELLED |
 | triggered_at | DATETIME(3) | 无 | 否 | 无 | 触发时间 |
 | deadline_at | DATETIME(3) | 无 | 否 | 无 | 提交截止时间 |
 | attempt_count | INT | 无 | 否 | 0 | 已提交次数 |

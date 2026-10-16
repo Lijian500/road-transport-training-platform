@@ -356,7 +356,7 @@
         <mxCell id="n80" value="N" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=20;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
           <mxGeometry x="835.0" y="340.5" width="27" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="n81" value="发件记录与进度在同一本地事务中保存，按事件标识投递。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+        <mxCell id="n81" value="发件记录与对应业务状态在同一本地事务中保存，按事件标识投递。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
           <mxGeometry x="40" y="1050" width="920" height="42" as="geometry" />
         </mxCell>
         <mxCell id="n82" value="会话签到、签退也可引用照片；历史无照片记录允许为空。" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=23;align=center;verticalAlign=middle;spacing=0;fillColor=none;">

@@ -382,7 +382,7 @@ def learning_er():
     fig.relation(log,photo,"引用",435,698,"N","1")
     fig.relation(progress,ware,"汇总",805,698,"1","N",left_total=True,right_total=True)
     fig.relation(task,progress,"累计",805,338,"1","N",right_total=True)
-    fig.shape("text","发件记录与进度在同一本地事务中保存，按事件标识投递。",40,1050,920,42,23)
+    fig.shape("text","发件记录与对应业务状态在同一本地事务中保存，按事件标识投递。",40,1050,920,42,23)
     fig.shape("text","会话签到、签退也可引用照片；历史无照片记录允许为空。",40,1100,920,42,23)
     fig.chen_legend(1150)
     return fig
@@ -422,7 +422,7 @@ def architecture():
 def learning_flow():
     """保留学习消息处理步骤，将重复请求与消息投递注释放在线旁。"""
     fig=Figure('learning-flow','学习进度受理与结果传播流程',1100,740)
-    left=['学员发送进度消息','核验身份、任务与会话绑定','查询请求标识及检查序号','核验学习状态与计时条件','事务保存学时、事件与 Outbox']
+    left=['学员发送进度消息','核验身份、任务与会话绑定','查询请求标识及检查序号','核验学习状态与计时条件','事务保存学时、事件及\n按需产生的 Outbox']
     for i,label in enumerate(left):
         fig.shape('rect',label,35,20+i*130,430,65,24)
         if i:fig.line([(250,85+(i-1)*130),(250,20+i*130)],arrow=True)

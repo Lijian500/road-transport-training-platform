@@ -1,8 +1,13 @@
 # 项目实施进度
 
-> 最后更新：2026-10-13（论文签名与公式定位结构修订完成，95页、目录及打印复核通过；阅读实际显示待本机复核；后端结果仍为10月9日61类266项全通过）
+> 最后更新：2026-10-14（论文终稿四项修复完成，95页、69项目录及全页版式复核通过；后端实测仍为10月9日61类266项）
 > 当前阶段：阶段八——真实媒体验收与本机演示交付
-> 总体状态：10月9日提交 `13d64637` 的后端全量61类266项通过，真实OSS、授权照片模型、18项MySQL和RabbitMQ条件测试均已执行；前端继续引用9月9日历史结果。Word结果已同步；8幅当前界面演示截图已采集，并按[10月10日批次](docs/changes/2026-10-10-thesis-screenshot-annotations.md)删除底部来源整行标注后重新替换。论文完成[正文精简](docs/changes/2026-10-12-thesis-word-count-optimization.md)和[Chen ER修订](docs/changes/2026-10-12-thesis-chen-er.md)后，现已按[10月13日ER批次](docs/changes/2026-10-13-thesis-er-review-fixes.md)修复三个ER业务关系P2，按[左对齐批次](docs/changes/2026-10-13-thesis-logical-reference-alignment.md)调整37段逻辑关联说明，并按[定位修订批次](docs/changes/2026-10-13-thesis-reading-layout.md)完成签名与公式定位的结构修订及打印验证，阅读实际显示待本机复核。论文仍为95页，21条文献与完整附录保留；P3说明和既有续表事项另留待办。截图数据仍来自纯虚构API／WebSocket夹具，浏览器真实媒体完整闭环仍在验收范围之外。
+> 总体状态：10月9日提交 `13d64637` 的后端全量61类266项通过，真实OSS、授权照片模型、18项MySQL和RabbitMQ条件测试均已执行；前端继续引用9月9日历史结果。Word结果已同步；8幅当前界面演示截图已采集，并按[10月10日批次](docs/changes/2026-10-10-thesis-screenshot-annotations.md)删除底部来源整行标注后重新替换。论文完成[正文精简](docs/changes/2026-10-12-thesis-word-count-optimization.md)和[Chen ER修订](docs/changes/2026-10-12-thesis-chen-er.md)后，现已按[10月13日ER批次](docs/changes/2026-10-13-thesis-er-review-fixes.md)修复三个ER业务关系P2，按[左对齐批次](docs/changes/2026-10-13-thesis-logical-reference-alignment.md)调整37段逻辑关联说明，并按[定位修订批次](docs/changes/2026-10-13-thesis-reading-layout.md)完成签名与公式定位的结构修订及打印验证，阅读实际显示待本机复核。论文仍为95页，21条文献与完整附录保留；状态、ACK、容差、Outbox说明及页眉/附录边界已按[10月14日批次](docs/changes/2026-10-14-thesis-final-fixes.md)修复；当前续表表头疑点已排除。本人签名/日期及R08建议继续按审查记录保留。截图数据仍来自纯虚构API／WebSocket夹具，浏览器真实媒体完整闭环仍在验收范围之外。
+
+## 2026-10-14 论文终稿四项修复
+
+- 表4-8、表B-30补齐CANCELLED，修正ACK发送时机、容差作用及Outbox条件；补正文页眉横线，缩短附录A的CI链接显示并保留真实目标，附录B另起一页。Word、字典、图源和生成器同步完成，见[本次批次](docs/changes/2026-10-14-thesis-final-fixes.md)。
+- 95页、69项目录、21文献引用、两图一致性及全页目视复核通过；[验证JSON](docs/test/thesis-final-fixes-2026-10-14.json)登记最终指纹。完成原审查R01～R04、R06、R07，R05/R08保留；未修改业务代码、历史迁移或实验结果，未编译项目或重跑业务测试。
 
 ## 2026-10-13 论文签名与公式定位修订
 

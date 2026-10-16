@@ -73,7 +73,7 @@
         <mxCell id="n5" value="核验学习状态与计时条件" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
           <mxGeometry x="35" y="410" width="430" height="65" as="geometry" />
         </mxCell>
-        <mxCell id="n7" value="事务保存学时、事件与 Outbox" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+        <mxCell id="n7" value="事务保存学时、事件及&lt;br&gt;按需产生的 Outbox" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
           <mxGeometry x="35" y="540" width="430" height="65" as="geometry" />
         </mxCell>
         <mxCell id="n9" value="重复请求返回历史确认结果" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=24;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">

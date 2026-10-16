@@ -1,0 +1,2728 @@
+{
+  "date": "2026-10-14",
+  "baseline_commit": "5d1c3ef50ad93210c17ef5d3c77a3ad0e9c1c0c2",
+  "input_sha256": "1cf416f370462169b59db20a4e11d9d66fb6873b66fff4af9122e990a5efe5ad",
+  "output_sha256": "af989235fd176af3c21441436d37fb377bff81129c69c4612ebf2648f9fd254f",
+  "changed_package_parts": [
+    "word/document.xml",
+    "word/header3.xml",
+    "word/media/image11.png",
+    "word/media/image12.png"
+  ],
+  "changed_paragraphs": [
+    {
+      "paragraph_index": 1405,
+      "before": "PENDING、PASSED、FAILED或TIMED_OUT",
+      "after": "PENDING、PASSED、FAILED、TIMED_OUT或CANCELLED"
+    },
+    {
+      "paragraph_index": 5501,
+      "before": "PENDING、PASSED、FAILED或TIMED_OUT",
+      "after": "PENDING、PASSED、FAILED、TIMED_OUT或CANCELLED"
+    },
+    {
+      "paragraph_index": 164,
+      "before": "对于状态与顺序合规的区间，设相邻服务端确认时间差为Δt、媒体位置非负增量为Δp、最大上报间隔为G、剩余规定学时为R，计入量见式（2-1）。不允许计时、间隔超过G或违反防拖动规则时，按拒绝或零计时处理，不直接套用公式。",
+      "after": "对于状态与顺序合规的区间，设相邻服务端确认时间差为Δt、媒体位置非负增量为Δp、最大上报间隔（上报周期与容差之和）为G、剩余规定学时为R，计入量见式（2-1）。不允许计时、间隔超过G或违反防拖动规则时，按拒绝或零计时处理，不直接套用公式。"
+    },
+    {
+      "paragraph_index": 168,
+      "before": "公式采取保守累计：媒体位置增加10秒、服务端经过9秒时最多计9秒；下一段经过11秒、位置增加10秒时最多计10秒，少计部分不自动补回。容差只判断位置变化，不增加学时。该规则限制客户端异常增长，也可能使正常播放后仍需补学。",
+      "after": "公式采取保守累计：媒体位置增加10秒、服务端经过9秒时最多计9秒；下一段经过11秒、位置增加10秒时最多计10秒，少计部分不自动补回。容差用于位置合法性、上报超时及课件完成边界判断，不直接增加计入学时。该规则限制客户端异常增长，也可能使正常播放后仍需补学。"
+    },
+    {
+      "paragraph_index": 1659,
+      "before": "消息响应区分协议受理和业务确认。ACK说明消息在协议层被受理，PROGRESS_CONFIRMED才携带服务端确认的学习结果；页面也可通过只读状态接口恢复当前值。实时信封seq按JSON数字序列化，业务Long标识仍采用字符串策略。首次绑定的总等待上限为30秒，重连不重新延长该期限；超时后提示重试。页面不能只在收到ACK后自行增加学时，确认结果才是累计值的依据。",
+      "after": "学习服务成功处理事件后，Realtime依次返回两类消息：ACK携带已受理序号与会话状态，PROGRESS_CONFIRMED携带本次计入量和累计学时。页面据完整确认结果更新进度，也可通过只读状态接口恢复当前值。实时信封seq按JSON数字序列化，业务Long标识仍采用字符串策略。首次绑定的总等待上限为30秒，重连不重新延长该期限；超时后提示重试。页面不能只在收到ACK后自行增加学时，确认结果才是累计值的依据。"
+    },
+    {
+      "paragraph_index": 1662,
+      "before": "抽验任务创建后记录截止时间并使学习进入核验等待状态。截止前提交图像时，服务调用模型适配器，保存本次结果，再更新任务；未提交而到期时，任务进入超时状态，提交列表保持为空。启用人脸抽验的会话还要求签到、签退前完成当次照片核验。服务端检查本人会话、动作状态和客户端实例，成功后保存与动作及下一事件序号绑定、60秒有效的凭据；事件事务再次校验并消费凭据，序号推进后不能跨事件复用。未启用抽验的会话不要求该凭据。",
+      "after": "抽验任务创建后记录截止时间并使学习进入核验等待状态。截止前提交图像时，服务调用模型适配器，保存本次结果，再更新任务；未提交而到期时，任务进入超时状态，提交列表保持为空；主动终止学习会话时，尚待处理的抽验任务转为CANCELLED。启用人脸抽验的会话还要求签到、签退前完成当次照片核验。服务端检查本人会话、动作状态和客户端实例，成功后保存与动作及下一事件序号绑定、60秒有效的凭据；事件事务再次校验并消费凭据，序号推进后不能跨事件复用。未启用抽验的会话不要求该凭据。"
+    },
+    {
+      "paragraph_index": 1693,
+      "before": "学习状态更新与Outbox记录写入同一事务。发送器读取待发送事件，向RabbitMQ发布，并结合代理确认与路由退回结果更新状态。仅有Broker ACK不足以判定发送成功；出现NO_ROUTE时，事件保留为可重试状态。该实现分别处理代理接收与业务路由两个条件，对应的组件实验结果见6.5节。",
+      "after": "学习开始或任务内全部课程完成时，系统按任务阶段幂等生成任务事件；抽验任务创建及处理结果另生成实时通知。Outbox记录与对应业务状态在同一本地事务中保存。发送器读取待发送事件，向RabbitMQ发布，并结合代理确认与路由退回结果更新状态。仅有Broker ACK不足以判定发送成功；出现NO_ROUTE时，事件保留为可重试状态。该实现分别处理代理接收与业务路由两个条件，对应的组件实验结果见6.5节。"
+    },
+    {
+      "paragraph_index": 1906,
+      "before": "9月9日后端CI历史作业：https://github.com/Lijian500/road-transport-training-platform/actions/runs/34250552187",
+      "after": "9月9日后端CI历史作业：查看作业（34250552187）"
+    },
+    {
+      "paragraph_index": 1907,
+      "before": "9月9日前端CI归档作业：https://github.com/Lijian500/road-transport-training-platform/actions/runs/34249525727",
+      "after": "9月9日前端CI归档作业：查看作业（34249525727）"
+    },
+    {
+      "paragraph_index": 1908,
+      "before": "附录B 数据表结构字典",
+      "after": "附录B 数据表结构字典"
+    }
+  ],
+  "inverse_document_xml_restores_input_exactly": true,
+  "inverse_header_xml_restores_input_exactly": true,
+  "formula_sections_drawings_bookmarks_preserved": true,
+  "all_field_instructions_preserved": true,
+  "font_styles_and_unlisted_parts_preserved": true,
+  "candidate_only": false,
+  "pages": 95,
+  "pdf_sha256": "bd0e5cf1c764d4877a02b1d16ad19deca567d853ccf4334d081c8597145f04ec",
+  "checks": {
+    "source_docx_unchanged_during_export": true,
+    "ten_target_paragraphs_only": true,
+    "all_69_toc_entries_match_actual_footers": true,
+    "two_status_descriptions_complete": true,
+    "cancellation_branch_explained": true,
+    "stale_ack_description_removed": true,
+    "stale_tolerance_description_removed": true,
+    "outbox_scope_explained": true,
+    "native_math_and_fields_preserved": true,
+    "exactly_21_reference_entries": true,
+    "all_1_to_21_cited": true,
+    "all_citations_actual_superscript": true,
+    "body_header_bottom_border": true,
+    "original_ci_link_targets_preserved": true,
+    "appendix_a_two_links_on_page_61": true,
+    "appendix_b_starts_page_62_without_previous_link": true,
+    "all_95_pages_rendered": true,
+    "body_header_line_visible_on_all_applicable_pages": true
+  },
+  "toc": {
+    "mapping_rule": "输出PDF标题完全匹配，并读取该物理页底部10%区域的实际页脚编号；仅Word明确首页不同且编号重启的隐藏首页可由紧邻下一页的实际页脚核对，不使用固定物理页偏移。",
+    "entries": [
+      {
+        "title": "摘要",
+        "label": "I",
+        "actual_heading_pages": [
+          {
+            "physical_page": 6,
+            "footer_labels": []
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 6,
+            "footer_labels": [],
+            "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+            "next_physical_page": 7,
+            "anchor_footer_labels": [
+              "II"
+            ]
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "Abstract",
+        "label": "II",
+        "actual_heading_pages": [
+          {
+            "physical_page": 7,
+            "footer_labels": [
+              "II"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 7,
+            "footer_labels": [
+              "II"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "1 绪论",
+        "label": "1",
+        "actual_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": []
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": [],
+            "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+            "next_physical_page": 9,
+            "anchor_footer_labels": [
+              "2"
+            ]
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "1.1 研究背景与问题提出",
+        "label": "1",
+        "actual_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": []
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": [],
+            "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+            "next_physical_page": 9,
+            "anchor_footer_labels": [
+              "2"
+            ]
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "1.2 研究目标与意义",
+        "label": "1",
+        "actual_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": []
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": [],
+            "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+            "next_physical_page": 9,
+            "anchor_footer_labels": [
+              "2"
+            ]
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "1.3 国内外相关研究进展",
+        "label": "2",
+        "actual_heading_pages": [
+          {
+            "physical_page": 9,
+            "footer_labels": [
+              "2"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 9,
+            "footer_labels": [
+              "2"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "1.4 研究方法与论文组织",
+        "label": "3",
+        "actual_heading_pages": [
+          {
+            "physical_page": 10,
+            "footer_labels": [
+              "3"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 10,
+            "footer_labels": [
+              "3"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2 相关理论与关键技术",
+        "label": "4",
+        "actual_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.1 Java与TypeScript编程语言",
+        "label": "4",
+        "actual_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.2 Spring Boot与Vue开发框架",
+        "label": "4",
+        "actual_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.3 Dubbo远程调用与Nacos服务治理",
+        "label": "4",
+        "actual_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.4 MySQL数据库与持久化技术",
+        "label": "5",
+        "actual_heading_pages": [
+          {
+            "physical_page": 12,
+            "footer_labels": [
+              "5"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 12,
+            "footer_labels": [
+              "5"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.5 WebSocket通信与学习状态控制",
+        "label": "5",
+        "actual_heading_pages": [
+          {
+            "physical_page": 12,
+            "footer_labels": [
+              "5"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 12,
+            "footer_labels": [
+              "5"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.6 RabbitMQ与消息最终一致性",
+        "label": "6",
+        "actual_heading_pages": [
+          {
+            "physical_page": 13,
+            "footer_labels": [
+              "6"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 13,
+            "footer_labels": [
+              "6"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.7 OpenCV与人脸核验技术",
+        "label": "6",
+        "actual_heading_pages": [
+          {
+            "physical_page": 13,
+            "footer_labels": [
+              "6"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 13,
+            "footer_labels": [
+              "6"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.8 OSS对象存储与媒体访问",
+        "label": "7",
+        "actual_heading_pages": [
+          {
+            "physical_page": 14,
+            "footer_labels": [
+              "7"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 14,
+            "footer_labels": [
+              "7"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3 需求与可行性分析",
+        "label": "8",
+        "actual_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.1 用户角色与业务范围",
+        "label": "8",
+        "actual_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.1.1 参与者及其权限范围",
+        "label": "8",
+        "actual_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.1.2 角色用例分析",
+        "label": "9",
+        "actual_heading_pages": [
+          {
+            "physical_page": 16,
+            "footer_labels": [
+              "9"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 16,
+            "footer_labels": [
+              "9"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.2 培训业务流程与功能需求",
+        "label": "11",
+        "actual_heading_pages": [
+          {
+            "physical_page": 18,
+            "footer_labels": [
+              "11"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 18,
+            "footer_labels": [
+              "11"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.2.1 课程与计划发布",
+        "label": "11",
+        "actual_heading_pages": [
+          {
+            "physical_page": 18,
+            "footer_labels": [
+              "11"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 18,
+            "footer_labels": [
+              "11"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.2.2 学习与异常恢复",
+        "label": "12",
+        "actual_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.2.3 抽验与考试",
+        "label": "12",
+        "actual_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.2.4 档案与统计",
+        "label": "12",
+        "actual_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.3 非功能需求",
+        "label": "13",
+        "actual_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.4 方案可行性与选择",
+        "label": "13",
+        "actual_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.4.1 技术可行性",
+        "label": "13",
+        "actual_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.4.2 经济可行性",
+        "label": "14",
+        "actual_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.4.3 操作可行性",
+        "label": "14",
+        "actual_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.4.4 方案比较与选择",
+        "label": "14",
+        "actual_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4 系统设计",
+        "label": "16",
+        "actual_heading_pages": [
+          {
+            "physical_page": 23,
+            "footer_labels": [
+              "16"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 23,
+            "footer_labels": [
+              "16"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.1 总体架构",
+        "label": "16",
+        "actual_heading_pages": [
+          {
+            "physical_page": 23,
+            "footer_labels": [
+              "16"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 23,
+            "footer_labels": [
+              "16"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.2 系统功能结构",
+        "label": "17",
+        "actual_heading_pages": [
+          {
+            "physical_page": 24,
+            "footer_labels": [
+              "17"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 24,
+            "footer_labels": [
+              "17"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.3 数据库设计",
+        "label": "18",
+        "actual_heading_pages": [
+          {
+            "physical_page": 25,
+            "footer_labels": [
+              "18"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 25,
+            "footer_labels": [
+              "18"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.3.1 主要业务实体",
+        "label": "18",
+        "actual_heading_pages": [
+          {
+            "physical_page": 25,
+            "footer_labels": [
+              "18"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 25,
+            "footer_labels": [
+              "18"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.3.2 快照与历史解释",
+        "label": "22",
+        "actual_heading_pages": [
+          {
+            "physical_page": 29,
+            "footer_labels": [
+              "22"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 29,
+            "footer_labels": [
+              "22"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.3.3 唯一性与删除约束",
+        "label": "23",
+        "actual_heading_pages": [
+          {
+            "physical_page": 30,
+            "footer_labels": [
+              "23"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 30,
+            "footer_labels": [
+              "23"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.3.4 核心数据表结构",
+        "label": "23",
+        "actual_heading_pages": [
+          {
+            "physical_page": 30,
+            "footer_labels": [
+              "23"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 30,
+            "footer_labels": [
+              "23"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.4 学习消息处理流程",
+        "label": "35",
+        "actual_heading_pages": [
+          {
+            "physical_page": 42,
+            "footer_labels": [
+              "35"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 42,
+            "footer_labels": [
+              "35"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.5 抽验与考试状态设计",
+        "label": "36",
+        "actual_heading_pages": [
+          {
+            "physical_page": 43,
+            "footer_labels": [
+              "36"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 43,
+            "footer_labels": [
+              "36"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.6 安全与只读查询设计",
+        "label": "36",
+        "actual_heading_pages": [
+          {
+            "physical_page": 43,
+            "footer_labels": [
+              "36"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 43,
+            "footer_labels": [
+              "36"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5 系统实现",
+        "label": "38",
+        "actual_heading_pages": [
+          {
+            "physical_page": 45,
+            "footer_labels": [
+              "38"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 45,
+            "footer_labels": [
+              "38"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.1 工程组织与基础管理实现",
+        "label": "38",
+        "actual_heading_pages": [
+          {
+            "physical_page": 45,
+            "footer_labels": [
+              "38"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 45,
+            "footer_labels": [
+              "38"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.2 课程资源与计划实现",
+        "label": "39",
+        "actual_heading_pages": [
+          {
+            "physical_page": 46,
+            "footer_labels": [
+              "39"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 46,
+            "footer_labels": [
+              "39"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.3 有效学时与补学实现",
+        "label": "40",
+        "actual_heading_pages": [
+          {
+            "physical_page": 47,
+            "footer_labels": [
+              "40"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 47,
+            "footer_labels": [
+              "40"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.4 幂等与异步结果实现",
+        "label": "41",
+        "actual_heading_pages": [
+          {
+            "physical_page": 48,
+            "footer_labels": [
+              "41"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 48,
+            "footer_labels": [
+              "41"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.5 抽验与考试实现",
+        "label": "42",
+        "actual_heading_pages": [
+          {
+            "physical_page": 49,
+            "footer_labels": [
+              "42"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 49,
+            "footer_labels": [
+              "42"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.6 档案聚合与界面交互实现",
+        "label": "43",
+        "actual_heading_pages": [
+          {
+            "physical_page": 50,
+            "footer_labels": [
+              "43"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 50,
+            "footer_labels": [
+              "43"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6 测试与结果分析",
+        "label": "45",
+        "actual_heading_pages": [
+          {
+            "physical_page": 52,
+            "footer_labels": [
+              "45"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 52,
+            "footer_labels": [
+              "45"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.1 测试环境与验证范围",
+        "label": "45",
+        "actual_heading_pages": [
+          {
+            "physical_page": 52,
+            "footer_labels": [
+              "45"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 52,
+            "footer_labels": [
+              "45"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.2 自动化测试结果",
+        "label": "46",
+        "actual_heading_pages": [
+          {
+            "physical_page": 53,
+            "footer_labels": [
+              "46"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 53,
+            "footer_labels": [
+              "46"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.3 核心业务用例分析",
+        "label": "47",
+        "actual_heading_pages": [
+          {
+            "physical_page": 54,
+            "footer_labels": [
+              "47"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 54,
+            "footer_labels": [
+              "47"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.4 合成计时实验与结果解释",
+        "label": "47",
+        "actual_heading_pages": [
+          {
+            "physical_page": 54,
+            "footer_labels": [
+              "47"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 54,
+            "footer_labels": [
+              "47"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.5 数据库事务与消息路由结果",
+        "label": "48",
+        "actual_heading_pages": [
+          {
+            "physical_page": 55,
+            "footer_labels": [
+              "48"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 55,
+            "footer_labels": [
+              "48"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.6 WebSocket心跳性能分析",
+        "label": "49",
+        "actual_heading_pages": [
+          {
+            "physical_page": 56,
+            "footer_labels": [
+              "49"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 56,
+            "footer_labels": [
+              "49"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "7 总结与展望",
+        "label": "50",
+        "actual_heading_pages": [
+          {
+            "physical_page": 57,
+            "footer_labels": [
+              "50"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 57,
+            "footer_labels": [
+              "50"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "7.1 研究总结",
+        "label": "50",
+        "actual_heading_pages": [
+          {
+            "physical_page": 57,
+            "footer_labels": [
+              "50"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 57,
+            "footer_labels": [
+              "50"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "7.2 局限与后续工作",
+        "label": "50",
+        "actual_heading_pages": [
+          {
+            "physical_page": 57,
+            "footer_labels": [
+              "50"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 57,
+            "footer_labels": [
+              "50"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "致谢",
+        "label": "51",
+        "actual_heading_pages": [
+          {
+            "physical_page": 58,
+            "footer_labels": [
+              "51"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 58,
+            "footer_labels": [
+              "51"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "参考文献",
+        "label": "52",
+        "actual_heading_pages": [
+          {
+            "physical_page": 59,
+            "footer_labels": [
+              "52"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 59,
+            "footer_labels": [
+              "52"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "附录A 项目证据与复现入口",
+        "label": "54",
+        "actual_heading_pages": [
+          {
+            "physical_page": 61,
+            "footer_labels": [
+              "54"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 61,
+            "footer_labels": [
+              "54"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "A.1 业务与实现",
+        "label": "54",
+        "actual_heading_pages": [
+          {
+            "physical_page": 61,
+            "footer_labels": [
+              "54"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 61,
+            "footer_labels": [
+              "54"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "A.2 测试与数据",
+        "label": "54",
+        "actual_heading_pages": [
+          {
+            "physical_page": 61,
+            "footer_labels": [
+              "54"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 61,
+            "footer_labels": [
+              "54"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "A.3 实验配置与记录规范",
+        "label": "54",
+        "actual_heading_pages": [
+          {
+            "physical_page": 61,
+            "footer_labels": [
+              "54"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 61,
+            "footer_labels": [
+              "54"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "附录B 数据表结构字典",
+        "label": "55",
+        "actual_heading_pages": [
+          {
+            "physical_page": 62,
+            "footer_labels": [
+              "55"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 62,
+            "footer_labels": [
+              "55"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "B.1 管理数据库",
+        "label": "55",
+        "actual_heading_pages": [
+          {
+            "physical_page": 62,
+            "footer_labels": [
+              "55"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 62,
+            "footer_labels": [
+              "55"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "B.2 培训数据库",
+        "label": "63",
+        "actual_heading_pages": [
+          {
+            "physical_page": 70,
+            "footer_labels": [
+              "63"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 70,
+            "footer_labels": [
+              "63"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "B.3 学习数据库",
+        "label": "80",
+        "actual_heading_pages": [
+          {
+            "physical_page": 87,
+            "footer_labels": [
+              "80"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 87,
+            "footer_labels": [
+              "80"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      }
+    ],
+    "all_entries_match": true,
+    "pages_without_detected_footer": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8
+    ]
+  },
+  "references": {
+    "reference_count": 21,
+    "reference_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "citation_occurrences": 21,
+    "citations": [
+      {
+        "numbers": [
+          1
+        ],
+        "citation": "[1]",
+        "body_index": 109,
+        "paragraph_index": 102,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          2
+        ],
+        "citation": "[2]",
+        "body_index": 109,
+        "paragraph_index": 102,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          3
+        ],
+        "citation": "[3]",
+        "body_index": 118,
+        "paragraph_index": 111,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          4
+        ],
+        "citation": "[4]",
+        "body_index": 119,
+        "paragraph_index": 112,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          5
+        ],
+        "citation": "[5]",
+        "body_index": 120,
+        "paragraph_index": 113,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          6
+        ],
+        "citation": "[6]",
+        "body_index": 120,
+        "paragraph_index": 113,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          7
+        ],
+        "citation": "[7]",
+        "body_index": 121,
+        "paragraph_index": 114,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          8
+        ],
+        "citation": "[8]",
+        "body_index": 121,
+        "paragraph_index": 114,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          9
+        ],
+        "citation": "[9]",
+        "body_index": 122,
+        "paragraph_index": 115,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          10
+        ],
+        "citation": "[10]",
+        "body_index": 123,
+        "paragraph_index": 116,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          11
+        ],
+        "citation": "[11]",
+        "body_index": 139,
+        "paragraph_index": 132,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          12
+        ],
+        "citation": "[12]",
+        "body_index": 141,
+        "paragraph_index": 134,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          13
+        ],
+        "citation": "[13]",
+        "body_index": 155,
+        "paragraph_index": 147,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          14
+        ],
+        "citation": "[14]",
+        "body_index": 156,
+        "paragraph_index": 148,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          15
+        ],
+        "citation": "[15]",
+        "body_index": 157,
+        "paragraph_index": 149,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          16
+        ],
+        "citation": "[16]",
+        "body_index": 161,
+        "paragraph_index": 153,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          17
+        ],
+        "citation": "[17]",
+        "body_index": 161,
+        "paragraph_index": 153,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          18
+        ],
+        "citation": "[18]",
+        "body_index": 162,
+        "paragraph_index": 154,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          19
+        ],
+        "citation": "[19]",
+        "body_index": 162,
+        "paragraph_index": 154,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          20
+        ],
+        "citation": "[20]",
+        "body_index": 165,
+        "paragraph_index": 157,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          21
+        ],
+        "citation": "[21]",
+        "body_index": 425,
+        "paragraph_index": 394,
+        "actual_superscript": true
+      }
+    ],
+    "non_superscript": [],
+    "first_use_sequence": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "uncited_references": [],
+    "missing_reference_entries": [],
+    "checks": {
+      "exactly_21_reference_entries": true,
+      "all_1_to_21_cited": true,
+      "all_citations_actual_superscript": true
+    }
+  },
+  "counts": {
+    "chapters": {
+      "1": {
+        "title": "1 绪论",
+        "paragraph_cjk": 2344,
+        "table_cjk": 0,
+        "paragraph_count": 23,
+        "table_count": 0,
+        "total_cjk": 2344
+      },
+      "2": {
+        "title": "2 相关理论与关键技术",
+        "paragraph_cjk": 2369,
+        "table_cjk": 0,
+        "paragraph_count": 36,
+        "table_count": 1,
+        "total_cjk": 2369
+      },
+      "3": {
+        "title": "3 需求与可行性分析",
+        "paragraph_cjk": 3219,
+        "table_cjk": 234,
+        "paragraph_count": 51,
+        "table_count": 2,
+        "total_cjk": 3453
+      },
+      "4": {
+        "title": "4 系统设计",
+        "paragraph_cjk": 3941,
+        "table_cjk": 2109,
+        "paragraph_count": 102,
+        "table_count": 17,
+        "total_cjk": 6050
+      },
+      "5": {
+        "title": "5 系统实现",
+        "paragraph_cjk": 2512,
+        "table_cjk": 0,
+        "paragraph_count": 41,
+        "table_count": 0,
+        "total_cjk": 2512
+      },
+      "6": {
+        "title": "6 测试与结果分析",
+        "paragraph_cjk": 2125,
+        "table_cjk": 488,
+        "paragraph_count": 34,
+        "table_count": 4,
+        "total_cjk": 2613
+      },
+      "7": {
+        "title": "7 总结与展望",
+        "paragraph_cjk": 661,
+        "table_cjk": 0,
+        "paragraph_count": 9,
+        "table_count": 0,
+        "total_cjk": 661
+      }
+    },
+    "paragraph_cjk": 17171,
+    "table_cjk": 2831,
+    "total_cjk": 20002,
+    "counting_rule": "仅真实Heading 1下第1～7章；汉字范围U+4E00～U+9FFF；标题及图题计入段落，正文表格单列；目录、摘要、致谢、参考文献和附录不计入。"
+  },
+  "ci_physical_pages": [
+    61
+  ],
+  "appendix_b_physical_pages": [
+    62
+  ],
+  "header_lines": [
+    {
+      "physical_page": 9,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 10,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 11,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 12,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 13,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 14,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 15,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 16,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 17,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 18,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 19,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 20,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 21,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 22,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 23,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 24,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 25,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 26,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 27,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 28,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 29,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 30,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 31,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 32,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 33,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 34,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 35,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 36,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 37,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 38,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 39,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 40,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 41,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 42,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 43,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 44,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 45,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 46,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 47,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 48,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 49,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 50,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 51,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 52,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 53,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 54,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 55,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 56,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 57,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 58,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 59,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 60,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 61,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 62,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 63,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 64,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 65,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 66,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 67,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 68,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 69,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 70,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 71,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 72,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 73,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 74,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 75,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 76,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 77,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 78,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 79,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 80,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 81,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 82,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 83,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 84,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 85,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 86,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 87,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 88,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 89,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 90,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 91,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 92,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 93,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 94,
+      "max_dark_pixels_in_line": 630
+    },
+    {
+      "physical_page": 95,
+      "max_dark_pixels_in_line": 630
+    }
+  ],
+  "changed_physical_pages": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95
+  ],
+  "body_changes_excluding_header": [
+    13,
+    14,
+    28,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    48,
+    49,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    94
+  ],
+  "renderer": "标准render_docx.py因捆绑运行时缺LibreOffice失败；独立隐藏WPS只读导出，捆绑Poppler 100DPI",
+  "visual_review": {
+    "complete": true,
+    "physical_pages_covered": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95
+    ],
+    "initial_full_review": "三个分组以view_image original逐页查看1–32、33–64、65–95页",
+    "initial_docx_sha256": "e07e33baadd34916c0197ba788c0d6c5f2bb1a1343b74aa70bfbdae235584c17",
+    "initial_pdf_sha256": "f7a975a7eb3b44ddb946c5bd35851d6090b82eb8fe08087e813510ea3a3dbed9",
+    "final_iteration": {
+      "final_pages_different_from_visually_reviewed_v1": [
+        42
+      ],
+      "unchanged_pages": 94,
+      "comparison": "decoded full-page RGB pixels"
+    },
+    "final_changed_pages_viewed_original": [
+      42
+    ],
+    "final_additional_pages_viewed_original": [
+      61,
+      62,
+      94
+    ],
+    "result": "ACK长消息名减少重复后字距正常；其余94页与已审版本逐像素相同。全稿未见新增遮挡、截断、图题分离或表格越界。",
+    "review_notes": {
+      "visual-01-32.md": "# 修订候选第1～32页视觉复核\n\n- 复核日期：2026-10-14。\n- 对象：`tmp/thesis-final-fixes-20261014/after.docx` 的本轮95页导出，使用 `pages/page-01.png`～`page-32.png`。\n- 检查时候选 Word SHA-256：`E07E33BAADD34916C0197BA788C0D6C5F2BB1A1343B74AA70BFBDAE235584C17`。\n- 页图来源登记：95页、100 DPI，PDF SHA-256 `f7a975a7eb3b44ddb946c5bd35851d6090b82eb8fe08087e813510ea3a3dbed9`。本记录只覆盖第1～32页；后续仅修改其他页时不把本记录扩大为全稿核验。\n- 方法：以下32页均实际调用 `view_image(detail=\"original\")` 逐页查看；第6、8页另行重开检查。通过Pillow只读统计页眉线像素，未编辑页图、候选Word或正式原件，未运行桌面LibreOffice。\n\n## 重点结论\n\n1. **物理第13页／正文第6页通过**：最大上报间隔已显示为“上报周期与容差之和”，公式本体完整且编号（2-1）右对齐；新句“容差用于位置合法性、上报超时及课件完成边界判断，不直接增加计入学时”完整、可读，没有挤压公式、标题或页脚。\n2. **物理第28页／正文第21页通过**：图4-6新注记“发件记录与对应业务状态在同一本地事务中保存，按事件标识投递。”完整可读，与下行注记及图题保持间距；图形未拉伸，实体、关系、单双线和基数未被覆盖。\n3. **页眉横线通过**：所有本范围原本显示页眉的页面均有连续横线，与文字及正文不相交。像素检查确认第2～5页横线位于100 DPI图像的第69行，第7页及第9～32页位于第65行，横向98～727像素范围至少620个深色像素。封面、中文摘要首页（第6页）及正文首页（第8页）沿用原稿不显示页眉/页脚的设置；第6、8页在旧稿与候选的页眉区域深色像素均为0，不属于本轮新增丢失，也不是连续图片展示压缩造成的判断。\n4. 本范围未发现新增正文遮挡、文字越界、公式截断、图题孤页、表格跨出页边距或图像压线。现有长字段名折行、章末留白及分节首页设置未作为本轮新增问题。\n\n## 完整已看页清单\n\n| 物理页 | 内容 | 实际检查结果 |\n| --- | --- | --- |\n| 01 | 封面 | 校名、题目两行、姓名与专业等信息完整；无新增线条穿过封面 |\n| 02 | 诚信承诺书 | 页眉横线清晰；标题、承诺文字及落款无遮挡 |\n| 03 | 目录第1页 | 目录层级、点线、右侧页码对齐；页眉横线像素确认存在 |\n| 04 | 目录第2页 | 表目范围及编号完整；横线与目录正文有间距 |\n| 05 | 目录第3页 | 第7章、参考文献及附录条目完整，无越界 |\n| 06 | 中文摘要 | 摘要和关键词完整；单独复查，原有首页不显示页眉/页码设置保留 |\n| 07 | Abstract | 英文段落及关键词完整；页眉横线、罗马页码II正常 |\n| 08 | 第1章首页 | 章标题、1.1及1.2开头完整；单独复查，原有首页不显示页眉/页码设置保留 |\n| 09 | 研究目标及研究进展 | 标题、正文、上标文献和页脚正常 |\n| 10 | 研究进展及研究方法 | 段落换行自然，正文与页眉横线无相交 |\n| 11 | 第2章、2.1～2.3 | 章标题及技术段落完整，页脚4正常 |\n| 12 | 2.3～2.5 | 小节标题随正文，技术段落未截断 |\n| 13 | 计时公式、2.6及2.7开头 | 重点复核通过，容差及G解释完整，公式编号位置正确 |\n| 14 | 2.7～2.8 | 引用、对象存储段落及页脚7完整 |\n| 15 | 第3章、表3-1 | 角色表与表题同页，所有单元格文字可读 |\n| 16 | 3.1.2、图3-1 | 用例图、连线和图题完整，页眉横线正常 |\n| 17 | 图3-2 | 企业管理员用例及说明无遮挡，图题同页 |\n| 18 | 图3-3、3.2.1 | 图题同页；图后标题和需求正文衔接正常 |\n| 19 | 3.2.2～3.2.4 | 学习、考试及档案段落完整，页脚12正常 |\n| 20 | 3.3～3.4.1 | 页面续句与前页衔接正常，标题无孤立 |\n| 21 | 3.4.2～3.4.4 | 三个小节排版清晰，无新增大间距或遮挡 |\n| 22 | 表3-2 | 四列比较表与表题完整，同页后续总结正常 |\n| 23 | 第4章、图4-1 | 架构图文字、箭头及图题清晰，正文和页脚正常 |\n| 24 | 4.2、图4-2 | 功能结构框、分隔线及图题未碰撞 |\n| 25 | 4.3.1、图4-3 | ER总览完整，实体/关系与基数清晰，图题同页 |\n| 26 | 图4-4 | 管理域ER及图内注记完整，页眉横线像素确认存在 |\n| 27 | 图4-5 | 培训考试域ER及答案联系完整，图题同页 |\n| 28 | 图4-6 | 重点复核通过，新Outbox注记完整且未挤压其他内容 |\n| 29 | 表4-1、4.3.2开头 | 表格完整，长表名保持原有折行，无溢出 |\n| 30 | 4.3.2～4.3.4 | 段落与小节标题正常，页脚23完整 |\n| 31 | 表4-2 sys_user | 表头及19个字段、逻辑关联完整，页眉横线正常 |\n| 32 | 用户表索引、表4-3开头 | 索引表及课程字段表边界清晰，表头无遮挡，续页前未截断单元格 |\n\n本范围复核结论：通过，可以使用这32页对应的候选排版；不需要为本范围继续调整字号、行距、图宽或分页。\n",
+      "visual-33-64.md": "# 论文修复候选视觉复核：物理33～64页\n\n审查日期：2026-10-14。仅检查候选文件，未修改正式Word或索引。\n\n- 本轮页图：`pages/page-33.png`～`page-64.png`，32页均逐页通过`view_image(detail=\"original\")`打开；物理40页另作单页复看。\n- 渲染来源：`after.pdf`，95页、100 DPI，SHA-256 `f7a975a7eb3b44ddb946c5bd35851d6090b82eb8fe08087e813510ea3a3dbed9`。\n- 物理页包括前置页；本组对应正文页26～57。\n- 根代理计划继续微调物理42页ACK段落的英文长词排版，本报告不将该后续版本视为已复看；变动页应在最终导出后再检查。\n\n## 结论\n\n本组未发现表格越界、行内容截断、图题丢失、图文遮挡或新增空白页。CANCELLED、ACK、抽验取消及Outbox修订均可在相应页面读到。正文页眉横线完整，附录A两条CI入口已收在正文54页，附录B在正文55页独立起始，没有残留上一附录的链接。\n\n物理42页ACK段落因两处`PROGRESS_CONFIRMED`长词出现明显两端对齐字距，根代理已安排缩短重复措辞，不构成业务内容错误。其他旧有长路径/文献英文间距和全屏截图小字不在本轮要求修复范围内，未因本轮修改进一步恶化。\n\n## 重点修复核对\n\n| 位置 | 已见结果 |\n| --- | --- |\n| 物理39/正文32，表4-8 | status完整列出PENDING、PASSED、FAILED、TIMED_OUT或CANCELLED，三行可读，未压住单元格边界 |\n| 物理40/正文33，表4-8续表 | result为“最终或最近一次核验结果”；字段表头完整重复，已用原像素比较排除展示压缩造成的缺字错觉 |\n| 物理42/正文35，图4-7 | 事务框为“事务保存学时、事件及按需产生的Outbox”；框内换行清楚，箭头/图题完整 |\n| 物理42/正文35，ACK段落 | 明确学习服务成功处理事件后Realtime依次发送ACK与PROGRESS_CONFIRMED；ACK携序号/状态，后者携本次计入量/累计学时；内容无截断，字距待根代理最终微调 |\n| 物理43/正文36 | 主动终止会话将待处理抽验任务转为CANCELLED，文字自然接在零提交超时之后，未挤压下一标题 |\n| 物理48/正文41 | Outbox按任务阶段生成；抽验创建及结果另走实时通知；确认及NO_ROUTE可重试说明完整 |\n| 物理49/正文42 | 5.4的结束段跨页正常，随后5.5标题、截图和图题都保持完整 |\n| 物理61/正文54 | 两条入口均为单行短文本“查看作业（作业号）”，左对齐，末行距页脚仍有空白 |\n| 物理62/正文55 | 从“附录B 数据表结构字典”开始，已无前端CI链接残行；表B-1随正文自然展开 |\n\n## 链接与重复区域的独立复核\n\n`check_visual_links.py`只读读取候选PDF链接注释及原PNG像素，结果见`visual-links-check.json`：\n\n- 物理61页仍有两个真实PDF超链接，目标分别为`https://github.com/Lijian500/road-transport-training-platform/actions/runs/34250552187`与`https://github.com/Lijian500/road-transport-training-platform/actions/runs/34249525727`，未丢失点击目标。\n- 两个作业号都存在于物理61页文本，物理62页没有任一作业号，附录B标题在物理62页。\n- 物理33～64全部32页的页眉及横线裁剪区`(90,43,734,78)`像素SHA-256完全一致；已排除连续相似图展示导致的“部分页无页眉”误判。\n- 物理33/34/37/39/40/41/63/64页的相同续表表头区域`(100,98,725,149)`像素SHA-256完全一致，表头均为完整的字段名/数据类型/主键外键/可空/默认值/字段说明，未发生截断。\n\n以上是链接注释存在及目标一致的本地验证，未重新访问GitHub作业，也不声称重跑CI。\n\n## 完整已看页清单\n\n| 物理页 | 正文页 | 主要内容与结论 |\n| --- | --- | --- |\n| 33 | 26 | 课程续表、索引及计划表起始；表头、行文完整 |\n| 34 | 27 | 计划续表及索引；无截断，表头像素复核通过 |\n| 35 | 28 | 参训任务表及索引起始；正常 |\n| 36 | 29 | 任务索引续表、会话表起始；正常 |\n| 37 | 30 | 会话续表与逻辑引用；正常 |\n| 38 | 31 | 会话索引、课程进度表；正常 |\n| 39 | 32 | 课程进度续表、抽验任务表；CANCELLED完整 |\n| 40 | 33 | 抽验续表、索引、考试表起始；result新说明完整，已单页复看 |\n| 41 | 34 | 考试续表与索引；正常 |\n| 42 | 35 | 4.4、图4-7、ACK段落；逻辑修订呈现正确，长词字距待最终微调 |\n| 43 | 36 | 4.5及4.6起始；抽验取消分支明确，正常分页 |\n| 44 | 37 | 4.6末段；完整，章末留白正常 |\n| 45 | 38 | 第5章、5.1与图5-1；图题和正文完整 |\n| 46 | 39 | 5.2与图5-2；正常 |\n| 47 | 40 | 图5-3、5.3与补学描述；正常 |\n| 48 | 41 | 图5-4、5.4；Outbox新描述完整 |\n| 49 | 42 | 5.4收尾、5.5与图5-5；正常 |\n| 50 | 43 | 图5-6、5.6、图5-7；正常 |\n| 51 | 44 | 5.6续文与图5-8；正常 |\n| 52 | 45 | 第6章、6.1；归档日期与边界未被改写，正文完整 |\n| 53 | 46 | 6.2、表6-1；表头、266/55/4/5等数字完整 |\n| 54 | 47 | 6.3、表6-2、6.4起始；正常 |\n| 55 | 48 | 表6-3、6.5；95秒及理论对照保留，正常 |\n| 56 | 49 | 6.6、表6-4；心跳数据及边界文字完整 |\n| 57 | 50 | 第7章；一页完整，无新增截断 |\n| 58 | 51 | 致谢；正常独立页 |\n| 59 | 52 | 文献[1]～[10]；无文献缺字或单条跨页 |\n| 60 | 53 | 文献[11]～[21]；完整 |\n| 61 | 54 | 附录A；两个短文本CI入口均在本页、目标保留 |\n| 62 | 55 | 附录B独立起始及表B-1；不再混入附录A末行 |\n| 63 | 56 | 表B-1续表/索引、表B-2起始；正常 |\n| 64 | 57 | 用户表续表及索引起始；无截断，重复表头像素复核通过 |\n",
+      "visual-65-95.md": "# 候选终稿物理第 65～95 页视觉复核\n\n- 复核日期：2026-10-14。\n- 对象：`tmp/thesis-final-fixes-20261014/pages/page-65.png` 至 `page-95.png`，共 31 页。\n- 渲染来源：95 页 PDF，100 DPI；`pages/render-source.json` 登记的 PDF SHA-256 为 `f7a975a7eb3b44ddb946c5bd35851d6090b82eb8fe08087e813510ea3a3dbed9`。\n- 方法：31 页全部调用 `view_image` 的 `original` 模式查看；第 78、85、94 页另行单页重开。对所有页眉及横线、17 个页首表头另作像素对比，结果保存在 `visual-65-95-pixel-check.json`，同时保留每张 PNG 指纹。\n- 本次仅检查候选页图，没有修改正式文件、重新排版或执行渲染。\n\n## 结论\n\n本范围未发现需要继续修复的分页、裁切、缺字或遮挡问题。新页眉横线完整、位置一致；续表表头可读；表题与表格首行保持同页，长字段名称按列宽自然换行。\n\n物理第 94 页／正文页脚 87 的 `face_check_task.status` 已显示五种状态，分为三行：\n\n```text\nPENDING、PASSED、\nFAILED、TIMED_OUT\n或CANCELLED\n```\n\n`CANCELLED` 完整保留在同一行，单元格行高自动容纳新增文字，没有压线、遮挡或挤出表格。下方字段、逻辑关联与索引表仍完整。\n\n## 实际逐页覆盖\n\n| 物理页 | 页脚页码 | 检查内容 | 结果 |\n| --- | --- | --- | --- |\n| 65 | 58 | 用户索引续表、角色字段表及索引首行 | 通过 |\n| 66 | 59 | 角色索引续表、权限字段与索引、用户角色表首行 | 通过 |\n| 67 | 60 | 用户角色续表、角色权限字段与索引 | 通过 |\n| 68 | 61 | 组织用户关系、车辆字段表 | 通过 |\n| 69 | 62 | 车辆续表与索引、行政区域字段表 | 通过 |\n| 70 | 63 | 行政区域说明与索引、B.2 标题、课程字段表 | 通过 |\n| 71 | 64 | 课程续表与索引、存储对象字段表 | 通过 |\n| 72 | 65 | 存储对象续表、业务说明与索引 | 通过 |\n| 73 | 66 | 视频课件字段、逻辑关联与索引 | 通过 |\n| 74 | 67 | 浏览器直传会话字段表 | 通过 |\n| 75 | 68 | 直传会话说明与索引、培训计划字段表 | 通过 |\n| 76 | 69 | 计划续表、逻辑关联与索引 | 通过 |\n| 77 | 70 | 计划课程快照字段、逻辑关联与索引 | 通过 |\n| 78 | 71 | 课件清单快照长标题、字段及索引 | 通过；另作单页重开 |\n| 79 | 72 | 参训任务字段、说明与索引首行 | 通过 |\n| 80 | 73 | 任务索引续表、消费日志、私有图片上传会话首段 | 通过 |\n| 81 | 74 | 私有图片上传会话续表、逻辑关联与索引 | 通过 |\n| 82 | 75 | 考试题库字段、逻辑关联与索引 | 通过 |\n| 83 | 76 | 考试试卷字段、逻辑关联与索引 | 通过 |\n| 84 | 77 | 试卷固化题目字段、逻辑关联与索引 | 通过 |\n| 85 | 78 | 考试记录标题、字段与逻辑关联 | 通过；另作单页重开 |\n| 86 | 79 | 考试记录索引、考试答案字段与索引首行 | 通过 |\n| 87 | 80 | 答案索引续表、B.3 标题、学习会话首段 | 通过 |\n| 88 | 81 | 学习会话续表与逻辑关联 | 通过 |\n| 89 | 82 | 会话索引、生成列表达式、课程进度首段 | 通过 |\n| 90 | 83 | 课程进度续表及索引、课件进度首段 | 通过 |\n| 91 | 84 | 课件进度续表与索引、事件日志首段 | 通过 |\n| 92 | 85 | 事件日志续表与索引、Outbox 首段 | 通过 |\n| 93 | 86 | Outbox 续表与索引、抽验任务首段 | 通过 |\n| 94 | 87 | 抽验任务续表、五种状态、逻辑关联与索引 | 通过；另作单页重开 |\n| 95 | 88 | 待抽验生成列表达式、抽验日志字段与索引 | 通过 |\n\n## 连续图片显示伪影排除\n\n连续显示相似页图时，工具曾省略部分重复区域，表现为页眉、表头或标题似乎缺字。以下实际像素核对全部通过，不能把显示伪影列为文档缺陷：\n\n- 第 65～95 页页眉文字与新增横线区域逐像素等同于第 65 页。\n- 第 65、66、80、86、87 页索引续表表头区域逐像素一致。\n- 第 67、69、71、72、76、81、88、90、91、92、93、94 页字段续表表头区域逐像素一致。\n- 第 78、85 页标题单页重开后完整；第 94 页单页重开确认 `CANCELLED` 行及表头均正常。\n\n以上结论只覆盖登记的候选页图。全文目录、正文内容与其他页码的最终复核由主审统一汇总。\n"
+    }
+  },
+  "business_tests_executed": false,
+  "published_docx": "docs/thesis/李剑_计算机科学与技术_基于Dubbo的道路运输企业在线培训系统设计与实现.docx",
+  "published_sha256": "af989235fd176af3c21441436d37fb377bff81129c69c4612ebf2648f9fd254f",
+  "final_page_sha256": {
+    "1": "a3fc68f663219c1dd595a0212e4cd925bece1230f26b199e6a9c79815478bf1d",
+    "2": "9c6723f8cb53dd6b25640d7abb1d2a76dd25ffa7186643455daad887a72ec4e0",
+    "3": "11aa0fe8316eea59545a36f60dab1130778e5330b755d9aa1a8d4ee55bb94afb",
+    "4": "f77824b87a43a5b7dcf4676ed51f8e9dccfee6cc37b50cb7f90e29e40169f53d",
+    "5": "14ce17227945db92038026fc19d30cb4b7f3a5023a22ef80160ca84c4ae06646",
+    "6": "13dc367cc5985d06a7a9d9adda8085e5481c8566ec775ef3147ebad3fe798f6d",
+    "7": "12386a8793af9c4a0298dc91fcec6bdf32f18d54597a0db25deef0b638e6f2fd",
+    "8": "09e136797731c2b906277f0b236455aa7729509631ebd5ddfde1dc4908386aa2",
+    "9": "bcf2a84ef41dce554c966c98ff54963fd75a7aa1531d6ef6726344f3d8f7b226",
+    "10": "7733f0deef53d5966c98606e1b76c9e996dae9a71446323616e4e910b7d33017",
+    "11": "a6c236f1e18cfc2a73e9e0860ab41bbfe7732dc5500ef9a59dcfb017fa655077",
+    "12": "2c317503c2398661f2e3e55e6824284e4f05a1fa5130c68dc7a4fa3222f2d3fc",
+    "13": "eade45cbd309c2937995e84b044646dd0271ac7ff665c53dddbabd960304e31a",
+    "14": "4ba75e0ddcb26f318e30a5fa90495d1279ca07135ccd98829b50b8a5597273ff",
+    "15": "4a921532fa9b53c68d42d947b2ffbaa217e464358ae08086632c7d7cdf8848a1",
+    "16": "267e713e9f7b7c589f438cedd0e53cb95bca3fb0d1819008b0d1b209039c73a4",
+    "17": "1eed270fb52d369759b76ff9957bd3cf12ed0ef79207a3f55acbc107792e25e2",
+    "18": "ea08bae505830f0d3bbe4933342be5a2e379825e014a5d985368ae73d7abf4e2",
+    "19": "4e269a5840d19e7d5907019ad4d60babc906dd3d067d983f0851beac576b6b84",
+    "20": "369757330b9ae5c6883e75b7f18963810f4794360930527e569f19640fd951be",
+    "21": "713fe9572711071c2577572d3e662cdee58769c79ed26f4b5f3bbc194ddd44bd",
+    "22": "153fc11b28c45e80094b7a6a54524695cc5c649ea962678eba9258049c988d50",
+    "23": "e8bc4bbb7a8b8ac069c03490719241c0097faccf5a811a9d6292656a4d6ad8a4",
+    "24": "a941f898b4dc898b8192db45fbda151d2d1c151644544399633254dabeb6debe",
+    "25": "183f4bfbe362885b51471c5de659632cf3d958ff1442f7ee7f273988a9ee6825",
+    "26": "f29a7ea9fb8925595b7913abfb1705a438437a2181af02c0ffe391227c03c58f",
+    "27": "c89224639aa79cd9e55a47cf01d3169f4770367236deea7465b5b9ee575b99bf",
+    "28": "1f6d3261fd7e30269f87130d93eb3f9f4bc2d6415a8f97290804bf5db0fdaf6e",
+    "29": "c082a6582cd58c27999320be2bfb1166314e0913c1ba5c503471c838e03779ac",
+    "30": "8f2929eaea5caf92b13aed7566660cd2478a0d47ef33832cd44a9f24d6f195df",
+    "31": "421b54ec5c1b6042f865a7902c1dbc576ffb93bd2e5ab7bae913d8990e793b4c",
+    "32": "703f33c5ee03094513943154e78895c76ee80c57cb3ee415c2badf4af3a405d0",
+    "33": "94a4586198b5e256ce17736e16b32fffa527b289b868bbc89d43772a56d6de2d",
+    "34": "19f384ee6cbc78365cf60f012605334575fbe9b28e2c1af3681b7fdf3088a3a6",
+    "35": "24a9e6cc3460724b66af840dd14adf3703ed3bed519c3e44f19d3f7a9d79604f",
+    "36": "e4d4dc0d050b9147b4bdcffff7e94ead02e814cca733c59d6e709a23860ba883",
+    "37": "4e68b34848c4778694222d393bff6cac840dbd94de6b2c71a478342d14923cc2",
+    "38": "30538f00f9af36008bd676065620368de31d655e269e2855fc5e1ce96860614f",
+    "39": "e43e04595c1ed14edb07ae015c0ccc232820825dc60e8ba6e6b18ef0164e061c",
+    "40": "3071d236b2101a45e19313908c575377ae182b2465ed8f6247693dda600aa7b1",
+    "41": "8bf188cdc7cc9293875644563a3eac3669a7211dcc3440f05e9eed10a8621eff",
+    "42": "859101f17b8b99c91eb22f67d4100ffdbec8a78359476ec57a6f8bd0f73876bd",
+    "43": "dbd194132b9e933b02a68ae078db5fddb18d876da76997cee1f76ba1617e4efa",
+    "44": "9496d2cebef413a9908bc315367023404ea4695e9c20137db67e8295352bdd5d",
+    "45": "7e7e886bc7007ec237d1b02d13bc4fd1b949c35538c6e6d9024cda8ff0f4923a",
+    "46": "8a9333badf1f7c07535bf60861e63d3f3f07c85e5b52b4c7cea6fc2e56dd829a",
+    "47": "f3adba3733a6c692352528d382ecf84797299671cf1b7c7576dbe46bad94909f",
+    "48": "8a3c5a89db0dfd2163c30643ed39eea9ff7afb619a3cb1b2be8111d166582a2d",
+    "49": "5f80ab94c76db272832bfebc5ada5f04995cc484b3c9d25f6d3e2a5c86e20b6b",
+    "50": "abc7627a3e6fd9b4d7dde498d6a4f1780cee4625e369817f2180929fe116021f",
+    "51": "5440c5b3d117a055a307d30c242e4ebd6b9e089b65d6fe98401428b92d5dc7fa",
+    "52": "7d9695f818cfdd626fc4ef2954f815871bb57c14e06a73b9cdd7abe0d50fc65f",
+    "53": "fc4745de69b511b162ee916839bb3288177e8278d41f4c8c73f19c20c5678108",
+    "54": "54ee17423f9fcda35adcfd8d450f7f8a71ac0d62a6b3ecf4be42e91c8c717353",
+    "55": "e56b986c740570c917e9fe86946dcb5ae80f7df358844bf3eab78e91faae18d2",
+    "56": "9ad994cf6e23d43e69577d3d42d4bb38daa319a1440a336191de6f2a75007276",
+    "57": "5956241d4025d31f464a85f994398ea4525ca5204093125756354f1af4d13a81",
+    "58": "630ff40fcc10265f03911c496002b78a0a5413bdbc5720f1bd6b2ce83e9cc309",
+    "59": "1649c91c90b25cfc9762aace4e2503aa92ac6f2853b7dd5e74d6f93d8c4ac6ef",
+    "60": "6f1ab4809f5c1d685abac03db63f0c54fa29c75572aa216b6fd7670553bc9462",
+    "61": "6613145fd004b1e4e3d2269759d4a5664208add7b70c94a4488409297728c63c",
+    "62": "4900213533e9891ba3f1ae830a938b34671ea71d763c17eeb91e817cd9dd44af",
+    "63": "2f8c277b84784f885b3ff557e442be987a17ebd26363a34d8816f62fa4f224a3",
+    "64": "a876a247faa2458e162a6073a60d8535526b48b60ec8ef961a7e8f6b24c39bf3",
+    "65": "a1b62065df723c8a436c975b7f6c3559b80995ef99825e319b3941af14798f7c",
+    "66": "326b33c6a8c4a52587f892e78aa0b9d43999e7b486e36afb0e7842fc635971c5",
+    "67": "70a2c7f7b0db7282a7a2bf32684a8742ae690faede763817f4c3de96e29bf415",
+    "68": "072d5164d1ea7e8f50249dd83360b0ccfee476181fff2be910c13c88b346a853",
+    "69": "f144b973e95d28c2f96d05374267db4068a0cfdd3a09e795c3398a9cd7f1f4dd",
+    "70": "710b0c58b960f390b3fa67c70152087eb88e5bb0b3c0345c506b784d1d66e08c",
+    "71": "7de3bfdada82d20ace484bc1847c9b7730af65741f04a10ac97ddc696d579a06",
+    "72": "e713155d3810b728ed0623abf5df2bfd169ce8c49516af82528eec2bde56e213",
+    "73": "1cbbca57e138757c571c2ed1d68029fd7cd2ee79fd934076f93ce2dbde0055a3",
+    "74": "ed251ad3e8682c488b053049ade10c166d875de54ebd5047dba1188f96fc4f11",
+    "75": "25baa37f374089bcd88d11701d197f255a35cde958897ee373bf89c76bed75f6",
+    "76": "a2e3c404e2c7a0f2b06094407406347df23fcd9368b96dffe801f2e0450c2db8",
+    "77": "ce70211f2cf02a5f9c8e1c6530cb823c3acdc148a07d6f050430b03ce48588cc",
+    "78": "e61f472eebe10feb86c2966503cf1767398396336575a73d09047c73b426323c",
+    "79": "8fddf6c58cd0496017106b5dd40c85888f84e1b4b0f399c0691c68f26699732a",
+    "80": "2259431ea2eee096b8a846df918f3c3e0d0b02bb218e1ca2f04f777cc753aa54",
+    "81": "f38ccb88a07b63537250e2ed96a0a529dfad7720560c4fecd472d79ec85a60c9",
+    "82": "495fe72369c0da02a6cc1c5242abe604cdb4a52aa33ae9b8ef64c14f3b0cd446",
+    "83": "fa30b5a42b2d5d6b4e75aa9301c63a1585f569f85a5efd340c2c48c4fe93eba5",
+    "84": "bcf7b62462d41a544f0f27b9ec16a5b4ca0220e2acc2348f4637dc669c2cec8a",
+    "85": "cb3856601d86d9ec8392c2cc70f11f734fd9d2c3067116ba44a749b852ca461a",
+    "86": "bccdbc3f3f51b7ca407135575fbe10cf79baa840d2526a9cb976dba83459ec6f",
+    "87": "549541cc1b7020fbdf07967c499afd10167e51d522255e0e0ba82e7edbebff28",
+    "88": "730df02a2b8637e986d3094a474bbd4ba9c7edc51c0fab285a6e01a0403927c7",
+    "89": "8c888fea3ceee1402578c73bb922c2e25083d9521d02a0f1fce977f1f1dbc061",
+    "90": "526f114ca36b166d997ea16e213da0a1fb0c719f5e6f35bb3c53c18dd4f9fba2",
+    "91": "498a7ae97fbb66985beaef791f5f33759f1a51ddb48e4ca28b673c976551f872",
+    "92": "b85328f2b381b044a2693da2206e027cf13106cd0dd791b2c1e75ac7ea315423",
+    "93": "fcdb65e4e918a62bd3df72983471bac133add73895c7c2ed5b88514333a708b6",
+    "94": "6b703932a60ecfa993a876764573fd332b09eab40b278a28c9e1bd106f52cf01",
+    "95": "0c0add1daff8d03ec94215e52db517902cbb1112fbc1d799836b72abced05105"
+  },
+  "source_assets": {
+    "changed_files": [
+      "docs/thesis/figures/advisor-20260930/er-learning.drawio",
+      "docs/thesis/figures/advisor-20260930/er-learning.png",
+      "docs/thesis/figures/advisor-20260930/er-learning.svg",
+      "docs/thesis/figures/advisor-20260930/learning-flow.drawio",
+      "docs/thesis/figures/advisor-20260930/learning-flow.png",
+      "docs/thesis/figures/advisor-20260930/learning-flow.svg",
+      "docs/thesis/tools/build_advisor_figures.py",
+      "docs/thesis/tools/build_data_dictionary.py",
+      "database/design/data-dictionary.json",
+      "database/design/data-dictionary.md"
+    ],
+    "file_count": 10,
+    "figures": {
+      "er-learning": {
+        "size": [
+          3000,
+          3570
+        ],
+        "changed_bbox": [
+          468,
+          3171,
+          2490,
+          3235
+        ],
+        "sha256": "a84f175c8041f9ce6c99dabe85134ebf08744d9b880ef583e73261f5d7f8d4af"
+      },
+      "learning-flow": {
+        "size": [
+          3300,
+          2220
+        ],
+        "changed_bbox": [
+          266,
+          1627,
+          1233,
+          1786
+        ],
+        "sha256": "23e0a6d968fb0dada7ec5c19525d3ffd364515c05ebce1341f762d91d10d11ea"
+      }
+    },
+    "schema_counts": {
+      "tables": 31,
+      "columns": 476,
+      "indexes": 113
+    },
+    "all_other_figures_unchanged": true,
+    "manifest_unchanged_and_matches_generated_metadata": true,
+    "schema_snapshot_byte_identical": true,
+    "original_migrations_unchanged": true,
+    "dictionary_only_changed_status_comment_and_source": true,
+    "utf8_without_bom": true,
+    "visual_review": "两图单独查看，新增图注与两行节点可读，未见压线或越界。",
+    "input_word_media_mapping": {
+      "er-learning": {
+        "relationship": "rId21",
+        "media_path": "word/media/image11.png",
+        "sha256": "02d849080183e69237ce2479630fb65806744cf740bd886e9b950c62f29199b1"
+      },
+      "learning-flow": {
+        "relationship": "rId22",
+        "media_path": "word/media/image12.png",
+        "sha256": "12c672b342f0b35a7dd5e2dc6267c2bded235cc5b65064992b9ee912fb6b778a"
+      }
+    }
+  },
+  "resolved_review_items": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R06",
+    "R07"
+  ],
+  "remaining_review_items": {
+    "R05": "本人签名与日期确认，不在本次四项授权修复范围内",
+    "R08": "部署信任前提补充建议，不在本次四项修复范围内"
+  },
+  "code_coverage": {
+    "committed_comparison": "13d6463..5d1c3ef，backend/frontend/database/scripts/deploy/.github无业务源码新增差异",
+    "staged": "无暂存变化",
+    "unstaged_and_untracked": "本次为论文、字典、图源、生成器及记录；保留原有docs/thesis/tools/__pycache__内容，无新增业务源码",
+    "rechecked_methods": [
+      "LearningWebSocketHandler.submit/emitLearningResult",
+      "LearningSessionServiceImpl学习计时与任务事件条件",
+      "LearningTimeCalculator.calculate/completionPosition",
+      "FaceCheckServiceImpl.cancelPending及抽验通知",
+      "LearningOutboxService.appendTaskEvent/appendFaceCheckEvent",
+      "useLearningRealtime ACK与PROGRESS_CONFIRMED处理",
+      "StudyView服务端进度恢复"
+    ]
+  }
+}

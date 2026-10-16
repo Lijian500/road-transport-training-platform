@@ -26,7 +26,8 @@
 <rect x="35" y="410" width="430" height="65" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="250.0" y="448.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">核验学习状态与计时条件</text>
 <rect x="35" y="540" width="430" height="65" fill="white" stroke="black" stroke-width="1.4"/>
-<text x="250.0" y="578.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">事务保存学时、事件与 Outbox</text>
+<text x="250.0" y="562.42" text-anchor="middle" font-family="SimSun,serif" font-size="24">事务保存学时、事件及</text>
+<text x="250.0" y="593.62" text-anchor="middle" font-family="SimSun,serif" font-size="24">按需产生的 Outbox</text>
 <rect x="675" y="20" width="390" height="65" fill="white" stroke="black" stroke-width="1.4"/>
 <text x="870.0" y="58.019999999999996" text-anchor="middle" font-family="SimSun,serif" font-size="24">重复请求返回历史确认结果</text>
 <rect x="675" y="280" width="390" height="65" fill="white" stroke="black" stroke-width="1.4"/>
