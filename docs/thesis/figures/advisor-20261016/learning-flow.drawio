@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" version="24.7.17">
+  <diagram id="learning-flow" name="学习进度受理与结果传播流程">
+    <mxGraphModel dx="1100" dy="690" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1100" pageHeight="690" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="e2" edge="1" parent="1" style="endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="98" as="sourcePoint" />
+            <mxPoint x="250" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" style="endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="228" as="sourcePoint" />
+            <mxPoint x="250" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" style="endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="358" as="sourcePoint" />
+            <mxPoint x="250" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" style="endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="488" as="sourcePoint" />
+            <mxPoint x="250" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" style="endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="465" y="319" as="sourcePoint" />
+            <mxPoint x="675" y="59" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="575" y="319" />
+              <mxPoint x="575" y="59" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" style="endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="465" y="579" as="sourcePoint" />
+            <mxPoint x="675" y="319" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="600" y="579" />
+              <mxPoint x="600" y="319" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" style="endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="449" as="sourcePoint" />
+            <mxPoint x="675" y="449" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" style="endArrow=block;endFill=1;startArrow=none;strokeColor=#000000;strokeWidth=1.4;rounded=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="870" y="488" as="sourcePoint" />
+            <mxPoint x="870" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n0" value="学员发送进度消息" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=27;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="35" y="20" width="430" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="n1" value="核验身份、任务与会话绑定" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=27;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="35" y="150" width="430" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" value="查询请求标识及检查序号" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=27;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="35" y="280" width="430" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" value="核验学习状态与计时条件" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=27;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="35" y="410" width="430" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" value="事务保存学时、事件及&lt;br&gt;按需产生的 Outbox" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=27;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="35" y="540" width="430" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" value="重复请求返回历史确认结果" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=27;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="675" y="20" width="390" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="n10" value="向浏览器返回确认学时" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=27;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="675" y="280" width="390" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" value="发送器发布学习结果事件" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=27;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="675" y="410" width="390" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="n12" value="培训服务去重并更新任务" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=27;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=1.4;">
+          <mxGeometry x="675" y="580" width="390" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="n14" value="已受理&lt;br&gt;请求" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=27;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="477" y="145" width="90" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="n18" value="RabbitMQ&lt;br&gt;至少一次投递" vertex="1" parent="1" style="text;strokeColor=none;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#000000;fontFamily=SimSun;fontSize=27;align=center;verticalAlign=middle;spacing=0;fillColor=none;">
+          <mxGeometry x="895" y="495" width="180" height="76" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

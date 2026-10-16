@@ -2,7 +2,7 @@
 
 当前论文使用的[数据字典](data-dictionary.md)由[单一 JSON 结构源](data-dictionary.json)生成，覆盖31张表、476个字段和113项索引。其中30张迁移表（464个字段、110项索引）按管理V1～V14、培训V1～V6、学习V1～V5顺序归并；外部 `sys_address` 按用户提供的[真实DDL](sys_address.source.sql)核验。它描述仓库及所提供DDL对应的结构，不证明运行库已应用全部迁移；31张表均未声明物理外键。
 
-[概念 ER 图及可编辑图源](../../docs/thesis/figures/advisor-20260930/README.md)与论文第4章对应。正文八张核心表和附录B使用同一数据字典，覆盖范围与验证依据统一见[2026-09-30修订记录](../../docs/changes/2026-09-30-thesis-analysis-design.md)。`sys_address` 的12个字段均非空，id为自增主键，另有行政代码唯一索引及父级代码普通索引；引擎为MyISAM，字符集为utf8mb3。四个代码列显式指定utf8mb3_general_ci，表级排序规则未显式声明。DDL中的AUTO_INCREMENT=4063保留为导出时的自增计数器值，不作为记录数或字段默认值。
+[概念 ER 图及可编辑图源](../../docs/thesis/figures/advisor-20261016/README.md)与论文第4章对应。正文八张核心表和精简附录A使用同一数据字典；附录仅节选四张补充字段表和特殊约束，见[导师反馈一修订](../../docs/changes/2026-10-16-thesis-advisor-feedback-one.md)。完整结构的来源与历史验证见[2026-09-30修订记录](../../docs/changes/2026-09-30-thesis-analysis-design.md)。`sys_address` 的12个字段均非空，id为自增主键，另有行政代码唯一索引及父级代码普通索引；引擎为MyISAM，字符集为utf8mb3。四个代码列显式指定utf8mb3_general_ci，表级排序规则未显式声明。DDL中的AUTO_INCREMENT=4063保留为导出时的自增计数器值，不作为记录数或字段默认值。
 
 ## 培训计划快照
 

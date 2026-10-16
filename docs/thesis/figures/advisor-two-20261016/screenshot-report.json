@@ -1,0 +1,524 @@
+{
+  "browserVersion": "157.0.8092.0",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+  "viewport": {
+    "width": 600,
+    "height": 1450
+  },
+  "deviceScaleFactor": 3,
+  "stages": [
+    {
+      "name": "video-playing",
+      "clipCss": {
+        "x": 36,
+        "y": 804,
+        "width": 528,
+        "height": 355
+      },
+      "fonts": [
+        {
+          "text": "道路运输安全基础（演示）",
+          "cssPixels": 16
+        },
+        {
+          "text": "已确认 0秒",
+          "cssPixels": 16
+        },
+        {
+          "text": "正常签退",
+          "cssPixels": 14
+        }
+      ],
+      "fixture": {
+        "requests": [
+          {
+            "method": "GET",
+            "path": "/auth/csrf"
+          },
+          {
+            "method": "GET",
+            "path": "/auth/me"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/plans/1001/courses/3001"
+          },
+          {
+            "method": "POST",
+            "path": "/learning/sessions"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/sessions/4001/coursewares/5001/play-url"
+          }
+        ],
+        "state": {
+          "id": "4001",
+          "taskId": "2001",
+          "planId": "1001",
+          "planCourseId": "3001",
+          "courseName": "道路运输安全教育（演示）",
+          "status": "STUDYING",
+          "currentCoursewareSnapshotId": "5001",
+          "lastSequence": 6,
+          "confirmedPositionMillis": 0,
+          "effectiveDurationMillis": 0,
+          "requiredDurationMillis": 200000,
+          "currentFaceCheck": null,
+          "createdAt": "2026-10-16T07:06:43.260Z"
+        },
+        "faceTask": null
+      },
+      "media": {
+        "paused": false,
+        "currentTime": 1.3187,
+        "readyState": 4,
+        "videoWidth": 960,
+        "videoHeight": 540,
+        "decodedFrames": 32
+      },
+      "snapshot": "- strong: 道路运输安全基础（演示）\n- text: 已确认 0秒\n- button \"正常签退\"",
+      "rawFile": "output/playwright/thesis-advisor-two-20261016/video-playing.png",
+      "rawPixels": [
+        1584,
+        1065
+      ],
+      "rawSha256": "d7aaa91196e4d92d718ff40d9c52df8f7fff733925dbbf35edf0876c03cbca07"
+    },
+    {
+      "name": "video-disconnected",
+      "clipCss": {
+        "x": 36,
+        "y": 365,
+        "width": 528,
+        "height": 40
+      },
+      "fonts": [
+        {
+          "text": "实时学习连接正在恢复，播放器已暂停；同步完成后请手动继续。",
+          "cssPixels": 14
+        }
+      ],
+      "fixture": {
+        "requests": [
+          {
+            "method": "GET",
+            "path": "/auth/csrf"
+          },
+          {
+            "method": "GET",
+            "path": "/auth/me"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/plans/1001/courses/3001"
+          },
+          {
+            "method": "POST",
+            "path": "/learning/sessions"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/sessions/4001/coursewares/5001/play-url"
+          }
+        ],
+        "state": {
+          "id": "4001",
+          "taskId": "2001",
+          "planId": "1001",
+          "planCourseId": "3001",
+          "courseName": "道路运输安全教育（演示）",
+          "status": "STUDYING",
+          "currentCoursewareSnapshotId": "5001",
+          "lastSequence": 6,
+          "confirmedPositionMillis": 0,
+          "effectiveDurationMillis": 0,
+          "requiredDurationMillis": 200000,
+          "currentFaceCheck": null,
+          "createdAt": "2026-10-16T07:06:43.260Z"
+        },
+        "faceTask": null
+      },
+      "media": {
+        "paused": true,
+        "currentTime": 1.3322,
+        "readyState": 4,
+        "videoWidth": 960,
+        "videoHeight": 540,
+        "decodedFrames": 32
+      },
+      "snapshot": "- alert: 实时学习连接正在恢复，播放器已暂停；同步完成后请手动继续。",
+      "rawFile": "output/playwright/thesis-advisor-two-20261016/video-disconnected.png",
+      "rawPixels": [
+        1584,
+        120
+      ],
+      "rawSha256": "43d033511cc8461bd7164753a8cbece5dc0d5e3d79e84ba97e74810094ed090c"
+    },
+    {
+      "name": "video-reconnected",
+      "clipCss": {
+        "x": 57,
+        "y": 1171,
+        "width": 486,
+        "height": 40
+      },
+      "fonts": [
+        {
+          "text": "学习已暂停，请点击播放器继续；页面返回时不会自动恢复计时。",
+          "cssPixels": 14
+        }
+      ],
+      "fixture": {
+        "requests": [
+          {
+            "method": "GET",
+            "path": "/auth/csrf"
+          },
+          {
+            "method": "GET",
+            "path": "/auth/me"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/plans/1001/courses/3001"
+          },
+          {
+            "method": "POST",
+            "path": "/learning/sessions"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/sessions/4001/coursewares/5001/play-url"
+          }
+        ],
+        "state": {
+          "id": "4001",
+          "taskId": "2001",
+          "planId": "1001",
+          "planCourseId": "3001",
+          "courseName": "道路运输安全教育（演示）",
+          "status": "PAUSED",
+          "currentCoursewareSnapshotId": "5001",
+          "lastSequence": 7,
+          "confirmedPositionMillis": 0,
+          "effectiveDurationMillis": 0,
+          "requiredDurationMillis": 200000,
+          "currentFaceCheck": null,
+          "createdAt": "2026-10-16T07:06:43.260Z"
+        },
+        "faceTask": null
+      },
+      "media": {
+        "paused": true,
+        "currentTime": 1.3322,
+        "readyState": 4,
+        "videoWidth": 960,
+        "videoHeight": 540,
+        "decodedFrames": 32
+      },
+      "snapshot": "- alert: 学习已暂停，请点击播放器继续；页面返回时不会自动恢复计时。",
+      "rawFile": "output/playwright/thesis-advisor-two-20261016/video-reconnected.png",
+      "rawPixels": [
+        1458,
+        120
+      ],
+      "rawSha256": "4757222a508cf2804cbd715e506626ebe5bcff8fce293cb0779a3b52935eab99"
+    },
+    {
+      "name": "face-passed",
+      "clipCss": {
+        "x": 16,
+        "y": 504,
+        "width": 568,
+        "height": 441
+      },
+      "fonts": [
+        {
+          "text": "学习人脸抽验",
+          "cssPixels": 18
+        },
+        {
+          "text": "人脸抽验已通过",
+          "cssPixels": 20
+        },
+        {
+          "text": "当前照片与登记照匹配",
+          "cssPixels": 14
+        },
+        {
+          "text": "知道了",
+          "cssPixels": 14
+        }
+      ],
+      "fixture": {
+        "requests": [
+          {
+            "method": "GET",
+            "path": "/auth/csrf"
+          },
+          {
+            "method": "GET",
+            "path": "/auth/me"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/plans/1001/courses/3001"
+          },
+          {
+            "method": "POST",
+            "path": "/learning/sessions"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/sessions/4001/coursewares/5001/play-url"
+          },
+          {
+            "method": "POST",
+            "path": "/learning/face-checks/6001/submissions"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/sessions/4001"
+          }
+        ],
+        "state": {
+          "id": "4001",
+          "taskId": "2001",
+          "planId": "1001",
+          "planCourseId": "3001",
+          "courseName": "道路运输安全教育（演示）",
+          "status": "PAUSED",
+          "currentCoursewareSnapshotId": "5001",
+          "lastSequence": 8,
+          "confirmedPositionMillis": 0,
+          "effectiveDurationMillis": 0,
+          "requiredDurationMillis": 200000,
+          "currentFaceCheck": null,
+          "createdAt": "2026-10-16T07:06:43.260Z"
+        },
+        "faceTask": {
+          "taskId": "6001",
+          "sessionId": "4001",
+          "status": "PASSED",
+          "triggeredAt": "2026-10-16T07:06:49.196Z",
+          "deadlineAt": "2026-10-16T07:09:49.196Z",
+          "attemptCount": 1,
+          "maxAttempts": 3,
+          "remainingAttempts": 2,
+          "result": "MATCHED",
+          "failureReason": null,
+          "similarity": 0.76,
+          "completedAt": "2026-10-16T07:06:49.765Z"
+        }
+      },
+      "media": {
+        "paused": true,
+        "currentTime": 1.341,
+        "readyState": 4,
+        "videoWidth": 960,
+        "videoHeight": 540,
+        "decodedFrames": 32
+      },
+      "snapshot": "- heading \"学习人脸抽验\" [level=2]\n- img\n- paragraph: 人脸抽验已通过\n- paragraph: 当前照片与登记照匹配\n- button \"知道了\"",
+      "rawFile": "output/playwright/thesis-advisor-two-20261016/face-passed.png",
+      "rawPixels": [
+        1704,
+        1323
+      ],
+      "rawSha256": "250f91dd1805d2625ccd6499b9a0f0814f2e5ecdab4278da26b54dd2c61d3da1"
+    },
+    {
+      "name": "face-paused",
+      "clipCss": {
+        "x": 57,
+        "y": 1067,
+        "width": 486,
+        "height": 146
+      },
+      "fonts": [
+        {
+          "text": "学习已暂停，请点击播放器继续；页面返回时不会自动恢复计时。",
+          "cssPixels": 14
+        }
+      ],
+      "fixture": {
+        "requests": [
+          {
+            "method": "GET",
+            "path": "/auth/csrf"
+          },
+          {
+            "method": "GET",
+            "path": "/auth/me"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/plans/1001/courses/3001"
+          },
+          {
+            "method": "POST",
+            "path": "/learning/sessions"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/sessions/4001/coursewares/5001/play-url"
+          },
+          {
+            "method": "POST",
+            "path": "/learning/face-checks/6001/submissions"
+          },
+          {
+            "method": "GET",
+            "path": "/learning/sessions/4001"
+          }
+        ],
+        "state": {
+          "id": "4001",
+          "taskId": "2001",
+          "planId": "1001",
+          "planCourseId": "3001",
+          "courseName": "道路运输安全教育（演示）",
+          "status": "PAUSED",
+          "currentCoursewareSnapshotId": "5001",
+          "lastSequence": 8,
+          "confirmedPositionMillis": 0,
+          "effectiveDurationMillis": 0,
+          "requiredDurationMillis": 200000,
+          "currentFaceCheck": null,
+          "createdAt": "2026-10-16T07:06:43.260Z"
+        },
+        "faceTask": {
+          "taskId": "6001",
+          "sessionId": "4001",
+          "status": "PASSED",
+          "triggeredAt": "2026-10-16T07:06:49.196Z",
+          "deadlineAt": "2026-10-16T07:09:49.196Z",
+          "attemptCount": 1,
+          "maxAttempts": 3,
+          "remainingAttempts": 2,
+          "result": "MATCHED",
+          "failureReason": null,
+          "similarity": 0.76,
+          "completedAt": "2026-10-16T07:06:49.765Z"
+        }
+      },
+      "media": {
+        "paused": true,
+        "currentTime": 1.341,
+        "readyState": 4,
+        "videoWidth": 960,
+        "videoHeight": 540,
+        "decodedFrames": 32
+      },
+      "snapshot": "- alert: 学习已暂停，请点击播放器继续；页面返回时不会自动恢复计时。",
+      "rawFile": "output/playwright/thesis-advisor-two-20261016/face-paused.png",
+      "rawPixels": [
+        1458,
+        438
+      ],
+      "rawSha256": "f6d1ca48e974ca07582e3cc5e0a5ebadcf1dc2181ffe3f9ea546ca57862fc8a2"
+    }
+  ],
+  "createdAt": "2026-10-16T07:10:19.286Z",
+  "origin": "http://127.0.0.1:5173",
+  "automation": {
+    "engine": "Playwright CLI",
+    "cliPath": "D:/developEnv/node_global/node_modules/@playwright/cli/playwright-cli.js",
+    "nodeExecutable": "C:\\Users\\Admin\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+    "nodeVersion": "v24.19.0",
+    "captureMode": "隔离、无登录、headless Chrome；600×1450 CSS 视口，设备比例3；本机前端开发服务"
+  },
+  "captureScriptSha256": "81e498401fced44287ced7f2fab4235988633b2177939a6098f00b3d03d78e74",
+  "source": "当前真实 Vue 组件；纯虚构 HTTP/WebSocket 演示夹具；自制 MP4 实际解码；纯灰合成摄像头；不透传业务后端",
+  "purpose": "论文实现过程界面配图；用户已确认本地验收，本轮截图不充当重新验收的实验结果",
+  "fontMeasurementScope": "逐阶段 fonts 与 minimumRecordedFontPoint 仅记录真实 Vue DOM 业务文字；不包含浏览器视频原生控件和 MP4 内栅格文字，二者另行说明，不能据 DOM 最小值宣称全图所有文字达到相同字号",
+  "mediaTypography": {
+    "source": "scripts/make-demo-video.py",
+    "sourceWidthPixels": 960,
+    "renderedVideoCssWidth": 486,
+    "titleSourceFontPixels": 38,
+    "smallestSourceFontPixels": 23,
+    "smallestRasterFontPointEstimate": 8.820543714363291,
+    "nativeControls": "浏览器 shadow DOM 原生播放按钮、时间和进度条；未作为可测业务 DOM 文字统计，保留原始截图供视觉复核",
+    "note": "视频说明小字属于媒体内容，核心业务提示按 DOM 字号单独核对；没有重绘或放大媒体文字"
+  },
+  "mediaSourceSha256": "a8c9f16d7878e081433557d139dc971e8e9a37c1264e54d0ba3420017f06ca1e",
+  "cropNotes": {
+    "video-playing": "保留真实课件标题及完整播放器画面；截去其后无关操作区",
+    "video-disconnected": "原生连接恢复提示的完整 alert 区域",
+    "video-reconnected": "原生暂停和手动继续提示的完整 alert 区域",
+    "face-passed": "仅裁去原生成功弹窗两侧空白；完整未裁原图另存 face-passed-full.png",
+    "face-paused": "同一播放器的下部90CSS像素及完整暂停提示，保留原生播放按钮，裁去上方重复视频内容"
+  },
+  "privacy": "照片采集为纯灰合成流；结果图没有照片区域，也不含真实人脸；本地接口与 WS 均不透传业务后端；无真实账号、凭据或签名 URL",
+  "figures": [
+    {
+      "file": "docs/thesis/figures/advisor-two-20261016/video-recovery.png",
+      "sha256": "e342a7aba7ae5f67422d288fec4a19535f0a09abcf855b8e2741530eb7dc83e1",
+      "pixels": [
+        1740,
+        1635
+      ],
+      "printWidthCm": 15.5,
+      "printHeightCm": 14.564655172413794,
+      "pointsPerCssPixel": 0.7575346185175128,
+      "uiFont14Point": 10.60548465924518,
+      "label16Point": 12.120553896280205,
+      "minimumRecordedFontPoint": 10.60548465924518,
+      "placements": [
+        {
+          "stage": "video-playing",
+          "width": 1584,
+          "height": 1065,
+          "top": 102,
+          "resampling": false
+        },
+        {
+          "stage": "video-disconnected",
+          "width": 1584,
+          "height": 120,
+          "top": 1269,
+          "resampling": false
+        },
+        {
+          "stage": "video-reconnected",
+          "width": 1458,
+          "height": 120,
+          "top": 1491,
+          "resampling": false
+        }
+      ]
+    },
+    {
+      "file": "docs/thesis/figures/advisor-two-20261016/face-result.png",
+      "sha256": "db22cc8333ed6ac458c85418d03d2866742b6b3114fa4f89c8d0231597533ec2",
+      "pixels": [
+        1740,
+        1989
+      ],
+      "printWidthCm": 15.5,
+      "printHeightCm": 17.718103448275862,
+      "pointsPerCssPixel": 0.7575346185175128,
+      "uiFont14Point": 10.60548465924518,
+      "label16Point": 12.120553896280205,
+      "minimumRecordedFontPoint": 10.60548465924518,
+      "placements": [
+        {
+          "stage": "face-passed",
+          "width": 1704,
+          "height": 1323,
+          "top": 102,
+          "resampling": false
+        },
+        {
+          "stage": "face-paused",
+          "width": 1458,
+          "height": 438,
+          "top": 1527,
+          "resampling": false
+        }
+      ]
+    }
+  ]
+}

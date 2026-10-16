@@ -2,13 +2,14 @@
 
 from pathlib import Path
 from html import escape
+import argparse
 import json
 import math
 import xml.etree.ElementTree as ET
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT / "docs/thesis/figures/advisor-20260930"
+OUT = ROOT / "docs/thesis/figures/advisor-20261016"
 FONT = Path("C:/Windows/Fonts/simsun.ttc")
 SCALE = 3
 
@@ -28,35 +29,12 @@ class Figure:
         self.items.append(node)
         return node
 
-    def line(self, points, label="", at=None, size=22, dashed=False, arrow=False, double=False):
+    def line(self, points, label="", at=None, size=24, dashed=False, arrow=False):
         """添加无箭头连接；基数标签使用独立文字节点避免压线。"""
-        paths = [self.parallel_line(points, offset) for offset in (-3, 3)] if double else [points]
-        for path in paths:
-            self.items.append(dict(id="e" + str(len(self.items)), kind="line", points=path, dashed=dashed, arrow=arrow))
+        self.items.append(dict(id="e" + str(len(self.items)), kind="line", points=points, dashed=dashed, arrow=arrow))
         if label:
             x, y = at or points[len(points) // 2]
             self.shape("text", label, x, y, max(46, len(label) * size * .65), 30, size)
-
-    def parallel_line(self, points, offset):
-        """平移折线并衔接转角；端点伸入节点，由节点填色裁去多余部分。"""
-        directions = []
-        for start, end in zip(points, points[1:]):
-            dx, dy = end[0] - start[0], end[1] - start[1]
-            length = math.hypot(dx, dy)
-            directions.append((dx / length, dy / length))
-        result = []
-        for index, (x, y) in enumerate(points):
-            before = directions[max(0, index - 1)]
-            after = directions[min(index, len(directions) - 1)]
-            divisor = 1 + before[0] * after[0] + before[1] * after[1]
-            px = x - offset * (before[1] + after[1]) / divisor
-            py = y + offset * (before[0] + after[0]) / divisor
-            if index == 0:
-                px, py = px - after[0] * 8, py - after[1] * 8
-            elif index == len(points) - 1:
-                px, py = px + before[0] * 8, py + before[1] * 8
-            result.append((px, py))
-        return result
 
     def center(self, node):
         """返回节点中心。"""
@@ -74,8 +52,8 @@ class Figure:
             rate = 1 / max(abs(dx) / (node["w"] / 2), abs(dy) / (node["h"] / 2))
         return cx + dx * rate, cy + dy * rate
 
-    def connect(self, left, right, left_card="", right_card="", total=False, card_at=None):
-        """连接节点；全参与使用双线，必要时指定基数位置以避开折线。"""
+    def connect(self, left, right, left_card="", right_card="", card_at=None):
+        """以单实线连接节点，基数可单独定位以避开折线。"""
         start = self.attach(left, self.center(right))
         end = self.attach(right, self.center(left))
         points = [start, end]
@@ -94,7 +72,7 @@ class Figure:
                     start=(lx+direction*left['w']/2,ly)
                     end=(rx,ry-vertical*right['h']/2)
                     points=[start,(rx,ly),end]
-        self.line(points, double=total)
+        self.line(points)
         segments=list(zip(points,points[1:]))
         orthogonal=[pair for pair in segments if pair[0][0]==pair[1][0] or pair[0][1]==pair[1][1]]
         segment=max(orthogonal or segments,key=lambda pair: abs(pair[1][0]-pair[0][0])+abs(pair[1][1]-pair[0][1]))
@@ -111,7 +89,7 @@ class Figure:
                 tx=x-width/2 if horizontal else x+5
                 tx=min(tx,self.width-width-6)
                 tx,ty=card_at if card_at is not None else (tx,y-30 if horizontal else y-14)
-                self.shape("text",label,tx,ty,width,28,20)
+                self.shape("text",label,tx,ty,width,32,24)
 
     def entity(self, label, x, y, key, attribute=None, width=172):
         """建立实体和关键属性，主键属性加下划线。"""
@@ -120,37 +98,37 @@ class Figure:
         node = self.shape("rect", label, x, y, width, 60)
         node['has_attributes']=True
         cx=x+width/2
-        primary = self.shape("ellipse", key, cx-157.5, y-86, 145, 48, 20, True)
+        multiline = len(key) > 5 and key.endswith("编号")
+        key = key[:-2] + "\n编号" if multiline else key
+        primary = self.shape("ellipse", key, max(8, cx-167.5) if multiline else cx-157.5,
+                             y-118 if multiline else y-110, 160 if multiline else 145,
+                             80 if multiline else 72, 24, True)
         self.connect(node, primary)
         if attribute:
-            attr = self.shape("ellipse", attribute, cx+12.5, y-86, 145, 48, 20)
+            attr = self.shape("ellipse", attribute, cx+12.5, y-110, 145, 72, 24)
             self.connect(node, attr)
         return node
 
-    def relation(self, left, right, label, x, y, left_card="1", right_card="N", width=84,
-                 left_total=False, right_total=False, left_card_at=None):
-        """绘制 Chen 联系；基数看对侧数量，单／双线表达本侧参与约束。"""
+    def relation(self, left, right, label, x, y, left_card="1", right_card="N", width=96,
+                 left_card_at=None):
+        """绘制普通菱形联系，单实线旁用1、N、M标明基数。"""
         lx,ly=self.center(left)
         rx,ry=self.center(right)
         x=(lx+rx)/2-width/2
         if abs(ly-ry)<70:
-            y=(ly+ry)/2-34
+            y=(ly+ry)/2-40
         else:
             upper,lower=(left,right) if ly<ry else (right,left)
-            y=(upper['y']+upper['h']+lower['y']-(100 if lower.get('has_attributes') else 0))/2-34
-        relation = self.shape("diamond", label, x, y, width, 68, 22)
-        self.connect(left, relation, left_card, total=left_total, card_at=left_card_at)
-        self.connect(relation, right, "", right_card, total=right_total)
+            y=(upper['y']+upper['h']+lower['y']-(110 if lower.get('has_attributes') else 0))/2-40
+        relation = self.shape("diamond", label, x, y, width, 80, 24)
+        self.connect(left, relation, left_card, card_at=left_card_at)
+        self.connect(relation, right, "", right_card)
         return relation
 
-    def chen_legend(self, y, size=20):
-        """统一说明 Chen 图的数量、参与约束和标识属性。"""
-        self.shape("text", "1／N／M表示关系基数；单线表示部分参与，双线表示全参与。",
-                   30, y, self.width - 60, 32, size)
-
-    def write(self):
+    def write(self, output_dir=None):
         """绘制矢量、栅格和可编辑 XML，并记录验证清单。"""
-        OUT.mkdir(parents=True, exist_ok=True)
+        output_dir = Path(output_dir) if output_dir is not None else OUT
+        output_dir.mkdir(parents=True, exist_ok=True)
         ordered = sorted(self.items, key=lambda item: 0 if item.get("background") else 1 if item["kind"] == "line" else 2)
         picture = Image.new("RGB", (self.width * SCALE, self.height * SCALE), "white")
         pen = ImageDraw.Draw(picture)
@@ -239,10 +217,10 @@ class Figure:
                     if item["underline"]:
                         pen.line([(tx, ty + item["size"]*SCALE*1.05), (tx+text_width, ty+item["size"]*SCALE*1.05)], fill="black", width=3)
         svg.append("</svg>")
-        (OUT / (self.name + ".svg")).write_text("\n".join(svg), encoding="utf-8")
+        (output_dir / (self.name + ".svg")).write_text("\n".join(svg), encoding="utf-8")
         ET.indent(mxfile)
-        ET.ElementTree(mxfile).write(OUT / (self.name + ".drawio"), encoding="utf-8", xml_declaration=True)
-        picture.save(OUT / (self.name + ".png"), dpi=(450,450))
+        ET.ElementTree(mxfile).write(output_dir / (self.name + ".drawio"), encoding="utf-8", xml_declaration=True)
+        picture.save(output_dir / (self.name + ".png"), dpi=(450,450))
         return {"name":self.name,"title":self.title,"width":self.width,"height":self.height,"shapes":len(self.items)}
 
 
@@ -288,52 +266,46 @@ def function_tree():
 
 def overview():
     """总览只展示主线实体与联系，属性在分域图展开。"""
-    fig = Figure("er-overview", "核心业务概念 ER 总览", 1000, 870)
+    fig = Figure("er-overview", "核心业务概念 ER 总览", 1000, 850)
     nodes = {}
     for key,label,x,y in [("org","企业",40,45),("user","学员",400,45),("vehicle","车辆",790,45),
                            ("plan","培训计划",40,275),("task","参训任务",400,275),
                            ("session","学习会话",40,520),("progress","课程进度",400,520),("exam","考试记录",790,520),
                            ("event","受理事件",40,760),("face","抽验任务",400,760),("attempt","抽验提交",790,760)]:
         nodes[key]=fig.shape("rect",label,x,y,165,58,25)
-    fig.relation(nodes["org"],nodes["user"],"归属",252,40,"1","N",right_total=True)
+    fig.relation(nodes["org"],nodes["user"],"归属",252,40,"1","N")
     fig.relation(nodes["user"],nodes["vehicle"],"绑定",640,40,"N","1")
-    fig.relation(nodes["plan"],nodes["task"],"分配",252,270,"1","N",right_total=True)
-    fig.relation(nodes["task"],nodes["user"],"参训",430,156,"N","1",left_total=True)
-    fig.relation(nodes["task"],nodes["session"],"产生",245,403,"1","N",right_total=True)
-    fig.relation(nodes["task"],nodes["progress"],"累计",430,406,"1","N",right_total=True)
-    fig.relation(nodes["task"],nodes["exam"],"考试",660,406,"1","1",right_total=True)
-    fig.relation(nodes["session"],nodes["event"],"记录",70,640,"1","N",right_total=True)
-    fig.relation(nodes["session"],nodes["face"],"触发",240,643,"1","N",right_total=True)
-    fig.relation(nodes["face"],nodes["attempt"],"提交",635,755,"1","N",right_total=True)
-    fig.chen_legend(831)
+    fig.relation(nodes["plan"],nodes["task"],"分配",252,270,"1","N")
+    fig.relation(nodes["task"],nodes["user"],"参训",430,156,"N","1")
+    fig.relation(nodes["task"],nodes["session"],"产生",245,403,"1","N",left_card_at=(378,379))
+    fig.relation(nodes["task"],nodes["progress"],"累计",430,406,"1","N")
+    fig.relation(nodes["task"],nodes["exam"],"考试",660,406,"1","1")
+    fig.relation(nodes["session"],nodes["event"],"记录",70,640,"1","N")
+    fig.relation(nodes["session"],nodes["face"],"触发",240,643,"1","N")
+    fig.relation(nodes["face"],nodes["attempt"],"提交",635,755,"1","N")
     return fig
 
 
 def admin_er():
     """管理域按身份、授权和组织关系建模，关联表在数据字典中映射。"""
-    fig=Figure("er-admin","管理域概念 ER 图",1000,1000)
+    fig=Figure("er-admin","管理域概念 ER 图",1000,620)
     org=fig.entity("组织／部门",60,130,"组织编号","组织性质")
     user=fig.entity("组织用户",425,130,"用户编号","姓名")
     vehicle=fig.entity("车辆",785,130,"车辆编号","车牌号码")
     area=fig.entity("行政区域",60,510,"区域编号","行政代码")
     role=fig.entity("角色",425,510,"角色编号","角色名称")
     permission=fig.entity("权限",785,510,"权限编号","权限编码")
-    fig.relation(org,user,"归属",270,125,"1","N",right_total=True)
+    fig.relation(org,user,"归属",270,125,"1","N")
     fig.relation(user,vehicle,"绑定",640,125,"N","1")
     fig.relation(org,area,"辖区",90,355,"N","1")
     fig.relation(user,role,"授予",455,355,"M","N")
     fig.relation(role,permission,"授权",640,505,"M","N")
-    fig.shape("text","M:N 联系通过用户角色、角色权限表实现。",75,740,850,45,24)
-    fig.shape("text","组织用户表保存用户的主部门归属；组织层级由父节点标识表达。",40,795,920,45,23)
-    fig.shape("text","行政区域仅建立辖区模型；跨企业监管查询尚未实现。",50,850,900,45,23)
-    fig.shape("text","下划线表示标识属性；连线表示逻辑关系。",100,905,800,45,23)
-    fig.chen_legend(955)
     return fig
 
 
 def training_er():
     """以计划、课程快照和考试展示培训域主要概念关系。"""
-    fig=Figure("er-training","培训与考试域概念 ER 图",1000,1270)
+    fig=Figure("er-training","培训与考试域概念 ER 图",1000,1200)
     course=fig.entity("课程",40,130,"课程编号","课程名称")
     ware=fig.entity("视频课件",405,130,"课件编号","视频时长")
     storage=fig.entity("存储对象",775,130,"对象编号","对象类型")
@@ -346,27 +318,25 @@ def training_er():
     record=fig.shape("rect","考试记录",90,1110,160,60)
     answer=fig.shape("rect","考试答案",420,1110,160,60)
     question=fig.shape("rect","题库题目",750,1110,160,60)
-    fig.relation(course,ware,"包含",258,125,"1","N",right_total=True)
-    fig.relation(ware,storage,"引用",622,125,"N","1",left_total=True)
-    fig.relation(plan,snap,"冻结",258,460,"1","N",right_total=True)
-    fig.relation(snap,wsnap,"冻结",622,460,"1","N",left_total=True,right_total=True)
-    fig.relation(course,snap,"来源",258,307,"1","N",right_total=True)
-    fig.relation(plan,task,"分配",70,660,"1","N",right_total=True)
+    fig.relation(course,ware,"包含",258,125,"1","N")
+    fig.relation(ware,storage,"引用",622,125,"N","1")
+    fig.relation(plan,snap,"冻结",258,460,"1","N")
+    fig.relation(snap,wsnap,"冻结",622,460,"1","N")
+    fig.relation(course,snap,"来源",258,307,"1","N")
+    fig.relation(plan,task,"分配",70,660,"1","N")
     fig.relation(plan,paper,"使用",257,660,"N","1")
-    fig.relation(paper,paperq,"固化",622,795,"1","N",right_total=True)
-    fig.relation(task,record,"参加",70,982,"1","1",right_total=True)
-    fig.relation(record,answer,"作答",258,1105,"1","N",right_total=True)
+    fig.relation(paper,paperq,"固化",622,795,"1","N")
+    fig.relation(task,record,"参加",70,982,"1","1")
+    fig.relation(record,answer,"作答",258,1105,"1","N")
     # 将基数放在竖直段旁，避免新增斜向连线穿过数字。
-    fig.relation(paperq,answer,"对应",622,982,"1","N",right_total=True,left_card_at=(735,913))
-    fig.relation(paperq,question,"来源",805,982,"N","1",left_total=True)
-    fig.shape("text","发布后课程规则与课件目录固定；答案按试卷题目快照判分。",40,1195,920,40,23)
-    fig.chen_legend(1236,18)
+    fig.relation(paperq,answer,"对应",622,982,"1","N",left_card_at=(735,913))
+    fig.relation(paperq,question,"来源",805,982,"N","1")
     return fig
 
 
 def learning_er():
     """区别会话、事件、进度及可零次提交的抽验任务。"""
-    fig=Figure("er-learning","学习监管域概念 ER 图",1000,1190)
+    fig=Figure("er-learning","学习监管域概念 ER 图",1000,980)
     session=fig.entity("学习会话",40,130,"会话编号","会话状态")
     event=fig.entity("学习事件",405,130,"事件编号","事件序号")
     task=fig.entity("参训任务",775,130,"任务编号","完成状态")
@@ -376,77 +346,80 @@ def learning_er():
     photo=fig.entity("照片对象",405,880,"对象编号","所有者")
     ware=fig.entity("课件进度",775,880,"课件进度编号","确认位置")
     fig.entity("发件记录",40,880,"发件编号","事件标识")
-    fig.relation(session,event,"受理",258,125,"1","N",right_total=True)
-    fig.relation(session,face,"触发",70,338,"1","N",right_total=True)
-    fig.relation(face,log,"提交",258,485,"1","N",right_total=True)
+    fig.relation(session,event,"受理",258,125,"1","N")
+    fig.relation(session,face,"触发",70,338,"1","N")
+    fig.relation(face,log,"提交",258,485,"1","N")
     fig.relation(log,photo,"引用",435,698,"N","1")
-    fig.relation(progress,ware,"汇总",805,698,"1","N",left_total=True,right_total=True)
-    fig.relation(task,progress,"累计",805,338,"1","N",right_total=True)
-    fig.shape("text","发件记录与对应业务状态在同一本地事务中保存，按事件标识投递。",40,1050,920,42,23)
-    fig.shape("text","会话签到、签退也可引用照片；历史无照片记录允许为空。",40,1100,920,42,23)
-    fig.chen_legend(1150)
+    fig.relation(progress,ware,"汇总",805,698,"1","N")
+    fig.relation(task,progress,"累计",805,338,"1","N")
     return fig
 
 
 def architecture():
-    """保留原架构职责，调整公共支撑注释与消息通路线条的间距。"""
-    fig=Figure('architecture','系统总体架构图',1200,900)
+    """以正文打印字号重排架构，公共支撑说明放入正文。"""
+    fig=Figure('architecture','系统总体架构图',1000,900)
     for label,x,y,w,h in [
-        ('Vue 管理端与学员端',400,20,400,66),('Gateway 统一入口',400,145,400,66),
-        ('Web API 页面接口与聚合',80,270,440,66),('Realtime 实时消息接入',780,270,360,66),
-        ('Admin 管理服务\n组织、人员、权限、车辆',20,440,330,96),
-        ('Training 培训服务\n课程、计划、考试',435,440,330,96),
-        ('Learning 学习服务\n会话、学时、抽验\n内嵌人脸适配器',850,440,330,130),
-        ('管理库',35,630,300,62),('培训库',450,630,300,62),('学习库与 Outbox',865,630,300,62),
-        ('RabbitMQ 学习结果事件',440,765,335,62)]:
+        ('Vue 管理端与学员端',310,20,380,66),('Gateway 统一入口',310,145,380,66),
+        ('Web API\n页面接口与聚合',65,285,370,80),('Realtime\n实时消息接入',665,285,305,80),
+        ('Admin 管理服务\n组织、人员\n权限、车辆',15,485,275,110),
+        ('Training 培训服务\n课程、计划、考试',365,485,275,110),
+        ('Learning 学习服务\n会话、学时、抽验\n内嵌人脸适配器',715,485,275,110),
+        ('管理库',25,700,255,62),('培训库',375,700,255,62),('学习库与 Outbox',725,700,255,62),
+        ('RabbitMQ\n学习结果事件',365,810,275,72)]:
         fig.shape('rect',label,x,y,w,h,24)
-    fig.shape('text','HTTP / WebSocket',660,95,300,35,23)
+    fig.shape('text','HTTP / WebSocket',530,98,285,35,24)
     for points in [
-        [(600,86),(600,145)],[(490,211),(490,240),(300,240),(300,270)],
-        [(710,211),(710,240),(960,240),(960,270)],
-        [(180,336),(180,395),(185,395),(185,440)],
-        [(330,336),(330,390),(600,390),(600,440)],
-        [(500,336),(500,360),(920,360),(920,440)],
-        [(960,336),(960,400),(1100,400),(1100,440)],
-        [(185,536),(185,630)],[(600,536),(600,630)],[(1015,570),(1015,630)],
-        [(1150,692),(1150,798),(775,798)],[(440,798),(385,798),(385,488),(435,488)]]:
+        [(500,86),(500,145)],[(400,211),(400,245),(250,245),(250,285)],
+        [(600,211),(600,245),(817,245),(817,285)],
+        [(145,365),(145,485)],[(270,365),(270,415),(502,415),(502,485)],
+        [(400,365),(400,390),(770,390),(770,485)],
+        [(817,365),(817,430),(895,430),(895,485)],
+        [(152,595),(152,700)],[(502,595),(502,700)],[(852,595),(852,700)],
+        [(920,762),(920,846),(640,846)],[(365,846),(325,846),(325,540),(365,540)]]:
         fig.line(points,arrow=True)
-    fig.shape('text','Dubbo',82,365,90,32,22)
-    fig.shape('text','Dubbo',380,350,90,32,22)
-    fig.shape('text','Dubbo',650,365,90,32,22)
-    fig.shape('text','Dubbo',987,354,95,32,22)
-    fig.shape('text','公共支撑：私有 OSS 媒体；Redis 认证授权缓存；Nacos 注册配置',10,850,1180,40,23)
+    fig.shape('text','Dubbo',45,405,90,36,24)
+    fig.shape('text','Dubbo',385,437,90,36,24)
+    fig.shape('text','Dubbo',650,437,90,36,24)
+    fig.shape('text','Dubbo',898,387,95,36,24)
     return fig
 
 
 def learning_flow():
-    """保留学习消息处理步骤，将重复请求与消息投递注释放在线旁。"""
-    fig=Figure('learning-flow','学习进度受理与结果传播流程',1100,740)
+    """放大流程及消息标签，异常处理长说明移入正文。"""
+    fig=Figure('learning-flow','学习进度受理与结果传播流程',1100,690)
     left=['学员发送进度消息','核验身份、任务与会话绑定','查询请求标识及检查序号','核验学习状态与计时条件','事务保存学时、事件及\n按需产生的 Outbox']
     for i,label in enumerate(left):
-        fig.shape('rect',label,35,20+i*130,430,65,24)
-        if i:fig.line([(250,85+(i-1)*130),(250,20+i*130)],arrow=True)
-    for label,y in [('重复请求返回历史确认结果',20),('向浏览器返回确认学时',280),('发送器发布学习结果事件',410),('培训服务去重并更新任务',540)]:
-        fig.shape('rect',label,675,y,390,65,24)
-    fig.line([(465,312.5),(575,312.5),(575,52.5),(675,52.5)],arrow=True)
-    fig.shape('text','已受理\n请求',477,145,90,62,23)
-    fig.line([(465,572.5),(600,572.5),(600,312.5),(675,312.5)],arrow=True)
-    fig.line([(600,442.5),(675,442.5)],arrow=True)
-    fig.line([(870,475),(870,540)],arrow=True)
-    fig.shape('text','RabbitMQ\n至少一次投递',895,477,180,60,20)
-    fig.shape('text','身份、状态或序号不符合要求时拒绝；超间隔不补记断线时长。',35,670,1030,42,23)
+        fig.shape('rect',label,35,20+i*130,430,78,27)
+        if i:fig.line([(250,98+(i-1)*130),(250,20+i*130)],arrow=True)
+    for label,y in [('重复请求返回历史确认结果',20),('向浏览器返回确认学时',280),('发送器发布学习结果事件',410),('培训服务去重并更新任务',580)]:
+        fig.shape('rect',label,675,y,390,78,27)
+    fig.line([(465,319),(575,319),(575,59),(675,59)],arrow=True)
+    fig.shape('text','已受理\n请求',477,145,90,76,27)
+    fig.line([(465,579),(600,579),(600,319),(675,319)],arrow=True)
+    fig.line([(600,449),(675,449)],arrow=True)
+    fig.line([(870,488),(870,580)],arrow=True)
+    fig.shape('text','RabbitMQ\n至少一次投递',895,495,180,76,27)
     return fig
 
 
 def main():
-    """生成八幅新增图，并修复两幅原图的注释压线。"""
+    """默认生成至本轮修订目录，也支持按图名及显式目录输出。"""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--only', nargs='+', help='仅生成指定图名，可指定多个')
+    parser.add_argument('--output-dir', type=Path, default=OUT, help='图源及清单的输出目录')
+    args = parser.parse_args()
     figures=[
         use_case("usecase-platform","平台管理员",["维护组织档案","启停组织及重置管理员密码","维护行政区域字典","查看管理工作台","维护本人资料及登记照"]),
         use_case("usecase-enterprise","企业管理员",["管理部门、人员及登记照","维护车辆台账及人员绑定","管理角色与功能授权","维护课程及视频课件","维护题库与试卷","编排并发布培训计划","查询培训统计与过程档案","维护本人资料及登记照"]),
         use_case("usecase-student","学员",["查看本人培训任务","签到及观看课程","暂停、恢复和补足学时","提交人脸核验及签退","学习完成后参加考试","查询本人档案与成绩","维护本人资料及登记照"]),
         function_tree(),overview(),admin_er(),training_er(),learning_er(),architecture(),learning_flow()]
-    manifest=[figure.write() for figure in figures]
-    (OUT/"manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    if args.only:
+        unknown = set(args.only) - {figure.name for figure in figures}
+        if unknown:
+            parser.error('未知图名：' + '、'.join(sorted(unknown)))
+        figures = [figure for figure in figures if figure.name in args.only]
+    manifest=[figure.write(args.output_dir) for figure in figures]
+    (args.output_dir/"manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(json.dumps(manifest,ensure_ascii=False))
 
 

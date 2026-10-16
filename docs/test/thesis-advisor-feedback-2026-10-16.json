@@ -1,0 +1,4820 @@
+{
+  "date": "2026-10-16",
+  "baseline_commit": "a63b40e1574e05e3260e935f06fb77729cfd6c58",
+  "original_sha256": "af989235fd176af3c21441436d37fb377bff81129c69c4612ebf2648f9fd254f",
+  "output_sha256": "e560cc4badcfda99cbc7d1eacaab61f47f18be331c77ac2962a1126c16cc4b91",
+  "pdf_sha256": "bcda39634804f17ad61c5c01d55a1be4b791f42f839e005c9bd3cd5d3a313074",
+  "pages": 66,
+  "checks": {
+    "original_docx_unchanged": true,
+    "package_valid": true,
+    "exactly_21_reference_entries": true,
+    "all_1_to_21_cited": true,
+    "all_citations_actual_superscript": true,
+    "protected_前置材料": true,
+    "protected_摘要": true,
+    "protected_Abstract": true,
+    "protected_致谢": true,
+    "protected_参考文献": true,
+    "native_math_preserved": true,
+    "styles_preserved": true,
+    "sections_preserved": true,
+    "drawing_count_19_including_cover": true,
+    "old_appendix_removed": true,
+    "new_appendix_present": true,
+    "double_line_explanation_removed": true,
+    "latest_rules_preserved": true,
+    "body_tables_preserved": true,
+    "preserved_word/footer1.xml": true,
+    "preserved_word/footer2.xml": true,
+    "preserved_word/header1.xml": true,
+    "preserved_word/header2.xml": true,
+    "preserved_word/header3.xml": true,
+    "er_33_relationships_preserved": true,
+    "only_four_supplemental_tables": true,
+    "ten_special_constraint_rows": true,
+    "fourteen_assets_exactly_embedded": true,
+    "toc_matches_actual_footers": true,
+    "toc_covers_headings": true,
+    "all_18_figures_and_captions_same_page": true,
+    "page_text_within_outer_bounds": true,
+    "all_pages_rendered": true,
+    "one_appendix_heading": true,
+    "body_header_lines_present": true,
+    "eight_captures_real_dpr_three": true,
+    "all_capture_retained_fonts_at_least_9pt": true,
+    "capture_raster_at_least_280dpi": true,
+    "six_diagram_fonts_at_least_10_5pt": true,
+    "capture_heights_within_18_5cm": true,
+    "capture_files_match_report": true,
+    "pdf_print_widths_match_15_5cm": true,
+    "only_document_xml_and_14_media_changed": true,
+    "all_66_pages_visually_reviewed": true
+  },
+  "references": {
+    "reference_count": 21,
+    "reference_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "citation_occurrences": 21,
+    "citations": [
+      {
+        "numbers": [
+          1
+        ],
+        "citation": "[1]",
+        "body_index": 107,
+        "paragraph_index": 100,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          2
+        ],
+        "citation": "[2]",
+        "body_index": 107,
+        "paragraph_index": 100,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          3
+        ],
+        "citation": "[3]",
+        "body_index": 116,
+        "paragraph_index": 109,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          4
+        ],
+        "citation": "[4]",
+        "body_index": 117,
+        "paragraph_index": 110,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          5
+        ],
+        "citation": "[5]",
+        "body_index": 118,
+        "paragraph_index": 111,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          6
+        ],
+        "citation": "[6]",
+        "body_index": 118,
+        "paragraph_index": 111,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          7
+        ],
+        "citation": "[7]",
+        "body_index": 119,
+        "paragraph_index": 112,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          8
+        ],
+        "citation": "[8]",
+        "body_index": 119,
+        "paragraph_index": 112,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          9
+        ],
+        "citation": "[9]",
+        "body_index": 120,
+        "paragraph_index": 113,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          10
+        ],
+        "citation": "[10]",
+        "body_index": 121,
+        "paragraph_index": 114,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          11
+        ],
+        "citation": "[11]",
+        "body_index": 137,
+        "paragraph_index": 130,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          12
+        ],
+        "citation": "[12]",
+        "body_index": 139,
+        "paragraph_index": 132,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          13
+        ],
+        "citation": "[13]",
+        "body_index": 153,
+        "paragraph_index": 145,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          14
+        ],
+        "citation": "[14]",
+        "body_index": 154,
+        "paragraph_index": 146,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          15
+        ],
+        "citation": "[15]",
+        "body_index": 155,
+        "paragraph_index": 147,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          16
+        ],
+        "citation": "[16]",
+        "body_index": 159,
+        "paragraph_index": 151,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          17
+        ],
+        "citation": "[17]",
+        "body_index": 159,
+        "paragraph_index": 151,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          18
+        ],
+        "citation": "[18]",
+        "body_index": 160,
+        "paragraph_index": 152,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          19
+        ],
+        "citation": "[19]",
+        "body_index": 160,
+        "paragraph_index": 152,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          20
+        ],
+        "citation": "[20]",
+        "body_index": 163,
+        "paragraph_index": 155,
+        "actual_superscript": true
+      },
+      {
+        "numbers": [
+          21
+        ],
+        "citation": "[21]",
+        "body_index": 423,
+        "paragraph_index": 392,
+        "actual_superscript": true
+      }
+    ],
+    "non_superscript": [],
+    "first_use_sequence": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "uncited_references": [],
+    "missing_reference_entries": [],
+    "checks": {
+      "exactly_21_reference_entries": true,
+      "all_1_to_21_cited": true,
+      "all_citations_actual_superscript": true
+    }
+  },
+  "toc": {
+    "mapping_rule": "输出PDF标题完全匹配，并读取该物理页底部10%区域的实际页脚编号；仅Word明确首页不同且编号重启的隐藏首页可由紧邻下一页的实际页脚核对，不使用固定物理页偏移。",
+    "entries": [
+      {
+        "title": "摘要",
+        "label": "I",
+        "actual_heading_pages": [
+          {
+            "physical_page": 6,
+            "footer_labels": []
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 6,
+            "footer_labels": [],
+            "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+            "next_physical_page": 7,
+            "anchor_footer_labels": [
+              "II"
+            ]
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "Abstract",
+        "label": "II",
+        "actual_heading_pages": [
+          {
+            "physical_page": 7,
+            "footer_labels": [
+              "II"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 7,
+            "footer_labels": [
+              "II"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "1 绪论",
+        "label": "1",
+        "actual_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": []
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": [],
+            "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+            "next_physical_page": 9,
+            "anchor_footer_labels": [
+              "2"
+            ]
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "1.1 研究背景与问题提出",
+        "label": "1",
+        "actual_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": []
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": [],
+            "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+            "next_physical_page": 9,
+            "anchor_footer_labels": [
+              "2"
+            ]
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "1.2 研究目标与意义",
+        "label": "1",
+        "actual_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": []
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 8,
+            "footer_labels": [],
+            "mapping_source": "Word首页不同且编号重启；紧邻下一物理页的实际页脚确认隐藏首页编号",
+            "next_physical_page": 9,
+            "anchor_footer_labels": [
+              "2"
+            ]
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "1.3 国内外相关研究进展",
+        "label": "2",
+        "actual_heading_pages": [
+          {
+            "physical_page": 9,
+            "footer_labels": [
+              "2"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 9,
+            "footer_labels": [
+              "2"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "1.4 研究方法与论文组织",
+        "label": "3",
+        "actual_heading_pages": [
+          {
+            "physical_page": 10,
+            "footer_labels": [
+              "3"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 10,
+            "footer_labels": [
+              "3"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2 相关理论与关键技术",
+        "label": "4",
+        "actual_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.1 Java与TypeScript编程语言",
+        "label": "4",
+        "actual_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.2 Spring Boot与Vue开发框架",
+        "label": "4",
+        "actual_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.3 Dubbo远程调用与Nacos服务治理",
+        "label": "4",
+        "actual_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 11,
+            "footer_labels": [
+              "4"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.4 MySQL数据库与持久化技术",
+        "label": "5",
+        "actual_heading_pages": [
+          {
+            "physical_page": 12,
+            "footer_labels": [
+              "5"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 12,
+            "footer_labels": [
+              "5"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.5 WebSocket通信与学习状态控制",
+        "label": "5",
+        "actual_heading_pages": [
+          {
+            "physical_page": 12,
+            "footer_labels": [
+              "5"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 12,
+            "footer_labels": [
+              "5"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.6 RabbitMQ与消息最终一致性",
+        "label": "6",
+        "actual_heading_pages": [
+          {
+            "physical_page": 13,
+            "footer_labels": [
+              "6"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 13,
+            "footer_labels": [
+              "6"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.7 OpenCV与人脸核验技术",
+        "label": "6",
+        "actual_heading_pages": [
+          {
+            "physical_page": 13,
+            "footer_labels": [
+              "6"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 13,
+            "footer_labels": [
+              "6"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "2.8 OSS对象存储与媒体访问",
+        "label": "7",
+        "actual_heading_pages": [
+          {
+            "physical_page": 14,
+            "footer_labels": [
+              "7"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 14,
+            "footer_labels": [
+              "7"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3 需求与可行性分析",
+        "label": "8",
+        "actual_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.1 用户角色与业务范围",
+        "label": "8",
+        "actual_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.1.1 参与者及其权限范围",
+        "label": "8",
+        "actual_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 15,
+            "footer_labels": [
+              "8"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.1.2 角色用例分析",
+        "label": "9",
+        "actual_heading_pages": [
+          {
+            "physical_page": 16,
+            "footer_labels": [
+              "9"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 16,
+            "footer_labels": [
+              "9"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.2 培训业务流程与功能需求",
+        "label": "11",
+        "actual_heading_pages": [
+          {
+            "physical_page": 18,
+            "footer_labels": [
+              "11"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 18,
+            "footer_labels": [
+              "11"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.2.1 课程与计划发布",
+        "label": "11",
+        "actual_heading_pages": [
+          {
+            "physical_page": 18,
+            "footer_labels": [
+              "11"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 18,
+            "footer_labels": [
+              "11"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.2.2 学习与异常恢复",
+        "label": "12",
+        "actual_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.2.3 抽验与考试",
+        "label": "12",
+        "actual_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.2.4 档案与统计",
+        "label": "12",
+        "actual_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 19,
+            "footer_labels": [
+              "12"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.3 非功能需求",
+        "label": "13",
+        "actual_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.4 方案可行性与选择",
+        "label": "13",
+        "actual_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.4.1 技术可行性",
+        "label": "13",
+        "actual_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 20,
+            "footer_labels": [
+              "13"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.4.2 经济可行性",
+        "label": "14",
+        "actual_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.4.3 操作可行性",
+        "label": "14",
+        "actual_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "3.4.4 方案比较与选择",
+        "label": "14",
+        "actual_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 21,
+            "footer_labels": [
+              "14"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4 系统设计",
+        "label": "16",
+        "actual_heading_pages": [
+          {
+            "physical_page": 23,
+            "footer_labels": [
+              "16"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 23,
+            "footer_labels": [
+              "16"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.1 总体架构",
+        "label": "16",
+        "actual_heading_pages": [
+          {
+            "physical_page": 23,
+            "footer_labels": [
+              "16"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 23,
+            "footer_labels": [
+              "16"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.2 系统功能结构",
+        "label": "17",
+        "actual_heading_pages": [
+          {
+            "physical_page": 24,
+            "footer_labels": [
+              "17"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 24,
+            "footer_labels": [
+              "17"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.3 数据库设计",
+        "label": "18",
+        "actual_heading_pages": [
+          {
+            "physical_page": 25,
+            "footer_labels": [
+              "18"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 25,
+            "footer_labels": [
+              "18"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.3.1 主要业务实体",
+        "label": "18",
+        "actual_heading_pages": [
+          {
+            "physical_page": 25,
+            "footer_labels": [
+              "18"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 25,
+            "footer_labels": [
+              "18"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.3.2 快照与历史解释",
+        "label": "22",
+        "actual_heading_pages": [
+          {
+            "physical_page": 29,
+            "footer_labels": [
+              "22"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 29,
+            "footer_labels": [
+              "22"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.3.3 唯一性与删除约束",
+        "label": "23",
+        "actual_heading_pages": [
+          {
+            "physical_page": 30,
+            "footer_labels": [
+              "23"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 30,
+            "footer_labels": [
+              "23"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.3.4 核心数据表结构",
+        "label": "23",
+        "actual_heading_pages": [
+          {
+            "physical_page": 30,
+            "footer_labels": [
+              "23"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 30,
+            "footer_labels": [
+              "23"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.4 学习消息处理流程",
+        "label": "35",
+        "actual_heading_pages": [
+          {
+            "physical_page": 42,
+            "footer_labels": [
+              "35"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 42,
+            "footer_labels": [
+              "35"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.5 抽验与考试状态设计",
+        "label": "36",
+        "actual_heading_pages": [
+          {
+            "physical_page": 43,
+            "footer_labels": [
+              "36"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 43,
+            "footer_labels": [
+              "36"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "4.6 安全与只读查询设计",
+        "label": "36",
+        "actual_heading_pages": [
+          {
+            "physical_page": 43,
+            "footer_labels": [
+              "36"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 43,
+            "footer_labels": [
+              "36"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5 系统实现",
+        "label": "38",
+        "actual_heading_pages": [
+          {
+            "physical_page": 45,
+            "footer_labels": [
+              "38"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 45,
+            "footer_labels": [
+              "38"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.1 工程组织与基础管理实现",
+        "label": "38",
+        "actual_heading_pages": [
+          {
+            "physical_page": 45,
+            "footer_labels": [
+              "38"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 45,
+            "footer_labels": [
+              "38"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.2 课程资源与计划实现",
+        "label": "39",
+        "actual_heading_pages": [
+          {
+            "physical_page": 46,
+            "footer_labels": [
+              "39"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 46,
+            "footer_labels": [
+              "39"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.3 有效学时与补学实现",
+        "label": "40",
+        "actual_heading_pages": [
+          {
+            "physical_page": 47,
+            "footer_labels": [
+              "40"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 47,
+            "footer_labels": [
+              "40"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.4 幂等与异步结果实现",
+        "label": "42",
+        "actual_heading_pages": [
+          {
+            "physical_page": 49,
+            "footer_labels": [
+              "42"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 49,
+            "footer_labels": [
+              "42"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.5 抽验与考试实现",
+        "label": "42",
+        "actual_heading_pages": [
+          {
+            "physical_page": 49,
+            "footer_labels": [
+              "42"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 49,
+            "footer_labels": [
+              "42"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "5.6 档案聚合与界面交互实现",
+        "label": "44",
+        "actual_heading_pages": [
+          {
+            "physical_page": 51,
+            "footer_labels": [
+              "44"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 51,
+            "footer_labels": [
+              "44"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6 测试与结果分析",
+        "label": "46",
+        "actual_heading_pages": [
+          {
+            "physical_page": 53,
+            "footer_labels": [
+              "46"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 53,
+            "footer_labels": [
+              "46"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.1 测试环境与验证范围",
+        "label": "46",
+        "actual_heading_pages": [
+          {
+            "physical_page": 53,
+            "footer_labels": [
+              "46"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 53,
+            "footer_labels": [
+              "46"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.2 自动化测试结果",
+        "label": "47",
+        "actual_heading_pages": [
+          {
+            "physical_page": 54,
+            "footer_labels": [
+              "47"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 54,
+            "footer_labels": [
+              "47"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.3 核心业务用例分析",
+        "label": "48",
+        "actual_heading_pages": [
+          {
+            "physical_page": 55,
+            "footer_labels": [
+              "48"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 55,
+            "footer_labels": [
+              "48"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.4 合成计时实验与结果解释",
+        "label": "48",
+        "actual_heading_pages": [
+          {
+            "physical_page": 55,
+            "footer_labels": [
+              "48"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 55,
+            "footer_labels": [
+              "48"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.5 数据库事务与消息路由结果",
+        "label": "49",
+        "actual_heading_pages": [
+          {
+            "physical_page": 56,
+            "footer_labels": [
+              "49"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 56,
+            "footer_labels": [
+              "49"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "6.6 WebSocket心跳性能分析",
+        "label": "50",
+        "actual_heading_pages": [
+          {
+            "physical_page": 57,
+            "footer_labels": [
+              "50"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 57,
+            "footer_labels": [
+              "50"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "7 总结与展望",
+        "label": "51",
+        "actual_heading_pages": [
+          {
+            "physical_page": 58,
+            "footer_labels": [
+              "51"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 58,
+            "footer_labels": [
+              "51"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "7.1 研究总结",
+        "label": "51",
+        "actual_heading_pages": [
+          {
+            "physical_page": 58,
+            "footer_labels": [
+              "51"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 58,
+            "footer_labels": [
+              "51"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "7.2 局限与后续工作",
+        "label": "51",
+        "actual_heading_pages": [
+          {
+            "physical_page": 58,
+            "footer_labels": [
+              "51"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 58,
+            "footer_labels": [
+              "51"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "致谢",
+        "label": "52",
+        "actual_heading_pages": [
+          {
+            "physical_page": 59,
+            "footer_labels": [
+              "52"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 59,
+            "footer_labels": [
+              "52"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "参考文献",
+        "label": "53",
+        "actual_heading_pages": [
+          {
+            "physical_page": 60,
+            "footer_labels": [
+              "53"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 60,
+            "footer_labels": [
+              "53"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "附录A 关键补充表与特殊约束",
+        "label": "55",
+        "actual_heading_pages": [
+          {
+            "physical_page": 62,
+            "footer_labels": [
+              "55"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 62,
+            "footer_labels": [
+              "55"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "A.1 计划课程规则快照",
+        "label": "55",
+        "actual_heading_pages": [
+          {
+            "physical_page": 62,
+            "footer_labels": [
+              "55"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 62,
+            "footer_labels": [
+              "55"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "A.2 计划课件清单快照",
+        "label": "55",
+        "actual_heading_pages": [
+          {
+            "physical_page": 62,
+            "footer_labels": [
+              "55"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 62,
+            "footer_labels": [
+              "55"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "A.3 关键学习事件",
+        "label": "56",
+        "actual_heading_pages": [
+          {
+            "physical_page": 63,
+            "footer_labels": [
+              "56"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 63,
+            "footer_labels": [
+              "56"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "A.4 可靠消息发件记录",
+        "label": "57",
+        "actual_heading_pages": [
+          {
+            "physical_page": 64,
+            "footer_labels": [
+              "57"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 64,
+            "footer_labels": [
+              "57"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      },
+      {
+        "title": "A.5 特殊约束汇总",
+        "label": "58",
+        "actual_heading_pages": [
+          {
+            "physical_page": 65,
+            "footer_labels": [
+              "58"
+            ]
+          }
+        ],
+        "matching_heading_pages": [
+          {
+            "physical_page": 65,
+            "footer_labels": [
+              "58"
+            ],
+            "mapping_source": "实际标题页的可见页脚"
+          }
+        ],
+        "matches_actual_page_footer": true
+      }
+    ],
+    "all_entries_match": true,
+    "pages_without_detected_footer": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8
+    ]
+  },
+  "figures": [
+    {
+      "caption": "图3-1 平台管理员用例图",
+      "physical_page": 16,
+      "same_page_image": true,
+      "image_bbox": [
+        77.88,
+        224.76,
+        517.2,
+        444.36
+      ]
+    },
+    {
+      "caption": "图3-2 企业管理员用例图",
+      "physical_page": 17,
+      "same_page_image": true,
+      "image_bbox": [
+        77.88,
+        146.88,
+        517.2,
+        471.96
+      ]
+    },
+    {
+      "caption": "图3-3 学员用例图",
+      "physical_page": 18,
+      "same_page_image": true,
+      "image_bbox": [
+        77.88,
+        170.15999999999997,
+        517.2,
+        460.08
+      ]
+    },
+    {
+      "caption": "图4-1 系统总体架构",
+      "physical_page": 23,
+      "same_page_image": true,
+      "image_bbox": [
+        77.88,
+        242.51999999999998,
+        517.2,
+        637.92
+      ]
+    },
+    {
+      "caption": "图4-2 系统功能结构图",
+      "physical_page": 24,
+      "same_page_image": true,
+      "image_bbox": [
+        77.88,
+        351.47999999999996,
+        517.2,
+        724.92
+      ]
+    },
+    {
+      "caption": "图4-3 核心业务概念ER总览",
+      "physical_page": 25,
+      "same_page_image": true,
+      "image_bbox": [
+        77.88,
+        338.04,
+        517.2,
+        711.48
+      ]
+    },
+    {
+      "caption": "图4-4 管理域概念ER图",
+      "physical_page": 26,
+      "same_page_image": true,
+      "image_bbox": [
+        77.88,
+        216.96000000000004,
+        517.2,
+        489.36
+      ]
+    },
+    {
+      "caption": "图4-5 培训与考试域概念ER图",
+      "physical_page": 27,
+      "same_page_image": true,
+      "image_bbox": [
+        77.4,
+        216.96000000000004,
+        516.72,
+        744.12
+      ]
+    },
+    {
+      "caption": "图4-6 学习监管域概念ER图",
+      "physical_page": 28,
+      "same_page_image": true,
+      "image_bbox": [
+        77.4,
+        240.2399999999999,
+        516.72,
+        670.8
+      ]
+    },
+    {
+      "caption": "图4-7 学习进度受理与结果同步流程",
+      "physical_page": 42,
+      "same_page_image": true,
+      "image_bbox": [
+        77.88,
+        244.08000000000004,
+        517.2,
+        519.72
+      ]
+    },
+    {
+      "caption": "图5-1 人员管理界面",
+      "physical_page": 45,
+      "same_page_image": true,
+      "image_bbox": [
+        77.76,
+        388.55999999999995,
+        517.08,
+        620.4
+      ]
+    },
+    {
+      "caption": "图5-2 课程资源管理界面",
+      "physical_page": 46,
+      "same_page_image": true,
+      "image_bbox": [
+        77.76,
+        180.0000000000001,
+        517.08,
+        540.84
+      ]
+    },
+    {
+      "caption": "图5-3 培训计划发布快照界面",
+      "physical_page": 47,
+      "same_page_image": true,
+      "image_bbox": [
+        77.76,
+        70.80000000000007,
+        517.08,
+        260.0400000000001
+      ]
+    },
+    {
+      "caption": "图5-4 视频学习与补学界面",
+      "physical_page": 48,
+      "same_page_image": true,
+      "image_bbox": [
+        77.76,
+        70.80000000000007,
+        517.08,
+        579.84
+      ]
+    },
+    {
+      "caption": "图5-5 学习人脸抽验界面",
+      "physical_page": 50,
+      "same_page_image": true,
+      "image_bbox": [
+        77.76,
+        70.80000000000007,
+        517.08,
+        594.72
+      ]
+    },
+    {
+      "caption": "图5-6 在线考试作答界面",
+      "physical_page": 51,
+      "same_page_image": true,
+      "image_bbox": [
+        77.76,
+        70.80000000000007,
+        517.08,
+        521.64
+      ]
+    },
+    {
+      "caption": "图5-7 学员学习档案界面",
+      "physical_page": 52,
+      "same_page_image": true,
+      "image_bbox": [
+        77.76,
+        70.80000000000007,
+        517.08,
+        207.0
+      ]
+    },
+    {
+      "caption": "图5-8 管理员学时监管与抽验记录界面",
+      "physical_page": 52,
+      "same_page_image": true,
+      "image_bbox": [
+        77.76,
+        379.8,
+        517.08,
+        564.48
+      ]
+    }
+  ],
+  "text_bounds": [],
+  "appendix_physical_pages": [
+    62
+  ],
+  "header_line_checks": [
+    {
+      "physical_page": 9,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 10,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 11,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 12,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 13,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 14,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 15,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 16,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 17,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 18,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 19,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 20,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 21,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 22,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 23,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 24,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 25,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 26,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 27,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 28,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 29,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 30,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 31,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 32,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 33,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 34,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 35,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 36,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 37,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 38,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 39,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 40,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 41,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 42,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 43,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 44,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 45,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 46,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 47,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 48,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 49,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 50,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 51,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 52,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 53,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 54,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 55,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 56,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 57,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 58,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 59,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 60,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 61,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 62,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 63,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 64,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 65,
+      "dark_pixels": 630
+    },
+    {
+      "physical_page": 66,
+      "dark_pixels": 630
+    }
+  ],
+  "content": {
+    "input": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\李剑_计算机科学与技术_基于Dubbo的道路运输企业在线培训系统设计与实现.docx",
+    "output": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\content.docx",
+    "input_sha256": "af989235fd176af3c21441436d37fb377bff81129c69c4612ebf2648f9fd254f",
+    "output_sha256": "00c1fe06014e614134c4231a4d9bdb9b55419167ea77bd341b05a933f71b65f5",
+    "modified_parts": [
+      "word/document.xml"
+    ],
+    "text_changes": [
+      {
+        "before": "全文共七章，依次介绍研究问题与目标、相关理论与技术、需求与可行性、系统设计、系统实现、测试结果与证据边界、总结与展望。附录补充实验记录和完整数据表结构。",
+        "after": "全文共七章，依次介绍研究问题与目标、相关理论与技术、需求与可行性、系统设计、系统实现、测试结果与证据边界、总结与展望。附录补充关键数据表与特殊约束。"
+      },
+      {
+        "before": "三个逻辑数据库由对应服务维护。概念设计以企业、用户、计划、任务和会话为主线：矩形、椭圆和菱形分别表示实体、属性及联系，下划线属性为实体标识，1、N、M表示基数，单线和双线分别表示部分参与和全参与。图4-3为总览，图4-4至图4-6展开各域实体和属性。",
+        "after": "三个逻辑数据库由对应服务维护。概念设计以企业、用户、计划、任务和会话为主线：矩形、椭圆和菱形分别表示实体、属性及联系，下划线属性为实体标识；实体与联系、实体与属性均使用单实线连接。1表示一个，N和M表示多个，通过两端标注表达1:1、1:N或M:N联系。必需归属、可选联系及最低数量由各域文字说明。图4-3为总览，图4-4至图4-6展开各域实体和属性。"
+      },
+      {
+        "before": "这些图展示业务概念及主要联系，不将每个上传会话、审计字段或关联表都作为独立概念实体展开。用户—角色、角色—权限联系分别映射到sys_user_role和sys_role_permission；课程、课件和私有图片上传过程由相应上传会话表管理。完整物理字段及索引见4.3.4节和附录B。所有迁移管理表未声明物理外键，图中连线表示逻辑关联，跨服务归属与引用有效性由接口校验。",
+        "after": "这些图展示业务概念及主要联系，不将每个上传会话、审计字段或关联表都作为独立概念实体展开。用户—角色、角色—权限联系分别映射到sys_user_role和sys_role_permission；课程、课件和私有图片上传过程由相应上传会话表管理。八张核心表见4.3.4节，四张补充关键表和特殊约束见附录A。图中连线表示业务逻辑关联。"
+      },
+      {
+        "before": "数据库物理设计采用与各服务一致的数据类型和约束。表4-2至表4-9给出主线中的八张核心表；其他资源、关联和过程表与核心表一起在附录B完整列示。主键用于唯一识别记录，复合唯一索引约束业务键，普通索引支持按企业、任务、会话和状态查询。字段默认值“无”表示未设置显式默认值的非空列，“隐式NULL”表示未显式声明默认值的可空普通列，生成列另列计算表达式。八张核心表均采用InnoDB引擎和utf8mb4字符集。",
+        "after": "数据库物理设计采用与各服务一致的数据类型和约束。表4-2至表4-9给出主线中的八张核心表；附录A补充发布快照、学习事件与可靠消息四张关键表，并汇总特殊唯一性约束，不再重复正文表结构。主键用于唯一识别记录，复合唯一索引约束业务键，普通索引支持按企业、任务、会话和状态查询。字段默认值“无”表示未设置显式默认值的非空列，“隐式NULL”表示未显式声明默认值的可空普通列，生成列另列计算表达式。八张核心表均采用InnoDB引擎和utf8mb4字符集。"
+      },
+      {
+        "before": "实验统计按版本及执行记录分别引用：后端采用2026年10月9日全量复验，前端与既有接口、心跳实验采用原归档结果，版本定位见附录A。实现说明依据固定源码快照核查，各项结论仅适用于记录覆盖的代码、输入和环境；不同批次不累加测试样本。",
+        "after": "实验统计按版本及执行记录分别引用：实现分析与2026年10月9日后端全量复验采用13d6463，其业务源码与96a8d84快照一致；前端采用7ca2f94对应的9月9日归档，既有接口与心跳实验沿用原记录。各项结论仅适用于相应代码、输入和环境，不同批次不累加测试样本。后端结果依据10月9日验收报告及逐项记录，前端与历史实验依据9月9日归档，相关原始材料保存在项目测试报告与证据索引中。"
+      },
+      {
+        "before": "管理域如图4-4所示。一个企业可有多名用户和多辆车辆，用户可以不绑定车辆，绑定时至多关联一辆本企业车辆，同车允许多人关联。用户与角色、角色与权限之间的多对多关系由关联表实现。组织与行政区域的关系用于保存辖区基础信息，部门层级与主部门归属通过组织及组织用户数据维护。管理域以组织用户为对象，平台账号不纳入组织归属联系。",
+        "after": "管理域如图4-4所示。每个组织用户必须归属一个企业，每辆车辆也必须归属一个企业；一个企业可有多名用户和多辆车辆，用户可以不绑定车辆，绑定时至多关联一辆本企业车辆，同车允许多人关联。用户与角色、角色与权限之间的多对多关系由关联表实现。组织与行政区域的关系用于保存辖区基础信息，跨企业监管查询尚未实现；组织父节点表达部门层级，组织用户表保存用户主部门归属。管理域以组织用户为对象，平台账号不纳入组织归属联系。"
+      },
+      {
+        "before": "培训与考试域如图4-5所示。基础课程包含视频课件，计划课程至少包含一份课件快照，发布后课程规则与课件目录固定，并为每名参训学员建立任务。需要考试的计划引用试卷，试卷题目保留题库内容的固定快照。一个任务最多形成一条考试记录，尚未开考或无需考试时可无记录；每条答案必须对应一条考试记录及一道试卷题目。视频和照片文件本身保存在对象存储中，业务表保存对象元数据与逻辑引用。",
+        "after": "培训与考试域如图4-5所示。基础课程包含视频课件，每份课件快照归属一门计划课程，计划课程至少包含一份课件快照，发布后课程规则与课件目录固定，并为每名参训学员建立任务。需要考试的计划引用试卷，试卷题目保留题库内容的固定快照。一个任务最多形成一条考试记录，尚未开考或无需考试时可无记录；每条答案必须对应一条考试记录及一道试卷题目，并依据该题的快照判分。视频和照片文件本身保存在对象存储中，业务表保存对象元数据与逻辑引用。"
+      },
+      {
+        "before": "学习监管域如图4-6所示。学习会话保存操作状态，受理事件保存请求和计时结果，课程进度及至少一条课件进度同步初始化并保存累计事实。抽验任务与提交日志分开建模，任务允许没有任何提交而因截止时间到达结束。提交日志以及会话签到、签退照片均可通过对象标识关联私有照片；历史照片字段允许为空。发件记录保存待投递事件，培训库消费日志按消费者和事件标识去重，两者依赖消息标识协调而非数据库外键。",
+        "after": "学习监管域如图4-6所示。学习会话保存操作状态，受理事件保存请求和计时结果，每条课程进度至少关联一条课件进度，每条课件进度只归属一条课程进度，两者同步初始化并保存累计事实。抽验任务与提交日志分开建模，任务允许没有任何提交而因截止时间到达结束。提交日志以及会话签到、签退照片均可通过对象标识关联私有照片；历史照片字段允许为空。发件记录与对应业务状态在同一本地事务中保存，再按事件标识投递；培训库消费日志按消费者和事件标识去重，两者依赖消息标识协调而非数据库外键。"
+      },
+      {
+        "before": "管理服务维护组织、用户、角色、权限、登记照元数据和车辆；培训服务维护课程、课件、计划、任务、题库与考试；学习服务维护会话、有效学时、事件、抽验和Outbox。人脸适配器作为库嵌入学习服务，为其提供图像检测与比较能力，不是额外的独立服务进程。对象存储保存私有媒体。图中的三库表示数据所有权的分离，不要求演示环境为每个数据库配置独立物理主机。",
+        "after": "管理服务维护组织、用户、角色、权限、登记照元数据和车辆；培训服务维护课程、课件、计划、任务、题库与考试；学习服务维护会话、有效学时、事件、抽验和Outbox。人脸适配器作为库嵌入学习服务，为其提供图像检测与比较能力，不是额外的独立服务进程。私有OSS保存媒体，Redis缓存认证与授权信息，Nacos提供服务注册和配置管理。图中的三库表示数据所有权的分离，不要求演示环境为每个数据库配置独立物理主机。"
+      },
+      {
+        "before": "学习消息处理按身份与会话绑定、幂等查询、序号检查、状态验证、学时计算、持久化和确认响应依次展开。幂等查询位于重复计算之前，已经成功处理的请求可以返回既有确认结果。序号检查防止旧事件改变当前进度，状态检查决定当前是否具备学习条件。只有通过相应条件后，才由计时组件计算允许增加的有效秒数。",
+        "after": "学习消息处理按身份与会话绑定、幂等查询、序号检查、状态验证、学时计算、持久化和确认响应依次展开。幂等查询位于重复计算之前，已经成功处理的请求可以返回既有确认结果。序号检查防止旧事件改变当前进度，状态检查决定当前是否具备学习条件；身份、状态或序号不符合要求时拒绝处理。只有通过相应条件后，才由计时组件计算允许增加的有效秒数。两次事件的服务端间隔超过“上报间隔＋学时容差”时暂停结算，不补记断线期间的学时。"
+      }
+    ],
+    "appendix": {
+      "removed": [
+        "附录A 项目证据与复现入口",
+        "附录B 数据表结构字典"
+      ],
+      "new": "附录A 关键补充表与特殊约束",
+      "preserved_core_tables": [
+        "sys_user",
+        "train_course",
+        "train_plan",
+        "train_plan_user",
+        "study_session",
+        "study_progress",
+        "face_check_task",
+        "exam_record"
+      ],
+      "supplemental_tables": [
+        "train_plan_course",
+        "train_plan_courseware_snapshot",
+        "study_event_log",
+        "mq_outbox"
+      ],
+      "ordinary_appendix_index_tables": 0,
+      "constraint_rows": 10
+    },
+    "checks": {
+      "native_math_unchanged": 1,
+      "references_unchanged": 21,
+      "core_field_tables_unchanged": 8,
+      "toc_entries": 67,
+      "toc_field_preserved": true,
+      "all_other_package_parts_unchanged": true,
+      "original_docx_unchanged": true
+    },
+    "toc": [
+      {
+        "heading": "摘要",
+        "bookmark": "_Toc15414",
+        "level": 1
+      },
+      {
+        "heading": "Abstract",
+        "bookmark": "_Toc17630",
+        "level": 1
+      },
+      {
+        "heading": "1 绪论",
+        "bookmark": "_Toc13437",
+        "level": 1
+      },
+      {
+        "heading": "1.1 研究背景与问题提出",
+        "bookmark": "_Toc12485",
+        "level": 2
+      },
+      {
+        "heading": "1.2 研究目标与意义",
+        "bookmark": "_Toc25266",
+        "level": 2
+      },
+      {
+        "heading": "1.3 国内外相关研究进展",
+        "bookmark": "_Toc17",
+        "level": 2
+      },
+      {
+        "heading": "1.4 研究方法与论文组织",
+        "bookmark": "_Toc22577",
+        "level": 2
+      },
+      {
+        "heading": "2 相关理论与关键技术",
+        "bookmark": "_Toc8716",
+        "level": 1
+      },
+      {
+        "heading": "2.1 Java与TypeScript编程语言",
+        "bookmark": "_Toc25847",
+        "level": 2
+      },
+      {
+        "heading": "2.2 Spring Boot与Vue开发框架",
+        "bookmark": "_Toc13618",
+        "level": 2
+      },
+      {
+        "heading": "2.3 Dubbo远程调用与Nacos服务治理",
+        "bookmark": "_Toc19005",
+        "level": 2
+      },
+      {
+        "heading": "2.4 MySQL数据库与持久化技术",
+        "bookmark": "_Toc18394",
+        "level": 2
+      },
+      {
+        "heading": "2.5 WebSocket通信与学习状态控制",
+        "bookmark": "_Toc28405",
+        "level": 2
+      },
+      {
+        "heading": "2.6 RabbitMQ与消息最终一致性",
+        "bookmark": "_Toc22339",
+        "level": 2
+      },
+      {
+        "heading": "2.7 OpenCV与人脸核验技术",
+        "bookmark": "_Toc3373",
+        "level": 2
+      },
+      {
+        "heading": "2.8 OSS对象存储与媒体访问",
+        "bookmark": "_Toc18398",
+        "level": 2
+      },
+      {
+        "heading": "3 需求与可行性分析",
+        "bookmark": "_Toc18350",
+        "level": 1
+      },
+      {
+        "heading": "3.1 用户角色与业务范围",
+        "bookmark": "_Toc10506",
+        "level": 2
+      },
+      {
+        "heading": "3.1.1 参与者及其权限范围",
+        "bookmark": "_Toc20802",
+        "level": 3
+      },
+      {
+        "heading": "3.1.2 角色用例分析",
+        "bookmark": "_Toc26531",
+        "level": 3
+      },
+      {
+        "heading": "3.2 培训业务流程与功能需求",
+        "bookmark": "_Toc23439",
+        "level": 2
+      },
+      {
+        "heading": "3.2.1 课程与计划发布",
+        "bookmark": "_Toc28178",
+        "level": 3
+      },
+      {
+        "heading": "3.2.2 学习与异常恢复",
+        "bookmark": "_Toc29032",
+        "level": 3
+      },
+      {
+        "heading": "3.2.3 抽验与考试",
+        "bookmark": "_Toc26040",
+        "level": 3
+      },
+      {
+        "heading": "3.2.4 档案与统计",
+        "bookmark": "_Toc16640",
+        "level": 3
+      },
+      {
+        "heading": "3.3 非功能需求",
+        "bookmark": "_Toc11507",
+        "level": 2
+      },
+      {
+        "heading": "3.4 方案可行性与选择",
+        "bookmark": "_Toc15464",
+        "level": 2
+      },
+      {
+        "heading": "3.4.1 技术可行性",
+        "bookmark": "_Toc28174",
+        "level": 3
+      },
+      {
+        "heading": "3.4.2 经济可行性",
+        "bookmark": "_Toc27450",
+        "level": 3
+      },
+      {
+        "heading": "3.4.3 操作可行性",
+        "bookmark": "_Toc26323",
+        "level": 3
+      },
+      {
+        "heading": "3.4.4 方案比较与选择",
+        "bookmark": "_Toc24159",
+        "level": 3
+      },
+      {
+        "heading": "4 系统设计",
+        "bookmark": "_Toc11681",
+        "level": 1
+      },
+      {
+        "heading": "4.1 总体架构",
+        "bookmark": "_Toc32600",
+        "level": 2
+      },
+      {
+        "heading": "4.2 系统功能结构",
+        "bookmark": "_Toc26669",
+        "level": 2
+      },
+      {
+        "heading": "4.3 数据库设计",
+        "bookmark": "_Toc32367",
+        "level": 2
+      },
+      {
+        "heading": "4.3.1 主要业务实体",
+        "bookmark": "_Toc18778",
+        "level": 3
+      },
+      {
+        "heading": "4.3.2 快照与历史解释",
+        "bookmark": "_Toc32689",
+        "level": 3
+      },
+      {
+        "heading": "4.3.3 唯一性与删除约束",
+        "bookmark": "_Toc5841",
+        "level": 3
+      },
+      {
+        "heading": "4.3.4 核心数据表结构",
+        "bookmark": "_Toc25780",
+        "level": 3
+      },
+      {
+        "heading": "4.4 学习消息处理流程",
+        "bookmark": "_Toc15412",
+        "level": 2
+      },
+      {
+        "heading": "4.5 抽验与考试状态设计",
+        "bookmark": "_Toc16742",
+        "level": 2
+      },
+      {
+        "heading": "4.6 安全与只读查询设计",
+        "bookmark": "_Toc24876",
+        "level": 2
+      },
+      {
+        "heading": "5 系统实现",
+        "bookmark": "_Toc15482",
+        "level": 1
+      },
+      {
+        "heading": "5.1 工程组织与基础管理实现",
+        "bookmark": "_Toc24735",
+        "level": 2
+      },
+      {
+        "heading": "5.2 课程资源与计划实现",
+        "bookmark": "_Toc24631",
+        "level": 2
+      },
+      {
+        "heading": "5.3 有效学时与补学实现",
+        "bookmark": "_Toc13002",
+        "level": 2
+      },
+      {
+        "heading": "5.4 幂等与异步结果实现",
+        "bookmark": "_Toc18093",
+        "level": 2
+      },
+      {
+        "heading": "5.5 抽验与考试实现",
+        "bookmark": "_Toc10530",
+        "level": 2
+      },
+      {
+        "heading": "5.6 档案聚合与界面交互实现",
+        "bookmark": "_Toc9371",
+        "level": 2
+      },
+      {
+        "heading": "6 测试与结果分析",
+        "bookmark": "_Toc4633",
+        "level": 1
+      },
+      {
+        "heading": "6.1 测试环境与验证范围",
+        "bookmark": "_Toc4240",
+        "level": 2
+      },
+      {
+        "heading": "6.2 自动化测试结果",
+        "bookmark": "_Toc19523",
+        "level": 2
+      },
+      {
+        "heading": "6.3 核心业务用例分析",
+        "bookmark": "_Toc4111",
+        "level": 2
+      },
+      {
+        "heading": "6.4 合成计时实验与结果解释",
+        "bookmark": "_Toc19312",
+        "level": 2
+      },
+      {
+        "heading": "6.5 数据库事务与消息路由结果",
+        "bookmark": "_Toc690",
+        "level": 2
+      },
+      {
+        "heading": "6.6 WebSocket心跳性能分析",
+        "bookmark": "_Toc26539",
+        "level": 2
+      },
+      {
+        "heading": "7 总结与展望",
+        "bookmark": "_Toc942",
+        "level": 1
+      },
+      {
+        "heading": "7.1 研究总结",
+        "bookmark": "_Toc19791",
+        "level": 2
+      },
+      {
+        "heading": "7.2 局限与后续工作",
+        "bookmark": "_Toc23583",
+        "level": 2
+      },
+      {
+        "heading": "致谢",
+        "bookmark": "_Toc24198",
+        "level": 1
+      },
+      {
+        "heading": "参考文献",
+        "bookmark": "_Toc13570",
+        "level": 1
+      },
+      {
+        "heading": "附录A 关键补充表与特殊约束",
+        "bookmark": "_TocAdvisor20261016_61",
+        "level": 1
+      },
+      {
+        "heading": "A.1 计划课程规则快照",
+        "bookmark": "_TocAdvisor20261016_62",
+        "level": 2
+      },
+      {
+        "heading": "A.2 计划课件清单快照",
+        "bookmark": "_TocAdvisor20261016_63",
+        "level": 2
+      },
+      {
+        "heading": "A.3 关键学习事件",
+        "bookmark": "_TocAdvisor20261016_64",
+        "level": 2
+      },
+      {
+        "heading": "A.4 可靠消息发件记录",
+        "bookmark": "_TocAdvisor20261016_65",
+        "level": 2
+      },
+      {
+        "heading": "A.5 特殊约束汇总",
+        "bookmark": "_TocAdvisor20261016_66",
+        "level": 2
+      }
+    ],
+    "constraints": [
+      {
+        "table": "train_org",
+        "column": "enterprise_code_key",
+        "expression": "CASE WHEN org_type = 'ENTERPRISE' THEN org_code ELSE NULL END",
+        "storage": "STORED",
+        "sources": [
+          "backend/train-admin-service/src/main/resources/db/migration/V1__admin_schema.sql",
+          "backend/train-admin-service/src/main/resources/db/migration/V3__admin_soft_delete.sql",
+          "backend/train-admin-service/src/main/resources/db/migration/V5__organization_nature_and_area.sql"
+        ]
+      },
+      {
+        "table": "train_org",
+        "index": "uk_org_enterprise_global_code",
+        "columns": [
+          "enterprise_code_key"
+        ],
+        "sources": [
+          "backend/train-admin-service/src/main/resources/db/migration/V1__admin_schema.sql",
+          "backend/train-admin-service/src/main/resources/db/migration/V3__admin_soft_delete.sql",
+          "backend/train-admin-service/src/main/resources/db/migration/V5__organization_nature_and_area.sql"
+        ]
+      },
+      {
+        "table": "train_org",
+        "index": "uk_org_enterprise_code",
+        "columns": [
+          "enterprise_id",
+          "org_code"
+        ],
+        "sources": [
+          "backend/train-admin-service/src/main/resources/db/migration/V1__admin_schema.sql",
+          "backend/train-admin-service/src/main/resources/db/migration/V3__admin_soft_delete.sql",
+          "backend/train-admin-service/src/main/resources/db/migration/V5__organization_nature_and_area.sql"
+        ]
+      },
+      {
+        "table": "sys_user",
+        "column": "platform_admin_key",
+        "expression": "NULLIF(platform_admin, 0)",
+        "storage": "STORED",
+        "sources": [
+          "backend/train-admin-service/src/main/resources/db/migration/V1__admin_schema.sql",
+          "backend/train-admin-service/src/main/resources/db/migration/V9__face_reference_metadata.sql",
+          "backend/train-admin-service/src/main/resources/db/migration/V14__user_vehicle_binding.sql"
+        ]
+      },
+      {
+        "table": "sys_user",
+        "index": "uk_user_single_platform_admin",
+        "columns": [
+          "platform_admin_key"
+        ],
+        "sources": [
+          "backend/train-admin-service/src/main/resources/db/migration/V1__admin_schema.sql",
+          "backend/train-admin-service/src/main/resources/db/migration/V9__face_reference_metadata.sql",
+          "backend/train-admin-service/src/main/resources/db/migration/V14__user_vehicle_binding.sql"
+        ]
+      },
+      {
+        "table": "study_session",
+        "column": "active_user_id",
+        "expression": "CASE WHEN status IN ('CREATED', 'SIGNED_IN', 'STUDYING', 'PAUSED', 'FACE_PENDING') THEN user_id ELSE NULL END",
+        "storage": "STORED",
+        "sources": [
+          "backend/train-learning-service/src/main/resources/db/migration/V1__learning_schema.sql",
+          "backend/train-learning-service/src/main/resources/db/migration/V3__face_check_schema.sql",
+          "backend/train-learning-service/src/main/resources/db/migration/V4__attendance_face_verification.sql",
+          "backend/train-learning-service/src/main/resources/db/migration/V5__learning_record_photos.sql"
+        ]
+      },
+      {
+        "table": "study_session",
+        "index": "uk_study_session_active_user",
+        "columns": [
+          "enterprise_id",
+          "active_user_id"
+        ],
+        "sources": [
+          "backend/train-learning-service/src/main/resources/db/migration/V1__learning_schema.sql",
+          "backend/train-learning-service/src/main/resources/db/migration/V3__face_check_schema.sql",
+          "backend/train-learning-service/src/main/resources/db/migration/V4__attendance_face_verification.sql",
+          "backend/train-learning-service/src/main/resources/db/migration/V5__learning_record_photos.sql"
+        ]
+      },
+      {
+        "table": "face_check_task",
+        "column": "pending_session_id",
+        "expression": "CASE WHEN status = 'PENDING' THEN session_id ELSE NULL END",
+        "storage": "STORED",
+        "sources": [
+          "backend/train-learning-service/src/main/resources/db/migration/V3__face_check_schema.sql"
+        ]
+      },
+      {
+        "table": "face_check_task",
+        "index": "uk_face_check_pending_session",
+        "columns": [
+          "pending_session_id"
+        ],
+        "sources": [
+          "backend/train-learning-service/src/main/resources/db/migration/V3__face_check_schema.sql"
+        ]
+      },
+      {
+        "table": "study_event_log",
+        "index": "uk_study_event_request",
+        "columns": [
+          "session_id",
+          "request_id"
+        ],
+        "sources": [
+          "backend/train-learning-service/src/main/resources/db/migration/V1__learning_schema.sql"
+        ]
+      },
+      {
+        "table": "study_event_log",
+        "index": "uk_study_event_sequence",
+        "columns": [
+          "session_id",
+          "sequence_no"
+        ],
+        "sources": [
+          "backend/train-learning-service/src/main/resources/db/migration/V1__learning_schema.sql"
+        ]
+      },
+      {
+        "table": "train_plan_course",
+        "index": "uk_plan_course",
+        "columns": [
+          "enterprise_id",
+          "plan_id",
+          "course_id"
+        ],
+        "sources": [
+          "backend/train-training-service/src/main/resources/db/migration/V2__training_plan_schema.sql"
+        ]
+      },
+      {
+        "table": "train_plan_courseware_snapshot",
+        "index": "uk_plan_courseware",
+        "columns": [
+          "enterprise_id",
+          "plan_id",
+          "source_courseware_id"
+        ],
+        "sources": [
+          "backend/train-training-service/src/main/resources/db/migration/V2__training_plan_schema.sql"
+        ]
+      },
+      {
+        "table": "exam_paper_question",
+        "index": "uk_exam_paper_question",
+        "columns": [
+          "enterprise_id",
+          "paper_id",
+          "source_question_id"
+        ],
+        "sources": [
+          "backend/train-training-service/src/main/resources/db/migration/V5__exam_schema.sql"
+        ]
+      },
+      {
+        "table": "exam_record",
+        "index": "uk_exam_record_task",
+        "columns": [
+          "enterprise_id",
+          "task_id"
+        ],
+        "sources": [
+          "backend/train-training-service/src/main/resources/db/migration/V5__exam_schema.sql"
+        ]
+      },
+      {
+        "table": "exam_answer",
+        "index": "uk_exam_answer_question",
+        "columns": [
+          "enterprise_id",
+          "record_id",
+          "paper_question_id"
+        ],
+        "sources": [
+          "backend/train-training-service/src/main/resources/db/migration/V5__exam_schema.sql"
+        ]
+      },
+      {
+        "table": "mq_outbox",
+        "index": "uk_outbox_event",
+        "columns": [
+          "event_id"
+        ],
+        "sources": [
+          "backend/train-learning-service/src/main/resources/db/migration/V2__learning_outbox.sql"
+        ]
+      },
+      {
+        "table": "mq_outbox",
+        "index": "uk_outbox_business",
+        "columns": [
+          "business_key"
+        ],
+        "sources": [
+          "backend/train-learning-service/src/main/resources/db/migration/V2__learning_outbox.sql"
+        ]
+      },
+      {
+        "table": "mq_consume_log",
+        "index": "uk_consume_event",
+        "columns": [
+          "consumer_name",
+          "event_id"
+        ],
+        "sources": [
+          "backend/train-training-service/src/main/resources/db/migration/V3__learning_task_projection.sql"
+        ]
+      }
+    ],
+    "constraint_source_sha256": {
+      "backend/train-admin-service/src/main/resources/db/migration/V14__user_vehicle_binding.sql": "66d880ff06256f98e4e6ec6d0084bf14622dc56bb2a3f13eca4a65e98a0f483a",
+      "backend/train-admin-service/src/main/resources/db/migration/V1__admin_schema.sql": "3f78b411e2a25628f697931cbef69e55c2387178f875869b43da711ae879f82b",
+      "backend/train-admin-service/src/main/resources/db/migration/V3__admin_soft_delete.sql": "4ab7056a8ab42e7a47a7ad4abe330991c1a2f998defe0296c4b98bf4ff125e34",
+      "backend/train-admin-service/src/main/resources/db/migration/V5__organization_nature_and_area.sql": "33bb72d3d8d73e775d6a1c35aaa438d37cf2b007d0696ba7b6605c5228cb6970",
+      "backend/train-admin-service/src/main/resources/db/migration/V9__face_reference_metadata.sql": "671b0220ded1f0c35d7300db774cb101b5240eee9ed145c80cd885ee31a7b62a",
+      "backend/train-learning-service/src/main/resources/db/migration/V1__learning_schema.sql": "0b5c5de9af6e253cc36505e5a9a9770c5c9bb602b2af1bafe6ae21eb78f10c92",
+      "backend/train-learning-service/src/main/resources/db/migration/V2__learning_outbox.sql": "1784dee6ced085a2b62be46bbf583cd9bac73a9bc3bddf12127d6ae8421e305f",
+      "backend/train-learning-service/src/main/resources/db/migration/V3__face_check_schema.sql": "9d689f76d9aa28494b2bd1c895c39c0231f65c556662ded94e2728a9690498ea",
+      "backend/train-learning-service/src/main/resources/db/migration/V4__attendance_face_verification.sql": "42cc735ec4024e2e25aa3bff22a7533fc5c65c092606c1053704318c90d934e5",
+      "backend/train-learning-service/src/main/resources/db/migration/V5__learning_record_photos.sql": "aff0750bab06111ad0ff2328e580faec706f6a0e97549307ed4b1c24dc55c4d8",
+      "backend/train-training-service/src/main/resources/db/migration/V2__training_plan_schema.sql": "5503760dfdebbb1ead43c70693136dd5ff440b51ba59a89baba312c9dc6cd107",
+      "backend/train-training-service/src/main/resources/db/migration/V3__learning_task_projection.sql": "f4530bd4acde5a2e0b705e513f459029770246cbb055fac4a1a8fad8fe5e882e",
+      "backend/train-training-service/src/main/resources/db/migration/V5__exam_schema.sql": "92bb884da4b5361d180fc18600ff09743cc57864da5639550894727b4fbac26d"
+    },
+    "dictionary_sha256": "5a08aeaecd239370cb13706b9810cf09009dd8ff53b457ed4f4415a49b64159a",
+    "visual_validation": "由合并图像后的最终候选统一渲染核对，本内容候选尚未作版式交付"
+  },
+  "diagrams": {
+    "date": "2026-10-16",
+    "generator": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\tools\\build_advisor_figures.py",
+    "output_dir": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016",
+    "print_width_cm": 15.5,
+    "maximum_height_cm": 20.5,
+    "minimum_target_pt": 10.5,
+    "hard_minimum_pt": 9,
+    "point_formula": "名义字号 × 15.5 ÷ 画布宽 × 72 ÷ 2.54",
+    "view_image_checked": [
+      "er-overview.png",
+      "er-admin.png",
+      "er-training.png",
+      "er-learning.png",
+      "architecture.png",
+      "learning-flow.png"
+    ],
+    "figures": [
+      {
+        "name": "er-overview",
+        "canvas": [
+          1000,
+          850
+        ],
+        "print_size_cm": [
+          15.5,
+          13.175
+        ],
+        "nominal_sizes": [
+          24,
+          25
+        ],
+        "min_print_pt": 10.5449,
+        "entities": 11,
+        "attributes": 0,
+        "relations": 10,
+        "node_box_overlaps": [],
+        "line_glyph_intersections": [],
+        "line_node_intersections": [],
+        "glyph_corners_outside_shapes": [],
+        "out_of_canvas": [],
+        "files": {
+          "drawio": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-overview.drawio",
+            "sha256": "ee4e0d402245d293418d0156327d4d18306729cea8a6b94bc23b678a5108359c"
+          },
+          "svg": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-overview.svg",
+            "sha256": "ec69033ce30841640c2605531e40e60355094acf3eb8ab195a7defe86b60bba0"
+          },
+          "png": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-overview.png",
+            "sha256": "a2555155576cd319e1b617eac2e00135429eb08c476b021742b960874cf9f44a"
+          }
+        },
+        "core_nodes_labels_and_identifiers_equal_baseline": true,
+        "all_66_cardinal_labels_in_original_order": true,
+        "expected_single_edge_count": 20,
+        "actual_edge_count": 20,
+        "single_edges_without_arrows": true,
+        "no_participation_legend": true
+      },
+      {
+        "name": "er-admin",
+        "canvas": [
+          1000,
+          620
+        ],
+        "print_size_cm": [
+          15.5,
+          9.61
+        ],
+        "nominal_sizes": [
+          24
+        ],
+        "min_print_pt": 10.5449,
+        "entities": 6,
+        "attributes": 12,
+        "relations": 5,
+        "node_box_overlaps": [],
+        "line_glyph_intersections": [],
+        "line_node_intersections": [],
+        "glyph_corners_outside_shapes": [],
+        "out_of_canvas": [],
+        "files": {
+          "drawio": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-admin.drawio",
+            "sha256": "14bbda08d8bf85224fc796d58b0805c23c98f4fa626ff0e8428b98b4190e54b1"
+          },
+          "svg": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-admin.svg",
+            "sha256": "c99e4032e0aa3e610a8afbbd40103b705e58decb30a0881bbe582cacc354e04e"
+          },
+          "png": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-admin.png",
+            "sha256": "283c65e1befda1a1777a2fb3d47fe285c15d4aef547ca400fa2fc809dce5bebd"
+          }
+        },
+        "core_nodes_labels_and_identifiers_equal_baseline": true,
+        "all_66_cardinal_labels_in_original_order": true,
+        "expected_single_edge_count": 22,
+        "actual_edge_count": 22,
+        "single_edges_without_arrows": true,
+        "no_participation_legend": true
+      },
+      {
+        "name": "er-training",
+        "canvas": [
+          1000,
+          1200
+        ],
+        "print_size_cm": [
+          15.5,
+          18.6
+        ],
+        "nominal_sizes": [
+          24
+        ],
+        "min_print_pt": 10.5449,
+        "entities": 12,
+        "attributes": 18,
+        "relations": 12,
+        "node_box_overlaps": [],
+        "line_glyph_intersections": [],
+        "line_node_intersections": [],
+        "glyph_corners_outside_shapes": [],
+        "out_of_canvas": [],
+        "files": {
+          "drawio": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-training.drawio",
+            "sha256": "6259e7a51ee3916affde1f7361202f31036bab3992d2a0fc5542615cc01425a4"
+          },
+          "svg": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-training.svg",
+            "sha256": "d116649f2dea274cbaa0fc9738c97e5e067d7b62120022d748852b160400d34b"
+          },
+          "png": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-training.png",
+            "sha256": "b017d1aabef935e960c87691b45b1bbf0eadd4430d622d0be8697da37b6f9778"
+          }
+        },
+        "core_nodes_labels_and_identifiers_equal_baseline": true,
+        "all_66_cardinal_labels_in_original_order": true,
+        "expected_single_edge_count": 42,
+        "actual_edge_count": 42,
+        "single_edges_without_arrows": true,
+        "no_participation_legend": true
+      },
+      {
+        "name": "er-learning",
+        "canvas": [
+          1000,
+          980
+        ],
+        "print_size_cm": [
+          15.5,
+          15.19
+        ],
+        "nominal_sizes": [
+          24
+        ],
+        "min_print_pt": 10.5449,
+        "entities": 9,
+        "attributes": 18,
+        "relations": 6,
+        "node_box_overlaps": [],
+        "line_glyph_intersections": [],
+        "line_node_intersections": [],
+        "glyph_corners_outside_shapes": [],
+        "out_of_canvas": [],
+        "files": {
+          "drawio": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-learning.drawio",
+            "sha256": "c77418dc222f5c9682ee08601aea1c9ca709f67b679ed787d8e7d3ce615d8b4e"
+          },
+          "svg": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-learning.svg",
+            "sha256": "d3ceefe6a976b2cc78d732afb6cb815f3fefcdeee5d64a4b24ad5c805c72bdcf"
+          },
+          "png": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\er-learning.png",
+            "sha256": "657a5929b0e377c1e590d5689a8cf13d29db5571f40c761b11ca66975b8cced4"
+          }
+        },
+        "core_nodes_labels_and_identifiers_equal_baseline": true,
+        "all_66_cardinal_labels_in_original_order": true,
+        "expected_single_edge_count": 30,
+        "actual_edge_count": 30,
+        "single_edges_without_arrows": true,
+        "no_participation_legend": true
+      },
+      {
+        "name": "architecture",
+        "canvas": [
+          1000,
+          900
+        ],
+        "print_size_cm": [
+          15.5,
+          13.95
+        ],
+        "nominal_sizes": [
+          24
+        ],
+        "min_print_pt": 10.5449,
+        "entities": 11,
+        "attributes": 0,
+        "relations": 0,
+        "node_box_overlaps": [],
+        "line_glyph_intersections": [],
+        "line_node_intersections": [],
+        "glyph_corners_outside_shapes": [],
+        "out_of_canvas": [],
+        "files": {
+          "drawio": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\architecture.drawio",
+            "sha256": "f52c968c0bf4ffe354b9e07b911d8ebfd83e3627d32e852945a5c448a8b511a3"
+          },
+          "svg": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\architecture.svg",
+            "sha256": "f9b60b50c9a72c273a10e0732d174e040da59abcecc3a7f028fa4ad42b67f0be"
+          },
+          "png": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\architecture.png",
+            "sha256": "2f14702caa9df819fed4217e2fdfddf8b77ac06ecdd3b2b6d6fcb58030d1fe21"
+          }
+        }
+      },
+      {
+        "name": "learning-flow",
+        "canvas": [
+          1100,
+          690
+        ],
+        "print_size_cm": [
+          15.5,
+          9.7227
+        ],
+        "nominal_sizes": [
+          27
+        ],
+        "min_print_pt": 10.7845,
+        "entities": 9,
+        "attributes": 0,
+        "relations": 0,
+        "node_box_overlaps": [],
+        "line_glyph_intersections": [],
+        "line_node_intersections": [],
+        "glyph_corners_outside_shapes": [],
+        "out_of_canvas": [],
+        "files": {
+          "drawio": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\learning-flow.drawio",
+            "sha256": "39771209c5325e761ba220c7c582fc969bb4b4a9b0bcfbdad7f539405047a020"
+          },
+          "svg": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\learning-flow.svg",
+            "sha256": "19abe1955112e5834dac007b6e236a0bd66d99834e5126af57a52e23a03aaa26"
+          },
+          "png": {
+            "path": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\learning-flow.png",
+            "sha256": "59db1d6f7c0780e67776d9687bd75c1f7881932e0b034c9405fe650493073714"
+          }
+        }
+      }
+    ],
+    "total_er_relations": 33,
+    "old_assets_git_diff": [],
+    "moved_to_body": {
+      "4.3.1管理域": [
+        "M:N联系通过用户角色、角色权限表实现。",
+        "组织用户表保存用户的主部门归属；组织层级由父节点标识表达。",
+        "行政区域仅建立辖区模型；跨企业监管查询尚未实现。"
+      ],
+      "4.3.1培训域": [
+        "发布后课程规则与课件目录固定；答案按试卷题目快照判分。"
+      ],
+      "4.3.1学习域": [
+        "发件记录与对应业务状态在同一本地事务中保存，按事件标识投递。",
+        "会话签到、签退也可引用照片；历史无照片记录允许为空。"
+      ],
+      "4.1架构": [
+        "公共支撑：私有OSS媒体；Redis认证授权缓存；Nacos注册配置。"
+      ],
+      "4.4流程": [
+        "身份、状态或序号不符合要求时拒绝；超间隔不补记断线时长。"
+      ]
+    },
+    "verification_limits": "图元几何、字体和PNG视觉检查；嵌入Word后的分页及打印渲染由主任务继续验证。未编译业务工程或运行后端测试。"
+  },
+  "captures": {
+    "date": "2026-10-16",
+    "status": "8幅截图已冻结，供导师反馈一修订稿合并",
+    "source_kind": "当前真实Vue组件＋原有纯虚构API/WebSocket截图夹具；未连接真实账号及业务数据，非真实闭环验收",
+    "source_fixture": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-ui-20261009\\demo-fixtures.js",
+    "source_fixture_sha256": "58ad3c51369380cda83efa4032c171ac23ba2b0d6148852e91485978a3a14749",
+    "browser_config": "D:\\repo\\tibi\\road-transport-training-platform\\output\\playwright\\thesis-20261016\\cli.config.json",
+    "browser_config_sha256": "e7aa01f9b5d48b6615425f1ceebc75c6124955a13ba03f68b90a28e8b0f9fbaf",
+    "capture_scale": "Playwright原生BrowserContext deviceScaleFactor=3，截图scale=device；未使用事后上采样",
+    "print_policy": {
+      "widthCm": 15.5,
+      "maxHeightCm": 18.5,
+      "coreTargetPt": 10.5,
+      "minimumPt": 9,
+      "formula": "实际打印字号pt = CSS字号px × (15.5/2.54×72) / (PNG宽像素/真实DPR)",
+      "actual": "主值约10.1～10.7pt；图5-3嵌套课件原生12px约9.01pt；所有保留文字最小值至少9pt"
+    },
+    "changes": "仅新目录截图及忽略目录脚本/原始采集/验证记录；不改业务代码、原素材、Word或MD",
+    "face": "仅原有合成灰色视频流；两阶段互斥状态原样拼接，照片区域不透明遮挡，未提交核验",
+    "figures": [
+      {
+        "figure": "5-1",
+        "scene": "http://localhost:5173/admin/users",
+        "viewportCss": [
+          610,
+          1000
+        ],
+        "deviceScaleFactor": 3,
+        "clipCss": {
+          "x": 15.25,
+          "y": 132.25445556640625,
+          "width": 579.5,
+          "height": 306
+        },
+        "fonts": [
+          {
+            "text": "用户名",
+            "fontPx": 14
+          },
+          {
+            "text": "demo_thesis_01",
+            "fontPx": 14
+          },
+          {
+            "text": "姓名",
+            "fontPx": 14
+          },
+          {
+            "text": "演示学员甲",
+            "fontPx": 14
+          },
+          {
+            "text": "手机号",
+            "fontPx": 14
+          },
+          {
+            "text": "138****0001",
+            "fontPx": 14
+          },
+          {
+            "text": "部门",
+            "fontPx": 14
+          },
+          {
+            "text": "演示安全培训部",
+            "fontPx": 14
+          },
+          {
+            "text": "绑定车牌",
+            "fontPx": 14
+          },
+          {
+            "text": "川A·****",
+            "fontPx": 14
+          },
+          {
+            "text": "状态",
+            "fontPx": 14
+          },
+          {
+            "text": "启用",
+            "fontPx": 14
+          },
+          {
+            "text": "角色",
+            "fontPx": 14
+          },
+          {
+            "text": "学员",
+            "fontPx": 14
+          },
+          {
+            "text": "人脸登记",
+            "fontPx": 14
+          },
+          {
+            "text": "已登记",
+            "fontPx": 14
+          }
+        ],
+        "printWidthCm": 15.5,
+        "printHeightCm": 8.177586206896551,
+        "fontPointFactor": 0.7575346185175128,
+        "output": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\figure-5-1.png",
+        "output_sha256": "eca966f835d2ef9ff45fd2de4032384aa6a6c4d6eca014c93d48edff9ffb5182",
+        "output_pixels": [
+          1740,
+          918
+        ],
+        "actualRasterCssWidth": 580.0,
+        "printDpi": 285.13548387096773,
+        "coreMinFontCssPx": 14,
+        "coreMinFontPrintPt": 10.60548465924518,
+        "mainValueFontCssPx": 14,
+        "mainValueFontPrintPt": 10.60548465924518,
+        "secondaryMinFontCssPx": 14,
+        "secondaryMinFontPrintPt": 10.60548465924518,
+        "visualReview": "已用view_image逐图查看最终PNG，关键文字及所保留完整列无裁切",
+        "postCaptureResampling": false
+      },
+      {
+        "figure": "5-2",
+        "scene": "http://localhost:5173/admin/courses/301",
+        "viewportCss": [
+          900,
+          1500
+        ],
+        "deviceScaleFactor": 3,
+        "clipCss": {
+          "x": 287.5,
+          "y": 262,
+          "width": 581,
+          "height": 478
+        },
+        "fonts": [
+          {
+            "text": "课程规则",
+            "fontPx": 19
+          },
+          {
+            "text": "规定时长不能超过所有有效视频的总时长。",
+            "fontPx": 13
+          },
+          {
+            "text": "课程名称",
+            "fontPx": 14
+          },
+          {
+            "text": "道路运输安全培训演示课",
+            "fontPx": 14
+          },
+          {
+            "text": "规定时长",
+            "fontPx": 14
+          },
+          {
+            "text": "3.33",
+            "fontPx": 14
+          },
+          {
+            "text": "课程简介",
+            "fontPx": 14
+          },
+          {
+            "text": "允许拖动",
+            "fontPx": 14
+          },
+          {
+            "text": "",
+            "fontPx": 14
+          },
+          {
+            "text": "on",
+            "fontPx": 14
+          },
+          {
+            "text": "进度上报",
+            "fontPx": 14
+          },
+          {
+            "text": "10",
+            "fontPx": 14
+          },
+          {
+            "text": "学时误差",
+            "fontPx": 14
+          },
+          {
+            "text": "2",
+            "fontPx": 14
+          }
+        ],
+        "printWidthCm": 15.5,
+        "printHeightCm": 12.730240549828178,
+        "fontPointFactor": 0.75493140677003,
+        "output": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\figure-5-2.png",
+        "output_sha256": "78afa011daafad819f3418deb0749c0c1da719841d204fce47150b626987938f",
+        "output_pixels": [
+          1746,
+          1434
+        ],
+        "actualRasterCssWidth": 582.0,
+        "printDpi": 286.11870967741936,
+        "coreMinFontCssPx": 14,
+        "coreMinFontPrintPt": 10.56903969478042,
+        "mainValueFontCssPx": 14,
+        "mainValueFontPrintPt": 10.56903969478042,
+        "secondaryMinFontCssPx": 13,
+        "secondaryMinFontPrintPt": 9.81410828801039,
+        "visualReview": "已用view_image逐图查看最终PNG，关键文字及所保留完整列无裁切",
+        "postCaptureResampling": false
+      },
+      {
+        "figure": "5-3",
+        "scene": "http://localhost:5173/admin/plans/1001",
+        "viewportCss": [
+          1000,
+          1500
+        ],
+        "deviceScaleFactor": 3,
+        "clipCss": {
+          "x": 360,
+          "y": 984,
+          "width": 585,
+          "height": 252.1875
+        },
+        "fonts": [
+          {
+            "text": "发布课程快照",
+            "fontPx": 16
+          },
+          {
+            "text": "课程名称",
+            "fontPx": 13
+          },
+          {
+            "text": "规定学时",
+            "fontPx": 13
+          },
+          {
+            "text": "允许拖动",
+            "fontPx": 13
+          },
+          {
+            "text": "上报间隔",
+            "fontPx": 13
+          },
+          {
+            "text": "学时误差",
+            "fontPx": 13
+          },
+          {
+            "text": "道路运输安全培训演示课",
+            "fontPx": 14
+          },
+          {
+            "text": "4分钟",
+            "fontPx": 14
+          },
+          {
+            "text": "否",
+            "fontPx": 14
+          },
+          {
+            "text": "10秒",
+            "fontPx": 14
+          },
+          {
+            "text": "2秒",
+            "fontPx": 14
+          },
+          {
+            "text": "课件标题",
+            "fontPx": 13
+          },
+          {
+            "text": "视频时长",
+            "fontPx": 13
+          },
+          {
+            "text": "顺序",
+            "fontPx": 13
+          },
+          {
+            "text": "道路运输安全基础（演示）",
+            "fontPx": 12
+          },
+          {
+            "text": "2分钟",
+            "fontPx": 12
+          },
+          {
+            "text": "1",
+            "fontPx": 12
+          },
+          {
+            "text": "学习流程与应急处置（演示）",
+            "fontPx": 12
+          },
+          {
+            "text": "2分钟",
+            "fontPx": 12
+          },
+          {
+            "text": "2",
+            "fontPx": 12
+          }
+        ],
+        "printWidthCm": 15.5,
+        "printHeightCm": 6.676923076923077,
+        "fontPointFactor": 0.7510599636583888,
+        "nestedBox": {
+          "x": 360,
+          "y": 1097,
+          "width": 537,
+          "height": 137.1875
+        },
+        "nestedColumns": [
+          {
+            "text": "课件标题",
+            "right": 654
+          },
+          {
+            "text": "视频时长",
+            "right": 817
+          },
+          {
+            "text": "顺序",
+            "right": 897
+          }
+        ],
+        "retained": "发布快照完整五业务列、展开后的课件标题/视频时长/顺序",
+        "omitted": "卡片标题、空的展开按钮列及底部横向滚动条，不裁切关键文字",
+        "output": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\figure-5-3.png",
+        "output_sha256": "22ed9a422a0719af9c6960f975f06087db7f3797aa8b61730fc479ef9a0ec4b7",
+        "output_pixels": [
+          1755,
+          756
+        ],
+        "actualRasterCssWidth": 585.0,
+        "printDpi": 287.5935483870968,
+        "coreMinFontCssPx": 12,
+        "coreMinFontPrintPt": 9.012719563900665,
+        "mainValueFontCssPx": 14,
+        "mainValueFontPrintPt": 10.514839491217444,
+        "secondaryMinFontCssPx": 12,
+        "secondaryMinFontPrintPt": 9.012719563900665,
+        "visualReview": "已用view_image逐图查看最终PNG，关键文字及所保留完整列无裁切",
+        "postCaptureResampling": false
+      },
+      {
+        "figure": "5-4",
+        "scene": "http://localhost:5173/student/plans/1001/courses/3001/study",
+        "viewportCss": [
+          660,
+          1500
+        ],
+        "deviceScaleFactor": 3,
+        "clipCss": {
+          "x": 39.59375,
+          "y": 224,
+          "width": 580.8125,
+          "height": 672.796875
+        },
+        "fonts": [
+          {
+            "text": "← 返回培训任务",
+            "fontPx": 14
+          },
+          {
+            "text": "道路运输安全培训演示课",
+            "fontPx": 32
+          },
+          {
+            "text": "已暂停",
+            "fontPx": 12
+          },
+          {
+            "text": "有效学时",
+            "fontPx": 16
+          },
+          {
+            "text": "禁止拖动",
+            "fontPx": 12
+          },
+          {
+            "text": "每10秒上报",
+            "fontPx": 12
+          },
+          {
+            "text": "误差2秒",
+            "fontPx": 12
+          },
+          {
+            "text": "课件已播放完成，有效学时仍不足，请从头补学。",
+            "fontPx": 16
+          },
+          {
+            "text": "从头补学当前课件",
+            "fontPx": 14
+          },
+          {
+            "text": "课程课件",
+            "fontPx": 16
+          },
+          {
+            "text": "1. 道路运输安全基础（演示）已完成 · 1分40秒",
+            "fontPx": 16
+          },
+          {
+            "text": "2. 学习流程与应急处置（演示）已完成 · 1分40秒",
+            "fontPx": 16
+          }
+        ],
+        "printWidthCm": 15.5,
+        "printHeightCm": 17.958620689655174,
+        "fontPointFactor": 0.7575346185175128,
+        "retained": "课程标题、有效/规定学时、补学提示/按钮、两门课件及已完成状态；播放器区域不占打印空间",
+        "output": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\figure-5-4.png",
+        "output_sha256": "6214e8474c3d6928b9dcc21e4a13884ea4fabb56e580bcd9555c1c56640b263c",
+        "output_pixels": [
+          1740,
+          2016
+        ],
+        "actualRasterCssWidth": 580.0,
+        "printDpi": 285.13548387096773,
+        "coreMinFontCssPx": 14,
+        "coreMinFontPrintPt": 10.60548465924518,
+        "mainValueFontCssPx": 14,
+        "mainValueFontPrintPt": 10.60548465924518,
+        "secondaryMinFontCssPx": 12,
+        "secondaryMinFontPrintPt": 9.090415422210153,
+        "visualReview": "已用view_image逐图查看最终PNG，关键文字及所保留完整列无裁切",
+        "postCaptureResampling": false
+      },
+      {
+        "figure": "5-5",
+        "scene": "http://localhost:5173/student/plans/1001/courses/3002/study",
+        "viewportCss": [
+          288,
+          1200
+        ],
+        "deviceScaleFactor": 3,
+        "phaseBoxesCss": [
+          {
+            "x": 0,
+            "y": 260.5,
+            "width": 288,
+            "height": 679
+          },
+          {
+            "x": 0,
+            "y": 260.5,
+            "width": 288,
+            "height": 679
+          }
+        ],
+        "maskBoxesCss": [
+          {
+            "x": 40,
+            "y": 566.5,
+            "width": 208,
+            "height": 260
+          },
+          {
+            "x": 40,
+            "y": 566.5,
+            "width": 208,
+            "height": 260
+          }
+        ],
+        "fonts": [
+          {
+            "text": "播放器和学时累计已暂停，请在倒计时结束前完成拍照核验。",
+            "fontPx": 14
+          },
+          {
+            "text": "剩余时间 03:00剩余提交次数 3 / 3",
+            "fontPx": 14
+          },
+          {
+            "text": "剩余时间 03:00",
+            "fontPx": 20
+          },
+          {
+            "text": "拍照",
+            "fontPx": 14
+          }
+        ],
+        "printWidthCm": 15.5,
+        "composition": "同一弹窗拍照前与拍照后，沿用既有两阶段组合；不提交核验；后续仅原样拼接及遮挡说明",
+        "output": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\figure-5-5.png",
+        "clipCss": {
+          "width": 608,
+          "height": 725
+        },
+        "compositionCss": {
+          "phaseWidth": 288,
+          "phaseHeight": 680,
+          "gap": 16,
+          "sidePadding": 8,
+          "topLabel": 28,
+          "footer": 17
+        },
+        "printHeightCm": 18.482730263157894,
+        "fontPointFactor": 0.7226481558226274,
+        "rasterPixels": [
+          1824,
+          2175
+        ],
+        "resampling": false,
+        "annotationFontCss": {
+          "phase": 16,
+          "redaction": 14,
+          "footer": 13
+        },
+        "output_sha256": "33cb04078da42092fd4823037a8841b2bf831ab290c8a23e94825c1a68513520",
+        "output_pixels": [
+          1824,
+          2175
+        ],
+        "actualRasterCssWidth": 608.0,
+        "printDpi": 298.90064516129036,
+        "coreMinFontCssPx": 14,
+        "coreMinFontPrintPt": 10.117074181516784,
+        "mainValueFontCssPx": 14,
+        "mainValueFontPrintPt": 10.117074181516784,
+        "secondaryMinFontCssPx": 13,
+        "secondaryMinFontPrintPt": 9.394426025694157,
+        "visualReview": "已用view_image逐图查看最终PNG，关键文字及所保留完整列无裁切",
+        "postCaptureResampling": false
+      },
+      {
+        "figure": "5-6",
+        "scene": "http://localhost:5173/student/plans/1001/exam",
+        "viewportCss": [
+          650,
+          1500
+        ],
+        "deviceScaleFactor": 3,
+        "clipCss": {
+          "x": 37,
+          "y": 222,
+          "width": 576,
+          "height": 591.359375
+        },
+        "fonts": [
+          {
+            "text": "道路运输安全培训测验（演示）",
+            "fontPx": 32
+          },
+          {
+            "text": "00:29:00",
+            "fontPx": 26
+          },
+          {
+            "text": "考试只有一次作答记录，答案会在选择后自动保存，请在倒计时结束前交卷。",
+            "fontPx": 14
+          },
+          {
+            "text": "答题进度：1 / 2答案已保存",
+            "fontPx": 16
+          },
+          {
+            "text": "1. 演示题：车辆制动出现异常时，应采取哪项措施？",
+            "fontPx": 16
+          },
+          {
+            "text": "单选题 · 50分",
+            "fontPx": 12
+          },
+          {
+            "text": "A. 继续行驶到目的地",
+            "fontPx": 14
+          },
+          {
+            "text": "B. 在确保安全的前提下停车检查",
+            "fontPx": 14
+          },
+          {
+            "text": "C. 仅降低车速继续行驶",
+            "fontPx": 14
+          }
+        ],
+        "printWidthCm": 15.5,
+        "printHeightCm": 15.903645833333334,
+        "fontPointFactor": 0.7627952755905512,
+        "output": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\figure-5-6.png",
+        "output_sha256": "c87f9a1c3b6728dbc3840d07fe2e3fbfa8053bbbf292b0572ad1e8b6b88cfb8b",
+        "output_pixels": [
+          1728,
+          1773
+        ],
+        "actualRasterCssWidth": 576.0,
+        "printDpi": 283.16903225806453,
+        "coreMinFontCssPx": 14,
+        "coreMinFontPrintPt": 10.679133858267717,
+        "mainValueFontCssPx": 14,
+        "mainValueFontPrintPt": 10.679133858267717,
+        "secondaryMinFontCssPx": 12,
+        "secondaryMinFontPrintPt": 9.153543307086615,
+        "visualReview": "已用view_image逐图查看最终PNG，关键文字及所保留完整列无裁切",
+        "postCaptureResampling": false
+      },
+      {
+        "figure": "5-7",
+        "scene": "http://localhost:5173/student/records",
+        "viewportCss": [
+          1180,
+          1200
+        ],
+        "deviceScaleFactor": 3,
+        "clipCss": {
+          "x": 283.796875,
+          "y": 317,
+          "width": 600,
+          "height": 186.75
+        },
+        "fonts": [
+          {
+            "text": "计划状态",
+            "fontPx": 13
+          },
+          {
+            "text": "有效学时",
+            "fontPx": 13
+          },
+          {
+            "text": "规定学时",
+            "fontPx": 13
+          },
+          {
+            "text": "考试成绩",
+            "fontPx": 13
+          },
+          {
+            "text": "培训状态",
+            "fontPx": 13
+          },
+          {
+            "text": "已结束",
+            "fontPx": 14
+          },
+          {
+            "text": "0小时3分20秒",
+            "fontPx": 14
+          },
+          {
+            "text": "0小时3分20秒",
+            "fontPx": 14
+          },
+          {
+            "text": "100",
+            "fontPx": 14
+          },
+          {
+            "text": "已完成",
+            "fontPx": 14
+          },
+          {
+            "text": "进行中",
+            "fontPx": 14
+          },
+          {
+            "text": "0小时3分0秒",
+            "fontPx": 14
+          },
+          {
+            "text": "0小时3分20秒",
+            "fontPx": 14
+          },
+          {
+            "text": "—",
+            "fontPx": 14
+          },
+          {
+            "text": "未完成",
+            "fontPx": 14
+          }
+        ],
+        "printWidthCm": 15.5,
+        "printHeightCm": 4.805,
+        "fontPointFactor": 0.732283464566929,
+        "retained": "计划状态、有效/规定学时、考试成绩、培训状态；原表两行顺序保留",
+        "output": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\figure-5-7.png",
+        "output_sha256": "2eab2f968b99d6db3fd1f3e72c27ebdcaffab1b9b26fb2a3e4785dddd50e92ed",
+        "output_pixels": [
+          1800,
+          558
+        ],
+        "actualRasterCssWidth": 600.0,
+        "printDpi": 294.9677419354839,
+        "coreMinFontCssPx": 14,
+        "coreMinFontPrintPt": 10.251968503937007,
+        "mainValueFontCssPx": 14,
+        "mainValueFontPrintPt": 10.251968503937007,
+        "secondaryMinFontCssPx": 13,
+        "secondaryMinFontPrintPt": 9.519685039370078,
+        "visualReview": "已用view_image逐图查看最终PNG，关键文字及所保留完整列无裁切",
+        "postCaptureResampling": false
+      },
+      {
+        "figure": "5-8",
+        "scene": "http://localhost:5173/admin/statistics",
+        "viewportCss": [
+          780,
+          1500
+        ],
+        "deviceScaleFactor": 3,
+        "clipCss": {
+          "x": 147,
+          "y": 905.75,
+          "width": 590,
+          "height": 248.984375
+        },
+        "fonts": [
+          {
+            "text": "触发时间",
+            "fontPx": 13
+          },
+          {
+            "text": "截止时间",
+            "fontPx": 13
+          },
+          {
+            "text": "提交次数",
+            "fontPx": 13
+          },
+          {
+            "text": "原因",
+            "fontPx": 13
+          },
+          {
+            "text": "2026/10/8 09:01:00",
+            "fontPx": 14
+          },
+          {
+            "text": "2026/10/8 09:04:00",
+            "fontPx": 14
+          },
+          {
+            "text": "0",
+            "fontPx": 14
+          },
+          {
+            "text": "超过抽验时限",
+            "fontPx": 14
+          },
+          {
+            "text": "本次抽验没有提交照片",
+            "fontPx": 14
+          }
+        ],
+        "printWidthCm": 15.5,
+        "printHeightCm": 6.5152542372881355,
+        "fontPointFactor": 0.7446950487121313,
+        "retained": "同一展开抽验行的触发/截止时间、提交次数0、超过抽验时限、本次抽验没有提交照片",
+        "omitted": "上方概况/会话列表、抽验状态列；不拼接或修改原表列",
+        "output": "D:\\repo\\tibi\\road-transport-training-platform\\docs\\thesis\\figures\\advisor-20261016\\figure-5-8.png",
+        "output_sha256": "ddb78d52c1c116ed820a0e5a6661f59e1238f0df2026551147f1719f1949c1c7",
+        "output_pixels": [
+          1770,
+          744
+        ],
+        "actualRasterCssWidth": 590.0,
+        "printDpi": 290.0516129032258,
+        "coreMinFontCssPx": 14,
+        "coreMinFontPrintPt": 10.425730681969839,
+        "mainValueFontCssPx": 14,
+        "mainValueFontPrintPt": 10.425730681969839,
+        "secondaryMinFontCssPx": 13,
+        "secondaryMinFontPrintPt": 9.681035633257707,
+        "visualReview": "已用view_image逐图查看最终PNG，关键文字及所保留完整列无裁切",
+        "postCaptureResampling": false
+      }
+    ]
+  },
+  "assembly": {
+    "input_sha256": "00c1fe06014e614134c4231a4d9bdb9b55419167ea77bd341b05a933f71b65f5",
+    "output_sha256": "a059b446f8f5662beea8ad3dee05a4d88002a465e4d42de9f9f6b8e0d105b063",
+    "figures": [
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/architecture.png",
+        "media": "word/media/image6.png",
+        "pixels": [
+          3000,
+          2700
+        ],
+        "width_cm": 15.5,
+        "height_cm": 13.95,
+        "sha256": "2f14702caa9df819fed4217e2fdfddf8b77ac06ecdd3b2b6d6fcb58030d1fe21"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/er-overview.png",
+        "media": "word/media/image8.png",
+        "pixels": [
+          3000,
+          2550
+        ],
+        "width_cm": 15.5,
+        "height_cm": 13.175,
+        "sha256": "a2555155576cd319e1b617eac2e00135429eb08c476b021742b960874cf9f44a"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/er-admin.png",
+        "media": "word/media/image9.png",
+        "pixels": [
+          3000,
+          1860
+        ],
+        "width_cm": 15.5,
+        "height_cm": 9.61,
+        "sha256": "283c65e1befda1a1777a2fb3d47fe285c15d4aef547ca400fa2fc809dce5bebd"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/er-training.png",
+        "media": "word/media/image10.png",
+        "pixels": [
+          3000,
+          3600
+        ],
+        "width_cm": 15.5,
+        "height_cm": 18.6,
+        "sha256": "b017d1aabef935e960c87691b45b1bbf0eadd4430d622d0be8697da37b6f9778"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/er-learning.png",
+        "media": "word/media/image11.png",
+        "pixels": [
+          3000,
+          2940
+        ],
+        "width_cm": 15.5,
+        "height_cm": 15.19,
+        "sha256": "657a5929b0e377c1e590d5689a8cf13d29db5571f40c761b11ca66975b8cced4"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/learning-flow.png",
+        "media": "word/media/image12.png",
+        "pixels": [
+          3300,
+          2070
+        ],
+        "width_cm": 15.5,
+        "height_cm": 9.7227,
+        "sha256": "59db1d6f7c0780e67776d9687bd75c1f7881932e0b034c9405fe650493073714"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/figure-5-1.png",
+        "media": "word/media/image13.png",
+        "pixels": [
+          1740,
+          918
+        ],
+        "width_cm": 15.5,
+        "height_cm": 8.1776,
+        "sha256": "eca966f835d2ef9ff45fd2de4032384aa6a6c4d6eca014c93d48edff9ffb5182"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/figure-5-2.png",
+        "media": "word/media/image14.png",
+        "pixels": [
+          1746,
+          1434
+        ],
+        "width_cm": 15.5,
+        "height_cm": 12.7302,
+        "sha256": "78afa011daafad819f3418deb0749c0c1da719841d204fce47150b626987938f"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/figure-5-3.png",
+        "media": "word/media/image15.png",
+        "pixels": [
+          1755,
+          756
+        ],
+        "width_cm": 15.5,
+        "height_cm": 6.6769,
+        "sha256": "22ed9a422a0719af9c6960f975f06087db7f3797aa8b61730fc479ef9a0ec4b7"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/figure-5-4.png",
+        "media": "word/media/image16.png",
+        "pixels": [
+          1740,
+          2016
+        ],
+        "width_cm": 15.5,
+        "height_cm": 17.9586,
+        "sha256": "6214e8474c3d6928b9dcc21e4a13884ea4fabb56e580bcd9555c1c56640b263c"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/figure-5-5.png",
+        "media": "word/media/image17.png",
+        "pixels": [
+          1824,
+          2175
+        ],
+        "width_cm": 15.5,
+        "height_cm": 18.4827,
+        "sha256": "33cb04078da42092fd4823037a8841b2bf831ab290c8a23e94825c1a68513520"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/figure-5-6.png",
+        "media": "word/media/image18.png",
+        "pixels": [
+          1728,
+          1773
+        ],
+        "width_cm": 15.5,
+        "height_cm": 15.9036,
+        "sha256": "c87f9a1c3b6728dbc3840d07fe2e3fbfa8053bbbf292b0572ad1e8b6b88cfb8b"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/figure-5-7.png",
+        "media": "word/media/image19.png",
+        "pixels": [
+          1800,
+          558
+        ],
+        "width_cm": 15.5,
+        "height_cm": 4.805,
+        "sha256": "2eab2f968b99d6db3fd1f3e72c27ebdcaffab1b9b26fb2a3e4785dddd50e92ed"
+      },
+      {
+        "asset": "docs/thesis/figures/advisor-20261016/figure-5-8.png",
+        "media": "word/media/image20.png",
+        "pixels": [
+          1770,
+          744
+        ],
+        "width_cm": 15.5,
+        "height_cm": 6.5153,
+        "sha256": "ddb78d52c1c116ed820a0e5a6661f59e1238f0df2026551147f1719f1949c1c7"
+      }
+    ]
+  },
+  "renderer": {
+    "standard": "已尝试render_docx.py；捆绑环境缺少soffice.exe，未计为成功",
+    "actual": "独立隐藏WPS只读导出任务副本，捆绑Poppler 100DPI逐页生成PNG"
+  },
+  "visual_review": {
+    "complete": true,
+    "pending_pages": [],
+    "reviewed_physical_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66
+    ],
+    "reports": [
+      {
+        "date": "2026-10-16",
+        "reviewer": "er_review",
+        "word_sha256": "e560cc4badcfda99cbc7d1eacaab61f47f18be331c77ac2962a1126c16cc4b91",
+        "matching_word_files": [
+          "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\after.docx"
+        ],
+        "pdf_sha256": "bcda39634804f17ad61c5c01d55a1be4b791f42f839e005c9bd3cd5d3a313074",
+        "total_document_pages": 66,
+        "reviewed_range": [
+          1,
+          22
+        ],
+        "method": "每一页均实际调用view_image(detail=original)查看原始页图；没有仅用缩略图、拼图或抽查代替逐页检查。",
+        "header_check": "目视检查文字位置；qa-report.json的body_header_lines_present为true。连续多图展示可能省略重复页眉，不据工具展示压缩推定原图缺字。",
+        "overall_conclusion": "通过，未发现本范围新增实质排版缺陷。",
+        "material_problems": [],
+        "nonblocking_notes": [
+          "第5页为目录收尾，第14和22页为章末，存在正常余白。",
+          "第16～17页沿用用例图整图分组，页底留白较多；图文图题均完整，无需为本次导师修订扩大重分页。"
+        ],
+        "pages": [
+          {
+            "physical_page": 1,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-01.png",
+            "image_sha256": "a3fc68f663219c1dd595a0212e4cd925bece1230f26b199e6a9c79815478bf1d",
+            "section": "封面",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "校名、题目、姓名专业与时间完整，题目两行及填空线无裁切。"
+          },
+          {
+            "physical_page": 2,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-02.png",
+            "image_sha256": "9c6723f8cb53dd6b25640d7abb1d2a76dd25ffa7186643455daad887a72ec4e0",
+            "section": "诚信承诺书",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "承诺文字、落款和日期完整，页眉横线与正文分离。"
+          },
+          {
+            "physical_page": 3,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-03.png",
+            "image_sha256": "11aa0fe8316eea59545a36f60dab1130778e5330b755d9aa1a8d4ee55bb94afb",
+            "section": "目录第一页",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "层级、引导点和右侧页码对齐，末条目录未越出正文范围。"
+          },
+          {
+            "physical_page": 4,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-04.png",
+            "image_sha256": "3137b24ff80cec8b93ac13bfc0c58bf261ea8a6bbd5623c0b9eb0a94f09d68fc",
+            "section": "目录第二页",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "第3章后续到第7章目录完整，页码及缩进清楚。"
+          },
+          {
+            "physical_page": 5,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-05.png",
+            "image_sha256": "a7ee5c48c7ee5bd57fdb0969448086dac19ead13c94c48d7e5622f161332f267",
+            "section": "目录第三页",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "仅保留新附录A及A.1～A.5条目，目录收尾留白正常。"
+          },
+          {
+            "physical_page": 6,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-06.png",
+            "image_sha256": "13dc367cc5985d06a7a9d9adda8085e5481c8566ec775ef3147ebad3fe798f6d",
+            "section": "中文摘要",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "摘要两段及关键词完整，未出现末行裁切或标题分离。"
+          },
+          {
+            "physical_page": 7,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-07.png",
+            "image_sha256": "12386a8793af9c4a0298dc91fcec6bdf32f18d54597a0db25deef0b638e6f2fd",
+            "section": "英文摘要",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "正文、两行关键词和罗马页码II完整，英文行间无压字。"
+          },
+          {
+            "physical_page": 8,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-08.png",
+            "image_sha256": "09e136797731c2b906277f0b236455aa7729509631ebd5ddfde1dc4908386aa2",
+            "section": "第1章首页",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "1.1、1.2标题及随后的正文完整，分节首页版式正常。"
+          },
+          {
+            "physical_page": 9,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-09.png",
+            "image_sha256": "bcf2a84ef41dce554c966c98ff54963fd75a7aa1531d6ef6726344f3d8f7b226",
+            "section": "第1章研究目标与研究进展",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "跨页续文及文献上标可读，正文未碰页眉页脚。"
+          },
+          {
+            "physical_page": 10,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-10.png",
+            "image_sha256": "2f28de6e47ace84bab70b68814942d8c9dcaa35ddd98598f6e016d79b8778fcf",
+            "section": "第1章研究进展与论文组织",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "1.4及更新后的附录组织说明完整，无文本截断。"
+          },
+          {
+            "physical_page": 11,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-11.png",
+            "image_sha256": "a6c236f1e18cfc2a73e9e0860ab41bbfe7732dc5500ef9a59dcfb017fa655077",
+            "section": "第2章首页及2.1～2.3",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "章标题、小节标题和技术段落完整，底部续行没有裁切。"
+          },
+          {
+            "physical_page": 12,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-12.png",
+            "image_sha256": "2c317503c2398661f2e3e55e6824284e4f05a1fa5130c68dc7a4fa3222f2d3fc",
+            "section": "2.3～2.5",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "数据库与WebSocket说明衔接正常，小节标题随正文。"
+          },
+          {
+            "physical_page": 13,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-13.png",
+            "image_sha256": "eade45cbd309c2937995e84b044646dd0271ac7ff665c53dddbabd960304e31a",
+            "section": "计时公式及2.6～2.7",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "原生公式本体及编号(2-1)完整，容差和G的说明可读，未见公式压字或越界。"
+          },
+          {
+            "physical_page": 14,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-14.png",
+            "image_sha256": "4ba75e0ddcb26f318e30a5fa90495d1279ca07135ccd98829b50b8a5597273ff",
+            "section": "2.7～2.8",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "人脸及OSS段落、文献上标完整，章末留白正常。"
+          },
+          {
+            "physical_page": 15,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-15.png",
+            "image_sha256": "4a921532fa9b53c68d42d947b2ffbaa217e464358ae08086632c7d7cdf8848a1",
+            "section": "第3章首页与表3-1",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "三列角色表的标题、表头、全部行及后续授权边界说明完整，表格无溢出。"
+          },
+          {
+            "physical_page": 16,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-16.png",
+            "image_sha256": "267e713e9f7b7c589f438cedd0e53cb95bca3fb0d1819008b0d1b209039c73a4",
+            "section": "3.1.2与图3-1",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "平台管理员用例图、连线、用例文字和图题同页，图形完整；整图分组造成页底较多留白。"
+          },
+          {
+            "physical_page": 17,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-17.png",
+            "image_sha256": "1eed270fb52d369759b76ff9957bd3cf12ed0ef79207a3f55acbc107792e25e2",
+            "section": "图3-2",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "企业管理员用例图与图题同页，各椭圆文字完整、无连线压字；整图分组造成页底较多留白。"
+          },
+          {
+            "physical_page": 18,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-18.png",
+            "image_sha256": "ea08bae505830f0d3bbe4933342be5a2e379825e014a5d985368ae73d7abf4e2",
+            "section": "图3-3与3.2.1",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "学员用例图及图题完整，后续3.2及3.2.1标题均与正文衔接，页底无裁切。"
+          },
+          {
+            "physical_page": 19,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-19.png",
+            "image_sha256": "4e269a5840d19e7d5907019ad4d60babc906dd3d067d983f0851beac576b6b84",
+            "section": "3.2.2～3.2.4",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "学习、抽验、考试与档案说明完整，末段跨页续句自然。"
+          },
+          {
+            "physical_page": 20,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-20.png",
+            "image_sha256": "369757330b9ae5c6883e75b7f18963810f4794360930527e569f19640fd951be",
+            "section": "3.3～3.4.1",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "非功能需求及技术可行性标题和正文完整，没有孤立标题或压字。"
+          },
+          {
+            "physical_page": 21,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-21.png",
+            "image_sha256": "713fe9572711071c2577572d3e662cdee58769c79ed26f4b5f3bbc194ddd44bd",
+            "section": "3.4.2～3.4.4",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "经济、操作与方案比较段落完整，分页未造成标题孤立。"
+          },
+          {
+            "physical_page": 22,
+            "image": "D:\\repo\\tibi\\road-transport-training-platform\\tmp\\thesis-advisor-20261016\\pages\\page-22.png",
+            "image_sha256": "153fc11b28c45e80094b7a6a54524695cc5c649ea962678eba9258049c988d50",
+            "section": "表3-2与第3章收尾",
+            "conclusion": "通过",
+            "problems": [],
+            "observation": "四列表格与表题完整、文字可读，末段与表格分离，章末留白正常。"
+          }
+        ],
+        "limits": "仅覆盖最终指定版本物理1～22页的打印页图；不声称已验证23～66页或真实阅读模式。"
+      },
+      {
+        "date": "2026-10-16",
+        "reviewer": "appendix_review",
+        "input_docx_sha256": "e560cc4badcfda99cbc7d1eacaab61f47f18be331c77ac2962a1126c16cc4b91",
+        "input_pdf_sha256": "bcda39634804f17ad61c5c01d55a1be4b791f42f839e005c9bd3cd5d3a313074",
+        "physical_pages": [
+          23,
+          44
+        ],
+        "method": "逐页调用view_image(detail=\"original\")查看全部22页原尺寸页图，未采用缩略图或抽查。",
+        "checked": [
+          "字体与图中文字清晰度",
+          "图形连线与基数",
+          "图题同页",
+          "表头重复与跨页行完整性",
+          "正文换页与越界碰撞"
+        ],
+        "pages": [
+          {
+            "physical_page": 23,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-23.png",
+            "image_sha256": "d7b32bb15d84d0bf94e6df9d8c1572ee22e3ebbbecabf4773bd8062a5b409516",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "总体架构图中文字、服务层级、Dubbo与消息连线清楚，图4-1图题同页，正文正常续页。",
+            "issues": []
+          },
+          {
+            "physical_page": 24,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-24.png",
+            "image_sha256": "7f11a7367ca911061574d0cf7d70bee8edfa73c9a05039872d88bda959012715",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "功能结构图七个模块完整，框线与文字无碰撞，图4-2图题同页。",
+            "issues": []
+          },
+          {
+            "physical_page": 25,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-25.png",
+            "image_sha256": "0e04e210fb9699f4321dab74006f00f7b3991f350a978ba19e382b7c256c31be",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "ER图例说明完整，总览实体、菱形、1/N标注与连线清楚，图4-3图题同页。",
+            "issues": []
+          },
+          {
+            "physical_page": 26,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-26.png",
+            "image_sha256": "5716ced9f1e1ef33d88941bcff59d3428f524e80aa8e9e2d801dca155d02e01b",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "管理域ER的属性下划线、1/N/M及可选车辆相关联系清楚，图4-4图题同页；专页余白未影响内容。",
+            "issues": []
+          },
+          {
+            "physical_page": 27,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-27.png",
+            "image_sha256": "56de65cb9db46d86eb8a17bce7e7ff47460c6afe876d1977dc5117921a0ff01f",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "培训考试域ER中课程快照、答案与试卷题目联系及1/N标注清楚，长属性分行完整，图4-5图题同页。",
+            "issues": []
+          },
+          {
+            "physical_page": 28,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-28.png",
+            "image_sha256": "7861f66bc90e8259a2a5852085c12181d746423b0896eac5c16e33a9e8a91ade",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "学习监管域ER、课程和课件进度、抽验提交及照片联系清楚，图4-6图题同页，正文正常续页。",
+            "issues": []
+          },
+          {
+            "physical_page": 29,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-29.png",
+            "image_sha256": "32372439e6ee65a8f660b09ea70cea66897513fb70e7ae8cd1567d909ca452d4",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "核心数据表设计作用表全部行可见，字段名自然换行，标题及后续4.3.2段落衔接正常。",
+            "issues": []
+          },
+          {
+            "physical_page": 30,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-30.png",
+            "image_sha256": "381d4bd072018e9d35c44cf717bb33fe1f840670f24fa1829f78127793a4dda9",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "快照、唯一性及核心结构说明清楚，章节标题未孤立，无异常文字挤压。",
+            "issues": []
+          },
+          {
+            "physical_page": 31,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-31.png",
+            "image_sha256": "421b54ec5c1b6042f865a7902c1dbc576ffb93bd2e5ab7bae913d8990e793b4c",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "用户字段表表4-2完整，长字段和默认值自然换行，逻辑关联无越界。",
+            "issues": []
+          },
+          {
+            "physical_page": 32,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-32.png",
+            "image_sha256": "703f33c5ee03094513943154e78895c76ee80c57cb3ee415c2badf4af3a405d0",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "用户索引表及课程表表4-3开始部分清楚，图表题与表头相连，无截断。",
+            "issues": []
+          },
+          {
+            "physical_page": 33,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-33.png",
+            "image_sha256": "94a4586198b5e256ce17736e16b32fffa527b289b868bbc89d43772a56d6de2d",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "课程字段表续表重复表头完整，索引表及计划表表4-4起始部分正常。",
+            "issues": []
+          },
+          {
+            "physical_page": 34,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-34.png",
+            "image_sha256": "19f384ee6cbc78365cf60f012605334575fbe9b28e2c1af3681b7fdf3088a3a6",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "计划字段续表重复表头与状态配置各行完整，表后逻辑关联及索引无碰撞。",
+            "issues": []
+          },
+          {
+            "physical_page": 35,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-35.png",
+            "image_sha256": "24a9e6cc3460724b66af840dd14adf3703ed3bed519c3e44f19d3f7a9d79604f",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "参训任务表表4-5、逻辑关联及索引起始部分完整，页末行未拆断。",
+            "issues": []
+          },
+          {
+            "physical_page": 36,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-36.png",
+            "image_sha256": "e4d4dc0d050b9147b4bdcffff7e94ead02e814cca733c59d6e709a23860ba883",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "参训任务索引续表重复表头正常，学习会话表表4-6开始部分完整。",
+            "issues": []
+          },
+          {
+            "physical_page": 37,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-37.png",
+            "image_sha256": "4e68b34848c4778694222d393bff6cac840dbd94de6b2c71a478342d14923cc2",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "学习会话字段续表重复表头、核验和照片字段完整，表后关联自然分行。",
+            "issues": []
+          },
+          {
+            "physical_page": 38,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-38.png",
+            "image_sha256": "30538f00f9af36008bd676065620368de31d655e269e2855fc5e1ce96860614f",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "学习会话索引与活动会话生成式清楚，课程进度表表4-7起始部分正常。",
+            "issues": []
+          },
+          {
+            "physical_page": 39,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-39.png",
+            "image_sha256": "e43e04595c1ed14edb07ae015c0ccc232820825dc60e8ba6e6b18ef0164e061c",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "课程进度续表重复表头、索引及抽验任务表表4-8起始部分完整。",
+            "issues": []
+          },
+          {
+            "physical_page": 40,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-40.png",
+            "image_sha256": "3071d236b2101a45e19313908c575377ae182b2465ed8f6247693dda600aa7b1",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "抽验续表、索引、PENDING生成式与考试记录表表4-9起始部分正常。",
+            "issues": []
+          },
+          {
+            "physical_page": 41,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-41.png",
+            "image_sha256": "8bf188cdc7cc9293875644563a3eac3669a7211dcc3440f05e9eed10a8621eff",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "考试记录续表重复表头、逻辑关联及索引清楚，无行列截断。",
+            "issues": []
+          },
+          {
+            "physical_page": 42,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-42.png",
+            "image_sha256": "15a44cdbc3ad763289efdcd70e6edbcaec8cc15fd659f947cfbe4cf10ba6274f",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "学习流程各节点、已受理请求分支、学时确认及消息投递箭头清楚，图4-7图题同页。",
+            "issues": []
+          },
+          {
+            "physical_page": 43,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-43.png",
+            "image_sha256": "e3100e61b4484400b1ba00ce88d5fe8ac638b874fadfeb71f3be460096456017",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "抽验、考试状态及安全设计正文排版正常，中英文标识可见，标题与正文衔接正常。",
+            "issues": []
+          },
+          {
+            "physical_page": 44,
+            "page_image": "tmp/thesis-advisor-20261016/pages/page-44.png",
+            "image_sha256": "d439a5b8bb9120ea2f694190efd2925c72c9a1c5b0e97eaca43e4b6ea9169a55",
+            "view_tool": "view_image",
+            "detail": "original",
+            "conclusion": "通过",
+            "notes": "历史档案与照片授权正文完整，章节结束留白正常，无孤立标题或越界。",
+            "issues": []
+          }
+        ],
+        "conclusion": "物理23～44页全部通过，未发现实质版式缺陷。",
+        "issues": []
+      },
+      {
+        "date": "2026-10-16",
+        "reviewer": "root",
+        "word_sha256": "e560cc4badcfda99cbc7d1eacaab61f47f18be331c77ac2962a1126c16cc4b91",
+        "pdf_sha256": "bcda39634804f17ad61c5c01d55a1be4b791f42f839e005c9bd3cd5d3a313074",
+        "method": "全部逐页调用view_image(detail=original)，按A4 100DPI页图检查，没有用缩略图代替",
+        "pages": [
+          {
+            "physical_page": 45,
+            "sha256": "ac292fc9a89e92209125911c7ddae61146d25e7adc958d733988799ea32219d4",
+            "conclusion": "第5章及人员详情单图，文字清晰，图题同页",
+            "issues": []
+          },
+          {
+            "physical_page": 46,
+            "sha256": "8eabb8845573048200fa2552d7ed09d8ee87f6160dd84dbef707c0f644d23e3c",
+            "conclusion": "课程规则单图及计划说明，关键字段完整",
+            "issues": []
+          },
+          {
+            "physical_page": 47,
+            "sha256": "937c290efdcd02cae0e8f3170252b0515f653094b64c5dc2bbb53b2931f6f0e1",
+            "conclusion": "发布课程和课件快照列完整，学习机制段落连续",
+            "issues": []
+          },
+          {
+            "physical_page": 48,
+            "sha256": "d3d24fd9644540fd36bcfc314a933b2b95ca2638817e4ca9d77622eb90e49c75",
+            "conclusion": "学时、补学和课件状态单图，比例及图题正常",
+            "issues": []
+          },
+          {
+            "physical_page": 49,
+            "sha256": "41002ff12d6df7f93d62d26bbd8a56443718f8694cffd2f0fab9a1e9b5808333",
+            "conclusion": "幂等、Outbox及抽验实现，标题和段落完整",
+            "issues": []
+          },
+          {
+            "physical_page": 50,
+            "sha256": "b87cfeacae289e722f7b2ac04e309d0c098e887e764bba2936aee4656c99ab8b",
+            "conclusion": "抽验拍照前后两阶段单张组合，按钮/遮挡/阶段说明完整",
+            "issues": []
+          },
+          {
+            "physical_page": 51,
+            "sha256": "8287b9413981e958546b115bd4457e4357ad74df97ecf60e055a10ec38409d46",
+            "conclusion": "考试第一题、倒计时及保存状态清晰，图题同页",
+            "issues": []
+          },
+          {
+            "physical_page": 52,
+            "sha256": "d22440d02e9bcf65565bbbaaba078bc8ab55eb79f8dbccd4fcca561a552cef0d",
+            "conclusion": "学习档案及零提交超时抽验单图，日期和无照片说明未截断",
+            "issues": []
+          },
+          {
+            "physical_page": 53,
+            "sha256": "4ac0c1050e5ebcba7f17acc6443492b1e0b8902782d6b0d315e812ab08d6b6ae",
+            "conclusion": "6.1实验环境、来源及不同验证批次说明完整",
+            "issues": []
+          },
+          {
+            "physical_page": 54,
+            "sha256": "0ec4c3721210550baeb0f9d8fea79d4167dac17dacad88964f5eaa119aba7f5d",
+            "conclusion": "自动化结果表与证据边界完整，未裁切",
+            "issues": []
+          },
+          {
+            "physical_page": 55,
+            "sha256": "8e5f4e104a798923b2f10adff1e077cc37de1ed9c70c606f2f21828954879d0e",
+            "conclusion": "核心业务用例表及实验说明正常",
+            "issues": []
+          },
+          {
+            "physical_page": 56,
+            "sha256": "c46f65060f33e3fd482ed034e9264c76e91560e0bff50b83c45cbbd22fd83887",
+            "conclusion": "计时对照表及事务结果说明完整",
+            "issues": []
+          },
+          {
+            "physical_page": 57,
+            "sha256": "751d8f763e163a022d6af3fb0e09e054f5b2096e1d5c4bb9b50f26c75dad55e9",
+            "conclusion": "WebSocket历史实验表和限定文字完整",
+            "issues": []
+          },
+          {
+            "physical_page": 58,
+            "sha256": "39e51d8bf69ce6c32883360a980b02613821bc12d8a6eb09f3162553dda5cb12",
+            "conclusion": "总结与局限正常，文献上标保留",
+            "issues": []
+          },
+          {
+            "physical_page": 59,
+            "sha256": "7659713a7996c41c71c8723b60509eb1f44db363a1997300d808f4834e41f9c5",
+            "conclusion": "致谢完整，章末留白正常",
+            "issues": []
+          },
+          {
+            "physical_page": 60,
+            "sha256": "e35c1b22cf3cabc72c18130abfd07dcfff634025ea5c76b4e42a45f3fa06bbf1",
+            "conclusion": "文献1至10完整，长链接自然换行",
+            "issues": []
+          },
+          {
+            "physical_page": 61,
+            "sha256": "239af0828cb6cc6837d1bb4c0d0bd9b9e430616efb467a48a74b16a50c587662",
+            "conclusion": "文献11至21完整，链接和页脚正常",
+            "issues": []
+          },
+          {
+            "physical_page": 62,
+            "sha256": "d024ba326bdd73281eda7f194d2e9331f8352df80938c48e26997e83c587c03c",
+            "conclusion": "唯一附录标题、A.1字段表及A.2引导文字正常",
+            "issues": []
+          },
+          {
+            "physical_page": 63,
+            "sha256": "a5cccbfbd3295a316cba0b389c5cc1e61c654d93c588b250734810f1acf18caa",
+            "conclusion": "A.2表题及字段表同页，A.3表头及首段字段正常",
+            "issues": []
+          },
+          {
+            "physical_page": 64,
+            "sha256": "dfd80dd324c3bf356a70f6d9510cba57a5e0dfdd08d9efd0bb65acca6e7a3b7b",
+            "conclusion": "学习事件续表与Outbox字段表均完整，重复表头正常",
+            "issues": []
+          },
+          {
+            "physical_page": 65,
+            "sha256": "828cc6af54f25ab6251414ed3cc86de1bd43d55e981ac2ab1e046a8528ef85af",
+            "conclusion": "特殊约束生成式及活动五态完整，表格未跨页截行",
+            "issues": []
+          },
+          {
+            "physical_page": 66,
+            "sha256": "7bfa81cedf8f2b602f6c0fbb54f26741d3d6446c1e2dece82c05c30ecd772d80",
+            "conclusion": "约束表续表头、考试答案作用域和消息去重完整，末页留白正常",
+            "issues": []
+          }
+        ],
+        "issues": []
+      }
+    ],
+    "method": "A4打印页图逐页原尺寸检查，未进行纸质打印实测"
+  },
+  "business_tests_executed": false,
+  "changed_package_parts": [
+    "word/document.xml",
+    "word/media/image10.png",
+    "word/media/image11.png",
+    "word/media/image12.png",
+    "word/media/image13.png",
+    "word/media/image14.png",
+    "word/media/image15.png",
+    "word/media/image16.png",
+    "word/media/image17.png",
+    "word/media/image18.png",
+    "word/media/image19.png",
+    "word/media/image20.png",
+    "word/media/image6.png",
+    "word/media/image8.png",
+    "word/media/image9.png"
+  ],
+  "deliverable": "docs/thesis/李剑_计算机科学与技术_基于Dubbo的道路运输企业在线培训系统设计与实现_导师反馈一修订版.docx",
+  "original_retained": "docs/thesis/李剑_计算机科学与技术_基于Dubbo的道路运输企业在线培训系统设计与实现.docx"
+}

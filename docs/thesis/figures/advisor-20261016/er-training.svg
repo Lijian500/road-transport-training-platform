@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1200" viewBox="0 0 1000 1200">
+<title>培训与考试域概念 ER 图</title>
+<rect width="100%" height="100%" fill="white"/>
+<polyline points="145.48076923076923,130.0 112.26343578441981,89.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="194.51923076923077,130.0 227.7365642155802,89.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="475.4807692307692,130.0 442.2634357844198,89.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="524.5192307692307,130.0 557.7365642155802,89.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="805.4807692307693,130.0 772.2634357844198,89.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="854.5192307692307,130.0 887.7365642155802,89.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="145.48076923076923,465.0 112.26343578441981,424.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="194.51923076923077,465.0 227.7365642155802,424.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="475.69444444444446,465.0 442.5364873770171,424.0736072767754" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="524.5192307692307,465.0 557.7365642155802,424.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="805.4807692307693,465.0 772.2634357844198,424.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="854.5192307692307,465.0 887.7365642155802,424.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="145.48076923076923,800.0 112.26343578441981,759.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="194.51923076923077,800.0 227.7365642155802,759.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="475.4807692307692,800.0 442.2634357844198,759.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="524.5192307692307,800.0 557.7365642155802,759.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="805.6944444444445,800.0 772.5364873770171,759.0736072767754" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="854.5192307692307,800.0 887.7365642155802,759.357615547996" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="250.0,160.0 287.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="383.0,160.0 420.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="580.0,160.0 617.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="713.0,160.0 750.0,160.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="250.0,495.0 287.0,495.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="383.0,495.0 420.0,495.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="580.0,495.0 617.0,495.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="713.0,495.0 750.0,495.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="218.0,190.0 267.0,220.0 267.0,272.5 287.0,272.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="383.0,272.5 500.0,272.5 500.0,465.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="170.0,525.0 170.0,567.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="170.0,647.5 170.0,800.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="218.0,525.0 267.0,555.0 267.0,607.5 287.0,607.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="383.0,607.5 500.0,607.5 500.0,800.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="580.0,830.0 617.0,830.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="713.0,830.0 750.0,830.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="170.0,860.0 170.0,945.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="170.0,1025.0 170.0,1110.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="250.0,1140.0 287.0,1140.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="383.0,1140.0 420.0,1140.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="782.0,860.0 733.0,890.0 733.0,985.0 713.0,985.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="617.0,985.0 500.0,985.0 500.0,1110.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="830.0,860.0 830.0,945.0" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="830.0,1025.0 830.0,1110.0" fill="none" stroke="black" stroke-width="1.4"/>
+<rect x="90" y="130" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="170.0" y="165.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">课程</text>
+<ellipse cx="85.0" cy="56.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="85.0" y="61.519999999999996" text-anchor="middle" font-family="SimSun,serif" font-size="24" text-decoration="underline">课程编号</text>
+<ellipse cx="255.0" cy="56.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="255.0" y="61.519999999999996" text-anchor="middle" font-family="SimSun,serif" font-size="24">课程名称</text>
+<rect x="420" y="130" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="500.0" y="165.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">视频课件</text>
+<ellipse cx="415.0" cy="56.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="415.0" y="61.519999999999996" text-anchor="middle" font-family="SimSun,serif" font-size="24" text-decoration="underline">课件编号</text>
+<ellipse cx="585.0" cy="56.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="585.0" y="61.519999999999996" text-anchor="middle" font-family="SimSun,serif" font-size="24">视频时长</text>
+<rect x="750" y="130" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="830.0" y="165.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">存储对象</text>
+<ellipse cx="745.0" cy="56.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="745.0" y="61.519999999999996" text-anchor="middle" font-family="SimSun,serif" font-size="24" text-decoration="underline">对象编号</text>
+<ellipse cx="915.0" cy="56.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="915.0" y="61.519999999999996" text-anchor="middle" font-family="SimSun,serif" font-size="24">对象类型</text>
+<rect x="90" y="465" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="170.0" y="500.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">培训计划</text>
+<ellipse cx="85.0" cy="391.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="85.0" y="396.52" text-anchor="middle" font-family="SimSun,serif" font-size="24" text-decoration="underline">计划编号</text>
+<ellipse cx="255.0" cy="391.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="255.0" y="396.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">计划状态</text>
+<rect x="420" y="465" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="500.0" y="500.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">计划课程</text>
+<ellipse cx="412.5" cy="387.0" rx="80.0" ry="40.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="412.5" y="376.92" text-anchor="middle" font-family="SimSun,serif" font-size="24" text-decoration="underline">计划课程</text>
+<text x="412.5" y="408.12" text-anchor="middle" font-family="SimSun,serif" font-size="24" text-decoration="underline">编号</text>
+<ellipse cx="585.0" cy="391.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="585.0" y="396.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">规定时长</text>
+<rect x="750" y="465" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="830.0" y="500.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">课件快照</text>
+<ellipse cx="745.0" cy="391.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="745.0" y="396.52" text-anchor="middle" font-family="SimSun,serif" font-size="24" text-decoration="underline">快照编号</text>
+<ellipse cx="915.0" cy="391.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="915.0" y="396.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">顺序</text>
+<rect x="90" y="800" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="170.0" y="835.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">参训任务</text>
+<ellipse cx="85.0" cy="726.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="85.0" y="731.52" text-anchor="middle" font-family="SimSun,serif" font-size="24" text-decoration="underline">任务编号</text>
+<ellipse cx="255.0" cy="726.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="255.0" y="731.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">完成状态</text>
+<rect x="420" y="800" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="500.0" y="835.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">试卷</text>
+<ellipse cx="415.0" cy="726.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="415.0" y="731.52" text-anchor="middle" font-family="SimSun,serif" font-size="24" text-decoration="underline">试卷编号</text>
+<ellipse cx="585.0" cy="726.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="585.0" y="731.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">及格分</text>
+<rect x="750" y="800" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="830.0" y="835.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">试卷题目</text>
+<ellipse cx="742.5" cy="722.0" rx="80.0" ry="40.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="742.5" y="711.92" text-anchor="middle" font-family="SimSun,serif" font-size="24" text-decoration="underline">试卷题目</text>
+<text x="742.5" y="743.12" text-anchor="middle" font-family="SimSun,serif" font-size="24" text-decoration="underline">编号</text>
+<ellipse cx="915.0" cy="726.0" rx="72.5" ry="36.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="915.0" y="731.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">答案快照</text>
+<rect x="90" y="1110" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="170.0" y="1145.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">考试记录</text>
+<rect x="420" y="1110" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="500.0" y="1145.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">考试答案</text>
+<rect x="750" y="1110" width="160" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="830.0" y="1145.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">题库题目</text>
+<polygon points="335.0,120.0 383.0,160.0 335.0,200.0 287.0,160.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="335.0" y="165.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">包含</text>
+<text x="268.5" y="151.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<text x="401.5" y="151.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">N</text>
+<polygon points="665.0,120.0 713.0,160.0 665.0,200.0 617.0,160.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="665.0" y="165.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">引用</text>
+<text x="598.5" y="151.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">N</text>
+<text x="731.5" y="151.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<polygon points="335.0,455.0 383.0,495.0 335.0,535.0 287.0,495.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="335.0" y="500.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">冻结</text>
+<text x="268.5" y="486.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<text x="401.5" y="486.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">N</text>
+<polygon points="665.0,455.0 713.0,495.0 665.0,535.0 617.0,495.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="665.0" y="500.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">冻结</text>
+<text x="598.5" y="486.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<text x="731.5" y="486.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">N</text>
+<polygon points="335.0,232.5 383.0,272.5 335.0,312.5 287.0,272.5" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="335.0" y="278.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">来源</text>
+<text x="285.5" y="222.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<text x="518.5" y="323.77" text-anchor="middle" font-family="SimSun,serif" font-size="24">N</text>
+<polygon points="170.0,567.5 218.0,607.5 170.0,647.5 122.0,607.5" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="170.0" y="613.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">分配</text>
+<text x="188.5" y="557.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<text x="188.5" y="678.77" text-anchor="middle" font-family="SimSun,serif" font-size="24">N</text>
+<polygon points="335.0,567.5 383.0,607.5 335.0,647.5 287.0,607.5" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="335.0" y="613.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">使用</text>
+<text x="285.5" y="557.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">N</text>
+<text x="518.5" y="658.77" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<polygon points="665.0,790.0 713.0,830.0 665.0,870.0 617.0,830.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="665.0" y="835.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">固化</text>
+<text x="598.5" y="821.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<text x="731.5" y="821.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">N</text>
+<polygon points="170.0,945.0 218.0,985.0 170.0,1025.0 122.0,985.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="170.0" y="990.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">参加</text>
+<text x="188.5" y="892.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<text x="188.5" y="1094.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<polygon points="335.0,1100.0 383.0,1140.0 335.0,1180.0 287.0,1140.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="335.0" y="1145.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">作答</text>
+<text x="268.5" y="1131.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<text x="401.5" y="1131.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">N</text>
+<polygon points="665.0,945.0 713.0,985.0 665.0,1025.0 617.0,985.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="665.0" y="990.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">对应</text>
+<text x="748.5" y="934.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+<text x="518.5" y="1094.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">N</text>
+<polygon points="830.0,945.0 878.0,985.0 830.0,1025.0 782.0,985.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="830.0" y="990.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">来源</text>
+<text x="848.5" y="892.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">N</text>
+<text x="848.5" y="1094.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">1</text>
+</svg>
