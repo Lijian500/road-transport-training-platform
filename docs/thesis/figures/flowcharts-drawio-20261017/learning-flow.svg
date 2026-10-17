@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1200" viewBox="0 0 1000 1200">
+<title>学习进度受理与结果同步流程</title>
+<rect width="100%" height="100%" fill="white"/>
+<polyline points="260,59 260,93" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="260,93 255.0,81.0 265.0,81.0" fill="black"/>
+<polyline points="260,173 260,200" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="260,200 255.0,188.0 265.0,188.0" fill="black"/>
+<polyline points="260,305 260,355" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="260,355 255.0,343.0 265.0,343.0" fill="black"/>
+<polyline points="260,465 260,540" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="260,540 255.0,528.0 265.0,528.0" fill="black"/>
+<polyline points="260,660 260,735" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="260,735 255.0,723.0 265.0,723.0" fill="black"/>
+<polyline points="260,847 260,905" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="260,905 255.0,893.0 265.0,893.0" fill="black"/>
+<polyline points="260,985 260,1045" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="260,1045 255.0,1033.0 265.0,1033.0" fill="black"/>
+<polyline points="450,252.5 610,252.5" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="610,252.5 598.0,257.5 598.0,247.5" fill="black"/>
+<polyline points="770,280 770,310" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="770,310 765.0,298.0 775.0,298.0" fill="black"/>
+<polyline points="450,410 610,410" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="610,410 598.0,415.0 598.0,405.0" fill="black"/>
+<polyline points="770,450 770,485" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="770,485 765.0,473.0 775.0,473.0" fill="black"/>
+<polyline points="450,600 610,600" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="610,600 598.0,605.0 598.0,595.0" fill="black"/>
+<polyline points="770,630 770,670" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="770,670 765.0,658.0 775.0,658.0" fill="black"/>
+<polyline points="465,791 535,791 535,875 610,875" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="610,875 598.0,880.0 598.0,870.0" fill="black"/>
+<polyline points="770,915 770,945" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="770,945 765.0,933.0 775.0,933.0" fill="black"/>
+<polyline points="770,1025 770,1045" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="770,1045 765.0,1033.0 775.0,1033.0" fill="black"/>
+<polyline points="770,1125 770,1148" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="770,1148 765.0,1136.0 775.0,1136.0" fill="black"/>
+<rect x="180" y="15" width="160" height="44" rx="22.0" ry="22.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="260.0" y="42.519999999999996" text-anchor="middle" font-family="SimSun,serif" font-size="24">开始</text>
+<rect x="55" y="93" width="410" height="80" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="260.0" y="122.92" text-anchor="middle" font-family="SimSun,serif" font-size="24">学员发送进度消息</text>
+<text x="260.0" y="154.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">核验身份与会话绑定</text>
+<polygon points="260.0,200 450,252.5 260.0,305 70,252.5" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="260.0" y="242.42000000000002" text-anchor="middle" font-family="SimSun,serif" font-size="24">身份与绑定</text>
+<text x="260.0" y="273.62" text-anchor="middle" font-family="SimSun,serif" font-size="24">是否合法？</text>
+<polygon points="260.0,355 450,410.0 260.0,465 70,410.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="260.0" y="399.92" text-anchor="middle" font-family="SimSun,serif" font-size="24">请求是否</text>
+<text x="260.0" y="431.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">已经受理？</text>
+<polygon points="260.0,540 450,600.0 260.0,660 70,600.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="260.0" y="589.92" text-anchor="middle" font-family="SimSun,serif" font-size="24">序号、状态、任务</text>
+<text x="260.0" y="621.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">及位置均合法？</text>
+<rect x="55" y="735" width="410" height="112" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="260.0" y="765.32" text-anchor="middle" font-family="SimSun,serif" font-size="24">按规则计算有效学时</text>
+<text x="260.0" y="796.5200000000001" text-anchor="middle" font-family="SimSun,serif" font-size="24">事务保存学时、会话及事件</text>
+<text x="260.0" y="827.72" text-anchor="middle" font-family="SimSun,serif" font-size="24">按需写入 Outbox</text>
+<rect x="55" y="905" width="410" height="80" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="260.0" y="934.92" text-anchor="middle" font-family="SimSun,serif" font-size="24">返回 ACK 与确认学时</text>
+<text x="260.0" y="966.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">（无须等待异步结果）</text>
+<rect x="180" y="1045" width="160" height="44" rx="22.0" ry="22.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="260.0" y="1072.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">受理结束</text>
+<text x="288.0" y="331.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">是</text>
+<text x="288.0" y="502.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">否</text>
+<text x="288.0" y="699.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">是</text>
+<rect x="610" y="225" width="320" height="55" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="770.0" y="258.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">返回身份或绑定错误</text>
+<rect x="690" y="310" width="160" height="44" rx="22.0" ry="22.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="770.0" y="337.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">受理结束</text>
+<text x="506.0" y="236.29000000000002" text-anchor="middle" font-family="SimSun,serif" font-size="23">否</text>
+<rect x="610" y="370" width="320" height="80" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="770.0" y="399.92" text-anchor="middle" font-family="SimSun,serif" font-size="24">返回历史确认结果</text>
+<text x="770.0" y="431.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">（ACK 与确认学时）</text>
+<rect x="690" y="485" width="160" height="44" rx="22.0" ry="22.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="770.0" y="512.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">受理结束</text>
+<text x="506.0" y="394.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">是</text>
+<rect x="610" y="570" width="320" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="770.0" y="605.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">返回对应校验错误</text>
+<rect x="690" y="670" width="160" height="44" rx="22.0" ry="22.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="770.0" y="697.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">受理结束</text>
+<text x="506.0" y="584.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">否</text>
+<text x="535.0" y="767.79" text-anchor="middle" font-family="SimSun,serif" font-size="23">按需异步</text>
+<rect x="610" y="835" width="320" height="80" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="770.0" y="864.92" text-anchor="middle" font-family="SimSun,serif" font-size="24">读取已提交的</text>
+<text x="770.0" y="896.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">待发送任务 Outbox</text>
+<rect x="610" y="945" width="320" height="80" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="770.0" y="974.92" text-anchor="middle" font-family="SimSun,serif" font-size="24">RabbitMQ 至少一次投递</text>
+<text x="770.0" y="1006.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">失败按策略重试</text>
+<rect x="610" y="1045" width="320" height="80" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="770.0" y="1074.9199999999998" text-anchor="middle" font-family="SimSun,serif" font-size="24">培训服务幂等去重</text>
+<text x="770.0" y="1106.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">按事件更新参训任务</text>
+<rect x="690" y="1148" width="160" height="44" rx="22.0" ry="22.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="770.0" y="1175.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">同步结束</text>
+<text x="265.0" y="1141.34" text-anchor="middle" font-family="SimSun,serif" font-size="23">注：上报超时可成功受理并暂停，</text>
+<text x="265.0" y="1171.24" text-anchor="middle" font-family="SimSun,serif" font-size="23">本次有效学时按规则计为 0。</text>
+</svg>

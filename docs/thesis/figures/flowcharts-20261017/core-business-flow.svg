@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1215" viewBox="0 0 1000 1215">
+<title>核心业务流程设计</title>
+<rect width="100%" height="100%" fill="white"/>
+<polyline points="300,69 300,100" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="300,100 295.0,88.0 305.0,88.0" fill="black"/>
+<polyline points="300,180 300,207" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="300,207 295.0,195.0 305.0,195.0" fill="black"/>
+<polyline points="300,287 300,312" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="300,312 295.0,300.0 305.0,300.0" fill="black"/>
+<polyline points="300,392 300,420" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="300,420 295.0,408.0 305.0,408.0" fill="black"/>
+<polyline points="300,790 300,815" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="300,815 295.0,803.0 305.0,803.0" fill="black"/>
+<polyline points="300,1025 300,1058" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="300,1058 295.0,1046.0 305.0,1046.0" fill="black"/>
+<polyline points="300,1138 300,1160" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="300,1160 295.0,1148.0 305.0,1148.0" fill="black"/>
+<polyline points="300,530 300,560" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="300,560 295.0,548.0 305.0,548.0" fill="black"/>
+<polyline points="300,660 300,710" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="300,710 295.0,698.0 305.0,698.0" fill="black"/>
+<polyline points="300,915 300,965" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="300,965 295.0,953.0 305.0,953.0" fill="black"/>
+<polyline points="125,475 30,475 30,1098 125,1098" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="125,1098 113.0,1103.0 113.0,1093.0" fill="black"/>
+<polyline points="125,610 65,610 65,995 125,995" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="125,995 113.0,1000.0 113.0,990.0" fill="black"/>
+<polyline points="475,865 520,865 520,1098 475,1098" fill="none" stroke="black" stroke-width="1.4"/>
+<polygon points="475,1098 487.0,1093.0 487.0,1103.0" fill="black"/>
+<polyline points="565,95 545,95 545,800 565,800" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="475,352 482,352" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="489,352 496,352" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="503,352 510,352" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="517,352 524,352" fill="none" stroke="black" stroke-width="1.4"/>
+<polyline points="531,352 538,352" fill="none" stroke="black" stroke-width="1.4"/>
+<ellipse cx="300.0" cy="47.0" rx="80.0" ry="22.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="300.0" y="52.519999999999996" text-anchor="middle" font-family="SimSun,serif" font-size="24">开始</text>
+<rect x="125" y="100" width="350" height="80" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="300.0" y="129.92" text-anchor="middle" font-family="SimSun,serif" font-size="24">课程启用与计划发布</text>
+<text x="300.0" y="161.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">冻结规则、课件及参训任务</text>
+<rect x="125" y="207" width="350" height="80" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="300.0" y="236.92000000000002" text-anchor="middle" font-family="SimSun,serif" font-size="24">账号登录与任务授权</text>
+<text x="300.0" y="268.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">读取本人培训任务</text>
+<rect x="125" y="312" width="350" height="80" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="300.0" y="341.92" text-anchor="middle" font-family="SimSun,serif" font-size="24">学习与过程核验子流程</text>
+<text x="300.0" y="373.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">服务端受理并确认学时</text>
+<polygon points="300.0,420 475,475.0 300.0,530 125,475.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="300.0" y="464.92" text-anchor="middle" font-family="SimSun,serif" font-size="24">全部课程</text>
+<text x="300.0" y="496.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">学习完成？</text>
+<polygon points="300.0,560 475,610.0 300.0,660 125,610.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="300.0" y="615.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">需要考试？</text>
+<rect x="125" y="710" width="350" height="80" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="300.0" y="739.92" text-anchor="middle" font-family="SimSun,serif" font-size="24">考试作答与服务端判分</text>
+<text x="300.0" y="771.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">保存答案并判定成绩</text>
+<polygon points="300.0,815 475,865.0 300.0,915 125,865.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="300.0" y="870.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">考试通过？</text>
+<rect x="125" y="965" width="350" height="60" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="300.0" y="1000.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">按规则判定培训完成</text>
+<rect x="125" y="1058" width="350" height="80" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="300.0" y="1087.9199999999998" text-anchor="middle" font-family="SimSun,serif" font-size="24">动态聚合与查询培训档案</text>
+<text x="300.0" y="1119.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">快照、学时、核验及成绩</text>
+<ellipse cx="300.0" cy="1180.0" rx="80.0" ry="20.0" fill="white" stroke="black" stroke-width="1.4"/>
+<text x="300.0" y="1185.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">结束</text>
+<text x="329.0" y="550.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">是</text>
+<text x="329.0" y="690.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">是</text>
+<text x="329.0" y="945.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">是</text>
+<text x="90.0" y="459.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">否</text>
+<text x="94.0" y="594.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">否</text>
+<text x="499.0" y="849.29" text-anchor="middle" font-family="SimSun,serif" font-size="23">否</text>
+<text x="765.0" y="64.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">学习子流程注释</text>
+<text x="765.0" y="128.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">播放与确认</text>
+<text x="765.0" y="169.92000000000002" text-anchor="middle" font-family="SimSun,serif" font-size="24">视频播放与有效学时累计</text>
+<text x="765.0" y="201.12" text-anchor="middle" font-family="SimSun,serif" font-size="24">受理及结果同步见图 4-7</text>
+<text x="765.0" y="268.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">断线恢复</text>
+<text x="765.0" y="314.32" text-anchor="middle" font-family="SimSun,serif" font-size="24">暂停视频与计时</text>
+<text x="765.0" y="345.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">重连后重新绑定并同步确认位置</text>
+<text x="765.0" y="376.72" text-anchor="middle" font-family="SimSun,serif" font-size="24">保持暂停，由学员手动继续</text>
+<text x="765.0" y="453.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">随机抽验</text>
+<text x="765.0" y="500.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">启用抽验且达到触发时点</text>
+<text x="765.0" y="531.2199999999999" text-anchor="middle" font-family="SimSun,serif" font-size="24">暂停播放，拍照并作 1∶1 比对</text>
+<text x="765.0" y="562.42" text-anchor="middle" font-family="SimSun,serif" font-size="24">未通过且可重试：再次拍照</text>
+<text x="765.0" y="593.62" text-anchor="middle" font-family="SimSun,serif" font-size="24">通过：保持暂停，手动继续</text>
+<text x="765.0" y="624.82" text-anchor="middle" font-family="SimSun,serif" font-size="24">超时或次数耗尽：终止会话</text>
+<text x="765.0" y="656.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">保存核验过程与结果</text>
+<text x="765.0" y="728.02" text-anchor="middle" font-family="SimSun,serif" font-size="24">课程完成条件</text>
+<text x="765.0" y="770.52" text-anchor="middle" font-family="SimSun,serif" font-size="24">全部课件完成且有效学时达标</text>
+<text x="765.0" y="997.84" text-anchor="middle" font-family="SimSun,serif" font-size="23">档案随业务过程动态聚合，</text>
+<text x="765.0" y="1027.74" text-anchor="middle" font-family="SimSun,serif" font-size="23">未完成或终止时也可查询留痕。</text>
+<path d="M 138 312 V 392" stroke="black" stroke-width="1.4"/>
+<path d="M 462 312 V 392" stroke="black" stroke-width="1.4"/>
+</svg>

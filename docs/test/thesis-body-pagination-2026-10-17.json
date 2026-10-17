@@ -1,0 +1,2715 @@
+{
+  "word": "docs/thesis/李剑_计算机科学与技术_基于Dubbo的道路运输企业在线培训系统设计与实现.docx",
+  "review_date": "2026-10-17",
+  "input_sha256": "bc11e4cf887c3b6023c9d51841feddad0098cc094b036fc7469bc248efb39c7b",
+  "word_sha256": "6fc2cd08e8caa83c5dabe9bd60971635c723e28af906f7533a284b4bc490e1bd",
+  "before_pdf_sha256": "39338112d5349cd7a5f5bf2b1afe46ed93ea96c63c981f797618b8012f206ce6",
+  "pdf_sha256": "6825184d64aa31f79fedc02ee38cc933fed634e217dcd9c4923d5e177065d2f6",
+  "structure": {
+    "changed_package_parts": [
+      "word/document.xml"
+    ],
+    "all_other_parts_byte_identical": true,
+    "body_text_and_nonpagination_format_preserved": true,
+    "front_matter_except_toc_cache_preserved": true,
+    "tables_preserved": 36,
+    "native_math_preserved": 1,
+    "references_preserved": 21,
+    "body_figures": 21,
+    "all_media_and_drawing_sizes_preserved": true,
+    "section_properties_preserved": true,
+    "released_figures": [
+      {
+        "figure": "图3-1",
+        "introduction_released": true,
+        "image_caption_kept_together": true,
+        "caption_following_released": true
+      },
+      {
+        "figure": "图3-2",
+        "introduction_released": true,
+        "image_caption_kept_together": true,
+        "caption_following_released": true
+      },
+      {
+        "figure": "图3-3",
+        "introduction_released": true,
+        "image_caption_kept_together": true,
+        "caption_following_released": true
+      },
+      {
+        "figure": "图4-2",
+        "introduction_released": true,
+        "image_caption_kept_together": true,
+        "caption_following_released": true
+      },
+      {
+        "figure": "图4-3",
+        "introduction_released": true,
+        "image_caption_kept_together": true,
+        "caption_following_released": true
+      },
+      {
+        "figure": "图4-4",
+        "introduction_released": true,
+        "image_caption_kept_together": true,
+        "caption_following_released": true
+      },
+      {
+        "figure": "图4-5",
+        "introduction_released": true,
+        "image_caption_kept_together": true,
+        "caption_following_released": true
+      },
+      {
+        "figure": "图4-6",
+        "introduction_released": true,
+        "image_caption_kept_together": true,
+        "caption_following_released": true
+      }
+    ],
+    "released_tables": [
+      {
+        "caption": "表3-1 用户角色与业务操作范围",
+        "rows": 4,
+        "changed_cell_paragraphs": 6,
+        "repeated_header_preserved": true,
+        "row_split_disabled": true
+      },
+      {
+        "caption": "表3-2 系统方案比较",
+        "rows": 5,
+        "changed_cell_paragraphs": 12,
+        "repeated_header_preserved": true,
+        "row_split_disabled": true
+      },
+      {
+        "caption": "表6-3 合成输入下的计时比较",
+        "rows": 3,
+        "changed_cell_paragraphs": 5,
+        "repeated_header_preserved": true,
+        "row_split_disabled": true
+      },
+      {
+        "caption": "表6-4 已认证WebSocket心跳实验",
+        "rows": 4,
+        "changed_cell_paragraphs": 12,
+        "repeated_header_preserved": true,
+        "row_split_disabled": true
+      }
+    ],
+    "captions": [
+      "图3-1 平台管理员用例图",
+      "图3-2 企业管理员用例图",
+      "图3-3 学员用例图",
+      "图4-1 系统总体架构",
+      "图4-2 系统功能结构图",
+      "图4-3 核心业务概念ER总览",
+      "图4-4 管理域概念ER图",
+      "图4-5 培训与考试域概念ER图",
+      "图4-6 学习监管域概念ER图",
+      "图4-7 学习进度受理与结果同步流程",
+      "图4-8 核心业务流程设计",
+      "图5-1 人员管理界面",
+      "图5-2 课程资源管理界面",
+      "图5-3 培训计划发布快照界面",
+      "图5-4 视频学习与补学界面",
+      "图5-5 视频播放与断线恢复",
+      "图5-6 学习人脸抽验界面",
+      "图5-7 人脸抽验结果与继续学习",
+      "图5-8 在线考试作答界面",
+      "图5-9 学员学习档案界面",
+      "图5-10 管理员学时监管与抽验记录界面"
+    ],
+    "toc_entries": [
+      {
+        "title": "摘要",
+        "page": "I"
+      },
+      {
+        "title": "Abstract",
+        "page": "II"
+      },
+      {
+        "title": "1 绪论",
+        "page": "1"
+      },
+      {
+        "title": "1.1 研究背景与问题提出",
+        "page": "1"
+      },
+      {
+        "title": "1.2 研究目标与意义",
+        "page": "1"
+      },
+      {
+        "title": "1.3 国内外相关研究进展",
+        "page": "2"
+      },
+      {
+        "title": "1.4 研究方法与论文组织",
+        "page": "3"
+      },
+      {
+        "title": "2 相关理论与关键技术",
+        "page": "4"
+      },
+      {
+        "title": "2.1 Java与TypeScript编程语言",
+        "page": "4"
+      },
+      {
+        "title": "2.2 Spring Boot与Vue开发框架",
+        "page": "4"
+      },
+      {
+        "title": "2.3 Dubbo远程调用与Nacos服务治理",
+        "page": "4"
+      },
+      {
+        "title": "2.4 MySQL数据库与持久化技术",
+        "page": "5"
+      },
+      {
+        "title": "2.5 WebSocket通信与学习状态控制",
+        "page": "5"
+      },
+      {
+        "title": "2.6 RabbitMQ与消息最终一致性",
+        "page": "6"
+      },
+      {
+        "title": "2.7 OpenCV与人脸核验技术",
+        "page": "7"
+      },
+      {
+        "title": "2.8 OSS对象存储与媒体访问",
+        "page": "7"
+      },
+      {
+        "title": "3 需求与可行性分析",
+        "page": "8"
+      },
+      {
+        "title": "3.1 用户角色与业务范围",
+        "page": "8"
+      },
+      {
+        "title": "3.1.1 参与者及其权限范围",
+        "page": "8"
+      },
+      {
+        "title": "3.1.2 角色用例分析",
+        "page": "9"
+      },
+      {
+        "title": "3.2 培训业务流程与功能需求",
+        "page": "11"
+      },
+      {
+        "title": "3.2.1 课程与计划发布",
+        "page": "11"
+      },
+      {
+        "title": "3.2.2 学习与异常恢复",
+        "page": "11"
+      },
+      {
+        "title": "3.2.3 抽验与考试",
+        "page": "11"
+      },
+      {
+        "title": "3.2.4 档案与统计",
+        "page": "12"
+      },
+      {
+        "title": "3.3 非功能需求",
+        "page": "12"
+      },
+      {
+        "title": "3.4 方案可行性与选择",
+        "page": "13"
+      },
+      {
+        "title": "3.4.1 技术可行性",
+        "page": "13"
+      },
+      {
+        "title": "3.4.2 经济可行性",
+        "page": "13"
+      },
+      {
+        "title": "3.4.3 操作可行性",
+        "page": "13"
+      },
+      {
+        "title": "3.4.4 方案比较与选择",
+        "page": "14"
+      },
+      {
+        "title": "4 系统设计",
+        "page": "15"
+      },
+      {
+        "title": "4.1 总体架构",
+        "page": "15"
+      },
+      {
+        "title": "4.2 系统功能结构",
+        "page": "16"
+      },
+      {
+        "title": "4.3 数据库设计",
+        "page": "17"
+      },
+      {
+        "title": "4.3.1 主要业务实体",
+        "page": "17"
+      },
+      {
+        "title": "4.3.2 快照与历史解释",
+        "page": "21"
+      },
+      {
+        "title": "4.3.3 唯一性与删除约束",
+        "page": "21"
+      },
+      {
+        "title": "4.3.4 核心数据表结构",
+        "page": "22"
+      },
+      {
+        "title": "4.4 学习消息处理流程",
+        "page": "33"
+      },
+      {
+        "title": "4.5 抽验与考试状态设计",
+        "page": "35"
+      },
+      {
+        "title": "4.6 安全与只读查询设计",
+        "page": "35"
+      },
+      {
+        "title": "4.7 核心业务流程设计",
+        "page": "36"
+      },
+      {
+        "title": "5 系统实现",
+        "page": "38"
+      },
+      {
+        "title": "5.1 工程组织与基础管理实现",
+        "page": "38"
+      },
+      {
+        "title": "5.2 课程资源与计划实现",
+        "page": "39"
+      },
+      {
+        "title": "5.3 视频学习、断线恢复与补学实现",
+        "page": "40"
+      },
+      {
+        "title": "5.4 幂等与异步结果实现",
+        "page": "43"
+      },
+      {
+        "title": "5.5 抽验与考试实现",
+        "page": "43"
+      },
+      {
+        "title": "5.6 档案聚合与界面交互实现",
+        "page": "46"
+      },
+      {
+        "title": "6 测试与结果分析",
+        "page": "48"
+      },
+      {
+        "title": "6.1 测试环境与验证范围",
+        "page": "48"
+      },
+      {
+        "title": "6.2 自动化测试结果",
+        "page": "49"
+      },
+      {
+        "title": "6.3 核心业务用例分析",
+        "page": "50"
+      },
+      {
+        "title": "6.4 合成计时实验与结果解释",
+        "page": "50"
+      },
+      {
+        "title": "6.5 数据库事务与消息路由结果",
+        "page": "51"
+      },
+      {
+        "title": "6.6 WebSocket心跳性能分析",
+        "page": "52"
+      },
+      {
+        "title": "7 总结与展望",
+        "page": "53"
+      },
+      {
+        "title": "7.1 研究总结",
+        "page": "53"
+      },
+      {
+        "title": "7.2 局限与后续工作",
+        "page": "53"
+      },
+      {
+        "title": "致谢",
+        "page": "55"
+      },
+      {
+        "title": "参考文献",
+        "page": "56"
+      },
+      {
+        "title": "附录A 关键补充表与特殊约束",
+        "page": "58"
+      },
+      {
+        "title": "A.1 计划课程规则快照",
+        "page": "58"
+      },
+      {
+        "title": "A.2 计划课件清单快照",
+        "page": "58"
+      },
+      {
+        "title": "A.3 关键学习事件",
+        "page": "59"
+      },
+      {
+        "title": "A.4 可靠消息发件记录",
+        "page": "60"
+      },
+      {
+        "title": "A.5 特殊约束汇总",
+        "page": "61"
+      }
+    ],
+    "chapters": [
+      "1 绪论",
+      "2 相关理论与关键技术",
+      "3 需求与可行性分析",
+      "4 系统设计",
+      "5 系统实现",
+      "6 测试与结果分析",
+      "7 总结与展望"
+    ],
+    "body_margins_pt": {
+      "top": 70.85,
+      "bottom": 70.85
+    }
+  },
+  "pdf": {
+    "page_count": 69,
+    "figures": [
+      {
+        "caption": "图3-1 平台管理员用例图",
+        "physical_page": 16,
+        "source_pixels": [
+          3000,
+          1500
+        ],
+        "image_bbox": [
+          77.88,
+          364.79999999999995,
+          517.2,
+          584.4
+        ],
+        "caption_bbox": [
+          240.72,
+          592.863,
+          354.36759999999987,
+          605.0477000000001
+        ],
+        "ratio_error": 0.0002731494127287126,
+        "same_page": true
+      },
+      {
+        "caption": "图3-2 企业管理员用例图",
+        "physical_page": 17,
+        "source_pixels": [
+          3000,
+          2220
+        ],
+        "image_bbox": [
+          77.88,
+          70.80000000000007,
+          517.2,
+          395.88
+        ],
+        "caption_bbox": [
+          240.72,
+          403.863,
+          354.36759999999987,
+          416.0477
+        ],
+        "ratio_error": 5.1676915922005406e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图3-3 学员用例图",
+        "physical_page": 17,
+        "source_pixels": [
+          3000,
+          1980
+        ],
+        "image_bbox": [
+          77.88,
+          421.92,
+          517.2,
+          711.84
+        ],
+        "caption_bbox": [
+          256.44,
+          720.543,
+          338.6484999999999,
+          732.7276999999999
+        ],
+        "ratio_error": 0.00010760431410528071,
+        "same_page": true
+      },
+      {
+        "caption": "图4-1 系统总体架构",
+        "physical_page": 22,
+        "source_pixels": [
+          3000,
+          2700
+        ],
+        "image_bbox": [
+          77.88,
+          242.51999999999998,
+          517.2,
+          637.92
+        ],
+        "caption_bbox": [
+          251.28,
+          652.863,
+          343.8083499999999,
+          665.0477000000001
+        ],
+        "ratio_error": 3.034993474759773e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图4-2 系统功能结构图",
+        "physical_page": 23,
+        "source_pixels": [
+          3000,
+          2550
+        ],
+        "image_bbox": [
+          77.88,
+          351.47999999999996,
+          517.2,
+          724.92
+        ],
+        "caption_bbox": [
+          246.0,
+          732.543,
+          349.08774999999986,
+          744.7276999999999
+        ],
+        "ratio_error": 4.820283754036758e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图4-3 核心业务概念ER总览",
+        "physical_page": 24,
+        "source_pixels": [
+          3000,
+          2550
+        ],
+        "image_bbox": [
+          77.88,
+          338.04,
+          517.2,
+          711.48
+        ],
+        "caption_bbox": [
+          231.72,
+          719.222,
+          363.48985,
+          731.4067
+        ],
+        "ratio_error": 4.820283754036758e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图4-4 管理域概念ER图",
+        "physical_page": 25,
+        "source_pixels": [
+          3000,
+          1860
+        ],
+        "image_bbox": [
+          77.88,
+          216.96000000000004,
+          517.2,
+          489.36
+        ],
+        "caption_bbox": [
+          242.159,
+          496.98199999999997,
+          353.05,
+          509.1667
+        ],
+        "ratio_error": 7.93014424049776e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图4-5 培训与考试域概念ER图",
+        "physical_page": 26,
+        "source_pixels": [
+          3000,
+          3600
+        ],
+        "image_bbox": [
+          77.4,
+          70.80000000000007,
+          516.72,
+          597.96
+        ],
+        "caption_bbox": [
+          226.44,
+          605.943,
+          368.77,
+          618.1277
+        ],
+        "ratio_error": 4.552490212161864e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图4-6 学习监管域概念ER图",
+        "physical_page": 27,
+        "source_pixels": [
+          3000,
+          2940
+        ],
+        "image_bbox": [
+          77.4,
+          123.4799999999999,
+          516.72,
+          554.04
+        ],
+        "caption_bbox": [
+          231.72,
+          561.903,
+          363.49,
+          574.0877
+        ],
+        "ratio_error": 6.131925591867926e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图4-7 学习进度受理与结果同步流程",
+        "physical_page": 41,
+        "source_pixels": [
+          3000,
+          3600
+        ],
+        "image_bbox": [
+          77.88,
+          70.80000000000007,
+          517.2,
+          597.96
+        ],
+        "caption_bbox": [
+          214.44,
+          613.863,
+          380.6454999999998,
+          626.0477000000001
+        ],
+        "ratio_error": 4.552490212161864e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图4-8 核心业务流程设计",
+        "physical_page": 44,
+        "source_pixels": [
+          3000,
+          3645
+        ],
+        "image_bbox": [
+          77.76,
+          70.79999999999995,
+          517.08,
+          604.56
+        ],
+        "caption_bbox": [
+          240.72,
+          613.263,
+          354.36759999999987,
+          625.4476999999999
+        ],
+        "ratio_error": 2.585364811846791e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图5-1 人员管理界面",
+        "physical_page": 45,
+        "source_pixels": [
+          1740,
+          918
+        ],
+        "image_bbox": [
+          77.76,
+          359.15999999999997,
+          517.08,
+          591.0
+        ],
+        "caption_bbox": [
+          251.28,
+          599.582,
+          343.8083499999999,
+          611.7666999999999
+        ],
+        "ratio_error": 0.00026243767105316174,
+        "same_page": true
+      },
+      {
+        "caption": "图5-2 课程资源管理界面",
+        "physical_page": 46,
+        "source_pixels": [
+          1746,
+          1434
+        ],
+        "image_bbox": [
+          77.76,
+          234.7199999999999,
+          517.08,
+          595.56
+        ],
+        "caption_bbox": [
+          240.72,
+          604.143,
+          354.36759999999987,
+          616.3277
+        ],
+        "ratio_error": 6.628730518110082e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图5-3 培训计划发布快照界面",
+        "physical_page": 47,
+        "source_pixels": [
+          1755,
+          756
+        ],
+        "image_bbox": [
+          77.76,
+          123.48000000000002,
+          517.08,
+          312.72
+        ],
+        "caption_bbox": [
+          230.28,
+          321.303,
+          364.8068499999998,
+          333.4877
+        ],
+        "ratio_error": 2.9266008506612096e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图5-4 视频学习与补学界面",
+        "physical_page": 48,
+        "source_pixels": [
+          1740,
+          2016
+        ],
+        "image_bbox": [
+          77.76,
+          216.95999999999992,
+          517.08,
+          726.0
+        ],
+        "caption_bbox": [
+          235.44,
+          734.582,
+          359.6469999999998,
+          746.7666999999999
+        ],
+        "ratio_error": 6.828735318231693e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图5-5 视频播放与断线恢复",
+        "physical_page": 49,
+        "source_pixels": [
+          1740,
+          1635
+        ],
+        "image_bbox": [
+          77.76,
+          216.95999999999992,
+          517.08,
+          629.76
+        ],
+        "caption_bbox": [
+          235.44,
+          638.3430000000001,
+          359.6469999999998,
+          650.5277000000001
+        ],
+        "ratio_error": 2.2553621234266963e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图5-6 学习人脸抽验界面",
+        "physical_page": 51,
+        "source_pixels": [
+          1824,
+          2175
+        ],
+        "image_bbox": [
+          77.76,
+          70.80000000000007,
+          517.08,
+          594.72
+        ],
+        "caption_bbox": [
+          240.72,
+          603.303,
+          354.36759999999987,
+          615.4876999999999
+        ],
+        "ratio_error": 0.00011415761662991741,
+        "same_page": true
+      },
+      {
+        "caption": "图5-7 人脸抽验结果与继续学习",
+        "physical_page": 52,
+        "source_pixels": [
+          1740,
+          1989
+        ],
+        "image_bbox": [
+          77.76,
+          70.80000000000007,
+          517.08,
+          573.0
+        ],
+        "caption_bbox": [
+          225.0,
+          581.703,
+          370.0862499999998,
+          593.8877
+        ],
+        "ratio_error": 2.3483433673199272e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图5-8 在线考试作答界面",
+        "physical_page": 53,
+        "source_pixels": [
+          1728,
+          1773
+        ],
+        "image_bbox": [
+          77.76,
+          70.80000000000007,
+          517.08,
+          521.64
+        ],
+        "caption_bbox": [
+          240.72,
+          530.222,
+          354.36759999999987,
+          542.4067
+        ],
+        "ratio_error": 0.00017609124576889457,
+        "same_page": true
+      },
+      {
+        "caption": "图5-9 学员学习档案界面",
+        "physical_page": 54,
+        "source_pixels": [
+          1800,
+          558
+        ],
+        "image_bbox": [
+          77.76,
+          70.80000000000007,
+          517.08,
+          207.0
+        ],
+        "caption_bbox": [
+          240.72,
+          215.70299999999997,
+          354.36759999999987,
+          227.8877
+        ],
+        "ratio_error": 7.930144240453352e-05,
+        "same_page": true
+      },
+      {
+        "caption": "图5-10 管理员学时监管与抽验记录界面",
+        "physical_page": 54,
+        "source_pixels": [
+          1770,
+          744
+        ],
+        "image_bbox": [
+          77.76,
+          379.8,
+          517.08,
+          564.48
+        ],
+        "caption_bbox": [
+          206.64,
+          573.0629999999999,
+          388.44434999999976,
+          585.2476999999999
+        ],
+        "ratio_error": 9.031553162786032e-05,
+        "same_page": true
+      }
+    ],
+    "toc": [
+      {
+        "title": "摘要",
+        "page": "I",
+        "physical_page": 6,
+        "method": "原有分节首页页脚留空，标题定位与下一页页脚连续性核对",
+        "verified": true
+      },
+      {
+        "title": "Abstract",
+        "page": "II",
+        "physical_page": 7,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "1 绪论",
+        "page": "1",
+        "physical_page": 8,
+        "method": "原有分节首页页脚留空，标题定位与下一页页脚连续性核对",
+        "verified": true
+      },
+      {
+        "title": "1.1 研究背景与问题提出",
+        "page": "1",
+        "physical_page": 8,
+        "method": "原有分节首页页脚留空，标题定位与下一页页脚连续性核对",
+        "verified": true
+      },
+      {
+        "title": "1.2 研究目标与意义",
+        "page": "1",
+        "physical_page": 8,
+        "method": "原有分节首页页脚留空，标题定位与下一页页脚连续性核对",
+        "verified": true
+      },
+      {
+        "title": "1.3 国内外相关研究进展",
+        "page": "2",
+        "physical_page": 9,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "1.4 研究方法与论文组织",
+        "page": "3",
+        "physical_page": 10,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "2 相关理论与关键技术",
+        "page": "4",
+        "physical_page": 11,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "2.1 Java与TypeScript编程语言",
+        "page": "4",
+        "physical_page": 11,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "2.2 Spring Boot与Vue开发框架",
+        "page": "4",
+        "physical_page": 11,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "2.3 Dubbo远程调用与Nacos服务治理",
+        "page": "4",
+        "physical_page": 11,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "2.4 MySQL数据库与持久化技术",
+        "page": "5",
+        "physical_page": 12,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "2.5 WebSocket通信与学习状态控制",
+        "page": "5",
+        "physical_page": 12,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "2.6 RabbitMQ与消息最终一致性",
+        "page": "6",
+        "physical_page": 13,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "2.7 OpenCV与人脸核验技术",
+        "page": "7",
+        "physical_page": 14,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "2.8 OSS对象存储与媒体访问",
+        "page": "7",
+        "physical_page": 14,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3 需求与可行性分析",
+        "page": "8",
+        "physical_page": 15,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.1 用户角色与业务范围",
+        "page": "8",
+        "physical_page": 15,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.1.1 参与者及其权限范围",
+        "page": "8",
+        "physical_page": 15,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.1.2 角色用例分析",
+        "page": "9",
+        "physical_page": 16,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.2 培训业务流程与功能需求",
+        "page": "11",
+        "physical_page": 18,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.2.1 课程与计划发布",
+        "page": "11",
+        "physical_page": 18,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.2.2 学习与异常恢复",
+        "page": "11",
+        "physical_page": 18,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.2.3 抽验与考试",
+        "page": "11",
+        "physical_page": 18,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.2.4 档案与统计",
+        "page": "12",
+        "physical_page": 19,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.3 非功能需求",
+        "page": "12",
+        "physical_page": 19,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.4 方案可行性与选择",
+        "page": "13",
+        "physical_page": 20,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.4.1 技术可行性",
+        "page": "13",
+        "physical_page": 20,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.4.2 经济可行性",
+        "page": "13",
+        "physical_page": 20,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.4.3 操作可行性",
+        "page": "13",
+        "physical_page": 20,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "3.4.4 方案比较与选择",
+        "page": "14",
+        "physical_page": 21,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4 系统设计",
+        "page": "15",
+        "physical_page": 22,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4.1 总体架构",
+        "page": "15",
+        "physical_page": 22,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4.2 系统功能结构",
+        "page": "16",
+        "physical_page": 23,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4.3 数据库设计",
+        "page": "17",
+        "physical_page": 24,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4.3.1 主要业务实体",
+        "page": "17",
+        "physical_page": 24,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4.3.2 快照与历史解释",
+        "page": "21",
+        "physical_page": 28,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4.3.3 唯一性与删除约束",
+        "page": "21",
+        "physical_page": 28,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4.3.4 核心数据表结构",
+        "page": "22",
+        "physical_page": 29,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4.4 学习消息处理流程",
+        "page": "33",
+        "physical_page": 40,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4.5 抽验与考试状态设计",
+        "page": "35",
+        "physical_page": 42,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4.6 安全与只读查询设计",
+        "page": "35",
+        "physical_page": 42,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "4.7 核心业务流程设计",
+        "page": "36",
+        "physical_page": 43,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "5 系统实现",
+        "page": "38",
+        "physical_page": 45,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "5.1 工程组织与基础管理实现",
+        "page": "38",
+        "physical_page": 45,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "5.2 课程资源与计划实现",
+        "page": "39",
+        "physical_page": 46,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "5.3 视频学习、断线恢复与补学实现",
+        "page": "40",
+        "physical_page": 47,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "5.4 幂等与异步结果实现",
+        "page": "43",
+        "physical_page": 50,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "5.5 抽验与考试实现",
+        "page": "43",
+        "physical_page": 50,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "5.6 档案聚合与界面交互实现",
+        "page": "46",
+        "physical_page": 53,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "6 测试与结果分析",
+        "page": "48",
+        "physical_page": 55,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "6.1 测试环境与验证范围",
+        "page": "48",
+        "physical_page": 55,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "6.2 自动化测试结果",
+        "page": "49",
+        "physical_page": 56,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "6.3 核心业务用例分析",
+        "page": "50",
+        "physical_page": 57,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "6.4 合成计时实验与结果解释",
+        "page": "50",
+        "physical_page": 57,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "6.5 数据库事务与消息路由结果",
+        "page": "51",
+        "physical_page": 58,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "6.6 WebSocket心跳性能分析",
+        "page": "52",
+        "physical_page": 59,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "7 总结与展望",
+        "page": "53",
+        "physical_page": 60,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "7.1 研究总结",
+        "page": "53",
+        "physical_page": 60,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "7.2 局限与后续工作",
+        "page": "53",
+        "physical_page": 60,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "致谢",
+        "page": "55",
+        "physical_page": 62,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "参考文献",
+        "page": "56",
+        "physical_page": 63,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "附录A 关键补充表与特殊约束",
+        "page": "58",
+        "physical_page": 65,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "A.1 计划课程规则快照",
+        "page": "58",
+        "physical_page": 65,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "A.2 计划课件清单快照",
+        "page": "58",
+        "physical_page": 65,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "A.3 关键学习事件",
+        "page": "59",
+        "physical_page": 66,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "A.4 可靠消息发件记录",
+        "page": "60",
+        "physical_page": 67,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      },
+      {
+        "title": "A.5 特殊约束汇总",
+        "page": "61",
+        "physical_page": 68,
+        "method": "标题与同页页脚直接匹配",
+        "verified": true
+      }
+    ],
+    "pages": [
+      {
+        "physical_page": 1,
+        "footer": "",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 2,
+        "footer": "",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 3,
+        "footer": "",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 4,
+        "footer": "",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 5,
+        "footer": "",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 6,
+        "footer": "",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 7,
+        "footer": "II",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 8,
+        "footer": "",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 9,
+        "footer": "2",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 10,
+        "footer": "3",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 11,
+        "footer": "4",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 12,
+        "footer": "5",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 13,
+        "footer": "6",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 14,
+        "footer": "7",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 15,
+        "footer": "8",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 16,
+        "footer": "9",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 17,
+        "footer": "10",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 18,
+        "footer": "11",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 19,
+        "footer": "12",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 20,
+        "footer": "13",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 21,
+        "footer": "14",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 22,
+        "footer": "15",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 23,
+        "footer": "16",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 24,
+        "footer": "17",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 25,
+        "footer": "18",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 26,
+        "footer": "19",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 27,
+        "footer": "20",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 28,
+        "footer": "21",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 29,
+        "footer": "22",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 30,
+        "footer": "23",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 31,
+        "footer": "24",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 32,
+        "footer": "25",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 33,
+        "footer": "26",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 34,
+        "footer": "27",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 35,
+        "footer": "28",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 36,
+        "footer": "29",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 37,
+        "footer": "30",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 38,
+        "footer": "31",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 39,
+        "footer": "32",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 40,
+        "footer": "33",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 41,
+        "footer": "34",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 42,
+        "footer": "35",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 43,
+        "footer": "36",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 44,
+        "footer": "37",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 45,
+        "footer": "38",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 46,
+        "footer": "39",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 47,
+        "footer": "40",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 48,
+        "footer": "41",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 49,
+        "footer": "42",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 50,
+        "footer": "43",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 51,
+        "footer": "44",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 52,
+        "footer": "45",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 53,
+        "footer": "46",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 54,
+        "footer": "47",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 55,
+        "footer": "48",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 56,
+        "footer": "49",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 57,
+        "footer": "50",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 58,
+        "footer": "51",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 59,
+        "footer": "52",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 60,
+        "footer": "53",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 61,
+        "footer": "54",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 62,
+        "footer": "55",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 63,
+        "footer": "56",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 64,
+        "footer": "57",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 65,
+        "footer": "58",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 66,
+        "footer": "59",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 67,
+        "footer": "60",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 68,
+        "footer": "61",
+        "width": 595.3,
+        "height": 841.9
+      },
+      {
+        "physical_page": 69,
+        "footer": "62",
+        "width": 595.3,
+        "height": 841.9
+      }
+    ]
+  },
+  "pagination": {
+    "role_analysis_physical_pages": [
+      16,
+      17
+    ],
+    "role_figures": {
+      "图3-1": 16,
+      "图3-2": 17,
+      "图3-3": 17
+    },
+    "chapters": [
+      {
+        "title": "1 绪论",
+        "physical_page": 8,
+        "body_page": 1,
+        "starts_page": true
+      },
+      {
+        "title": "2 相关理论与关键技术",
+        "physical_page": 11,
+        "body_page": 4,
+        "starts_page": true
+      },
+      {
+        "title": "3 需求与可行性分析",
+        "physical_page": 15,
+        "body_page": 8,
+        "starts_page": true
+      },
+      {
+        "title": "4 系统设计",
+        "physical_page": 22,
+        "body_page": 15,
+        "starts_page": true
+      },
+      {
+        "title": "5 系统实现",
+        "physical_page": 45,
+        "body_page": 38,
+        "starts_page": true
+      },
+      {
+        "title": "6 测试与结果分析",
+        "physical_page": 55,
+        "body_page": 48,
+        "starts_page": true
+      },
+      {
+        "title": "7 总结与展望",
+        "physical_page": 60,
+        "body_page": 53,
+        "starts_page": true
+      }
+    ],
+    "body_page_map": [
+      {
+        "physical_page": 8,
+        "footer": "",
+        "body_last_bottom_pt": 740.93,
+        "tail_space_pt": 30.12,
+        "body_page": 1
+      },
+      {
+        "physical_page": 9,
+        "footer": "2",
+        "body_last_bottom_pt": 756.05,
+        "tail_space_pt": 15.0,
+        "body_page": 2
+      },
+      {
+        "physical_page": 10,
+        "footer": "3",
+        "body_last_bottom_pt": 732.77,
+        "tail_space_pt": 38.28,
+        "body_page": 3
+      },
+      {
+        "physical_page": 11,
+        "footer": "4",
+        "body_last_bottom_pt": 743.45,
+        "tail_space_pt": 27.6,
+        "body_page": 4
+      },
+      {
+        "physical_page": 12,
+        "footer": "5",
+        "body_last_bottom_pt": 750.53,
+        "tail_space_pt": 20.52,
+        "body_page": 5
+      },
+      {
+        "physical_page": 13,
+        "footer": "6",
+        "body_last_bottom_pt": 709.37,
+        "tail_space_pt": 61.68,
+        "body_page": 6
+      },
+      {
+        "physical_page": 14,
+        "footer": "7",
+        "body_last_bottom_pt": 602.45,
+        "tail_space_pt": 168.6,
+        "body_page": 7
+      },
+      {
+        "physical_page": 15,
+        "footer": "8",
+        "body_last_bottom_pt": 723.77,
+        "tail_space_pt": 47.28,
+        "body_page": 8
+      },
+      {
+        "physical_page": 16,
+        "footer": "9",
+        "body_last_bottom_pt": 605.05,
+        "tail_space_pt": 166.0,
+        "body_page": 9
+      },
+      {
+        "physical_page": 17,
+        "footer": "10",
+        "body_last_bottom_pt": 732.73,
+        "tail_space_pt": 38.32,
+        "body_page": 10
+      },
+      {
+        "physical_page": 18,
+        "footer": "11",
+        "body_last_bottom_pt": 762.41,
+        "tail_space_pt": 8.64,
+        "body_page": 11
+      },
+      {
+        "physical_page": 19,
+        "footer": "12",
+        "body_last_bottom_pt": 676.61,
+        "tail_space_pt": 94.44,
+        "body_page": 12
+      },
+      {
+        "physical_page": 20,
+        "footer": "13",
+        "body_last_bottom_pt": 739.01,
+        "tail_space_pt": 32.04,
+        "body_page": 13
+      },
+      {
+        "physical_page": 21,
+        "footer": "14",
+        "body_last_bottom_pt": 495.17,
+        "tail_space_pt": 275.88,
+        "body_page": 14
+      },
+      {
+        "physical_page": 22,
+        "footer": "15",
+        "body_last_bottom_pt": 733.32,
+        "tail_space_pt": 37.73,
+        "body_page": 15
+      },
+      {
+        "physical_page": 23,
+        "footer": "16",
+        "body_last_bottom_pt": 744.73,
+        "tail_space_pt": 26.32,
+        "body_page": 16
+      },
+      {
+        "physical_page": 24,
+        "footer": "17",
+        "body_last_bottom_pt": 731.41,
+        "tail_space_pt": 39.64,
+        "body_page": 17
+      },
+      {
+        "physical_page": 25,
+        "footer": "18",
+        "body_last_bottom_pt": 645.53,
+        "tail_space_pt": 125.52,
+        "body_page": 18
+      },
+      {
+        "physical_page": 26,
+        "footer": "19",
+        "body_last_bottom_pt": 731.09,
+        "tail_space_pt": 39.96,
+        "body_page": 19
+      },
+      {
+        "physical_page": 27,
+        "footer": "20",
+        "body_last_bottom_pt": 748.69,
+        "tail_space_pt": 22.36,
+        "body_page": 20
+      },
+      {
+        "physical_page": 28,
+        "footer": "21",
+        "body_last_bottom_pt": 748.73,
+        "tail_space_pt": 22.32,
+        "body_page": 21
+      },
+      {
+        "physical_page": 29,
+        "footer": "22",
+        "body_last_bottom_pt": 748.09,
+        "tail_space_pt": 22.96,
+        "body_page": 22
+      },
+      {
+        "physical_page": 30,
+        "footer": "23",
+        "body_last_bottom_pt": 765.61,
+        "tail_space_pt": 5.44,
+        "body_page": 23
+      },
+      {
+        "physical_page": 31,
+        "footer": "24",
+        "body_last_bottom_pt": 737.65,
+        "tail_space_pt": 33.4,
+        "body_page": 24
+      },
+      {
+        "physical_page": 32,
+        "footer": "25",
+        "body_last_bottom_pt": 745.21,
+        "tail_space_pt": 25.84,
+        "body_page": 25
+      },
+      {
+        "physical_page": 33,
+        "footer": "26",
+        "body_last_bottom_pt": 745.09,
+        "tail_space_pt": 25.96,
+        "body_page": 26
+      },
+      {
+        "physical_page": 34,
+        "footer": "27",
+        "body_last_bottom_pt": 757.57,
+        "tail_space_pt": 13.48,
+        "body_page": 27
+      },
+      {
+        "physical_page": 35,
+        "footer": "28",
+        "body_last_bottom_pt": 749.29,
+        "tail_space_pt": 21.76,
+        "body_page": 28
+      },
+      {
+        "physical_page": 36,
+        "footer": "29",
+        "body_last_bottom_pt": 765.49,
+        "tail_space_pt": 5.56,
+        "body_page": 29
+      },
+      {
+        "physical_page": 37,
+        "footer": "30",
+        "body_last_bottom_pt": 690.25,
+        "tail_space_pt": 80.8,
+        "body_page": 30
+      },
+      {
+        "physical_page": 38,
+        "footer": "31",
+        "body_last_bottom_pt": 728.53,
+        "tail_space_pt": 42.52,
+        "body_page": 31
+      },
+      {
+        "physical_page": 39,
+        "footer": "32",
+        "body_last_bottom_pt": 760.76,
+        "tail_space_pt": 10.29,
+        "body_page": 32
+      },
+      {
+        "physical_page": 40,
+        "footer": "33",
+        "body_last_bottom_pt": 545.57,
+        "tail_space_pt": 225.48,
+        "body_page": 33
+      },
+      {
+        "physical_page": 41,
+        "footer": "34",
+        "body_last_bottom_pt": 764.4,
+        "tail_space_pt": 6.65,
+        "body_page": 34
+      },
+      {
+        "physical_page": 42,
+        "footer": "35",
+        "body_last_bottom_pt": 750.53,
+        "tail_space_pt": 20.52,
+        "body_page": 35
+      },
+      {
+        "physical_page": 43,
+        "footer": "36",
+        "body_last_bottom_pt": 475.97,
+        "tail_space_pt": 295.08,
+        "body_page": 36
+      },
+      {
+        "physical_page": 44,
+        "footer": "37",
+        "body_last_bottom_pt": 625.45,
+        "tail_space_pt": 145.6,
+        "body_page": 37
+      },
+      {
+        "physical_page": 45,
+        "footer": "38",
+        "body_last_bottom_pt": 748.13,
+        "tail_space_pt": 22.92,
+        "body_page": 38
+      },
+      {
+        "physical_page": 46,
+        "footer": "39",
+        "body_last_bottom_pt": 731.28,
+        "tail_space_pt": 39.77,
+        "body_page": 39
+      },
+      {
+        "physical_page": 47,
+        "footer": "40",
+        "body_last_bottom_pt": 746.52,
+        "tail_space_pt": 24.53,
+        "body_page": 40
+      },
+      {
+        "physical_page": 48,
+        "footer": "41",
+        "body_last_bottom_pt": 746.77,
+        "tail_space_pt": 24.28,
+        "body_page": 41
+      },
+      {
+        "physical_page": 49,
+        "footer": "42",
+        "body_last_bottom_pt": 716.93,
+        "tail_space_pt": 54.12,
+        "body_page": 42
+      },
+      {
+        "physical_page": 50,
+        "footer": "43",
+        "body_last_bottom_pt": 651.12,
+        "tail_space_pt": 119.93,
+        "body_page": 43
+      },
+      {
+        "physical_page": 51,
+        "footer": "44",
+        "body_last_bottom_pt": 753.84,
+        "tail_space_pt": 17.21,
+        "body_page": 44
+      },
+      {
+        "physical_page": 52,
+        "footer": "45",
+        "body_last_bottom_pt": 755.52,
+        "tail_space_pt": 15.53,
+        "body_page": 45
+      },
+      {
+        "physical_page": 53,
+        "footer": "46",
+        "body_last_bottom_pt": 715.92,
+        "tail_space_pt": 55.13,
+        "body_page": 46
+      },
+      {
+        "physical_page": 54,
+        "footer": "47",
+        "body_last_bottom_pt": 674.93,
+        "tail_space_pt": 96.12,
+        "body_page": 47
+      },
+      {
+        "physical_page": 55,
+        "footer": "48",
+        "body_last_bottom_pt": 723.17,
+        "tail_space_pt": 47.88,
+        "body_page": 48
+      },
+      {
+        "physical_page": 56,
+        "footer": "49",
+        "body_last_bottom_pt": 709.01,
+        "tail_space_pt": 62.04,
+        "body_page": 49
+      },
+      {
+        "physical_page": 57,
+        "footer": "50",
+        "body_last_bottom_pt": 748.56,
+        "tail_space_pt": 22.49,
+        "body_page": 50
+      },
+      {
+        "physical_page": 58,
+        "footer": "51",
+        "body_last_bottom_pt": 720.24,
+        "tail_space_pt": 50.81,
+        "body_page": 51
+      },
+      {
+        "physical_page": 59,
+        "footer": "52",
+        "body_last_bottom_pt": 459.17,
+        "tail_space_pt": 311.88,
+        "body_page": 52
+      },
+      {
+        "physical_page": 60,
+        "footer": "53",
+        "body_last_bottom_pt": 764.33,
+        "tail_space_pt": 6.72,
+        "body_page": 53
+      },
+      {
+        "physical_page": 61,
+        "footer": "54",
+        "body_last_bottom_pt": 154.61,
+        "tail_space_pt": 616.44,
+        "body_page": 54
+      },
+      {
+        "physical_page": 62,
+        "footer": "55",
+        "body_last_bottom_pt": 269.81,
+        "tail_space_pt": 501.24,
+        "body_page": 55
+      },
+      {
+        "physical_page": 63,
+        "footer": "56",
+        "body_last_bottom_pt": 740.88,
+        "tail_space_pt": 30.17,
+        "body_page": 56
+      },
+      {
+        "physical_page": 64,
+        "footer": "57",
+        "body_last_bottom_pt": 694.44,
+        "tail_space_pt": 76.61,
+        "body_page": 57
+      },
+      {
+        "physical_page": 65,
+        "footer": "58",
+        "body_last_bottom_pt": 750.53,
+        "tail_space_pt": 20.52,
+        "body_page": 58
+      },
+      {
+        "physical_page": 66,
+        "footer": "59",
+        "body_last_bottom_pt": 765.25,
+        "tail_space_pt": 5.8,
+        "body_page": 59
+      },
+      {
+        "physical_page": 67,
+        "footer": "60",
+        "body_last_bottom_pt": 699.49,
+        "tail_space_pt": 71.56,
+        "body_page": 60
+      },
+      {
+        "physical_page": 68,
+        "footer": "61",
+        "body_last_bottom_pt": 744.97,
+        "tail_space_pt": 26.08,
+        "body_page": 61
+      },
+      {
+        "physical_page": 69,
+        "footer": "62",
+        "body_last_bottom_pt": 259.57,
+        "tail_space_pt": 511.48,
+        "body_page": 62
+      }
+    ],
+    "front_pages_text_and_positions_identical": [
+      1,
+      2,
+      6,
+      7
+    ],
+    "toc_physical_pages": [
+      3,
+      4,
+      5
+    ],
+    "focus_page_metrics": [
+      {
+        "body_page": 9,
+        "before_physical_page": 16,
+        "after_physical_page": 16,
+        "before_tail_space_pt": 306.04,
+        "after_tail_space_pt": 166.0
+      },
+      {
+        "body_page": 10,
+        "before_physical_page": 17,
+        "after_physical_page": 17,
+        "before_tail_space_pt": 278.92,
+        "after_tail_space_pt": 38.32
+      },
+      {
+        "body_page": 15,
+        "before_physical_page": 22,
+        "after_physical_page": 22,
+        "before_tail_space_pt": 406.44,
+        "after_tail_space_pt": 37.73
+      }
+    ],
+    "chapter_3_end": {
+      "before_physical_page": 22,
+      "after_physical_page": 21,
+      "before_tail_space_pt": 406.44,
+      "after_tail_space_pt": 275.88
+    },
+    "table_3_2": {
+      "before_physical_page": 22,
+      "before_body_page": 15,
+      "after_physical_page": 21,
+      "after_body_page": 14
+    },
+    "metrics_note": "页尾留白按页面底边距减最后正文文字或图片底部计算；正常章末留白保留，不能据此单独判定缺陷。"
+  },
+  "rendered_pages": [
+    {
+      "physical_page": 1,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-01.png",
+      "sha256": "a3fc68f663219c1dd595a0212e4cd925bece1230f26b199e6a9c79815478bf1d"
+    },
+    {
+      "physical_page": 2,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-02.png",
+      "sha256": "9c6723f8cb53dd6b25640d7abb1d2a76dd25ffa7186643455daad887a72ec4e0"
+    },
+    {
+      "physical_page": 3,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-03.png",
+      "sha256": "d912b60900aaf1433575c7fca751d8b937d8bc561592c47dff07769db9fa94a6"
+    },
+    {
+      "physical_page": 4,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-04.png",
+      "sha256": "06069858a34570850eea4b05e36c0c278d9b54b871e85dbedfe0f2312c20b022"
+    },
+    {
+      "physical_page": 5,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-05.png",
+      "sha256": "8e6831f72ad3315074212c79e58f8609a9c79f483560acf57adc75e2b0df753d"
+    },
+    {
+      "physical_page": 6,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-06.png",
+      "sha256": "19b141697608df8ea0c582e5e46d3133c9b13627172b985d6eff3a662636f936"
+    },
+    {
+      "physical_page": 7,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-07.png",
+      "sha256": "99f21789c04bfed8ffe72465d59eb5052cce7cd455263f916b2f2aa73fb1f59a"
+    },
+    {
+      "physical_page": 8,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-08.png",
+      "sha256": "18e7d6a6e08b61d703f13287383e0740717b6b7b8db6ed5f04d9d58f52b27814"
+    },
+    {
+      "physical_page": 9,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-09.png",
+      "sha256": "fc7d7287295b55137b42d00cd20ac0c219656fc98b4d22b2eb4e65efd6e3cb5f"
+    },
+    {
+      "physical_page": 10,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-10.png",
+      "sha256": "14fa304c973a9b79517d55039975841518a43ef43c67d937d7cf14a0bdeeae8c"
+    },
+    {
+      "physical_page": 11,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-11.png",
+      "sha256": "3a9449b9a2c23bd89e8c91cb2f4df5d3ee4414c2884fb1703cd2ba1cafe80bb0"
+    },
+    {
+      "physical_page": 12,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-12.png",
+      "sha256": "6d5d0b1a290397c0cc8d3e70ead2cab1a107a0fbbdef310a3f1baf63395d796a"
+    },
+    {
+      "physical_page": 13,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-13.png",
+      "sha256": "a682321cf2c6c02ffab1d0d6ac6b425a6dda10dfc78c7b9b1f8ce99449d5e5cc"
+    },
+    {
+      "physical_page": 14,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-14.png",
+      "sha256": "51dd667976e9ed70c5e44cbf0dfb8b4560b642c50c23b16f401205150193633a"
+    },
+    {
+      "physical_page": 15,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-15.png",
+      "sha256": "43c0066f547ca970c9a0c07a36d12bf9aa27599891da98f863560bc2ff5bd5a0"
+    },
+    {
+      "physical_page": 16,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-16.png",
+      "sha256": "acccf314b0274e797677806832e3a93ed656086643d0cffad798bfa31d3b7395"
+    },
+    {
+      "physical_page": 17,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-17.png",
+      "sha256": "7aa9ec22309be681989e8bd92453d518ec644f7638d6a14d933132ce5edd5953"
+    },
+    {
+      "physical_page": 18,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-18.png",
+      "sha256": "677a77f9b0c4ed991d2f4d272513b107e137b7323c5abedc7528b5c496e58f35"
+    },
+    {
+      "physical_page": 19,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-19.png",
+      "sha256": "c0bb5abee90c5cc888ef55d48dfb37c5a0f6e7e2e63e72940de0f261a848e416"
+    },
+    {
+      "physical_page": 20,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-20.png",
+      "sha256": "60b49738e8571c759349963411bad5335b858d440a0e7982c30c4337f5eae0b8"
+    },
+    {
+      "physical_page": 21,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-21.png",
+      "sha256": "bfe5e7a98e2f8eff8fa2f5b848b55bc8aa145efd519dbfa8d41f57d3492d9dcb"
+    },
+    {
+      "physical_page": 22,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-22.png",
+      "sha256": "7acaae74421e73605a5b392e4988a52b9038448da084f2ee2b3477c5c4763433"
+    },
+    {
+      "physical_page": 23,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-23.png",
+      "sha256": "84ed5b9fb41ecb1ec604cc1e338143d3c72391073c7d13fa72bd21dd19d1360b"
+    },
+    {
+      "physical_page": 24,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-24.png",
+      "sha256": "e34b1e5766692ffdb9c894634d1812fe68185027994b21933883e92680974d0f"
+    },
+    {
+      "physical_page": 25,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-25.png",
+      "sha256": "2c442c0e8eec40b11cdf6262cd49deff685eed17df889c1bf7d9d52db063bb90"
+    },
+    {
+      "physical_page": 26,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-26.png",
+      "sha256": "df32372a2d6cd4ec684858dba2a366bad60deaa7d16f8192729e63220cefd133"
+    },
+    {
+      "physical_page": 27,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-27.png",
+      "sha256": "25e3851cc3880a147bba9af4a715df4e89cff5c89d822559216946681c827045"
+    },
+    {
+      "physical_page": 28,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-28.png",
+      "sha256": "d74a39c8aec1d309a09ad846773e9f94737be592221286f8ab1838e7b9ff1087"
+    },
+    {
+      "physical_page": 29,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-29.png",
+      "sha256": "8cc158ca16271a84a0a26bbc75b77edbd78b5c3b3d9de6d76f90b3e9e9e80230"
+    },
+    {
+      "physical_page": 30,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-30.png",
+      "sha256": "3294274c95ff8da7071b839ea2376180e1c0a043d5f9fc0b1a39e04a5f69a291"
+    },
+    {
+      "physical_page": 31,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-31.png",
+      "sha256": "4fba745ca6cd6e8945e4f2950aaeac5193b1eb47bc5c79e83e1302299d8545f7"
+    },
+    {
+      "physical_page": 32,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-32.png",
+      "sha256": "008edb09fcc2966ae524d0795f9c54d7f811a0c90ca8c0406863567e0aa2ba6d"
+    },
+    {
+      "physical_page": 33,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-33.png",
+      "sha256": "ef1a7af67b8cf84204efbc5834a83a9a53c430e24691a78644b45138f4a25f94"
+    },
+    {
+      "physical_page": 34,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-34.png",
+      "sha256": "346c4f7d99b64ff726299183f642f7d239a269f1731315ded016190a74683af8"
+    },
+    {
+      "physical_page": 35,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-35.png",
+      "sha256": "f75e30c60442f0262b937609d396df4b2a979cdfa84b0ff8af7d82c8590ec3d3"
+    },
+    {
+      "physical_page": 36,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-36.png",
+      "sha256": "74cecc5cd4cfbab310fd0f7cef01973a72f5f622f5972bf978172a802a54beed"
+    },
+    {
+      "physical_page": 37,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-37.png",
+      "sha256": "e3d143eb43442a5381c2955cc4ace3744865b379c1ab5001148c8457d50dd49e"
+    },
+    {
+      "physical_page": 38,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-38.png",
+      "sha256": "b52f24b6dda30e7b257c3c52e00350e7593b8bd0a3b67e123855b4301d7f3acf"
+    },
+    {
+      "physical_page": 39,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-39.png",
+      "sha256": "724b5558c5a9c80cfbd1fd3db874dc866acb29591cdaf1664cc7442374a7f0fb"
+    },
+    {
+      "physical_page": 40,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-40.png",
+      "sha256": "8ba53dc75350ee94730134a2430088bf61be706412c637bc565bb31e72b8baa8"
+    },
+    {
+      "physical_page": 41,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-41.png",
+      "sha256": "e4c4286a567c40ddf0a4f5e3fd03e8289569a0c8f502ac408aae6bc127d198ce"
+    },
+    {
+      "physical_page": 42,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-42.png",
+      "sha256": "a4753b7524e9c55190521df845374b4310e771726862ee0868893ef78dc2dc5a"
+    },
+    {
+      "physical_page": 43,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-43.png",
+      "sha256": "2612203c04cef2207f67c4315d862a38eb9e4670b458c5cd03076765d83a06ce"
+    },
+    {
+      "physical_page": 44,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-44.png",
+      "sha256": "08b9ee5642609eaa41f904abb6e384beca84522b6fd392f5fcc8bb6efcd56b5d"
+    },
+    {
+      "physical_page": 45,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-45.png",
+      "sha256": "a94fb2ff0125c78ae6c9f4baa00dfc3560459fdf2632ef638b4a805282c2b69d"
+    },
+    {
+      "physical_page": 46,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-46.png",
+      "sha256": "5fdf1cd681a3d043a5531bc237c6938919bd4934d8673a9bd8ac4096fb93ffe9"
+    },
+    {
+      "physical_page": 47,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-47.png",
+      "sha256": "cc1547a6aaf45f82407f9350d3fba0a118582819b9211b927fd2bace9311f10e"
+    },
+    {
+      "physical_page": 48,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-48.png",
+      "sha256": "b92d206c5edb96c157b39a9bbf7380d8c0c6ae4d1159b03935dd5098b0e304b3"
+    },
+    {
+      "physical_page": 49,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-49.png",
+      "sha256": "685236b70444485c4b512d25b6347e84516983d35848cd2e27b8751322b36c71"
+    },
+    {
+      "physical_page": 50,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-50.png",
+      "sha256": "80656bebe83d67962807eaf1a0cab6ab248e859e58dc784a9b374347ac5448fa"
+    },
+    {
+      "physical_page": 51,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-51.png",
+      "sha256": "71593b2840af227346e6a34082d073a50965895b27a9053348c11811d9305783"
+    },
+    {
+      "physical_page": 52,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-52.png",
+      "sha256": "cc9ee83cbf87970f342ec5e2607435e2cbd5d2ac65bf1b3fc9b3ce768a88e9e1"
+    },
+    {
+      "physical_page": 53,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-53.png",
+      "sha256": "8009fd6db2d282bf82b46a3d207102ae5e91821581567c6ed36a45c50c742f81"
+    },
+    {
+      "physical_page": 54,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-54.png",
+      "sha256": "41857479ae778e00602e2c0233ad383c42146ac89af614788704bac3cb357724"
+    },
+    {
+      "physical_page": 55,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-55.png",
+      "sha256": "c67c143bd202976964f3339efe1653eb2d24460ef523ab9fbca037f8f5ee5da8"
+    },
+    {
+      "physical_page": 56,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-56.png",
+      "sha256": "0c4affbc1385c97266225a19ec71f55c263a4f9e9a8f9376694055e69d5fc67b"
+    },
+    {
+      "physical_page": 57,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-57.png",
+      "sha256": "f6a23add7f8236e8914cb9aa98fd9e5c7988b34ba1b12e94dbfb07f033ea95ad"
+    },
+    {
+      "physical_page": 58,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-58.png",
+      "sha256": "68a937d03b4b6b9f5cadb622bfa08cc6adcf5119ca555d04c91cde9514907454"
+    },
+    {
+      "physical_page": 59,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-59.png",
+      "sha256": "291a367335c75f6539c0374d106f7921d5c8b8221ac74104e63ba631507f6bdb"
+    },
+    {
+      "physical_page": 60,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-60.png",
+      "sha256": "02dad1e5a8c6cdb896e99cdf801b8907c10678a9a4cce37f9a18cc868c2da927"
+    },
+    {
+      "physical_page": 61,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-61.png",
+      "sha256": "04240e8ca32f536fcdc8131fa2dfca0da92e91830f8be17be4ce94885c72a891"
+    },
+    {
+      "physical_page": 62,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-62.png",
+      "sha256": "a47db429c4c73f8e898966145f0a2f29d26f554b9bc6b29567d7c6bb4ccfd0c8"
+    },
+    {
+      "physical_page": 63,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-63.png",
+      "sha256": "aef090912abc5a12f13e9d0441e6c690aa1a21226031f8ad335850126108a11a"
+    },
+    {
+      "physical_page": 64,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-64.png",
+      "sha256": "b255382b89c587c86edbb72dde5a102295359051f3d53dd86853ed7706bd740c"
+    },
+    {
+      "physical_page": 65,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-65.png",
+      "sha256": "4e354cc43d0a52d04522ecaae1027caa8ee67b997b3118103f357a0cb869b79f"
+    },
+    {
+      "physical_page": 66,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-66.png",
+      "sha256": "5e1a6f5f90ed4e87050797ea4f6c02aa3b4b7ae117cce85dc675f59d718cfbcd"
+    },
+    {
+      "physical_page": 67,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-67.png",
+      "sha256": "c4e71b361d250c350231bb7e21d167b4fd6cfa98cc0975a5f4e1292b21b2ef2d"
+    },
+    {
+      "physical_page": 68,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-68.png",
+      "sha256": "6cf69fe5b9e23db051695e428d1d98a8553d2b194596bedbc5f3af2d08fff402"
+    },
+    {
+      "physical_page": 69,
+      "path": "tmp/thesis-body-pagination-20261017/pages/page-69.png",
+      "sha256": "eeea6c3f69e13f401f75f2553017c8da45465394c71d44e068c59b9fb5ccb3d6"
+    }
+  ],
+  "render_method": "标准render_docx.py缺少捆绑LibreOffice；独立隐藏WPS副本导出，捆绑Poppler按100DPI渲染",
+  "visual_review": {
+    "status": "passed",
+    "pages": 69,
+    "method": "69张100DPI最终完整页图逐张原尺寸查看",
+    "review_ranges": [
+      [
+        1,
+        23
+      ],
+      [
+        24,
+        46
+      ],
+      [
+        47,
+        69
+      ]
+    ],
+    "findings": "未见缺字、裁切、重叠、图题分离、表格越界、半行拆页或新增空白页；正常章末及完整大图前的自然余白保留。",
+    "retained_large_figure_gaps": [
+      40,
+      43
+    ],
+    "normal_chapter_end_example": 44
+  },
+  "business_tests_run": false,
+  "baseline_commit": "87e1af622e27a6fd8cdea32689ca46d4b84eacf9",
+  "change_id": "CHG-20261017-03",
+  "toc_page_caches_updated": 41,
+  "renderer_failure_counted_as_pass": false,
+  "standard_renderer_failure": "FileNotFoundError: LibreOffice soffice.exe was not found on PATH",
+  "source_scope_check": {
+    "last_thesis_baseline": "5011d2354e5eb6dbf589534077cec3926aa8e2e5",
+    "committed_staged_unstaged_untracked_source_reviewed": true,
+    "reviewed_paths": [
+      "backend",
+      "frontend",
+      "database"
+    ],
+    "new_business_source_changes": false,
+    "prior_uncommitted_flowchart_materials_preserved": true
+  },
+  "main_file_matches_verified_candidate": true,
+  "final_checks": {
+    "main_word_hash_matches": true,
+    "page_image_hashes_verified": 69,
+    "front_pages_pixel_identical": [
+      1,
+      2,
+      6,
+      7
+    ],
+    "git_diff_check_passed": true,
+    "utf8_without_bom_passed": true,
+    "local_links_checked": true
+  }
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "name": "learning-flow",
+    "title": "学习进度受理与结果同步流程",
+    "width": 1000,
+    "height": 1200,
+    "shapes": 59,
+    "pixelSize": [
+      3000,
+      3600
+    ],
+    "printSizeCm": [
+      15.5,
+      18.6
+    ],
+    "mainPrintFontPt": 10.54,
+    "minPrintFontPt": 10.11,
+    "files": {
+      ".drawio": "92ff181a16f6b5e550a044ad57cb3d34810f3cb1db96a6398a606f5687d91b70",
+      ".svg": "0a56b9080c5814cb07840817dc26d313a6c19ef6aad3019871eb78025acb7e5b",
+      ".png": "94e15757487bc6c3d9789c9fdc5474a14a26860260b47b63c9ffa26ad205f19b"
+    }
+  },
+  {
+    "name": "core-business-flow",
+    "title": "核心业务流程设计",
+    "width": 1000,
+    "height": 1215,
+    "shapes": 46,
+    "pixelSize": [
+      3000,
+      3645
+    ],
+    "printSizeCm": [
+      15.5,
+      18.832
+    ],
+    "mainPrintFontPt": 10.54,
+    "minPrintFontPt": 10.11,
+    "files": {
+      ".drawio": "e665210edaf3c1f0c9745cdcb1323ec72db0c24964efa45f81b221cb9ae15a6a",
+      ".svg": "e0f2a423a712716e2819e0f326f707642970afdb2d94836d4cef4e8109791ff1",
+      ".png": "e7b2c24f552f943a820c10e0b1b0aefd55f023b1a6a18ecd82423cc8da1941db"
+    }
+  }
+]

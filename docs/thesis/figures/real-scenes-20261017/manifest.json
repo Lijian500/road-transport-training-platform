@@ -1,0 +1,428 @@
+{
+  "batch": "20261017",
+  "source_directory": "E:\\毕业论文材料\\image",
+  "processing": "Pillow 确定性裁剪及原像素拼接；图5-4、5-5、5-6沿用用户原图已有马赛克，不追加遮挡；档案缩略图及未嵌入的备用视频仍保留原处理。不使用生成式图像，不修改数字、状态、姓名或按钮；坐标均为源图像左上原点的半开区间。",
+  "privacy": "仅使用用户已脱敏的截图，不保留未打马赛克的人脸照片；成品 PNG 为无 EXIF、无文本元信息的 RGB 图像。",
+  "figures": [
+    {
+      "output_file": "course.png",
+      "output_sha256": "a6083961aa2a29715cf1d99dd52d3421afeef99b7a8449b0155ad229ed1c26f4",
+      "output_rgb_pixels_sha256": "f6fa74555884d34f3a204e59f76f397fdc48007cc8e77b0aa8b961d49e8a6ffb",
+      "output_size_px": [
+        1567,
+        878
+      ],
+      "preferred_width_cm": 15.5,
+      "height_at_preferred_width_cm": 8.68,
+      "composition": "vertical",
+      "embedded_in_thesis": true,
+      "note": "分别裁取规则和视频课件表，排除课程封面。两张截图为不同位置的真实页面，不作同一时刻规则一致的推断。",
+      "sources": [
+        {
+          "source_file": "课件设置1.png",
+          "source_sha256": "c5260cd37daaddf341fca5b9b07bb9bdb8a745fdf8cba635288b7e2f97fb4145",
+          "source_size_px": [
+            1587,
+            771
+          ],
+          "crop_box_xyxy": [
+            16,
+            0,
+            1563,
+            377
+          ],
+          "irreversible_solid_gray_masks_xyxy": [],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": "(a) 课程规则",
+          "resize": "none"
+        },
+        {
+          "source_file": "课件设置2.png",
+          "source_sha256": "86dedf17c5857c8b2a367bcfa496a1597855cddc78f2b63505ab43c8f44a7751",
+          "source_size_px": [
+            1549,
+            783
+          ],
+          "crop_box_xyxy": [
+            2,
+            406,
+            1548,
+            783
+          ],
+          "irreversible_solid_gray_masks_xyxy": [],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": "(b) 视频课件",
+          "resize": "none"
+        }
+      ]
+    },
+    {
+      "output_file": "plan.png",
+      "output_sha256": "960b8d2cc0038c838036d0e23d2fac78c3feaf6f58fe86523074f60058393ee3",
+      "output_rgb_pixels_sha256": "be750ac2cc382508db6a8d2d15a128faff070997a060ef6f8e85e6de2fc56b87",
+      "output_size_px": [
+        1561,
+        1453
+      ],
+      "preferred_width_cm": 15.5,
+      "height_at_preferred_width_cm": 14.43,
+      "composition": "vertical",
+      "embedded_in_thesis": true,
+      "note": "配置和发布快照均按截图原样保留。",
+      "sources": [
+        {
+          "source_file": "计划基础信息1.png",
+          "source_sha256": "2fdb2109895084867ed0c6c7bcd150b4259b1e182e480ecdd1a041260023b6e8",
+          "source_size_px": [
+            1535,
+            654
+          ],
+          "crop_box_xyxy": [
+            0,
+            0,
+            1535,
+            638
+          ],
+          "irreversible_solid_gray_masks_xyxy": [],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": "(a) 基础信息与抽验配置",
+          "resize": "none"
+        },
+        {
+          "source_file": "计划基础信息二.png",
+          "source_sha256": "295f85de5833b93f75c16628da0cb8b25dfa1fce1d4e9abbba325a7221c2a86c",
+          "source_size_px": [
+            1541,
+            691
+          ],
+          "crop_box_xyxy": [
+            0,
+            0,
+            1541,
+            691
+          ],
+          "irreversible_solid_gray_masks_xyxy": [],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": "(b) 发布课程与学员快照",
+          "resize": "none"
+        }
+      ]
+    },
+    {
+      "output_file": "sign-in.png",
+      "output_sha256": "ff63783ebc3b258220dac9bbc22848364c3714d63f295a3541a7a063e532187f",
+      "output_rgb_pixels_sha256": "e1d4a4e13c1f780a7c15c99ce3c3c3e2e1a86aed4f873593bbacd0abe98075bb",
+      "output_size_px": [
+        488,
+        441
+      ],
+      "preferred_width_cm": 9,
+      "height_at_preferred_width_cm": 8.13,
+      "composition": "single",
+      "embedded_in_thesis": true,
+      "note": "签到摄像头预览，沿用用户原图中已有的人脸马赛克，不追加遮挡；拍照按钮仍可见，不能据此声称签到验证已成功。",
+      "sources": [
+        {
+          "source_file": "人脸签到1.png",
+          "source_sha256": "8d4675e8917cd11db7321496660938d565a30e698feec58fe6ece25b9592831e",
+          "source_size_px": [
+            510,
+            480
+          ],
+          "crop_box_xyxy": [
+            11,
+            15,
+            499,
+            456
+          ],
+          "irreversible_solid_gray_masks_xyxy": [],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": null,
+          "resize": "none"
+        }
+      ]
+    },
+    {
+      "output_file": "video.png",
+      "output_sha256": "3739ce5ef5b1e7a6cdb271421d0004c31dbff8367542468bcb9a7c165bc526e7",
+      "output_rgb_pixels_sha256": "5b9dfbbc0c6fdbe28dc84aa1e05c6869b704108c8aba138d08484782eebea545",
+      "output_size_px": [
+        1295,
+        821
+      ],
+      "preferred_width_cm": 15.5,
+      "height_at_preferred_width_cm": 9.83,
+      "composition": "single",
+      "embedded_in_thesis": true,
+      "note": "直接采用用户已对版权部分打马赛克的原图，完整保留视频画面、播放器控件、学时、课件目录和底部暂停提示，不追加遮挡。截图中播放器为暂停状态，不能推断播放位置与累计学时的定量关系。",
+      "sources": [
+        {
+          "source_file": "视频学习2.png",
+          "source_sha256": "a027b9925e09a0187a70ba7764eb5a37c7a36e9757758bc3c262b82314acd5b8",
+          "source_size_px": [
+            1295,
+            821
+          ],
+          "crop_box_xyxy": [
+            0,
+            0,
+            1295,
+            821
+          ],
+          "irreversible_solid_gray_masks_xyxy": [],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": null,
+          "resize": "none"
+        }
+      ]
+    },
+    {
+      "output_file": "video-alternate.png",
+      "output_sha256": "4d2151080d7b20aee66895a03c07f1abf8c14ec5e009cc6d96fc1b109c0e9f51",
+      "output_rgb_pixels_sha256": "43652db9a9e1596c52d880d3039311cc457fa6ddb88b3cf330aad784e57cd2db",
+      "output_size_px": [
+        1309,
+        832
+      ],
+      "preferred_width_cm": 15.5,
+      "height_at_preferred_width_cm": 9.85,
+      "composition": "single",
+      "embedded_in_thesis": false,
+      "note": "备用单图，不嵌入本次论文；版权画面整体覆盖，保留有效学时、目录和正常签退按钮。",
+      "sources": [
+        {
+          "source_file": "视频学习1.png",
+          "source_sha256": "c4b06d50186a29256b307b3252390b76940f4c9bd18da48ae6ef7b1ee2ba53be",
+          "source_size_px": [
+            1309,
+            832
+          ],
+          "crop_box_xyxy": [
+            0,
+            0,
+            1309,
+            832
+          ],
+          "irreversible_solid_gray_masks_xyxy": [
+            [
+              338,
+              230,
+              1296,
+              770
+            ]
+          ],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": null,
+          "resize": "none"
+        }
+      ]
+    },
+    {
+      "output_file": "face-check.png",
+      "output_sha256": "10285401667cf6f3990363e32ff10e763a2918f9e68442af1fc9033eefa3166f",
+      "output_rgb_pixels_sha256": "12ca061c4298194e8d84586f91de0698c565d36e3d04b498d3b37c0edd65a778",
+      "output_size_px": [
+        1207,
+        766
+      ],
+      "preferred_width_cm": 15.5,
+      "height_at_preferred_width_cm": 9.84,
+      "composition": "horizontal",
+      "embedded_in_thesis": true,
+      "note": "两幅真实截图并排展示抽验提示和摄像头预览，沿用用户已有的人脸马赛克，不追加遮挡；保留各自倒计时、3/3剩余提交次数及拍照按钮，不能表述为已经提交或核验成功。",
+      "sources": [
+        {
+          "source_file": "学习触发抽验.png",
+          "source_sha256": "b863f54ee28d7e0d0255276dc73854761876d1fa0e5d7adddcd498d0ea30ff1b",
+          "source_size_px": [
+            613,
+            629
+          ],
+          "crop_box_xyxy": [
+            12,
+            15,
+            602,
+            559
+          ],
+          "irreversible_solid_gray_masks_xyxy": [],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": "(a) 开启摄像头前",
+          "resize": "none"
+        },
+        {
+          "source_file": "抽验拍照1.png",
+          "source_sha256": "1baf7bf97ec57f934edf9de57c1346f8ac351aab938a89c1b5648aa12ffb7ea1",
+          "source_size_px": [
+            604,
+            737
+          ],
+          "crop_box_xyxy": [
+            9,
+            16,
+            590,
+            722
+          ],
+          "irreversible_solid_gray_masks_xyxy": [],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": "(b) 摄像头预览",
+          "resize": "none"
+        }
+      ]
+    },
+    {
+      "output_file": "paper.png",
+      "output_sha256": "eaa8e6cac4559b416a0975ead2accc8a366120e2421c0700fd1520ed67734b4f",
+      "output_rgb_pixels_sha256": "a6c43b09030196acced37bf21d12a5a17296baeccef84ffbce6ab371c04a6a20",
+      "output_size_px": [
+        728,
+        646
+      ],
+      "preferred_width_cm": 13,
+      "height_at_preferred_width_cm": 11.54,
+      "composition": "single",
+      "embedded_in_thesis": true,
+      "note": "试卷草稿配置及手工选题下拉框，保留截图已显示的选题内容和参数。",
+      "sources": [
+        {
+          "source_file": "创建试卷二.png",
+          "source_sha256": "a3f003fca21eb238aecaf717373c701153c3e5156028eaac3b1903f24a8cdbcb",
+          "source_size_px": [
+            754,
+            661
+          ],
+          "crop_box_xyxy": [
+            12,
+            15,
+            740,
+            661
+          ],
+          "irreversible_solid_gray_masks_xyxy": [],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": null,
+          "resize": "none"
+        }
+      ]
+    },
+    {
+      "output_file": "task-detail.png",
+      "output_sha256": "a2dfb248c6ecd9549a6564dad2ceb6ed4b7552c78411d51d942bcbe462257d56",
+      "output_rgb_pixels_sha256": "fabfc2c605d40c92defbddc978c013fea19b22f1e18318d0118624ce0f6a6237",
+      "output_size_px": [
+        1317,
+        835
+      ],
+      "preferred_width_cm": 15.5,
+      "height_at_preferred_width_cm": 9.83,
+      "composition": "single",
+      "embedded_in_thesis": true,
+      "note": "学员计划详情、考试入口条件、课程有效学时与课件完成情况。",
+      "sources": [
+        {
+          "source_file": "学员的计划学习详情页面.png",
+          "source_sha256": "ea8a13b1f250d2f6ff05bfcd5133e8493ee0bd0b941c6b182f37b24b328596e0",
+          "source_size_px": [
+            1317,
+            835
+          ],
+          "crop_box_xyxy": [
+            0,
+            0,
+            1317,
+            835
+          ],
+          "irreversible_solid_gray_masks_xyxy": [],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": null,
+          "resize": "none"
+        }
+      ]
+    },
+    {
+      "output_file": "record.png",
+      "output_sha256": "93fe6060b70d735fd2684f5d05961487bc0b2a3b1fbc4400032893da682f4641",
+      "output_rgb_pixels_sha256": "b3d82dbbab9289b2f79cc6b24f5378cd5d880bfe2c4ee1c7ed9c0a0e767af9cd",
+      "output_size_px": [
+        1704,
+        819
+      ],
+      "preferred_width_cm": 15.5,
+      "height_at_preferred_width_cm": 7.45,
+      "composition": "single",
+      "embedded_in_thesis": true,
+      "note": "三张签到/签退照片缩略图整块纯灰遮挡；保留已签退、已终止及抽验超时等原始状态。",
+      "sources": [
+        {
+          "source_file": "学员学习档案.png",
+          "source_sha256": "74f716975479fe872f6bad0fa3a14aadee4855858f1d3247fff337be299feb2e",
+          "source_size_px": [
+            1712,
+            819
+          ],
+          "crop_box_xyxy": [
+            8,
+            0,
+            1712,
+            819
+          ],
+          "irreversible_solid_gray_masks_xyxy": [
+            [
+              1131,
+              585,
+              1207,
+              661
+            ],
+            [
+              1241,
+              585,
+              1317,
+              661
+            ],
+            [
+              1131,
+              684,
+              1207,
+              760
+            ]
+          ],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": null,
+          "resize": "none"
+        }
+      ]
+    },
+    {
+      "output_file": "statistics.png",
+      "output_sha256": "e56c27259a3413e34aaa5e2fa8ccfbe3a9e8f026c74ef007f6516de49d44f884",
+      "output_rgb_pixels_sha256": "da9565cd7598e5fb2bd183fe83cf693ccbc7c5789b23c7b285bc3592befaf4a7",
+      "output_size_px": [
+        1561,
+        675
+      ],
+      "preferred_width_cm": 15.5,
+      "height_at_preferred_width_cm": 6.7,
+      "composition": "single",
+      "embedded_in_thesis": true,
+      "note": "保留原始统计卡片和计划统计表，不据此新增实验样本规模或完成率结论。",
+      "sources": [
+        {
+          "source_file": "管理员-培训统计页面.png",
+          "source_sha256": "ac7ce9e543d7cdf61a99760e5464592403350e7617039aba08c0244362a0f426",
+          "source_size_px": [
+            1561,
+            675
+          ],
+          "crop_box_xyxy": [
+            0,
+            0,
+            1561,
+            675
+          ],
+          "irreversible_solid_gray_masks_xyxy": [],
+          "preserved_native_ui_regions_xyxy": [],
+          "group_label": null,
+          "resize": "none"
+        }
+      ]
+    }
+  ]
+}

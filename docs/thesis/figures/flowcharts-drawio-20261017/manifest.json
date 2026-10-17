@@ -1,0 +1,54 @@
+[
+  {
+    "name": "learning-flow",
+    "title": "学习进度受理与结果同步流程",
+    "width": 1000,
+    "height": 1200,
+    "shapes": 43,
+    "pixelSize": [
+      3000,
+      3600
+    ],
+    "printSizeCm": [
+      15.5,
+      18.6
+    ],
+    "mainPrintFontPt": 10.54,
+    "minPrintFontPt": 10.11,
+    "files": {
+      ".drawio": "f27e83b0b05841a6f045e7eee801fd24628c535df848cbbb6dd5e6ff2882ea57",
+      ".svg": "1bf202acf5d98e7ccdcebb7be3017eab5e581ea9518f9aeecc66e5a71cdade46",
+      ".png": "fc3a5a95acd67791c66378085d9952c9784cc9e1e68bd70e2f1938636fa0ba0b"
+    },
+    "terminalCount": 6,
+    "terminalStyle": "胶囊形终止符：中部直线，两端半圆",
+    "dashedLines": 0,
+    "workflow": "drawio@drawio 1.2.3原生XML；无桌面CLI，PNG/SVG由同源本地渲染器生成"
+  },
+  {
+    "name": "core-business-flow",
+    "title": "核心业务流程设计",
+    "width": 1000,
+    "height": 1215,
+    "shapes": 42,
+    "pixelSize": [
+      3000,
+      3645
+    ],
+    "printSizeCm": [
+      15.5,
+      18.832
+    ],
+    "mainPrintFontPt": 10.54,
+    "minPrintFontPt": 10.11,
+    "files": {
+      ".drawio": "992534b9062b5f2751181e5dade401572a96b8283c83765e37bcaaadc3c4807a",
+      ".svg": "b137cc0fa23037e53a2d5767f2f8aa4bd320abaf8785a4269551e7546a44d3fa",
+      ".png": "6cdd82d229ea1b3518829613085c149f9d5d0f83136c80563ca2b4e10b835ced"
+    },
+    "terminalCount": 2,
+    "terminalStyle": "胶囊形终止符：中部直线，两端半圆",
+    "dashedLines": 0,
+    "workflow": "drawio@drawio 1.2.3原生XML；无桌面CLI，PNG/SVG由同源本地渲染器生成"
+  }
+]

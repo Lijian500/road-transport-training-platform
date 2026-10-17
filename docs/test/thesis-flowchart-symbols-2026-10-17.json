@@ -1,0 +1,356 @@
+{
+  "review_date": "2026-10-17",
+  "change_id": "CHG-20261017-06",
+  "baseline_commit": "87e1af622e27a6fd8cdea32689ca46d4b84eacf9",
+  "input_sha256": "df8f0afe3728759413c0ab864e685a41bfb10aaac8a012b3df2df78efba36c51",
+  "word_sha256": "29a770571b0bc362c92959350882b001cf4a6a6e72cf2e4c040bcecb02295aaf",
+  "word": "docs/thesis/李剑_计算机科学与技术_基于Dubbo的道路运输企业在线培训系统设计与实现.docx",
+  "changed_package_parts": [
+    "word/media/advisor-two-core-business-flow.png",
+    "word/media/image12.png"
+  ],
+  "all_other_package_parts_byte_identical": true,
+  "all_xml_body_text_captions_toc_tables_references_math_preserved": true,
+  "source_audit": "5011d23..HEAD及暂存、未暂存、未跟踪业务源码无差异；相关10个源码文件Git blob一致",
+  "business_tests_executed": false,
+  "diagram_workflow": "调用drawio@drawio插件1.2.3原生XML路线；无桌面CLI，PNG/SVG由同源本地渲染器生成",
+  "figures": [
+    {
+      "asset": "learning-flow.png",
+      "media": "word/media/image12.png",
+      "sha256": "fc3a5a95acd67791c66378085d9952c9784cc9e1e68bd70e2f1938636fa0ba0b"
+    },
+    {
+      "asset": "core-business-flow.png",
+      "media": "word/media/advisor-two-core-business-flow.png",
+      "sha256": "6cdd82d229ea1b3518829613085c149f9d5d0f83136c80563ca2b4e10b835ced"
+    }
+  ],
+  "visual_review": {
+    "status": "通过",
+    "pages_viewed": [
+      41,
+      44
+    ],
+    "other_68_pages": "与CHG-20261017-05已验证校样PNG逐字节一致",
+    "findings": "胶囊形起止符及实线清晰，图题同页，无文字裁切或线条遮挡"
+  },
+  "main_file_written_and_verified": true,
+  "pdf_sha256": "b61121ed47ca4ef698d7792a950fa5921db4539a57e84a192cb8ffac66566d02",
+  "pdf": {
+    "page_count": 70,
+    "body_figures": 22,
+    "toc_entries": 68,
+    "all_70_page_text_and_image_bboxes_identical": true,
+    "changed_pages": [
+      41,
+      44
+    ],
+    "other_68_page_pngs_byte_identical": true
+  },
+  "rendered_pages": [
+    {
+      "physical_page": 1,
+      "sha256": "a3fc68f663219c1dd595a0212e4cd925bece1230f26b199e6a9c79815478bf1d"
+    },
+    {
+      "physical_page": 2,
+      "sha256": "9c6723f8cb53dd6b25640d7abb1d2a76dd25ffa7186643455daad887a72ec4e0"
+    },
+    {
+      "physical_page": 3,
+      "sha256": "d912b60900aaf1433575c7fca751d8b937d8bc561592c47dff07769db9fa94a6"
+    },
+    {
+      "physical_page": 4,
+      "sha256": "580c98be65516ecde7e713f115b5ace764a67a97dd331efd4fb7c649ff37cfb3"
+    },
+    {
+      "physical_page": 5,
+      "sha256": "329935fef37c2c4d71aec81ed41ca1549849c6285b0f84641b6cf7af125122bf"
+    },
+    {
+      "physical_page": 6,
+      "sha256": "19b141697608df8ea0c582e5e46d3133c9b13627172b985d6eff3a662636f936"
+    },
+    {
+      "physical_page": 7,
+      "sha256": "99f21789c04bfed8ffe72465d59eb5052cce7cd455263f916b2f2aa73fb1f59a"
+    },
+    {
+      "physical_page": 8,
+      "sha256": "18e7d6a6e08b61d703f13287383e0740717b6b7b8db6ed5f04d9d58f52b27814"
+    },
+    {
+      "physical_page": 9,
+      "sha256": "fc7d7287295b55137b42d00cd20ac0c219656fc98b4d22b2eb4e65efd6e3cb5f"
+    },
+    {
+      "physical_page": 10,
+      "sha256": "14fa304c973a9b79517d55039975841518a43ef43c67d937d7cf14a0bdeeae8c"
+    },
+    {
+      "physical_page": 11,
+      "sha256": "3a9449b9a2c23bd89e8c91cb2f4df5d3ee4414c2884fb1703cd2ba1cafe80bb0"
+    },
+    {
+      "physical_page": 12,
+      "sha256": "6d5d0b1a290397c0cc8d3e70ead2cab1a107a0fbbdef310a3f1baf63395d796a"
+    },
+    {
+      "physical_page": 13,
+      "sha256": "a682321cf2c6c02ffab1d0d6ac6b425a6dda10dfc78c7b9b1f8ce99449d5e5cc"
+    },
+    {
+      "physical_page": 14,
+      "sha256": "51dd667976e9ed70c5e44cbf0dfb8b4560b642c50c23b16f401205150193633a"
+    },
+    {
+      "physical_page": 15,
+      "sha256": "43c0066f547ca970c9a0c07a36d12bf9aa27599891da98f863560bc2ff5bd5a0"
+    },
+    {
+      "physical_page": 16,
+      "sha256": "acccf314b0274e797677806832e3a93ed656086643d0cffad798bfa31d3b7395"
+    },
+    {
+      "physical_page": 17,
+      "sha256": "7aa9ec22309be681989e8bd92453d518ec644f7638d6a14d933132ce5edd5953"
+    },
+    {
+      "physical_page": 18,
+      "sha256": "677a77f9b0c4ed991d2f4d272513b107e137b7323c5abedc7528b5c496e58f35"
+    },
+    {
+      "physical_page": 19,
+      "sha256": "c0bb5abee90c5cc888ef55d48dfb37c5a0f6e7e2e63e72940de0f261a848e416"
+    },
+    {
+      "physical_page": 20,
+      "sha256": "60b49738e8571c759349963411bad5335b858d440a0e7982c30c4337f5eae0b8"
+    },
+    {
+      "physical_page": 21,
+      "sha256": "bfe5e7a98e2f8eff8fa2f5b848b55bc8aa145efd519dbfa8d41f57d3492d9dcb"
+    },
+    {
+      "physical_page": 22,
+      "sha256": "7acaae74421e73605a5b392e4988a52b9038448da084f2ee2b3477c5c4763433"
+    },
+    {
+      "physical_page": 23,
+      "sha256": "84ed5b9fb41ecb1ec604cc1e338143d3c72391073c7d13fa72bd21dd19d1360b"
+    },
+    {
+      "physical_page": 24,
+      "sha256": "e34b1e5766692ffdb9c894634d1812fe68185027994b21933883e92680974d0f"
+    },
+    {
+      "physical_page": 25,
+      "sha256": "2c442c0e8eec40b11cdf6262cd49deff685eed17df889c1bf7d9d52db063bb90"
+    },
+    {
+      "physical_page": 26,
+      "sha256": "df32372a2d6cd4ec684858dba2a366bad60deaa7d16f8192729e63220cefd133"
+    },
+    {
+      "physical_page": 27,
+      "sha256": "25e3851cc3880a147bba9af4a715df4e89cff5c89d822559216946681c827045"
+    },
+    {
+      "physical_page": 28,
+      "sha256": "d74a39c8aec1d309a09ad846773e9f94737be592221286f8ab1838e7b9ff1087"
+    },
+    {
+      "physical_page": 29,
+      "sha256": "8cc158ca16271a84a0a26bbc75b77edbd78b5c3b3d9de6d76f90b3e9e9e80230"
+    },
+    {
+      "physical_page": 30,
+      "sha256": "3294274c95ff8da7071b839ea2376180e1c0a043d5f9fc0b1a39e04a5f69a291"
+    },
+    {
+      "physical_page": 31,
+      "sha256": "4fba745ca6cd6e8945e4f2950aaeac5193b1eb47bc5c79e83e1302299d8545f7"
+    },
+    {
+      "physical_page": 32,
+      "sha256": "008edb09fcc2966ae524d0795f9c54d7f811a0c90ca8c0406863567e0aa2ba6d"
+    },
+    {
+      "physical_page": 33,
+      "sha256": "ef1a7af67b8cf84204efbc5834a83a9a53c430e24691a78644b45138f4a25f94"
+    },
+    {
+      "physical_page": 34,
+      "sha256": "346c4f7d99b64ff726299183f642f7d239a269f1731315ded016190a74683af8"
+    },
+    {
+      "physical_page": 35,
+      "sha256": "f75e30c60442f0262b937609d396df4b2a979cdfa84b0ff8af7d82c8590ec3d3"
+    },
+    {
+      "physical_page": 36,
+      "sha256": "74cecc5cd4cfbab310fd0f7cef01973a72f5f622f5972bf978172a802a54beed"
+    },
+    {
+      "physical_page": 37,
+      "sha256": "e3d143eb43442a5381c2955cc4ace3744865b379c1ab5001148c8457d50dd49e"
+    },
+    {
+      "physical_page": 38,
+      "sha256": "b52f24b6dda30e7b257c3c52e00350e7593b8bd0a3b67e123855b4301d7f3acf"
+    },
+    {
+      "physical_page": 39,
+      "sha256": "724b5558c5a9c80cfbd1fd3db874dc866acb29591cdaf1664cc7442374a7f0fb"
+    },
+    {
+      "physical_page": 40,
+      "sha256": "8ba53dc75350ee94730134a2430088bf61be706412c637bc565bb31e72b8baa8"
+    },
+    {
+      "physical_page": 41,
+      "sha256": "bfb243fc64158044a5d59fa31e8587893025c577d96e4d1530609f6e61ba5d06"
+    },
+    {
+      "physical_page": 42,
+      "sha256": "a4753b7524e9c55190521df845374b4310e771726862ee0868893ef78dc2dc5a"
+    },
+    {
+      "physical_page": 43,
+      "sha256": "2612203c04cef2207f67c4315d862a38eb9e4670b458c5cd03076765d83a06ce"
+    },
+    {
+      "physical_page": 44,
+      "sha256": "103ca85bc9c9aa6984a272546cf49252fb7f9936d8828f958a9e12b9c6586cf5"
+    },
+    {
+      "physical_page": 45,
+      "sha256": "5225d3404f7077a1d0fda8df234b1b57a89c8cb622b78aa5931b0ca9900962c5"
+    },
+    {
+      "physical_page": 46,
+      "sha256": "2a29fda6585ebbe2142e6f7029e4b99ecb95505193ae9f68e3907707f2267951"
+    },
+    {
+      "physical_page": 47,
+      "sha256": "6153db5a9f46c83d6e75069a434e719a977f4e2ad388d0ff6e2de2109cfe2b74"
+    },
+    {
+      "physical_page": 48,
+      "sha256": "6769f1af9d6eca78f2becc065603c57f8212572eb344f7328bcce48b1bd4d868"
+    },
+    {
+      "physical_page": 49,
+      "sha256": "c494cd09d16bb4604b0c1efb19b10414087dff55aeb38fbfdff69ef7f3dd322c"
+    },
+    {
+      "physical_page": 50,
+      "sha256": "fc7943753002b057ee706c7cb5c72001aeea65c0b5ec929e1552434f45bbf481"
+    },
+    {
+      "physical_page": 51,
+      "sha256": "59e1911ba7fa24a8427670fa2601e55ff4caf286ee487c722a5d9784a0839283"
+    },
+    {
+      "physical_page": 52,
+      "sha256": "d6ab4b91e657019ddfb06a9f5a7e8b4526299d697496684c300d91c9799bc2bb"
+    },
+    {
+      "physical_page": 53,
+      "sha256": "1596db977f7d7b47c851f7c1700deb4f3108dbb133557074e106e7398bce91ac"
+    },
+    {
+      "physical_page": 54,
+      "sha256": "c5e886f03cbca9f65b7e14ca142113900714be1c1b670cc22a9dfcf0307931d5"
+    },
+    {
+      "physical_page": 55,
+      "sha256": "32e4bac38156ee42c247e2f843df4c0ff4d7c90d9a5f57dc004b4df7af4d282c"
+    },
+    {
+      "physical_page": 56,
+      "sha256": "19e487b9a8bf32288ffb27cf4de8a0add6d7df2dcebe75814e9adfc5ebd7eee3"
+    },
+    {
+      "physical_page": 57,
+      "sha256": "9dd919bc2dfff1bad8167c72e6dd6905937feaaea3dca85921422118b1a0f1c7"
+    },
+    {
+      "physical_page": 58,
+      "sha256": "8ac8ec6d5b192689dc330964bad511182610cb507e96b1f155efac8a57b575e3"
+    },
+    {
+      "physical_page": 59,
+      "sha256": "5afecd644aedb3550ae14d5d3757d14a56dfb695306a58569b5fd502550cd6fd"
+    },
+    {
+      "physical_page": 60,
+      "sha256": "c86de4edf66deff9a8841046c5047d85cdedbb42761a7d58b8db57f5215c9d7e"
+    },
+    {
+      "physical_page": 61,
+      "sha256": "521fad891a0bc40254f32f2981b7231b3e786904aca65916f933fd773aaeae6d"
+    },
+    {
+      "physical_page": 62,
+      "sha256": "c987d9113f7ae5ec935ab031b556d67e76de27a5c778c59358d57bafa666beb3"
+    },
+    {
+      "physical_page": 63,
+      "sha256": "9fdd1c171a13b1ef858e84bb171617a1242d42986389c72c09d6a7d4a4355d38"
+    },
+    {
+      "physical_page": 64,
+      "sha256": "c4bbf5cc084fdb150f78f90be57f3067c3ec54eb7bce4b46bdc0dbc42209610f"
+    },
+    {
+      "physical_page": 65,
+      "sha256": "1027c4fa24d57cdbb53f3244a3ae799a49f0fa0b50bac3c91ac0f2966bfa1766"
+    },
+    {
+      "physical_page": 66,
+      "sha256": "929eb2d7e029f4bab4d660aaba333fff2deba423280859176ba22b94760cc593"
+    },
+    {
+      "physical_page": 67,
+      "sha256": "e3fe941de64ea05e54ea7a429d668f6712dfbddf2a0b6cc2a2993bcb05b819c0"
+    },
+    {
+      "physical_page": 68,
+      "sha256": "6b03df7515c7ebc499ebb46f4a892d104c2d13b7c054b254e3ca46b9d5b2b90f"
+    },
+    {
+      "physical_page": 69,
+      "sha256": "2771dd96cd9d15fa1796c2cd95a7f8243f64c0631af34eea0cb456eaae422530"
+    },
+    {
+      "physical_page": 70,
+      "sha256": "546fe5c893dc57575eb07da60850abf27eb1fdbd314e2db902b7df916723b227"
+    }
+  ],
+  "rendering": "沿用已诊断的隐藏WPS临时副本导出方式，捆绑Poppler按100DPI渲染；捆绑LibreOffice缺失",
+  "diagram_checks": [
+    {
+      "name": "learning-flow",
+      "terminal_count": 6,
+      "decisions": 3,
+      "all_edges_solid": true,
+      "node_text_and_coordinates_preserved": true,
+      "pixel_changes_limited_to_terminals_and_connector": true,
+      "png_sha256": "fc3a5a95acd67791c66378085d9952c9784cc9e1e68bd70e2f1938636fa0ba0b"
+    },
+    {
+      "name": "core-business-flow",
+      "terminal_count": 2,
+      "decisions": 3,
+      "all_edges_solid": true,
+      "node_text_and_coordinates_preserved": true,
+      "pixel_changes_limited_to_terminals_and_connector": true,
+      "png_sha256": "6cdd82d229ea1b3518829613085c149f9d5d0f83136c80563ca2b4e10b835ced"
+    }
+  ],
+  "drawio_xml_repair_pass": "两图均执行，通过且无需修复",
+  "figure_manifest": "docs/thesis/figures/flowcharts-drawio-20261017/manifest.json"
+}
